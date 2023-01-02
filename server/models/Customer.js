@@ -32,10 +32,6 @@ const customerSchema = mongoose.Schema({
         type:String,
         required:[true,"User must provide his/her current location"],
     },
-    location:{
-        type:Object,
-        required:true,
-    },
     Email:{
         type:String,
         required:[true,"Customer must have to enter the email"],
@@ -50,15 +46,22 @@ const customerSchema = mongoose.Schema({
     },
     Role:{
         type:String,
+        default: 'Customer',
         enum:{
-            value:['Customer'],
+            values:['Customer'],
             message: "Cannot allow to  change the role of customer to any other role."
         },
         immutable:true
-    }
+    },
     },
     {
-        toJSON: { virtuals: true },
+        toJSON: { 
+            virtuals: true,
+            // transform(doc,ret){
+            //     delete ret.Password;
+            //     delete ret.ConfirmPassword
+            // }    
+        },
         toObject: { virtuals: true },
         timestamps: true
     });
