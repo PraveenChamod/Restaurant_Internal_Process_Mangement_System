@@ -19,7 +19,6 @@ export const CreateCustomer = async (req,res)=>{
         ContactNumber:ContactNumber,
         Address:Address,
         Email:Email,
-        
         Role:Role
     });
     return res.json(createCustomer);
