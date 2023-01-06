@@ -9,7 +9,6 @@ const customerSchema = mongoose.Schema({
         type:String,
         required:[true,"Customer must have enter the password"],
         minlength:8,
-        select: false,
         unique:true,
     },
     ConfirmPassword:{

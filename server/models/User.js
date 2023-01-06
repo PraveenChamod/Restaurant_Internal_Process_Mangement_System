@@ -11,7 +11,7 @@ const UserSchema = mongoose.Schema({
         required:[true,"User must have to enter the password"],
         minlength: 8,
         unique:true,
-        select: false
+        
     },
     ContactNumber:{
         type:Number,
