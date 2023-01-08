@@ -3,7 +3,7 @@ import Customer from "../models/Customer.js";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
-import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
+import { GeneratePassword, GenerateSalt, validatePassword } from "../util/PasswordUtility.js";
 const findUser = async (Email)=>{
     await Customer.findOne({Email:Email});
 }
@@ -17,9 +17,9 @@ export const RegisterCustomer = async (req,res)=>{
             return res.json({"message":"A Customer is already exist"});
         }
 
-        const salt = await bcrypt.genSalt(12);
-        const encryptedPassword = await bcrypt.hash(Password,salt);
-        const confirmEncryptedPassword = await bcrypt.hash(ConfirmPassword,salt);
+        const salt = await GenerateSalt();
+        const encryptedPassword = await GeneratePassword(Password,salt);
+        const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
     
         const createCustomer = await Customer.create({
             Name:Name,
@@ -54,7 +54,7 @@ export const LogInCustomer = async (req,res)=>{
     const existingUser = await Customer.findOne({Email:Email});
     
     if(existingUser !== null){
-        const result = await bcrypt.compare(Password,existingUser.Password);
+        const result = await validatePassword(Password,existingUser.Password);
         if(result){
             res.json({"message":"User Login Completed"});
         }
