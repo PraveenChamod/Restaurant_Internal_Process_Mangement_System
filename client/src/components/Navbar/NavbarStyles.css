@@ -5,7 +5,7 @@ nav{
     padding: 20px 80px;
     font-family: monospace;
     text-transform: uppercase;
-    background-color: transparent;
+    background: transparent;
     z-index: 1;
 }
 
