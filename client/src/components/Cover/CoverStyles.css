@@ -1,0 +1,152 @@
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 85vh;
+}
+
+.right{
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    background-image: url('../../Images/Background_Cover.png');
+    background-position: fixed;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.left{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 85vh;
+
+}
+
+
+
+.foodImage{
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+}
+
+.imgBurger{
+    width: 70%;
+    height: 70%;
+    position: center left;
+    left: 0;
+}
+
+.descriptionBox{
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    height: 100%;
+}
+
+
+
+.title{
+    font-size: 8vh;
+    font-weight: 450;
+    margin: 0;
+    padding: 0;
+}
+
+.description{
+    font-size: large;
+    padding: 0 10px 0 10px;
+}
+
+p{
+    color: #fff;
+} 
+
+.loginBtn{
+    position: absolute;
+    background: linear-gradient(to right, #ba9035, #a0522d);
+    border-radius: 20px;
+    border: none;
+    font-size: large;
+    color: #fff;
+    margin: 5px;
+    padding: 5px 20px 5px 20px;
+    display: block;
+    left: 50%;
+}
+
+@media screen and (max-width: 769px){
+    .container{
+        /* background-image: url('../../Images/Background_Cover.png'); */
+        /* background-position: right bottom; */
+        /* background-position: fixed;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-size: cover; */
+        height: 85vh;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        height: 100vh;
+    }
+
+    .right{
+        background-image: none;
+        width: 0;
+        height: 0;
+    }
+
+    .left{
+        height: auto;
+        width: 100%;
+        grid-column-start: 1;
+        grid-row-start: 1;
+        grid-row-end: 6;
+        margin: 0;
+        padding: 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    .foodImage{
+        grid-column-start: 1;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+    
+    .descriptionBox{
+        grid-column-start: 1;
+        grid-row-start: 2;
+        grid-row-end: 6;
+        text-align: center;
+        position: relative;
+    }
+
+    .imgBurger{
+        width: 50%;
+        height: 50%;
+        left: 0;
+        display: block;
+        margin: auto;
+    }
+
+    .title{
+        font-size: 5vh;
+        font-weight: 450;
+        padding: 0;
+    }
+
+    .loginBtn{
+        display: block;
+    }
+}
