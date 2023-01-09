@@ -39,7 +39,7 @@ const UserSchema = mongoose.Schema({
             },
             message:"Please enter the valid email"
         },
-        immutable:true
+    
     },
     Role:{
         type:String,

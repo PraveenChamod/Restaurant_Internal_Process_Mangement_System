@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
-import Customer from "../models/Customer.js";
+import ServiceProviders from "../models/ServiceProviders.js";
 import User from "../models/User.js";
+import { createToken, findUser } from "../util/AuthUtil.js";
+import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 
 // Method : GET
 // End Point : "api/v1/admin/GetUsers"
@@ -12,7 +14,9 @@ export const getUsers = async (req,res)=>{
     if(users !== null){
         return res.json(users);
     }
-    return res.json({"message":"There are no any records exits!"});
+    else{
+        return res.json({"message":"There are no any records exits!"});
+    }
     
 }
 
@@ -31,16 +35,37 @@ export const getUserById = async (req,res)=>{
 }
 
 // Method : GET
-// End Point : "api/v1/admin/GetUserByEmail/:Email"
+// End Point : "api/v1/admin/GetUserByEmail"
 // Description : Get User By Email
 
-export const getUsersByEmail = async (req,res)=>{
-    const { Email } = req.params;
-    const findUser = await User.findOne({Email:Email});
-    if(findUser !== null){
-        res.json(findUser);
+export const getUserByEmail = async (req,res)=>{
+    const Email  = req.body;
+    try {
+        const FindUser = await User.findOne({Email:Email});
+        console.log(FindUser);
+        if(FindUser !== null){
+            res.json(FindUser);
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.status(501).json(error.message);
     }
-    res.json({"message":"This user dosen't exits"});
+}
+
+// Method : GET
+// End Point : "api/v1/admin/GetUsersByRole"
+// Description : Get Users By Role
+
+export const getUsersByRole = async(req,res)=>{
+    const Role = req.body;
+    try {
+        const Users = await User.find({Role:Role});
+        if(Users !== null){
+            res.json(Users);
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
 }
 
 // Method : PATCH
@@ -48,23 +73,6 @@ export const getUsersByEmail = async (req,res)=>{
 // Description : Update User By Email
 
 export const updateUserByEmail = async (req,res)=>{
-    const {userEmail} = req.params;
-    const findUser = await User.findOne({Email:userEmail});
-    if(!mongoose.Types.ObjectId.isValid){
-        return res.status(404).send(`The Email ${userEmail} is note valid`);
-    }
-    if(findUser !== null){
-        res.json(findUser);
-        const {Name,ContactNumber,Address,Email,Role} = req.body;
-        const user = {Name,ContactNumber,Address,Email:userEmail,Role}
-        await User.findOneAndUpdate(Email,user,{new:true});
-        res.json(user);
-    }
-    else{
-        res.json({"message":"This user dosen't exits"});
-    }
-    
-    
     
 }
 
@@ -82,7 +90,7 @@ export const deleteUser = async (req,res)=>{
         res.json({message:`There is no any user with ${Email} email`});
     }
     await User.findOneAndRemove(Email);
-    res.json({message : `User is deleted who has the email address ${Email}`});
+    res.json({message : `User is deleted`});
 }
 
 // Method : DELETE
@@ -90,10 +98,59 @@ export const deleteUser = async (req,res)=>{
 // Description : Delete Users
 
 export const deleteUsers = async (req,res)=>{
-    const users = await Customer.find();
+    const users = await User.find();
     if(users !== null){
-        await Customer.deleteMany();
+        await User.deleteMany();
         res.json({message:`All users are removed`});
     }
     return res.status(404).send(`There are no users exits`);
 }
+
+// Method : POST
+// End Point : "api/v1/admin/RegisterServiceProvider";
+// Description : Register Service Providers
+
+const maxAge = 3 * 24 * 60 * 60;
+export const RegisterServiceProviders = async (req,res)=>{
+    const {Name,Password,ConfirmPassword,ContactNumber,Email,Role} = req.body;
+    const existingCustomer = await ServiceProviders.findOne({Email:Email});
+    const existingUser = await User.findOne({Email:Email});
+
+    try {
+        if(existingCustomer !== null || existingUser !== null){
+            return res.json({"message":"A User is already exist"});
+        }
+        else{
+            const salt = await GenerateSalt();
+            const encryptedPassword = await GeneratePassword(Password,salt);
+            const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
+        
+            const createServiceProvider = await ServiceProviders.create({
+                Name:Name,
+                Password:encryptedPassword,
+                ConfirmPassword:confirmEncryptedPassword,
+                ContactNumber:ContactNumber,
+                Email:Email,
+                Role:Role
+            });
+            const createUser = await User.create({
+                Name:Name,
+                Password:encryptedPassword,
+                ConfirmPassword:confirmEncryptedPassword,
+                ContactNumber:ContactNumber,
+                Email:Email,
+                Role:Role
+            })
+            const token = createToken(createUser._id,createUser.Email);
+            res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
+            res.json(token);
+        }
+    
+    } catch (error) {
+        const errors = handleErrors(error);
+        console.log(error.message);
+        res.status(500).json(errors);
+    }
+    
+}
+
