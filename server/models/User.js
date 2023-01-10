@@ -39,7 +39,7 @@ const UserSchema = mongoose.Schema({
             },
             message:"Please enter the valid email"
         },
-    
+        immutable:true
     },
     Role:{
         type:String,
@@ -50,6 +50,9 @@ const UserSchema = mongoose.Schema({
         },
         immutable:true
     },
+    ProfileImage:{
+        type:String,
+    }
     },{
         toJSON: { virtuals: true },
         toObject: { virtuals: true },

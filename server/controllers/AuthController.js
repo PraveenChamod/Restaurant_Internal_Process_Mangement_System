@@ -2,8 +2,19 @@ import User from "../models/User.js";
 import { createToken, findUser, handleErrors } from "../util/AuthUtil.js";
 import { validatePassword } from "../util/PasswordUtility.js";
 import jwt from 'jsonwebtoken';
+import multer from "multer";
 
+const imageStorage = multer.diskStorage({
+    destination:"images/Users",
+    filename: (req,file,cb)=>{
+        cb(null,Date.now()+'_'+file.originalname)
+    }
+})
+const image = multer({storage:imageStorage}).single('image');
 
+// Method : POST
+// End Point : "api/v1/Auth/LoginUser";
+// Description : Login User
 const maxAge = 3 * 24 * 60 * 60;
 export const LogInUser = async (req,res)=>{
     
@@ -33,6 +44,35 @@ export const LogInUser = async (req,res)=>{
     
 }
 
+// Method : POST
+// End Point : "api/v1/Auth/uploadProfilePicture";
+// Description : Upload Profile Image
+
+export const UploadProfileImage =  (req,res,next)=>{
+    const token = req.cookies.jwt;
+    if(token){
+      jwt.verify(token,'resturent secret key',async (err,decodeToken)=>{
+          if(err){
+              res.locals.user = null;
+              console.log(err.message);
+          }
+          else{
+                const user = await User.findById(decodeToken.id);
+                image(req,res,(err)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                    else{
+                        user.ProfileImage = req.file.filename;
+                    }
+                })
+                const saveResult = await user.save();
+                await User.findByIdAndUpdate(decodeToken.id,saveResult,{new:true});
+                return res.json(saveResult);
+            }
+        })
+    }
+}
 
 // Method : GET
 // End Point : "api/v1/Auth/getProfile";
@@ -58,6 +98,10 @@ export const getUserProfile = async(req,res,next)=>{
   }
 }
 
+
+// Method : GET
+// End Point : "api/v1/Auth/logout";
+// Description : Logging Our User
 export const LogoutUser = async (req,res)=>{
   res.cookie('jwt','',{maxAge:1});
   res.json('User Logging Out');

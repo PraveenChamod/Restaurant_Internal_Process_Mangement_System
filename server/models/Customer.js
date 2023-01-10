@@ -52,18 +52,21 @@ const customerSchema = mongoose.Schema({
         },
         immutable:true
     },
+    ProfileImage:{
+        type:String,
+    }
+},
+{
+    toJSON: { 
+        virtuals: true,
+        // transform(doc,ret){
+        //     delete ret.Password;
+        //     delete ret.ConfirmPassword
+        // }    
     },
-    {
-        toJSON: { 
-            virtuals: true,
-            // transform(doc,ret){
-            //     delete ret.Password;
-            //     delete ret.ConfirmPassword
-            // }    
-        },
-        toObject: { virtuals: true },
-        timestamps: true
-    });
+    toObject: { virtuals: true },
+    timestamps: true
+});
     
 
 const Customer = mongoose.model('Customer',customerSchema);

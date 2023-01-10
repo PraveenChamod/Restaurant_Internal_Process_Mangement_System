@@ -15,7 +15,6 @@ export const RegisterCustomer = async (req,res)=>{
     const {Name,Password,ConfirmPassword,ContactNumber,Address,Email,Role} = req.body;
     const existingCustomer = await Customer.findOne({Email:Email});
     const existingUser = await User.findOne({Email:Email});
-
     try {
         if(existingCustomer !== null || existingUser !== null){
             return res.json({"message":"A Customer is already exist"});
@@ -24,7 +23,6 @@ export const RegisterCustomer = async (req,res)=>{
             const salt = await GenerateSalt();
             const encryptedPassword = await GeneratePassword(Password,salt);
             const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
-        
             const createCustomer = await Customer.create({
                 Name:Name,
                 Password:encryptedPassword,
@@ -49,8 +47,7 @@ export const RegisterCustomer = async (req,res)=>{
         }
     
     } catch (error) {
-        const errors = handleErrors(error);
-        res.status(500).json(errors);
+        res.status(500).json(error.message);
     }
     
 }

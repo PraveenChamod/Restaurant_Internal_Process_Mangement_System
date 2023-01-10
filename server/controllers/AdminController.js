@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Customer from "../models/Customer.js";
 import ServiceProviders from "../models/ServiceProviders.js";
 import User from "../models/User.js";
 import { createToken, findUser } from "../util/AuthUtil.js";
@@ -21,35 +22,22 @@ export const getUsers = async (req,res)=>{
 }
 
 // Method : GET
-// End Point : "api/v1/admin/GetUserById/:id"
-// Description : Get User By ID
-
-export const getUserById = async (req,res)=>{
-    const userId = req.params.id;
-
-    const user = await User.findById(userId);
-    if(user !== null){
-        return res.json(user);
-    }
-    return res.json({"message":"There is no any user exits with given id"});
-}
-
-// Method : GET
 // End Point : "api/v1/admin/GetUserByEmail"
 // Description : Get User By Email
 
 export const getUserByEmail = async (req,res)=>{
-    const Email  = req.body;
+    const Email = req.body.Email;
+    const findUser = await User.findOne({Email:Email});
     try {
-        const FindUser = await User.findOne({Email:Email});
-        console.log(FindUser);
-        if(FindUser !== null){
-            res.json(FindUser);
+        if(findUser === null){
+            res.json('this user dosen\'t exits');
         }
+        res.json(findUser);
     } catch (error) {
         console.log(error.message);
-        res.status(501).json(error.message);
+        res.status(404).json(error.message);
     }
+    
 }
 
 // Method : GET
@@ -57,11 +45,17 @@ export const getUserByEmail = async (req,res)=>{
 // Description : Get Users By Role
 
 export const getUsersByRole = async(req,res)=>{
-    const Role = req.body;
+    const Role = req.body.Role;
     try {
-        const Users = await User.find({Role:Role});
+        const Users = await User.find({Role:Role}).populate('Role');
         if(Users !== null){
-            res.json(Users);
+            let users = [];
+            Users.map(user=>{
+                if(user.Role === Role){
+                    users.push(user);
+                }
+            })
+            res.json(users);
         }
     } catch (error) {
         res.status(500).json(error.message);
@@ -69,11 +63,26 @@ export const getUsersByRole = async(req,res)=>{
 }
 
 // Method : PATCH
-// End Point : "api/v1/admin/UpdateUserById/:Email"
+// End Point : "api/v1/admin/UpdateUser/:Email"
 // Description : Update User By Email
 
 export const updateUserByEmail = async (req,res)=>{
-    
+    const {email} = req.params;
+    const {Name,ContactNumber,Email,Role} = req.body;
+    try {
+        const findUser = await User.findOne({Email:email});
+        console.log(findUser);
+        if(!mongoose.Types.ObjectId.isValid){
+            return res.status(404).send(`The id ${id} is not valied`);
+        }
+        if(findUser !== null){
+            const user = {Name,ContactNumber,Email,Role};
+            await User.findOneAndUpdate(email,user,{new:true});
+            res.json(user);
+        }   
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
 }
 
 // Method : DELETE
@@ -83,14 +92,23 @@ export const updateUserByEmail = async (req,res)=>{
 export const deleteUser = async (req,res)=>{
     const {Email} = req.params;
     const findUser = await User.findOne({Email:Email});
-    if(!mongoose.Types.ObjectId.isValid){
-        return res.status(404).send(`The Email ${Email} is note valid`);
+    const findCustomer = await Customer.findOne({Email:Email});
+    const findServiceProvider = await ServiceProviders.findOne({Email:Email});
+    
+    if(findUser !== null){
+        console.log(findUser);
+        await User.findByIdAndRemove(findUser._id);
+        if(findCustomer !== null){
+            await Customer.findByIdAndRemove(findCustomer._id);
+        }
+        else if(findServiceProvider !== null){
+            await ServiceProviders.findByIdAndRemove(findServiceProvider._id);
+        }
+        res.json({message : `User is deleted`});
     }
-    if(findUser === null){
+    else{
         res.json({message:`There is no any user with ${Email} email`});
     }
-    await User.findOneAndRemove(Email);
-    res.json({message : `User is deleted`});
 }
 
 // Method : DELETE
@@ -99,11 +117,21 @@ export const deleteUser = async (req,res)=>{
 
 export const deleteUsers = async (req,res)=>{
     const users = await User.find();
+    const findCustomers = await Customer.find();
+    const findServiceProviders = await ServiceProviders.find();
     if(users !== null){
         await User.deleteMany();
+        if(findCustomers !== null){
+            await Customer.deleteMany();
+        }
+        else if(findServiceProviders !== null){
+            await ServiceProviders.deleteMany();
+        }
         res.json({message:`All users are removed`});
     }
-    return res.status(404).send(`There are no users exits`);
+    else{
+        return res.status(404).send(`There are no users exits`);
+    }
 }
 
 // Method : POST
@@ -147,9 +175,8 @@ export const RegisterServiceProviders = async (req,res)=>{
         }
     
     } catch (error) {
-        const errors = handleErrors(error);
         console.log(error.message);
-        res.status(500).json(errors);
+        res.status(500).json(error.message);
     }
     
 }

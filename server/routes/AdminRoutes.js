@@ -1,6 +1,6 @@
 
 import express from "express";
-import { deleteUser, deleteUsers, getUserById, getUsers, getUserByEmail, getUsersByRole, updateUserByEmail, RegisterServiceProviders } from "../controllers/AdminController.js";
+import { deleteUser, deleteUsers, getUsers, getUserByEmail, getUsersByRole, updateUserByEmail, RegisterServiceProviders } from "../controllers/AdminController.js";
 
 const AdminRoutes = express.Router();
 
@@ -9,9 +9,6 @@ AdminRoutes.route('/GetUsers').get(getUsers);
 
 //Get User By Email
 AdminRoutes.route('/GetUserByEmail').get(getUserByEmail);
-
-//Get User By ID
-AdminRoutes.route('/GetUserById/:id').get(getUserById);
 
 //Update User By Email
 AdminRoutes.route('/UpdateUser/:Email').patch(updateUserByEmail);
@@ -22,7 +19,7 @@ AdminRoutes.route('/DeleteUser/:Email').delete(deleteUser);
 //Delete all Users 
 AdminRoutes.route('/DeleteUsers').delete(deleteUsers);
 
-
+//Get Users By Role
 AdminRoutes.route('/getUsersByRole').get(getUsersByRole);
 
 //Register ServiceProviders
