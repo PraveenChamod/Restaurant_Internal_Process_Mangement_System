@@ -5,7 +5,7 @@
     text-align: center;
   } */
 
-h1 {
+#H1 {
     margin: 1rem auto;
     text-align: center;
     font-family: "Ubuntu";
@@ -16,7 +16,7 @@ h1 {
     text-transform: uppercase;
   }
 
-h2{
+#H2{
     color: sienna;
 }
 

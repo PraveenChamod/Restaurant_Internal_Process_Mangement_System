@@ -8,7 +8,7 @@ import './DealsStyles.css';
 function Deals() {
   return (
     <div>
-      <h1>Today Hot Deals</h1>
+      <h1 id='H1'>Today Hot Deals</h1>
       <OwlCarasel
         className='owl-theme'
         items='3'
@@ -21,7 +21,7 @@ function Deals() {
         return (
           <div className='card'>
             <img className='product--image' src={card.img} alt='' />
-            <h2>{card.Name}</h2>
+            <h2 id="H2">{card.Name}</h2>
             <p className='price'>{card.price}</p>
             {/* <button>Add to Cart</button> */}
           </div>
