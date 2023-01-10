@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import Customer from "../models/Customer.js";
+import ServiceProviders from "../models/ServiceProviders.js";
 import User from "../models/User.js";
+import { createToken, findUser } from "../util/AuthUtil.js";
+import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 
 // Method : GET
 // End Point : "api/v1/admin/GetUsers"
@@ -12,60 +15,74 @@ export const getUsers = async (req,res)=>{
     if(users !== null){
         return res.json(users);
     }
-    return res.json({"message":"There are no any records exits!"});
+    else{
+        return res.json({"message":"There are no any records exits!"});
+    }
     
 }
 
 // Method : GET
-// End Point : "api/v1/admin/GetUserById/:id"
-// Description : Get User By ID
+// End Point : "api/v1/admin/GetUserByEmail"
+// Description : Get User By Email
 
-export const getUserById = async (req,res)=>{
-    const userId = req.params.id;
-
-    const user = await User.findById(userId);
-    if(user !== null){
-        return res.json(user);
+export const getUserByEmail = async (req,res)=>{
+    const Email = req.body.Email;
+    const findUser = await User.findOne({Email:Email});
+    try {
+        if(findUser === null){
+            res.json('this user dosen\'t exits');
+        }
+        res.json(findUser);
+    } catch (error) {
+        console.log(error.message);
+        res.status(404).json(error.message);
     }
-    return res.json({"message":"There is no any user exits with given id"});
+    
 }
 
 // Method : GET
-// End Point : "api/v1/admin/GetUserByEmail/:Email"
-// Description : Get User By Email
+// End Point : "api/v1/admin/GetUsersByRole"
+// Description : Get Users By Role
 
-export const getUsersByEmail = async (req,res)=>{
-    const { Email } = req.params;
-    const findUser = await User.findOne({Email:Email});
-    if(findUser !== null){
-        res.json(findUser);
+export const getUsersByRole = async(req,res)=>{
+    const Role = req.body.Role;
+    try {
+        const Users = await User.find({Role:Role}).populate('Role');
+        if(Users !== null){
+            let users = [];
+            Users.map(user=>{
+                if(user.Role === Role){
+                    users.push(user);
+                }
+            })
+            res.json(users);
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
     }
-    res.json({"message":"This user dosen't exits"});
 }
 
 // Method : PATCH
-// End Point : "api/v1/admin/UpdateUserById/:Email"
+// End Point : "api/v1/admin/UpdateUser/:Email"
 // Description : Update User By Email
 
 export const updateUserByEmail = async (req,res)=>{
-    const {userEmail} = req.params;
-    const findUser = await User.findOne({Email:userEmail});
-    if(!mongoose.Types.ObjectId.isValid){
-        return res.status(404).send(`The Email ${userEmail} is note valid`);
+    const {email} = req.params;
+    const {Name,ContactNumber,Email,Role} = req.body;
+    try {
+        const findUser = await User.findOne({Email:email});
+        console.log(findUser);
+        if(!mongoose.Types.ObjectId.isValid){
+            return res.status(404).send(`The id ${id} is not valied`);
+        }
+        if(findUser !== null){
+            const user = {Name,ContactNumber,Email,Role};
+            await User.findOneAndUpdate(email,user,{new:true});
+            res.json(user);
+        }   
+    } catch (error) {
+        res.status(500).json(error.message);
     }
-    if(findUser !== null){
-        res.json(findUser);
-        const {Name,ContactNumber,Address,Email,Role} = req.body;
-        const user = {Name,ContactNumber,Address,Email:userEmail,Role}
-        await User.findOneAndUpdate(Email,user,{new:true});
-        res.json(user);
-    }
-    else{
-        res.json({"message":"This user dosen't exits"});
-    }
-    
-    
-    
 }
 
 // Method : DELETE
@@ -75,14 +92,23 @@ export const updateUserByEmail = async (req,res)=>{
 export const deleteUser = async (req,res)=>{
     const {Email} = req.params;
     const findUser = await User.findOne({Email:Email});
-    if(!mongoose.Types.ObjectId.isValid){
-        return res.status(404).send(`The Email ${Email} is note valid`);
+    const findCustomer = await Customer.findOne({Email:Email});
+    const findServiceProvider = await ServiceProviders.findOne({Email:Email});
+    
+    if(findUser !== null){
+        console.log(findUser);
+        await User.findByIdAndRemove(findUser._id);
+        if(findCustomer !== null){
+            await Customer.findByIdAndRemove(findCustomer._id);
+        }
+        else if(findServiceProvider !== null){
+            await ServiceProviders.findByIdAndRemove(findServiceProvider._id);
+        }
+        res.json({message : `User is deleted`});
     }
-    if(findUser === null){
+    else{
         res.json({message:`There is no any user with ${Email} email`});
     }
-    await User.findOneAndRemove(Email);
-    res.json({message : `User is deleted who has the email address ${Email}`});
 }
 
 // Method : DELETE
@@ -90,10 +116,68 @@ export const deleteUser = async (req,res)=>{
 // Description : Delete Users
 
 export const deleteUsers = async (req,res)=>{
-    const users = await Customer.find();
+    const users = await User.find();
+    const findCustomers = await Customer.find();
+    const findServiceProviders = await ServiceProviders.find();
     if(users !== null){
-        await Customer.deleteMany();
+        await User.deleteMany();
+        if(findCustomers !== null){
+            await Customer.deleteMany();
+        }
+        else if(findServiceProviders !== null){
+            await ServiceProviders.deleteMany();
+        }
         res.json({message:`All users are removed`});
     }
-    return res.status(404).send(`There are no users exits`);
+    else{
+        return res.status(404).send(`There are no users exits`);
+    }
 }
+
+// Method : POST
+// End Point : "api/v1/admin/RegisterServiceProvider";
+// Description : Register Service Providers
+
+const maxAge = 3 * 24 * 60 * 60;
+export const RegisterServiceProviders = async (req,res)=>{
+    const {Name,Password,ConfirmPassword,ContactNumber,Email,Role} = req.body;
+    const existingCustomer = await ServiceProviders.findOne({Email:Email});
+    const existingUser = await User.findOne({Email:Email});
+
+    try {
+        if(existingCustomer !== null || existingUser !== null){
+            return res.json({"message":"A User is already exist"});
+        }
+        else{
+            const salt = await GenerateSalt();
+            const encryptedPassword = await GeneratePassword(Password,salt);
+            const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
+        
+            const createServiceProvider = await ServiceProviders.create({
+                Name:Name,
+                Password:encryptedPassword,
+                ConfirmPassword:confirmEncryptedPassword,
+                ContactNumber:ContactNumber,
+                Email:Email,
+                Role:Role
+            });
+            const createUser = await User.create({
+                Name:Name,
+                Password:encryptedPassword,
+                ConfirmPassword:confirmEncryptedPassword,
+                ContactNumber:ContactNumber,
+                Email:Email,
+                Role:Role
+            })
+            const token = createToken(createUser._id,createUser.Email);
+            res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
+            res.json(token);
+        }
+    
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json(error.message);
+    }
+    
+}
+
