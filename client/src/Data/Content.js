@@ -40,3 +40,4 @@ export const responsive = {
         items: 3,
     },
 };
+
