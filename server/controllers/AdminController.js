@@ -140,38 +140,56 @@ export const deleteUsers = async (req,res)=>{
 
 const maxAge = 3 * 24 * 60 * 60;
 export const RegisterServiceProviders = async (req,res)=>{
-    const {Name,Password,ConfirmPassword,ContactNumber,Email,Role} = req.body;
-    const existingCustomer = await ServiceProviders.findOne({Email:Email});
+    const {Password,Email,Role} = req.body;
+    const existingServiceProvider = await ServiceProviders.findOne({Email:Email});
     const existingUser = await User.findOne({Email:Email});
 
     try {
-        if(existingCustomer !== null || existingUser !== null){
+        if(existingServiceProvider !== null || existingUser !== null){
             return res.json({"message":"A User is already exist"});
         }
         else{
             const salt = await GenerateSalt();
             const encryptedPassword = await GeneratePassword(Password,salt);
-            const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
-        
-            const createServiceProvider = await ServiceProviders.create({
-                Name:Name,
-                Password:encryptedPassword,
-                ConfirmPassword:confirmEncryptedPassword,
-                ContactNumber:ContactNumber,
-                Email:Email,
-                Role:Role
-            });
-            const createUser = await User.create({
-                Name:Name,
-                Password:encryptedPassword,
-                ConfirmPassword:confirmEncryptedPassword,
-                ContactNumber:ContactNumber,
-                Email:Email,
-                Role:Role
-            })
-            const token = createToken(createUser._id,createUser.Email);
-            res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
-            res.json(token);
+
+            if(Role === "Admin"){
+                const user = await User.findOne({Role:Role}).populate('Role');
+                console.log(user);
+                if(user !== null){
+                    res.json('Admin is already exist');
+                }
+                else{
+                    const createServiceProvider = await ServiceProviders.create({
+                        Password:encryptedPassword,
+                        Email:Email,
+                        Role:Role
+                    });
+                    const createUser = await User.create({
+                        Password:encryptedPassword,
+                        Email:Email,
+                        Role:Role
+                    })
+                    const token = createToken(createUser._id,createUser.Email);
+                    res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
+                    res.json(token);
+                }
+            }
+            else{
+                const createServiceProvider = await ServiceProviders.create({
+                    Password:encryptedPassword,
+                    Email:Email,
+                    Role:Role
+                });
+                const createUser = await User.create({
+                    Password:encryptedPassword,
+                    Email:Email,
+                    Role:Role
+                })
+                const token = createToken(createUser._id,createUser.Email);
+                res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
+                res.json(token);
+            }
+            
         }
     
     } catch (error) {
