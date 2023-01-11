@@ -5,6 +5,7 @@ import Customerrouter from './routes/CustomerRoutes.js';
 import AuthRoutes from "./routes/AuthRoutes.js";
 import { requireAuth } from "./middleware/Authmiddleware.js";
 import path from "path";
+import ServiceProviderrouter from "./routes/ServiceProvideRoutes.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api/v1/admin',AdminRoutes);
 
 app.use('/api/v1/Auth', AuthRoutes);
 
+app.use('/api/v1/serviceProvider',ServiceProviderrouter);
 
 export default app;
 

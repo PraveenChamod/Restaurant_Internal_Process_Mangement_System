@@ -4,7 +4,6 @@ import validator from "validator";
 const UserSchema = mongoose.Schema({
     Name:{
         type:String,
-        required:[true,"User must have user name"]
     },
     Password:{
         type:String,
@@ -15,19 +14,10 @@ const UserSchema = mongoose.Schema({
     },
     ContactNumber:{
         type:Number,
-        required:[true,"User must provide his/her contact number"],
         maxlength:10,
     },
-    ConfirmPassword:{
+    Address:{
         type:String,
-        required:[true,"User must confirm the password"],
-        select: false,
-        validate:{
-            validator:function(pwd){
-                return this.Password === pwd
-            },
-            message:"Password doesn't match"
-        }
     },
     Email:{
         type:String,
