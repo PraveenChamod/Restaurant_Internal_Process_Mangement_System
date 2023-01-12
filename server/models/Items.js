@@ -26,10 +26,6 @@ const itemSchema = mongoose.Schema({
     WholeSalePrice:{
         type:Number,
         required:[true,"Must provide the wholesale price"]
-    },
-    TotalPrice:{
-        type:Number,
-        required:[true,"Must provide the unit price of the selected item"]
     }
     },
     {

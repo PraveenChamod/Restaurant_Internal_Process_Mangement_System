@@ -92,16 +92,16 @@ export const updateUserByEmail = async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Admin"){
-            const {email} = req.params;
-            const {Name,ContactNumber,Email,Role} = req.body;
-            const findUser = await User.findOne({Email:email});
+            const {Email} = req.params;
+            const findUser = await User.findOne({Email:Email});
+            const {Name,ContactNumber,Role} = req.body;
             console.log(findUser);
             if(!mongoose.Types.ObjectId.isValid){
                 return res.status(404).send(`The id ${id} is not valied`);
             }
             if(findUser !== null){
-                const user = {Name,ContactNumber,Email,Role};
-                await User.findOneAndUpdate(email,user,{new:true});
+                const user = {Name:Name,ContactNumber:ContactNumber,Email:Email,Role:Role};
+                await User.findOneAndUpdate(Email,user,{new:true});
                 res.json(user);
             }   
         }
@@ -239,7 +239,7 @@ export const RegisterServiceProviders = async (req,res)=>{
                         from : 'resto6430@gmail.com',
                         to : Email,
                         subject : 'Registration Confrimation',
-                        text : `Hi ${Name} Welcome to Resto. You successfully registered to the system.`
+                        text : `Hi Welcome to Resto. You successfully registered to the system.`
                     }
 
                     transporter.sendMail(mailOption,(err,info)=>{
