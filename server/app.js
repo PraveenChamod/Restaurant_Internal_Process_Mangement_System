@@ -15,13 +15,13 @@ app.use(cookieParser());
 
 
 
-app.use('/api/v1/customer',Customerrouter);
+app.use('/api/v1/customer',requireAuth,Customerrouter);
 
-app.use('/api/v1/admin',AdminRoutes);
+app.use('/api/v1/admin',requireAuth,AdminRoutes);
 
 app.use('/api/v1/Auth', AuthRoutes);
 
-app.use('/api/v1/serviceProvider',ServiceProviderrouter);
+app.use('/api/v1/serviceProvider',requireAuth,ServiceProviderrouter);
 
 export default app;
 

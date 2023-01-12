@@ -78,24 +78,9 @@ export const UploadProfileImage =  (req,res,next)=>{
 // End Point : "api/v1/Auth/getProfile";
 // Description : Get User Details
 export const getUserProfile = async(req,res,next)=>{
-  const token = req.cookies.jwt;
-  if(token){
-      jwt.verify(token,'resturent secret key',async (err,decodeToken)=>{
-          if(err){
-              res.locals.user = null;
-              console.log(err.message);
-          }
-          else{
-              let user = await User.findById(decodeToken.id);
-              res.locals.user = user;
-              res.json(user);
-              next();
-          }
-      })
-  }
-  else{
-      res.locals.user = null;
-  }
+    const user = req.user;
+    console.log(user);
+    res.json(user);
 }
 
 

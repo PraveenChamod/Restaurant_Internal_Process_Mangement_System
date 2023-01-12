@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 
 const itemSchema = mongoose.Schema({
-    
     ItemName:{
         type:String,
         require:[true,"Must provide th item name"]
+    },
+    Category:{
+        type:String,
+        require:[true,"Must provide the category"]
     },
     SerialNo:{
         type:String,
@@ -17,11 +20,15 @@ const itemSchema = mongoose.Schema({
         required:[true,"Must provide the quantiy of the selected item"]
     },
     UnitPrice:{
-        type:Float32Array,
+        type:Number,
         required:[true,"Must provide the unit price of the selected item"]
     },
+    WholeSalePrice:{
+        type:Number,
+        required:[true,"Must provide the wholesale price"]
+    },
     TotalPrice:{
-        type:Float32Array,
+        type:Number,
         required:[true,"Must provide the unit price of the selected item"]
     }
     },
