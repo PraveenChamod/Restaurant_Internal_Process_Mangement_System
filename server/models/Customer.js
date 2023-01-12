@@ -54,7 +54,30 @@ const customerSchema = mongoose.Schema({
     },
     ProfileImage:{
         type:String,
-    }
+    },
+    OTP:{
+        type:Number
+    },
+    OTP_Expire:{
+        type:Date
+    },
+    lat:{
+        type:Number
+    },
+    lang:{
+        type:Number
+    },
+    cart: [
+        {
+            item: { type: mongoose.Schema.ObjectId, ref: 'Item', require: true},
+            unit: { type: Number, require: true}
+        }
+    ],
+    orders: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'Order'
+    }]
+
 },
 {
     toJSON: { 

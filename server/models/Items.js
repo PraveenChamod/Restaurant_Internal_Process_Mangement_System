@@ -2,10 +2,7 @@ import mongoose from "mongoose";
 
 
 const itemSchema = mongoose.Schema({
-    Customer:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Customer',
-    },
+    
     ItemName:{
         type:String,
         require:[true,"Must provide th item name"]

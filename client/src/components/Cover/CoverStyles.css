@@ -15,10 +15,12 @@
 .foodImage{
     width: 40%;
     position: relative;
+    /* background-color: blue; */
 }
 
 .descriptionBox{
     width: 60%;
+    /* background-color: red; */
 }
 
 .imgBurger{
