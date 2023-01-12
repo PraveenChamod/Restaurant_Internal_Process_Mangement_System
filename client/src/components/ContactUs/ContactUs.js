@@ -68,6 +68,7 @@ const ContactUs = () => {
     `
     const P = styled.p`
         font-size: 18px;
+        color: #fff;
         text-align: center;
         @media screen and (max-width:800px){
             font-size: 12px;

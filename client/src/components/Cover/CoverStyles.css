@@ -1,79 +1,54 @@
 .container{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    height: 85vh;
-}
-
-.right{
-    grid-column-start: 3;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    background-image: url('../../Images/Background_Cover.png');
-    background-position: fixed;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: -1;
-}
-
-.left{
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-
-    padding-left: 0;
     display: flex;
-    align-items: center;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
+    flex-wrap: wrap;
+    width: 100%;
     height: 85vh;
-
+    position: relative;
+    z-index: 1;
+    background-image: url('../../Images/Background_Cover.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: auto 100%;
+    padding: 15px;
 }
-
-
 
 .foodImage{
-    grid-column-start: 1;
-    grid-column-end: 4;
-    grid-row-start: 1;
-}
-
-.imgBurger{
-    width: 70%;
-    height: 70%;
-    position: center left;
-    left: 0;
+    width: 40%;
+    position: relative;
+    /* background-color: blue; */
 }
 
 .descriptionBox{
-    grid-column-start: 3;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    height: 100%;
+    width: 60%;
+    /* background-color: red; */
 }
 
-
+.imgBurger{
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 
 .title{
-    font-size: 8vh;
-    font-weight: 450;
-    margin: 0;
-    padding: 0;
+    font-size: 40px;
+    font-weight: 600;
+    color: #fff;
+    font-family: ubuntu;
 }
 
 .description{
-    font-size: large;
-    padding: 0 10px 0 10px;
+    font-size: 120%;
+    padding: 0 100px 0 0;
+    color: #fff;
 }
 
-p{
-    color: #fff;
-} 
-
 .loginBtn{
-    position: absolute;
+    position: relative;
     background: linear-gradient(to right, #ba9035, #a0522d);
     border-radius: 20px;
     border: none;
@@ -86,66 +61,39 @@ p{
 
 @media screen and (max-width: 769px){
     .container{
-        /* background-image: url('../../Images/Background_Cover.png'); */
-        /* background-position: right bottom; */
-        /* background-position: fixed;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-size: cover; */
-        height: 85vh;
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-        height: 100vh;
-    }
-
-    .right{
-        background-image: none;
-        width: 0;
-        height: 0;
-    }
-
-    .left{
-        height: auto;
-        width: 100%;
-        grid-column-start: 1;
-        grid-row-start: 1;
-        grid-row-end: 6;
-        margin: 0;
         padding: 0;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+        text-align: center;
+        height: auto;
+    }
+
+    .foodImage, .descriptionBox{
+        width: 100%;
     }
 
     .foodImage{
-        grid-column-start: 1;
-        grid-row-start: 1;
-        grid-row-end: 2;
-    }
-    
-    .descriptionBox{
-        grid-column-start: 1;
-        grid-row-start: 2;
-        grid-row-end: 6;
-        text-align: center;
-        position: relative;
-    }
-
-    .imgBurger{
-        width: 50%;
-        height: 50%;
-        left: 0;
-        display: block;
-        margin: auto;
-    }
-
-    .title{
-        font-size: 5vh;
-        font-weight: 450;
+        height: 20vh;
+        margin: 0;
         padding: 0;
     }
 
-    .loginBtn{
-        display: block;
+    .descriptionBox{
+        height: auto;
+        padding: 10px;
+    }
+
+    .imgBurger{
+        margin: 0;
+        padding: 0;
+    }
+
+    .title{
+        font-size: 30px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .description{
+        font-size: 120%;
+        padding: 0;
     }
 }

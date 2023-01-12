@@ -5,10 +5,6 @@ import {Menu} from './Pages/Menu'
 import {Cart} from './Pages/Cart'
 import Navbar from './components/Navbar/Navbar';
 
-
-
-
-
 function App() {
   return (
     <div className="App">
