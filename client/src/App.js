@@ -9,10 +9,6 @@ import {About} from './Pages/About'
 import {Cart} from './Pages/Cart'
 import Navbar from './components/Navbar/Navbar';
 
-
-
-
-
 function App() {
   return (
     <div className="App">
