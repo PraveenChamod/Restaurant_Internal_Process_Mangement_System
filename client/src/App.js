@@ -4,16 +4,19 @@ import {Home} from './Pages/Home';
 import {Menu} from './Pages/Menu'
 import {Cart} from './Pages/Cart'
 import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
     <div className="App">
-      <Navbar/>
+      {/* <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route path="Menu" element={<Menu/>}></Route>
         <Route path="Cart" element={<Cart/>}></Route>
-      </Routes>
+      </Routes> */}
+      <Footer/>
+   
       
     </div>
   );
