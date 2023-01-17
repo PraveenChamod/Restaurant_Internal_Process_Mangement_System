@@ -16,8 +16,6 @@ export const RegisterCustomer = async (req,res)=>{
     const {Name,Password,ConfirmPassword,ContactNumber,Address,Email,Role} = req.body;
     const existingCustomer = await Customer.findOne({Email:Email});
     const existingUser = await User.findOne({Email:Email});
-
-    
     try {
         if(existingCustomer !== null || existingUser !== null){
             return res.json({"message":"A Customer is already exist"});
@@ -69,13 +67,10 @@ export const RegisterCustomer = async (req,res)=>{
             })
 
             const token = createToken(createUser._id,createUser.Email);
-            res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
             res.json(token);
         }
-    
     } catch (error) {
         res.status(500).json(error.message);
     }
-    
 }
 
