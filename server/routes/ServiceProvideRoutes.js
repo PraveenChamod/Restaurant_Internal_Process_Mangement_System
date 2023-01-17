@@ -1,16 +1,22 @@
 import express from 'express';
-import { addItems, deleteFoodBySerialNo, getFoods, getFoodsByCategory, RegisterOutletStaff } from '../controllers/ServiceProvidersControll.js';
+import { addItems, deleteItemBySerialNo, getItems, getItemByCategory, RegisterOutletStaff, addFoods } from '../controllers/ServiceProvidersControll.js';
 
 const ServiceProviderrouter = express.Router();
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Manager++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 ServiceProviderrouter.route('/RegisterOutletStaff').post(RegisterOutletStaff);
 
 ServiceProviderrouter.route('/AddItems').post(addItems);
 
-ServiceProviderrouter.route('/getFoods').get(getFoods);
+ServiceProviderrouter.route('/getItems').get(getItems);
 
-ServiceProviderrouter.route('/getFoodsByCategory').get(getFoodsByCategory);
+ServiceProviderrouter.route('/getItemsByCategory').get(getItemByCategory);
 
-ServiceProviderrouter.route('/deleteFoodBySerialNo/:SerialNo').delete(deleteFoodBySerialNo);
+ServiceProviderrouter.route('/deleteItemBySerialNo/:SerialNo').delete(deleteItemBySerialNo);
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Staff-Member++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ServiceProviderrouter.route('/Staff-Member/AddFoods').post(addFoods);
 
 export default ServiceProviderrouter;
