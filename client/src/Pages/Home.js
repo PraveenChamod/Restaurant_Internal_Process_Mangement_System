@@ -2,6 +2,7 @@ import React from 'react'
 import ContactUs from '../components/ContactUs/ContactUs'
 import Cover from '../components/Cover/Cover'
 import Deals from '../components/Deals/Deals'
+import Footer from '../components/Footer/Footer'
 
 export const Home = () => {
   return (
@@ -10,6 +11,7 @@ export const Home = () => {
         <Cover/>
         <Deals/>
         <ContactUs/>
+        <Footer/>
     </div>
   )
 }
