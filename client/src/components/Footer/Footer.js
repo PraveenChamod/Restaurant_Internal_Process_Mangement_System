@@ -1,6 +1,5 @@
 import React from "react";
 import {Box,Container,Row,Column,FooterLink,Heading, H2, P,} from "./FooterStyles";
-import './FooterStyles1.css';
 
 const Footer = () => {
 return (
