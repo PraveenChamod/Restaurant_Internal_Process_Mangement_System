@@ -16,9 +16,6 @@ function App() {
         <Route path="Cart" element={<Cart/>}></Route>
       </Routes>
       <Footer/>
- 
-   
-      
     </div>
   );
 }

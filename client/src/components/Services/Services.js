@@ -66,7 +66,7 @@ const Services = () => {
         }
     `
 
-    return ( 
+    return (
         <Div>
             <Sec1>
                 <H1>OUR SERVICES</H1>
@@ -86,7 +86,7 @@ const Services = () => {
                     <Sec2>
                         <img alt="table" className='image' src={require('../../Images/Services/table.png')} />
                         
-                        <H2>TABLE RESWRVATION</H2>
+                        <H2>TABLE RESRVATION</H2>
                     </Sec2>
                 </Main>
             </Sec1> 
