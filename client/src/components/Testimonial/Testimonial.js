@@ -15,7 +15,7 @@ const Testimonials = () => {
         background: 
             url(${Background_Img}) right center no-repeat;
         background-size: auto 100%;
-        padding: 5px;
+        margin: 5% 0;
         @media screen and (max-width:900px){
             background-color: red;
             height: auto;
@@ -26,10 +26,10 @@ const Testimonials = () => {
             padding: 0;
         }
     `
-        const H1 = styled.h1`
-        font-size: 35px;
+        const H1 = styled.div`
+        letter-spacing: 0.1em;
+        font-size: 2em;
         color: #B26C29;
-        font-weight: bold;
         position: relative;
         text-align: center;
         margin: 1rem auto;
@@ -38,13 +38,11 @@ const Testimonials = () => {
         }
     `
         const H2 = styled.h1`
-        font-size: 50px;
+        letter-spacing: 0.2em;
+        font-size: 40px;
+        font-weight: 500;
         color: #fff;
-        font-family: Ubuntu;
-        font-weight: bold;
-        position: relative;
         text-align: center;
-        margin: 1rem auto;
         @media screen and (max-width:800px){
             font-size: 20px;
     }
@@ -87,9 +85,7 @@ const Testimonials = () => {
     return ( 
         <Container>
             <Sec>
-                <H1>Testmonial</H1>
-            </Sec>
-            <Sec>
+                <H1>Testimonial</H1>
                 <H2>What They Are Saying</H2>
             </Sec>
             <Sec2>

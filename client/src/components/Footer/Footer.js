@@ -1,7 +1,9 @@
 import React from "react";
-import {Box,Container,Row,Column,FooterLink,Heading, H2, P,} from "./FooterStyles";
-
-
+import {Box,Container,Row,Column,FooterLink,Heading, H2, P,Sec, Icon, Image,HR} from "./FooterStyles";
+import fb from '../../Images/facebook.png';
+import inster from '../../Images/instagram.png';
+import youtube from '../../Images/youtube.png';
+import whatsapp from '../../Images/whatsapp.png';
 const Footer = () => {
 return (
     <div>
@@ -66,7 +68,24 @@ return (
 		</Column>
 		</Row> */}
 	</Container>
+	<Container>
 		<H2>FIND US ON SOCIAL MEDIA</H2>
+		<Sec>
+			<Icon>
+				<Image src={fb}/>
+			</Icon>
+			<Icon>
+				<Image src={inster}/>
+			</Icon>
+			<Icon>
+				<Image src={youtube}/>
+			</Icon>
+			<Icon>
+				<Image src={whatsapp}/>
+			</Icon>
+		</Sec>
+	</Container>
+		<HR/>
 		<P>@2022 resto. All rights reserved.The resto name,logos and related marks are trademarks of resto Inc.</P>
 	</Box>
 

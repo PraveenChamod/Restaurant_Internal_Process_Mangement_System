@@ -2,6 +2,7 @@ import React from 'react'
 import { faEnvelope, faPhoneFlip, faLocationDot, faClock } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
+import { Heading } from '../Deals/DealsElements'
 
 const ContactUs = () => {
     const Div = styled.div`
@@ -16,12 +17,11 @@ const ContactUs = () => {
         }
     `
     const H1 = styled.h1`
+        letter-spacing: 0.2em;
         font-size: 40px;
-        color: #fff;
-        font-weight: bold;
-        position: relative;
+        font-weight: 500;
         text-align: center;
-        margin: 1rem auto;
+        color: #fff;
         @media screen and (max-width:800px){
             font-size: 20px;
         }
@@ -48,9 +48,9 @@ const ContactUs = () => {
         }
     `
     const Icon = styled.div`
-        font-size: 80px;
+        font-size: 40px;
         margin: 10px 10px 45px 10px;
-        color: sienna;
+        color: #C98621;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -77,6 +77,7 @@ const ContactUs = () => {
     return ( 
         <Div>
             <Sec>
+                <Heading>CONTACT US</Heading>
                 <H1>Get In Touch</H1>
             </Sec>
             <Sec>
@@ -85,14 +86,14 @@ const ContactUs = () => {
                         <Icon>
                             <FontAwesomeIcon icon = {faEnvelope}/>
                         </Icon>
-                        <H2>Chat Us On</H2>
+                        <H2>Chat With Us On</H2>
                         <P>+94 77 777 7777 <br/> +94 77 777 7777</P>
                     </SubSec>
                     <SubSec>
                         <Icon>
                             <FontAwesomeIcon icon = {faPhoneFlip}/>
                         </Icon>
-                        <H2>Call Us On</H2>
+                        <H2>Call To Us On</H2>
                         <P>+94 77 777 7777 <br/> +94 77 777 7777</P>
                     </SubSec>
                     <SubSec>
@@ -107,7 +108,8 @@ const ContactUs = () => {
                             <FontAwesomeIcon icon = {faClock}/>
                         </Icon>
                         <H2>Openning Hours</H2>
-                        <P>8:00 am to 10:00 pm</P>
+                        <P>Week Days - 8:00 am to 10:00 pm</P>
+                        <P>Weekend - 8:00 am to 8.00 pm</P>
                     </SubSec>
                 </MainSubSec>
             </Sec> 

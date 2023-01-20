@@ -2,19 +2,22 @@ import { useState } from "react";
 import styled from "styled-components";
 import LoginImage from "../../Images/foods/pancake.jpg";
 import { Link } from 'react-router-dom';
+import img from "../../Images/restoLogodark.png";
+import { Button } from "../Deals/DealsElements";
 const Login = () => {
     const Page = styled.div`
         height: 100vh;
         display: flex;
         justify-content: center;
-        
+        align-items: center;
     `
     const Container = styled.div`
         background-color: #000;
         display: flex;
         width: 79%;
-        height: auto;
-        margin: 5%;
+        margin-top: 6%;
+        
+        height: 80%;
         border-radius: 20px;
         @media screen and (max-width:769px){
             flex-direction: column;
@@ -31,6 +34,7 @@ const Login = () => {
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        padding: 2% 0;
         @media screen and (max-width:769px){
             width: 90%;
             border-bottom-left-radius: 0px;
@@ -53,16 +57,14 @@ const Login = () => {
         padding: 0;
     `
     const Title = styled.h2`
-        color: sienna;
-        margin: 0;
-        padding: 0;
-        text-decoration: underline;
+        color: #B26C29;
         text-transform: uppercase;
-        letter-spacing: 0.1em;
+        border-bottom: 2px solid #B26C29;
+        letter-spacing: 0.1rem;
     `
     const TextArea = styled.div`
         width: 90%;
-        height: 50%;
+        height: 70%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -71,7 +73,7 @@ const Login = () => {
     const Label = styled.label`
         font-size: 1.5em;
         color: #fff;
-        margin-top: 0.5em;
+        margin: 1em 0 0.5rem 0;
         letter-spacing: 0.1rem;
         .UpperLabel{
             margin-top: 0;
@@ -96,7 +98,7 @@ const Login = () => {
     const ForgotPWD = styled.div`
         width: 50%;
         text-align: right;
-        color: #febf10;
+        color: #B26C29;
         font-size: 80%;
         margin: 0;
         &:hover{
@@ -123,22 +125,8 @@ const Login = () => {
             font-size: 14px;
         }
     `
-    const Button = styled.div`
-        width: 85px;
-        height: 28px;
-        margin: 0;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(to right, #ba9035, #a0522d);
-        color: #fff;
-        @media screen and (max-width:800px){
-            height: 20px;
-        }
-    `
     const Option = styled.div`
-        color: #febf10;
+        color: #B26C29;
         font-size: 100%;
         margin: 0 2%;
         @media screen and (max-width:769px){
@@ -177,6 +165,7 @@ const Login = () => {
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        padding: 2% 0;
         @media screen and (max-width:769px){
             width: 90%;
             border-bottom-left-radius: 0px;
@@ -197,11 +186,13 @@ const Login = () => {
         flex-direction: column;
         align-items: left;
         justify-content: center;
+        margin: 0 5%;
+        
     `
     const LabelSignUp = styled.label`
         font-size: 1.2em;
         color: #fff;
-        margin-top: 1em;
+        margin: 1em 0 0.5rem 0;
         letter-spacing: 0.1rem;
         .UpperLabel{
             margin-top: 0;
@@ -222,6 +213,10 @@ const Login = () => {
         font-size: 12px;
     }
 `
+    const IMG = styled.img`
+         width: 150px;
+        height: 150px;
+    `
     const[change,setChange] = useState(false);
     const handleChange = ()=>{
         if(!change){
@@ -238,7 +233,7 @@ const Login = () => {
 
                     <LoginPage>
                         <Heading>
-                            <Logo>Resto</Logo>
+                            <Logo><IMG src={img}/></Logo>
                             <Title>Login</Title>
                         </Heading>
                         <TextArea>
@@ -262,7 +257,7 @@ const Login = () => {
         
                     <SignUpPage>
                         <Heading>
-                            <Logo>Resto</Logo>
+                        <Logo><IMG src={img}/></Logo>
                             <Title>Sign Up</Title>
                         </Heading>
                         <TextAreaSignUp>
@@ -293,8 +288,6 @@ const Login = () => {
                         </Bottom>
                     </SignUpPage>
                 }
-    
-
                 <ImageSection>
                     <Img src={LoginImage}/>
                 </ImageSection>

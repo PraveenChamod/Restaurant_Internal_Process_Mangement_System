@@ -1,14 +1,8 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-	padding: 10px 10px;
 	background: transparent;
-;
 	position: center;
-	bottom: 0;
-	width: 100%;
-
-
 @media (max-width: 1000px) {
 	padding: 70px 30px;
 }
@@ -18,7 +12,7 @@ export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	max-width: 1000px;
+	width: 100%;
 	margin: 0 auto;
 	/* background: red; */
 `
@@ -34,7 +28,7 @@ export const Row = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill,
 							minmax(185px, 1fr));
-	grid-gap: 20px;
+	grid-gap: 10%;
 
 @media (max-width: 1000px) {
 	grid-template-columns: repeat(auto-fill,
@@ -78,3 +72,24 @@ export const P = styled.p`
 	font-size: 15px;
 }
 `;
+
+export const Sec = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+`
+export const Icon = styled.div`
+	width: 50px;
+	height: 50px;
+	margin: 2%;
+`
+export const Image = styled.img`
+	width: 50px;
+	height: 50px;
+`
+export const HR = styled.hr`
+        border: none;
+        background: #ffffff2d;
+        height: 2px;
+        margin: 10px 0;
+`
