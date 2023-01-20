@@ -13,10 +13,10 @@ const Services = () => {
             margin: 0;
         }
     `
-    const H1 = styled.h1`
-        font-size: 35px;
+    const H1 = styled.div`
         color: #B26C29;
-        font-weight: bold;
+        letter-spacing: 0.1em;
+        font-size: 2em;
         position: relative;
         text-align: center;
         margin: 1rem auto;
@@ -25,13 +25,11 @@ const Services = () => {
         }
     `
     const H3 = styled.h1`
-    font-size: 50px;
-    color: #fff;
-    font-family: Ubuntu;
-    font-weight: bold;
-    position: relative;
-    text-align: center;
-    margin: 1rem auto;
+    letter-spacing: 0.2em;
+        font-size: 40px;
+        font-weight: 500;
+        color: #fff;
+        text-align: center;
     @media screen and (max-width:800px){
         font-size: 20px;
     }
@@ -70,8 +68,6 @@ const Services = () => {
         <Div>
             <Sec1>
                 <H1>OUR SERVICES</H1>
-            </Sec1>
-            <Sec1>
                 <H3>What We Offer</H3>
             </Sec1>
             <Sec1>

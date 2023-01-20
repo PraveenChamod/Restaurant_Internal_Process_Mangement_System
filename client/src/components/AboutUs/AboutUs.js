@@ -15,7 +15,6 @@ const AboutUs = () => {
             url(${foodImg_1}) right center no-repeat,
             url(${Background_Img}) left center no-repeat;
         background-size: auto 100%;
-        padding: 15px;
         @media screen and (max-width:900px){
             background-color: red;
             height: auto;
@@ -33,7 +32,7 @@ const AboutUs = () => {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: #febf10;
+        color: #B26C29;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         font-size: 2em;
@@ -98,7 +97,9 @@ const AboutUs = () => {
         }
     `
     const H1 = styled.h1`
-        letter-spacing: 0.1em;
+        letter-spacing: 0.2em;
+        font-size: 40px;
+        font-weight: 500;
         @media screen and (max-width: 900px){
             text-align: center;
             font-size: 1.5em;

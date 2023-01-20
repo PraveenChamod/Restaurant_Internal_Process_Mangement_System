@@ -41,3 +41,8 @@ export const responsive = {
     },
 };
 
+export const contactDetails = [
+    {
+        
+    }
+]

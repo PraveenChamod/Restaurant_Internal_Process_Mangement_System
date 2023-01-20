@@ -11,3 +11,41 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.li a{
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+.li{
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+.slider{
+  opacity: 0.5;
+  transform: scale(0.7);
+  transition: 0.5s;
+  filter:blur(2px);
+}
+
+.sliderActive{
+  opacity: 1;
+  transform: scale(0.9);
+  filter:blur(0);
+}
+.text{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  padding: 5% 2%;
+  transform: translateX(-50%);
+  opacity: 0;
+  cursor: pointer;
+  transition: 1s;
+  background-color: #C98621dd;
+}
+.sliderActive:hover .text{
+  opacity: 1;
+  bottom: 80px;
+}
