@@ -37,6 +37,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   device_preview: ^1.1.0
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:
@@ -63,10 +64,12 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/logo/restologodark.png
-     - assets/images/Down.png
-     - assets/images/Up.png
-     - assets/images/login_bg.png
-     - assets/images/ChefBg.png
+     - assets/logo/Logo.png
+     - assets/images/SplashScreen_Bg.png
+     - assets/images/Common_Bg.png
+     - assets/images/Common_Bgg.png
+     - assets/images/Bot_Bg.png
+     - assets/images/Bot.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

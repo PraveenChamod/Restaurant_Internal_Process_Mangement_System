@@ -1,4 +1,3 @@
-const String commonBackgroundImage = "assets/images/login_bg.png";
-const String commonBackgroundImageUp = "assets/images/Up.png";
-const String commonBackgroundImageDown = "assets/images/Down.png";
-const String commonLogo = "assets/logo/restologodark.png";
+const String commonBackgroundImage = "assets/images/Common_Bgg.png";
+const String commonLogo = "assets/logo/Logo.png";
+const String splashScreenImage = "assets/images/SplashScreen_Bg.png";
