@@ -8,9 +8,9 @@ const vonage = new Vonage({
 
 export const sendRegistrationSms = async (to,from,text)=>{
     await vonage.sms.send({to, from, text})
-        .then(resp => { 
+        .then(res => { 
             console.log('Message sent successfully'); 
-            console.log(resp); 
+            console.log(res); 
         })
         .catch(err => { 
             console.log('There was an error sending the messages.'); 

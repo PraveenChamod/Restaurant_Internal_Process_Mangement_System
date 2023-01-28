@@ -108,7 +108,7 @@ const AboutUs = () => {
     `
     return(
         <Container>
-            <Heading>This is our story</Heading>
+            <Heading data-aos={"fade-right"}>This is our story</Heading>
             <Content>
                 <About>
                     <Para>

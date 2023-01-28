@@ -5,7 +5,7 @@ const OrderSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Customer',
     },
-    Item:{
+    Foods:{
         type:mongoose.Schema.ObjectId,
         ref:'Item'
     },

@@ -1,222 +1,34 @@
 import { useState } from "react";
 import styled from "styled-components";
 import LoginImage from "../../Images/foods/pancake.jpg";
-import { Link } from 'react-router-dom';
+
 import img from "../../Images/restoLogodark.png";
 import { Button } from "../Deals/DealsElements";
+import {
+    Page,
+    Container,
+    LoginPage,
+    Heading,
+    Logo,
+    Title,
+    TextArea,
+    Label,
+    Input,
+    ForgotPWD,
+    Bottom,
+    StyledLink,
+    Option,
+    LinkToSignUpAndLogIn,
+    ImageSection,
+    Img,
+    SignUpPage,
+    TextAreaSignUp,
+    Column,
+    LabelSignUp,
+    InputSignUp,
+    IMG
+} from './LoginElements'
 const Login = () => {
-    const Page = styled.div`
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    `
-    const Container = styled.div`
-        background-color: #000;
-        display: flex;
-        width: 79%;
-        margin-top: 6%;
-        
-        height: 80%;
-        border-radius: 20px;
-        @media screen and (max-width:769px){
-            flex-direction: column;
-            width: 90%;
-            justify-content: center;
-            align-items: center;
-        }
-    `
-    const LoginPage = styled.div`
-        width: 50%;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 2% 0;
-        @media screen and (max-width:769px){
-            width: 90%;
-            border-bottom-left-radius: 0px;
-            border-top-right-radius: 20px;
-            border-top-left-radius: 20px;
-            height: 350px;
-        }
-    `
-    const Heading = styled.div`
-        width: 90%;
-        height: 20%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    `
-    const Logo = styled.h1`
-        color: #fff;
-        margin: 0;
-        padding: 0;
-    `
-    const Title = styled.h2`
-        color: #B26C29;
-        text-transform: uppercase;
-        border-bottom: 2px solid #B26C29;
-        letter-spacing: 0.1rem;
-    `
-    const TextArea = styled.div`
-        width: 90%;
-        height: 70%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    `
-    const Label = styled.label`
-        font-size: 1.5em;
-        color: #fff;
-        margin: 1em 0 0.5rem 0;
-        letter-spacing: 0.1rem;
-        .UpperLabel{
-            margin-top: 0;
-        }
-        @media screen and (max-width:769px){
-
-            font-size: 20px;
-        }
-    `
-    const Input = styled.input`
-        height: 30px;
-        width: 50%;
-        padding: 0 3%;
-        border-radius: 20px;
-        border: none;
-        @media screen and (max-width:769px){
-            width: 200px;
-            height: 30px;
-            font-size: 12px;
-        }
-    `
-    const ForgotPWD = styled.div`
-        width: 50%;
-        text-align: right;
-        color: #B26C29;
-        font-size: 80%;
-        margin: 0;
-        &:hover{
-            cursor: pointer;
-        }
-    `
-    const Bottom = styled.div`
-        width: 90%;
-        height: 15%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        @media screen and (max-width:769px){
-            height: 20%;
-            font-size: 12px;
-        }
-    `
-    const StyledLink = styled(Link)`
-        font-size: 1.2em;
-        text-decoration: none; 
-        color: #fff;
-        @media screen and (max-width:800px){
-            font-size: 14px;
-        }
-    `
-    const Option = styled.div`
-        color: #B26C29;
-        font-size: 100%;
-        margin: 0 2%;
-        @media screen and (max-width:769px){
-            font-size: 14px;
-        }
-    `
-    const LinkToSignUpAndLogIn = styled.a`
-        &:hover{
-            cursor: pointer;
-        }
-    `
-    const ImageSection = styled.div`
-        width: 50%;
-        overflow: hidden;
-        @media screen and (max-width:769px){
-            width: 100%;
-            overflow: hidden;
-        }
-    `
-    const Img = styled.img`
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        @media screen and (max-width:800px){
-            border-bottom-left-radius: 20px;
-            border-top-right-radius: 0px;
-        }
-    ` 
-    const SignUpPage = styled.div`
-        width: 50%;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 2% 0;
-        @media screen and (max-width:769px){
-            width: 90%;
-            border-bottom-left-radius: 0px;
-            border-top-right-radius: 20px;
-            border-top-left-radius: 20px;
-            height: 350px;
-        }
-    `
-    const TextAreaSignUp = styled.div`
-        display: flex;
-        flex-direction: row;
-        width: 90%;
-        height: 60%;
-    `
-    const Column = styled.div`
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: left;
-        justify-content: center;
-        margin: 0 5%;
-        
-    `
-    const LabelSignUp = styled.label`
-        font-size: 1.2em;
-        color: #fff;
-        margin: 1em 0 0.5rem 0;
-        letter-spacing: 0.1rem;
-        .UpperLabel{
-            margin-top: 0;
-        }
-        @media screen and (max-width:1010px){
-            font-size: 0.8em;
-        } 
-    `
-    const InputSignUp = styled.input`
-    height: 30px;
-    width: 90%;
-    padding: 0 3%;
-    border-radius: 20px;
-    border: none;
-    @media screen and (max-width:769px){
-        width: 90%;
-        height: 25px;
-        font-size: 12px;
-    }
-`
-    const IMG = styled.img`
-         width: 150px;
-        height: 150px;
-    `
     const[change,setChange] = useState(false);
     const handleChange = ()=>{
         if(!change){
@@ -237,10 +49,10 @@ const Login = () => {
                             <Title>Login</Title>
                         </Heading>
                         <TextArea>
-                            <Label className="UpperLabel">Email</Label>
-                            <Input type ="text" name="username"/>
-                            <Label>Password</Label>
-                            <Input type ="text" name="Password"/>
+                            {/* <Label className="UpperLabel">Email</Label> */}
+                            <Input type ="text" name="username" placeholder="Enter the email"/>
+                            {/* <Label>Password</Label> */}
+                            <Input type ="password" name="Password" placeholder="Enter the password"/>
                             <ForgotPWD>
                                 <p>Forgot Your Password ?</p>
                             </ForgotPWD>
@@ -250,7 +62,7 @@ const Login = () => {
                                 <Button>Login</Button>
                             </StyledLink>
                             <Option>
-                                <p>Dosen't have an account ? <LinkToSignUpAndLogIn onClick={handleChange}><u>Sign Up</u></LinkToSignUpAndLogIn></p>
+                                <p>Dosen't have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Sign Up</LinkToSignUpAndLogIn></p>
                             </Option>
                         </Bottom>
                     </LoginPage> :
@@ -262,20 +74,16 @@ const Login = () => {
                         </Heading>
                         <TextAreaSignUp>
                             <Column>
-                                <LabelSignUp className="UpperLabel">Name</LabelSignUp>
-                                <InputSignUp type ="text" name="Name"/>
-                                <LabelSignUp>Contact No</LabelSignUp>
-                                <InputSignUp type ="text" name="Contact"/>
-                                <LabelSignUp>Password</LabelSignUp>
-                                <InputSignUp type ="text" name="Password"/>
-                            </Column>
-                            <Column>
-                                <LabelSignUp className="UpperLabel">Email</LabelSignUp>
-                                <InputSignUp type ="text" name="Email"/>
-                                <LabelSignUp>Address</LabelSignUp>
-                                <InputSignUp type ="text" name="Address"/>
-                                <LabelSignUp>Confirm Password</LabelSignUp>
-                                <InputSignUp type ="text" name="ConfPassword"/>
+                                {/* <LabelSignUp className="UpperLabel">Name</LabelSignUp> */}
+                                <InputSignUp type ="text" name="Name" placeholder="Enter the full name"/>
+                                <InputSignUp type ="text" name="Email" placeholder="Enter the email"/>
+                                {/* <LabelSignUp>Contact No</LabelSignUp> */}
+                                <InputSignUp type ="text" name="Contact" placeholder="Enter the contact number"/>
+                                {/* <LabelSignUp>Password</LabelSignUp> */}
+                                <InputSignUp type ="password" name="Password" placeholder="Enter the password"/>
+                                {/* <LabelSignUp className="UpperLabel">Email</LabelSignUp> */}
+                                {/* <LabelSignUp>Confirm Password</LabelSignUp> */}
+                                <InputSignUp type ="text" name="ConfPassword" placeholder="Re-enter the password"/>
                             </Column>
                         </TextAreaSignUp>
                         <Bottom>
@@ -283,7 +91,7 @@ const Login = () => {
                                 <Button>Sign Up</Button>
                             </StyledLink>
                             <Option>
-                                <p>Already have an account ? <LinkToSignUpAndLogIn onClick={handleChange}><u>Login</u></LinkToSignUpAndLogIn></p>
+                                <p>Already have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Login</LinkToSignUpAndLogIn></p>
                             </Option>
                         </Bottom>
                     </SignUpPage>

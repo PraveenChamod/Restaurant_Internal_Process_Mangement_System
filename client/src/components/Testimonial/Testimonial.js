@@ -54,7 +54,7 @@ const Testimonials = () => {
         `
         const Sec2 = styled.div`
             border-radius: 25px;
-            background: #000000;
+            background: #1A1E21;
             width: 900px;
             height: 380px;
             margin: 10px 10px 10px 10px;
@@ -62,7 +62,7 @@ const Testimonials = () => {
             display: block;
             margin-left: auto;
             margin-right: auto;
-            box-shadow: 8px 8px 3px #888888;
+            box-shadow: 3px 3px 3px #000;
             @media screen and (max-width:900px){
             height: auto;
             background: none;

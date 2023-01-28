@@ -61,7 +61,7 @@ const Deals = () => {
               </Slider>
           </Section2>
           <Section3>
-              <Button>Order Now</Button>
+              <Button>View Menu</Button>
           </Section3>
       </Container>
    );
