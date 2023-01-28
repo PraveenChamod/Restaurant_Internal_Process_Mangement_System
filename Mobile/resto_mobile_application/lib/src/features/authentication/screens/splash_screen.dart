@@ -18,7 +18,6 @@ class SplashScreen extends StatelessWidget {
                   image: DecorationImage(
                     image: AssetImage(splashScreenImage),
                     fit: BoxFit.cover,
-                    //colorFilter: ColorFilter.mode(Colors.yellow, BlendMode.color),
                   ),
               ),
             ),
@@ -49,69 +48,9 @@ class SplashScreen extends StatelessWidget {
                 SpinKitWave(
                 color: Colors.white,
                 size: 30.0,
-                //controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
                 ),
               ],
             ),
-            // Positioned(
-            //   bottom: 0,
-            //   left: 0,
-            //   right: 0,
-            //   child: Container(
-            //     height: MediaQuery.of(context).size.width,
-            //     width: MediaQuery.of(context).size.width,
-            //     decoration: const BoxDecoration(
-            //       image: DecorationImage(
-            //         image: AssetImage("assets/images/chef_image.png"),
-            //         fit: BoxFit.fitWidth,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Positioned(
-            //   top: MediaQuery.of(context).size.height/2.5,
-            //   child: Center(
-            //     child: Positioned(
-            //       top: MediaQuery.of(context).size.height/10,
-            //       left: 0,
-            //       right: 0,
-            //       child: Column(
-            //         mainAxisAlignment: MainAxisAlignment.center,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: <Widget>[
-            //           Center(
-            //             child: Container(
-            //               height: MediaQuery.of(context).size.height/7,
-            //               width: MediaQuery.of(context).size.width/1.75,
-            //               decoration: const BoxDecoration(
-            //                 image: DecorationImage(
-            //                   image: AssetImage("assets/logo/Logo.png"),
-            //                   fit: BoxFit.fitWidth,
-            //                 ),
-            //
-            //               ),
-            //             ),
-            //           ),
-            //           Center(
-            //             child: SizedBox(
-            //               height: MediaQuery.of(context).size.height/5,
-            //               width: MediaQuery.of(context).size.width,
-            //               child: const Text(
-            //                 "Your Favourite Food Delivered Hot & Fresh",
-            //                 style: TextStyle(
-            //                   color: Colors.white,
-            //                   fontSize: 25,
-            //                   fontWeight: FontWeight.bold,
-            //                 ),
-            //                 textAlign: TextAlign.center,
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Positioned(
               bottom: 30,
               right: 0,
