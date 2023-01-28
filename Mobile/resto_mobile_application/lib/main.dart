@@ -1,6 +1,8 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/login_screen.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 
 void main() => runApp(
@@ -23,6 +25,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
+      //home: const LoginScreen(),
+      //home: const SignupScreen(),
     );
   }
 }
