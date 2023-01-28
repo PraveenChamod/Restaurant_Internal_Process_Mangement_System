@@ -39,9 +39,8 @@ const NavBar = () => {
                             <Li className="li" ><Link to="./">Home<Span className="Ho"></Span></Link></Li>
                             <Li className="li" ><Link to="./Menu">Menu<Span className="Ho"></Span></Link></Li>
                             <Li className="li" ><Link to="./Services">Services<Span className="Ho"></Span></Link></Li>
-                            <Li className="li" ><Link to="./ContactUs">Contact Us<Span className="Ho"></Span></Link></Li>
-                            <Li className="li" ><Link to="./AboutUs">About Us<Span className="Ho"></Span></Link></Li>
-                            <Li className="li" ><Link to="./aboutUs"><FontAwesomeIcon icon= {faCartShopping}/>Cart<Span className="Ho"></Span></Link></Li>
+                            <Li className="li" ><Link to="./ContactUs">About Us<Span className="Ho"></Span></Link></Li>
+                            <Li className="li" ><Link to="./AboutUs">Contact Us<Span className="Ho"></Span></Link></Li>
                             {/* <Li className="li" onClick={ScrollToTop}><Link to=" ">Contact Us<Span className="Ho"></Span></Link></Li> */}
                         </Ul>
                     </Links>
@@ -55,9 +54,8 @@ const NavBar = () => {
                     <Li className="li" ><Link to="./">Home<Span className="Ho"></Span></Link></Li>
                     <Li className="li" ><Link to="./Menu">Menu<Span className="Ho"></Span></Link></Li>
                     <Li className="li" ><Link to="./Services">Services<Span className="Ho"></Span></Link></Li>
-                    <Li className="li" ><Link to="./ContactUs">Contact Us<Span className="Ho"></Span></Link></Li>
-                    <Li className="li" ><Link to="./AboutUs">About Us<Span className="Ho"></Span></Link></Li>
-                    <Li className="li" ><Link to="./Cart"><FontAwesomeIcon icon= {faCartShopping}/>Cart<Span className="Ho"></Span></Link></Li>
+                    <Li className="li" ><Link to="./ContactUs">About Us<Span className="Ho"></Span></Link></Li>
+                    <Li className="li" ><Link to="./AboutUs">Contact Us<Span className="Ho"></Span></Link></Li>
                     {/* <Li className="li" onClick={ScrollToTop}><Link to=" ">Contact Us<Span className="Ho"></Span></Link></Li> */}
                 </Ul>
             </Links>

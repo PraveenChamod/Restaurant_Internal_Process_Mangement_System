@@ -47,7 +47,7 @@ export const getUserByEmail = async (req,res)=>{
             res.json(findUser);
         }
         else{
-            res.json('Admin is note logging to the system');
+            res.json({message:`Admin is note logging to the system`});
         }
     } catch (error) {
         console.log(error.message);
@@ -77,7 +77,7 @@ export const getUsersByRole = async(req,res)=>{
             }
         }
         else{
-            res.json('Admin is note logging to the system');
+            res.json({message:`Admin is note logging to the system`});
         }
         
     } catch (error) {
@@ -107,7 +107,7 @@ export const updateUserByEmail = async (req,res)=>{
             }   
         }
         else{
-            res.json('Admin is note logging to the system');
+            res.json({message:`Admin is note logging to the system`});
         }
     } catch (error) {
         res.status(500).json(error.message);
@@ -143,7 +143,7 @@ export const deleteUser = async (req,res)=>{
             }   
         }
         else{
-            res.json('Admin is note logging to the system');
+            res.json({message:`Admin is note logging to the system`});
         }   
     } catch (error) {
         res.status(500).json(error.message);
@@ -176,7 +176,7 @@ export const deleteUsers = async (req,res)=>{
             }   
         }
         else{
-            res.json('Admin is note logging to the system');
+            res.json({message:`Admin is note logging to the system`});
         }
     } catch (error) {
         res.status(500).json(error.message);
