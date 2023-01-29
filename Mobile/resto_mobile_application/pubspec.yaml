@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   device_preview: ^1.1.0
   flutter_spinkit: ^5.1.0
+  font_awesome_flutter: ^10.3.0
 
 dev_dependencies:
   flutter_test:
@@ -66,10 +67,7 @@ flutter:
      - assets/logo/restologodark.png
      - assets/logo/Logo.png
      - assets/images/SplashScreen_Bg.png
-     - assets/images/Common_Bg.png
-     - assets/images/Common_Bgg.png
-     - assets/images/Bot_Bg.png
-     - assets/images/Bot.png
+     - assets/images/Common_Background_Img.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
