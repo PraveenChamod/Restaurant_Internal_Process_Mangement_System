@@ -233,4 +233,99 @@ export const addFoods = async(req,res)=>{
         res.status(501).json(error.message);
     }
 }
+
+//get foods
+export const getFoods = async (req,res)=>{
+
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const foods = await Foods.find();
+            if(foods !== null){
+                res.json(foods);
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes plase add foods"});
+            }
+        }
+        else{
+            res.status(401).json('Only Staff member has access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
+export const getFoodByCategory = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const Category = req.body.Category;
+            const findFoods = await Foods.find({Category:Category}).populate('Category');
+            if(findFoods !== null){
+                let foods = [];
+                findFoods.map(food=>{
+                    if(Foods.Category === Category){
+                        foods.push(food);
+                    }
+                })
+                res.json(foods);
+            }
+            else{
+                res.json({message:"Category dosen't exist"});
+            }
+        }
+        else{
+            res.status(401).json('Only Staff-Member has access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+//update food
+export const updateFood = async(req,res)=>{
+    try{
+        const {SerialNo} = req.params;
+        const Food = await Foods.findOneAndUpdate({SerialNo:SerialNo},{
+            ...req.body
+        })
+        if(!Food){
+            res.status(404).json("No such food item to update")
+        }
+        res.status(200).json(Food);
+       
+    }
+    catch(error){
+        res.status(error.message);
+    }
+}
+
+//Delete foods
+export const  deleteFoods =async (req,res)=>{
+
+    try{
+         const user = req.user;
+         if(user.Role==="Staff-Member"){
+            const {SerialNo} = req.params;
+            const Food = await Foods.findOne({SerialNo:SerialNo});
+            console.log(Food);
+            if(Food !== null){
+                await Food.findByIdAndRemove(Food._id);
+                res.json({message:`${SerialNo} Food Removed`});
+            }
+            else{
+                res.status(404).json({message:"Food doesn't found, Please enter valid serail no"});
+            }
+         }else{
+            res.status(501).json("This user not authorized for this operation")
+         }
+
+    }catch(error){
+        res.status(501).json(error.message);
+
+    }
+   
+}
+
+//
 //
