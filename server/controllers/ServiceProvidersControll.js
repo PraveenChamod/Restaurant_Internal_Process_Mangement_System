@@ -4,6 +4,7 @@ import { createToken } from "../util/AuthUtil.js";
 import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 import Item from "../models/Items.js";
 import Foods from "../models/Foods.js";
+import Offer from "../models/Offers.js"
 import multer from "multer";
 import { transporter } from "../util/NotificationUtil.js";
 
@@ -327,5 +328,111 @@ export const  deleteFoods =async (req,res)=>{
    
 }
 
-//
+// offers #########3
+
+//Add offer
+export const addOffer  = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const {Foods,SpecialPrice} = req.body;
+            const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
+            const existingOffer = await Offer.findOne({SerialNo:SerialNumber});
+            
+            if(existingOffer !== null){
+                res.status(501).json({message:`This offer is already added`});
+            }else{
+                const AddOffer = await Offer.create({
+                    Foods:Foods,
+                    SpecialPrice:SpecialPrice,                   
+                    SerialNo:SerialNumber,
+                    
+                })
+                res.json(AddOffer);
+            }
+        }
+        else{
+            res.status(501).json("This user dosen't has authorization to do this operation");
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
+
+
+//View Offers
+
+export const getOffers = async (req,res)=>{
+
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const offers = await Offer.find();
+            if(offers !== null){
+                res.json(offers);
+            }
+            else{
+                res.status(404).json({message:"No offers found."});
+            }
+        }
+        else{
+            res.status(401).json('Only Staff member has access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
+//Update offers
+export const updateOffer = async(req,res)=>{
+    try{
+        const {SerialNo} = req.params;
+        const offer = await Offer.findOneAndUpdate({SerialNo:SerialNo},{
+            ...req.body
+        })
+        if(!offer){
+            res.status(404).json("No such offer to update")
+        }
+        res.status(200).json(offer);
+       
+    }
+    catch(error){
+        res.status(error.message);
+    }
+}
+
+//Delete offers
+
+
+export const  deleteOffers =async (req,res)=>{
+
+    try{
+         const user = req.user;
+         if(user.Role==="Staff-Member"){
+            const {SerialNo} = req.params;
+            const offer = await Offer.findOne({SerialNo:SerialNo});
+            console.log(Food);
+            if(offer !== null){
+                await Offer.findByIdAndRemove(offer._id);
+                res.json({message:`${SerialNo} Offer Removed`});
+            }
+            else{
+                res.status(404).json({message:"Offer doesn't found, Please enter valid serail no"});
+            }
+         }else{
+            res.status(501).json("This user not authorized for this operation")
+         }
+
+    }catch(error){
+        res.status(501).json(error.message);
+
+    }
+   
+}
+
+
+
+
+
 //
