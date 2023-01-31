@@ -8,6 +8,10 @@ const offerSchema = mongoose.Schema({
     SpecialPrice:{
         type:Number,
         required:[true,"Add Price of the offer"]
+    },
+    SerialNo:{
+        type:String,
+        required:[true,"Serial No Must Be Add"]
     }
 },
 {
