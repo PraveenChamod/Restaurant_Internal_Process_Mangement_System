@@ -192,7 +192,8 @@ export const RegisterServiceProviders = async (req,res)=>{
     try {
     const user = req.user;
         if(user.Role === "Admin"){
-            const {Password,Email,Role} = req.body;
+            const {Email,Role} = req.body;
+            const Password = "12345678";
             const existingServiceProvider = await ServiceProviders.findOne({Email:Email});
             const existingUser = await User.findOne({Email:Email});
             if(existingServiceProvider !== null || existingUser !== null){

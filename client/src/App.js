@@ -53,6 +53,7 @@ import SupplierUserProfile from './Pages/Supplier/UserProfile';
 import Messages from './Pages/Supplier/Messages';
 import FrogotPassword from './Pages/FrogotPassword';
 import PasswordReset from './Pages/PasswordReset';
+import { Cards, Roles } from './Data/DashBoardLinks';
 function App() {
   useEffect(() => {
     Aos.init({duration:500});
@@ -72,7 +73,7 @@ function App() {
 
         {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
           
-          <Route path="/Admin/DashBoard" element={<AdminDashBoard/>}/>
+          <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
           <Route path="/Admin/Add-User" element={<AddUser/>}/>
           <Route path="/Admin/View-Users" element={<ViewUsers/>}/>
           <Route path="/Admin/View-User" element={<ViewUser/>}/>

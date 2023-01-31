@@ -49,3 +49,9 @@ code {
   opacity: 1;
   bottom: 80px;
 }
+.cardIcon{
+  background: linear-gradient(60deg, rgb(178,108,41) 0%, rgb(253,190,16) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: #fff;
+}

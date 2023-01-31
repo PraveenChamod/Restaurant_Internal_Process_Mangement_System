@@ -1,9 +1,9 @@
 import Dashboard from "../../components/shared/Dashboard/Dashboard";
 
-const AdminDashBoard = () => {
+const AdminDashBoard = (props) => {
     return ( 
         <>
-            <Dashboard/>
+            <Dashboard Navs1 = {props.Navs} cards1={props.Card}/>
         </>
      );
 }
