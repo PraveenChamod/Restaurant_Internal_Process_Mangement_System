@@ -21,13 +21,13 @@ ServiceProviderrouter.route('/deleteItemBySerialNo/:SerialNo').delete(deleteItem
 ServiceProviderrouter.route('/Staff-Member/food/AddFoods').post(addFoods);
 ServiceProviderrouter.route('/Staff-Member/food/getFoods').get(getFoods);
 ServiceProviderrouter.route('/Staff-Member/food/getFoodsbyCategory').get(getFoodByCategory);
-ServiceProviderrouter.route('/Staff-Member/food/updateFood/:SerialNo').get(updateFood);
-ServiceProviderrouter.route('/Staff-Member/food/deleteFood/:SerialNo').get(deleteFoods);
+ServiceProviderrouter.route('/Staff-Member/food/updateFood/:SerialNo').post(updateFood);
+ServiceProviderrouter.route('/Staff-Member/food/deleteFood/:SerialNo').post(deleteFoods);
 
 //Offer routes
-ServiceProviderrouter.route('/Staff-Member/offer/addOffer').get(addOffer);
+ServiceProviderrouter.route('/Staff-Member/offer/addOffer').post(addOffer);
 ServiceProviderrouter.route('/Staff-Member/offer/getOffer').get(getOffers);
-ServiceProviderrouter.route('/Staff-Member/offer/updateOffer').get(updateOffer);
-ServiceProviderrouter.route('/Staff-Member/offer/deleteOffer').get(deleteOffers);
+ServiceProviderrouter.route('/Staff-Member/offer/updateOffer').post(updateOffer);
+ServiceProviderrouter.route('/Staff-Member/offer/deleteOffer').post(deleteOffers);
 
 export default ServiceProviderrouter;
