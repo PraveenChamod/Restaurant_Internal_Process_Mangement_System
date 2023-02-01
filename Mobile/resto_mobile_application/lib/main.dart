@@ -1,16 +1,24 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/getphonenumber.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/gettemail.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/make_selction.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/home_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/login_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 
-void main() => runApp(
-  DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => const MyApp(), // Wrap your app
-  ),
-);
+// void main() => runApp(
+//   DevicePreview(
+//     enabled: !kReleaseMode,
+//     builder: (context) => const MyApp(), // Wrap your app
+//   ),
+// );
+
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -26,7 +34,11 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
       //home: const LoginScreen(),
+      //home: const HomeScreen(),
       //home: const SignupScreen(),
+      //home: const GetPhoneNumber(),
+      //home: const GetEmail(),
+      //home: const MakeSelection(),
     );
   }
 }
