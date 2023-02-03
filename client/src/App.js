@@ -54,6 +54,7 @@ import Messages from './Pages/Supplier/Messages';
 import FrogotPassword from './Pages/FrogotPassword';
 import PasswordReset from './Pages/PasswordReset';
 import { Cards, Roles } from './Data/DashBoardLinks';
+
 function App() {
   useEffect(() => {
     Aos.init({duration:500});
@@ -137,6 +138,7 @@ function App() {
       </Routes>
       <Footer/>
     </div>
+
   );
 }
 
