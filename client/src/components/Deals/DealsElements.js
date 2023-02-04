@@ -15,8 +15,10 @@ export const Section1 = styled.div`
 `
 export const Section2 = styled.div`
     width: 80%;
-    height: 100%;
+    height: 90%;
     display: block;
+    position: relative;
+    top: -5%;
 `
 export const SubSec = styled.div`
     width: 250px;
@@ -43,6 +45,8 @@ export const H2 = styled.h1`
         font-weight: 500;
         text-align: center;
         color: #fff;
+        position: relative;
+        top: -10%;
         @media screen and (max-width: 900px){
             text-align: center;
             font-size: 1.5em;
@@ -61,13 +65,13 @@ export const Section3 = styled.div`
     width: 150px;
     height: 40px;
     position:relative;
-    top: -10%;
+    top: -15%;
 `
 export const Button = styled.div`
         width: 150px;
         height: 40px;
         color:#fff;
-        background: linear-gradient(to right, #ba9035, #a0522d);
+        background: linear-gradient(to right, #FFBF00, #B26C29);
         border: none;
         cursor: pointer;
         position: relative;
@@ -75,7 +79,6 @@ export const Button = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 25%;
 `
 export const Images = styled.div`
     width: 100%;

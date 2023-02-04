@@ -4,7 +4,7 @@ import { createToken } from "../util/AuthUtil.js";
 import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 import Item from "../models/Items.js";
 import Foods from "../models/Foods.js";
-import Offer from "../models/Offers.js"
+import Offers from "../models/Offers.js"
 import multer from "multer";
 import { transporter } from "../util/NotificationUtil.js";
 
@@ -338,7 +338,7 @@ export const addOffer  = async (req,res)=>{
         if(user.Role === "Staff-Member"){
             const {Foods,SpecialPrice} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
-            const existingOffer = await Offer.findOne({SerialNo:SerialNumber});
+            const existingOffer = await Offers.findOne({SerialNo:SerialNumber});
             
             if(existingOffer !== null){
                 res.status(501).json({message:`This offer is already added`});
@@ -369,7 +369,7 @@ export const getOffers = async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
-            const offers = await Offer.find();
+            const offers = await Offers.find();
             if(offers !== null){
                 res.json(offers);
             }
@@ -389,7 +389,7 @@ export const getOffers = async (req,res)=>{
 export const updateOffer = async(req,res)=>{
     try{
         const {SerialNo} = req.params;
-        const offer = await Offer.findOneAndUpdate({SerialNo:SerialNo},{
+        const offer = await Offers.findOneAndUpdate({SerialNo:SerialNo},{
             ...req.body
         })
         if(!offer){
@@ -412,7 +412,7 @@ export const  deleteOffers =async (req,res)=>{
          const user = req.user;
          if(user.Role==="Staff-Member"){
             const {SerialNo} = req.params;
-            const offer = await Offer.findOne({SerialNo:SerialNo});
+            const offer = await Offers.findOne({SerialNo:SerialNo});
             console.log(Food);
             if(offer !== null){
                 await Offer.findByIdAndRemove(offer._id);

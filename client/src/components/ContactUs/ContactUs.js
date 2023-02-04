@@ -75,41 +75,53 @@ const ContactUs = () => {
         }
     `
     return ( 
-        <Div>
+        <Div id="ContactUs">
             <Sec>
-                <Heading>CONTACT US</Heading>
-                <H1>Get In Touch</H1>
+                <Heading data-aos={"zoom-in"}>CONTACT US</Heading>
+                <H1 data-aos={"zoom-in-up"}
+                    data-aos-duration={"1500"}>Get In Touch</H1>
             </Sec>
             <Sec>
                 <MainSubSec>
                     <SubSec>
-                        <Icon>
+                        <Icon data-aos={"zoom-in-up"}>
                             <FontAwesomeIcon icon = {faEnvelope}/>
                         </Icon>
-                        <H2>Chat With Us On</H2>
-                        <P>+94 77 777 7777 <br/> +94 77 777 7777</P>
+                        <H2 data-aos={"zoom-in"}
+                            >Chat With Us On</H2>
+                        <P data-aos={"zoom-out"}
+                            data-aos-duration={"1500"}>+94 77 777 7777 <br/> +94 77 777 7777</P>
                     </SubSec>
                     <SubSec>
-                        <Icon>
+                        <Icon data-aos={"zoom-in-up"}>
                             <FontAwesomeIcon icon = {faPhoneFlip}/>
                         </Icon>
-                        <H2>Call To Us On</H2>
-                        <P>+94 77 777 7777 <br/> +94 77 777 7777</P>
+                        <H2 data-aos={"zoom-in"}
+                            data-aos-duration={"1500"}>Call To Us On</H2>
+                        <P data-aos={"zoom-out"}
+                            data-aos-duration={"1500"}>+94 77 777 7777 <br/> +94 77 777 7777</P>
                     </SubSec>
                     <SubSec>
-                        <Icon>
+                        <Icon data-aos={"zoom-in"}
+                            data-aos-duration={"1500"}>
                             <FontAwesomeIcon icon = {faLocationDot}/>
                         </Icon>
-                        <H2>Find Us On</H2>
-                        <P>No.999 <br/> Unknown Street <br/> Main City</P>
+                        <H2 data-aos={"zoom-in"}
+                            data-aos-duration={"1500"}>Find Us On</H2>
+                        <P data-aos={"zoom-out"}
+                            data-aos-duration={"1500"}>No.999 <br/> Unknown Street <br/> Main City</P>
                     </SubSec>
-                    <SubSec data-aos="zoom-up">
-                        <Icon>
+                    <SubSec>
+                        <Icon data-aos={"zoom-in"}
+                            data-aos-duration={"1500"}>
                             <FontAwesomeIcon icon = {faClock}/>
                         </Icon>
-                        <H2>Openning Hours</H2>
-                        <P>Week Days - 8:00 am to 10:00 pm</P>
-                        <P>Weekend - 8:00 am to 8.00 pm</P>
+                        <H2 data-aos={"zoom-in"}
+                            data-aos-duration={"1500"}>Openning Hours</H2>
+                        <P data-aos={"zoom-out"}
+                            data-aos-duration={"1500"}>Week Days - 8:00 am to 10:00 pm</P>
+                        <P data-aos={"zoom-out"}
+                            data-aos-duration={"1500"}>Weekend - 8:00 am to 8.00 pm</P>
                     </SubSec>
                 </MainSubSec>
             </Sec> 

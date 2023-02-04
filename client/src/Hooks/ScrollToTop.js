@@ -14,7 +14,7 @@ const ScrollToTop = () => {
             cursor: pointer;
             border: none;
             color: #fff;
-            background: linear-gradient(to right, #ba9035, #a0522d);
+            background: linear-gradient(to right, #FFBF00, #B26C29);
             z-index: 4;
             border-radius: 50%;
             width: 50px;

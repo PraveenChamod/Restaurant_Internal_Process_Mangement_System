@@ -29,7 +29,6 @@ const customerSchema = mongoose.Schema({
     },
     Address:{
         type:String,
-        required:[true,"User must provide his/her current location"],
     },
     Email:{
         type:String,

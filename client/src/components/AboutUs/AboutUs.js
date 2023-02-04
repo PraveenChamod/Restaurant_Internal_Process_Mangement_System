@@ -107,16 +107,16 @@ const AboutUs = () => {
         }
     `
     return(
-        <Container>
-            <Heading data-aos={"fade-right"}>This is our story</Heading>
+        <Container id="AboutUs">
+            <Heading data-aos={"zoom-in"}>This is our story</Heading>
             <Content>
                 <About>
                     <Para>
-                        <H1>About Us</H1>
-                        <P>"Welcome to RESTO, where we've been serving up delicious French for over 10 years. Our mission is to provide our customers with a truly authentic dining experience, using only the freshest ingredients and traditional cooking methods. Our family-owned and operated restaurant is a labor of love, and our team is dedicated to creating a warm and inviting atmosphere for all of our guests. We take pride in our commitment to sourcing local and sustainable ingredients, and our menu changes seasonally to reflect the best of what's available. Thank you for choosing RESTO for your next meal, we can't wait to serve you!"</P>
+                        <H1 data-aos={"fade-right"}>About Us</H1>
+                        <P data-aos={"fade-right"}>"Welcome to RESTO, where we've been serving up delicious French for over 10 years. Our mission is to provide our customers with a truly authentic dining experience, using only the freshest ingredients and traditional cooking methods. Our family-owned and operated restaurant is a labor of love, and our team is dedicated to creating a warm and inviting atmosphere for all of our guests. We take pride in our commitment to sourcing local and sustainable ingredients, and our menu changes seasonally to reflect the best of what's available. Thank you for choosing RESTO for your next meal, we can't wait to serve you!"</P>
                     </Para>
                 </About>
-                <Image>
+                <Image data-aos={"fade-left"}>
                     <Img src={foodImg_2}/>
                 </Image>
              </Content>

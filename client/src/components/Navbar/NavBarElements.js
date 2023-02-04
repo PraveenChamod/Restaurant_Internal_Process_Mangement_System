@@ -24,7 +24,6 @@ export const Navbar=styled.div`
         transition: all 0.5s ease;
     `
     export const Links = styled.div`
-        margin: 10px 5px;
         display: flex;
         align-items: center;
     `
@@ -53,8 +52,7 @@ export const Navbar=styled.div`
     export const Logo = styled.img`
         width: 150px;
         height: 150px;
-        position: absolute;
-        left: 2%;
+        margin: 0 5%;
     `
     export const Span = styled.span`
     &{

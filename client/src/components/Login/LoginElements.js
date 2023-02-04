@@ -58,7 +58,7 @@ export const Title = styled.h2`
         border-bottom: 2px solid #fff;
         letter-spacing: 0.1rem;
         position: relative;
-        top: -15%;
+        top: -20%;
     `
 export const TextArea = styled.div`
         width: 80%;
@@ -185,7 +185,7 @@ export const TextAreaSignUp = styled.div`
         align-items: center;
         width: 90%;
         position: relative;
-        top: -5%;
+        top: -10%;
 
     `
 export const Column = styled.div`

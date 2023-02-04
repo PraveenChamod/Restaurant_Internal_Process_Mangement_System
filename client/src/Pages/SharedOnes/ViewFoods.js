@@ -1,8 +1,8 @@
 const ViewFoods = () => {
-    return ( 
+    return (  
         <>
         </>
-     );
+    );
 }
  
 export default ViewFoods;

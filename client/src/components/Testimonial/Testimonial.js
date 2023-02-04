@@ -85,17 +85,20 @@ const Testimonials = () => {
     return ( 
         <Container>
             <Sec>
-                <H1>Testimonial</H1>
-                <H2>What They Are Saying</H2>
+                <H1 data-aos={"zoom-in"}>Testimonial</H1>
+                <H2 data-aos={"zoom-in-up"}
+                    data-aos-duration={"1500"}>What They Are Saying</H2>
             </Sec>
-            <Sec2>
-                <img alt="person"  className='image1' src={require('../../Images/Services/person.jpg')} />
-                <P>IT SPORTSMAN EARNESTLY YE PRESERVED AN ON. MOMENT LED FAMILY SOONER CANNOT HER WINDOW PULLED ANY. OR RAILLERY 
+            <Sec2 data-aos={"zoom-out-up"} >
+                <img alt="person"  className='image1' src={require('../../Images/Services/person.jpg')} data-aos="zoom-in-down"
+                    data-aos-duration="1500"/>
+                <P data-aos={"zoom-in"}
+                    data-aos-duration={"2000"}>IT SPORTSMAN EARNESTLY YE PRESERVED AN ON. MOMENT LED FAMILY SOONER CANNOT HER WINDOW PULLED ANY. OR RAILLERY 
                     IF IMPROVED LANDLORD TO SPEAKING HASTENED DIFFERED HE. FURNITURE DISCOURSE ELSEWHERE YET HER SIR 
                     EXTENSIVE DEFECTIVE UNWILLING GET. WHY RESOLUTION ONE MOTIONLESS YOU HIM THOROUGHLY. NOISE IS ROUND TO 
                 </P>
-                <img alt="stars"  className='image2' src={require('../../Images/Services/stars.png')} />
-                <P>JENNY</P>
+                <img alt="stars"  className='image2' src={require('../../Images/Services/stars.png')} data-aos="zoom-in"/>
+                <P data-aos="fade-right">JENNY</P>
                 
             </Sec2>
 
