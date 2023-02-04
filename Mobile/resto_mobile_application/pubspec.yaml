@@ -39,6 +39,8 @@ dependencies:
   device_preview: ^1.1.0
   flutter_spinkit: ^5.1.0
   font_awesome_flutter: ^10.3.0
+  social_login_buttons: ^1.0.7
+  fl_country_code_picker: ^0.0.4
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,10 @@ flutter:
      - assets/logo/Logo.png
      - assets/images/SplashScreen_Bg.png
      - assets/images/Common_Background_Img.png
+     - assets/images/Lock.png
+     - assets/images/Common_Bg.png
+     - assets/images/Splash_Bg.png
+     - assets/images/Common_Background.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

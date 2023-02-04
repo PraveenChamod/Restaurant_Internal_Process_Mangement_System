@@ -56,6 +56,7 @@ import ViewFoods from './Pages/SharedOnes/ViewFoods';
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import { MenuItems } from './Data/Menu';
+
 function App() {
   useEffect(() => {
     Aos.init({duration:1000});
@@ -155,6 +156,7 @@ function App() {
       </Routes>
       <Footer/>
     </div>
+
   );
 }
 
