@@ -81,7 +81,7 @@ export const Sec = styled.div`
 export const Icon = styled.div`
 	width: 50px;
 	height: 50px;
-	margin: 2%;
+	margin: 0 0.5%;
 `
 export const Image = styled.img`
 	width: 50px;

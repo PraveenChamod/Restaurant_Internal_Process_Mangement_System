@@ -16,11 +16,11 @@ import {
 import Slider from "react-slick";
 import { useState } from "react";
 import { card } from "../../Data/Content";
-const Deals = () => {
+import { Link } from 'react-router-dom';
+const Deals = (props) => {
   const [slideIndex,setSlideIndex] = useState(0);
   const settings = {
       className:"center",
-      dots: true,
       infinite: true,
       autoplay: true,
       speed: 500,
@@ -31,14 +31,14 @@ const Deals = () => {
     
   return ( 
       
-      <Container>
+      <Container id="Menu">
           <Section1>
-              <Heading>
+              <Heading data-aos={"zoom-in"}>
                   Today Hot Deals
               </Heading>
-              <H2>Get Your Meal</H2>
+              <H2 data-aos={"zoom-in-up"}>Get Your Meal</H2>
           </Section1>
-          <Section2>
+          <Section2 data-aos={"zoom-out-up"}>
               <Slider {...settings}>
                   {
                       card.map((cardData,index)=>{
@@ -61,7 +61,7 @@ const Deals = () => {
               </Slider>
           </Section2>
           <Section3>
-              <Button>View Menu</Button>
+              <Link to="./Menu" className='btn' onClick={props.ScrollToTop1}><Button data-aos={"zoom-in-up"}>View Menu</Button></Link>
           </Section3>
       </Container>
    );

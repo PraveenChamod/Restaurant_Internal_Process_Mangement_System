@@ -37,6 +37,17 @@ const Login = () => {
             setChange(false);
         }
     }
+
+    const[Name,setName] = useState();
+    const[Email,setEmail] = useState();
+    const[Password,setPassword] = useState();
+    const[ConfirmPassword,setConfirmPassword] = useState();
+    const[ContactNumber,setContactNumber] = useState();
+
+    const onSubmit = (e)=>{
+        e.preventDefault();
+
+    }
     return(
         <Page>
             <Container>

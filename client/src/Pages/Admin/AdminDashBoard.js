@@ -1,6 +1,6 @@
 import Dashboard from "../../components/shared/Dashboard/Dashboard";
 
-const AdminDashBoard = (props) => {
+const ManagerDashBoard = (props) => {
     return ( 
         <>
             <Dashboard Navs1 = {props.Navs} cards1={props.Card}/>
@@ -8,4 +8,4 @@ const AdminDashBoard = (props) => {
      );
 }
  
-export default AdminDashBoard;
+export default ManagerDashBoard;

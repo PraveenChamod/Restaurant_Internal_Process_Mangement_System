@@ -14,7 +14,7 @@ import {
 } from'./AddUserElements';
 
 
-const AddUser = () => {
+const AddUserComponent = () => {
 
   
 
@@ -66,4 +66,4 @@ const AddUser = () => {
   );
 };
 
-export default AddUser;
+export default AddUserComponent;

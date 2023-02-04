@@ -16,6 +16,13 @@ code {
   color: #fff;
   font-weight: bold;
 }
+.btn a{
+  text-decoration: none;
+}
+.btn{
+  text-decoration: none;
+  color: #fff;
+}
 .li{
   text-decoration: none;
   color: #fff;

@@ -13,7 +13,7 @@ const maxAge = 3 * 24 * 60 * 60;
 // End Point : "api/v1/customer/AddCustomer";
 // Description : Register Customer
 export const RegisterCustomer = async (req,res)=>{
-    const {Name,Password,ConfirmPassword,ContactNumber,Address,Email,Role} = req.body;
+    const {Name,Password,ConfirmPassword,ContactNumber,Email} = req.body;
     const existingCustomer = await Customer.findOne({Email:Email});
     const existingUser = await User.findOne({Email:Email});
     try {
@@ -24,12 +24,12 @@ export const RegisterCustomer = async (req,res)=>{
             const salt = await GenerateSalt();
             const encryptedPassword = await GeneratePassword(Password,salt);
             const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
+            const Role="Customer";
             const createCustomer = await Customer.create({
                 Name:Name,
                 Password:encryptedPassword,
                 ConfirmPassword:confirmEncryptedPassword,
                 ContactNumber:ContactNumber,
-                Address:Address,
                 Email:Email,
                 Role:Role
             });
@@ -38,7 +38,6 @@ export const RegisterCustomer = async (req,res)=>{
                 Password:encryptedPassword,
                 ConfirmPassword:confirmEncryptedPassword,
                 ContactNumber:ContactNumber,
-                Address:Address,
                 Email:Email,
                 Role:Role
             })

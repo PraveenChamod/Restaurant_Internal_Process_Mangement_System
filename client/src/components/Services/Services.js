@@ -65,24 +65,34 @@ const Services = () => {
     `
 
     return (
-        <Div>
+        <Div id="Services">
             <Sec1>
-                <H1>OUR SERVICES</H1>
-                <H3>What We Offer</H3>
+                <H1 data-aos={"zoom-in"}>OUR SERVICES</H1>
+                <H3 data-aos={"zoom-in-up"}
+                    data-aos-duration={"1500"}>What We Offer</H3>
             </Sec1>
             <Sec1>
                 <Main>
                     <Sec2>
                         
-                        <img alt="easy" className='imag' src={require('../../Images/Services/easy.png')} />
-                       
+                        <img alt="easy" className='imag' src={require('../../Images/Services/easy.png')} 
+                            data-aos="flip-right" 
+                            data-aos-easing="ease-out-cubic"/>
+                            
                         
-                        <H2>EASY DELIVER</H2>
+                        <H2
+                        data-aos={"fade-right"}
+                        data-aos-duration={"1250"}>EASY DELIVER</H2>
                     </Sec2>
                     <Sec2>
-                        <img alt="table" className='image' src={require('../../Images/Services/table.png')} />
+                        <img alt="table" className='image' src={require('../../Images/Services/table.png')} 
+                            data-aos="flip-left" 
+                            data-aos-easing="ease-out-cubic"
+                            data-aos-duration="1500"/>
                         
-                        <H2>TABLE RESRVATION</H2>
+                        <H2
+                        data-aos={"fade-left"}
+                        data-aos-duration={"1750"}>TABLE RESRVATION</H2>
                     </Sec2>
                 </Main>
             </Sec1> 
