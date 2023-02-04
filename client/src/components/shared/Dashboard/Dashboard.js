@@ -1,4 +1,6 @@
-import React from 'react'
+import React from 'react';
+import leftImage from '../../../Images/InnerUi/chef.png';
+import rightImage from '../../../Images/InnerUi/lime.png'
 import {
   Container,
   Div,
@@ -20,43 +22,67 @@ import {
   Text,
   Left,
   Right,
-  CardIcon
+  CardIcon,
+  HeaderContainer,
+  Image
 } from './DashbordElements'
 
 const Dashboard = (props) => {
+
+  const data1 = Array.from(props.Navs1.Navs);
+
+  const cardData = Array.from(props.cards1.CardContent);
 
   return (
     <Div>
       <Container>
       <SideNavBar>
         <UserHeader>
-          <Title>Admin</Title>
+          <Title>{props.Navs1.Role}</Title>
           <Name>Mr.Admin</Name>
         </UserHeader>
         <Navs>
-          <Nav>
-            <Icon></Icon>
-            <NavText></NavText>
-          </Nav>
+          {
+            data1.map(data=>{
+              return(
+                <Nav>
+                  <Icon>{data.icon}</Icon>
+                  <NavText>{data.text}</NavText>
+                </Nav>
+              )
+            })
+          }
         </Navs>
         <Footer>
-          <p></p>
+          <p>@2023 RESTO | ALL RIGHTS RESERVED</p>
         </Footer>
       </SideNavBar>
       <Menu>
-        <Header>
-
-        </Header>
+        <HeaderContainer>
+          <Header>
+            Welcome
+          </Header>
+        </HeaderContainer>
         <Cards>
-          <Card>
-            <CardIcon></CardIcon>
-            <Count></Count>
-            <Text></Text>
-          </Card>
+          {
+            cardData.map(data=>{
+              return(
+                <Card>
+                  <CardIcon>{data.icon}</CardIcon>
+                  <Count>{data.count}</Count>
+                  <Text>{data.text}</Text>
+                </Card>
+              )
+            })
+          }
         </Cards>
         <Pictures>
-          <Left></Left>
-          <Right></Right>
+          <Left>
+            <Image src={leftImage}/>
+          </Left>
+          <Right>
+            <Image src={rightImage}/>
+          </Right>
         </Pictures>
       </Menu>
     </Container>

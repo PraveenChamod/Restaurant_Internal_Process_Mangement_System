@@ -19,7 +19,8 @@ export const RegisterOutletStaff = async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role == "Manager"){
-            const {Password,Email,Role} = req.body;
+            const {Email,Role} = req.body;
+            const Password = "12345678";
             const existingStaffMember = await ServiceProviders.findOne({Email:Email});
             const existingUser = await User.findOne({Email:Email});
             if(existingStaffMember !== null || existingUser !== null){

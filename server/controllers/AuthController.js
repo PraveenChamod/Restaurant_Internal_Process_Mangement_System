@@ -91,3 +91,69 @@ export const LogoutUser = async (req,res)=>{
   res.cookie('jwt','',{maxAge:1});
   res.json('User Logging Out');
 }
+
+//
+export const PasswordReset = async (req,res)=>{
+    try {
+        const {Email} = req.params;
+        const{InitialPassword,Password,ConfirmPassword} = req.body;
+        const user = await User.findOne({Email:Email}).populate('Email');
+        const result = await validatePassword(InitialPassword,user.Password);
+        if(result){
+            await User.findOneAndUpdate({Email:Email},{
+                Password:Password,
+                ConfirmPassword:ConfirmPassword
+            });
+            res.status(201).status({message:`Password Reset Successfully`});
+        }
+        else{
+            res.status(402).json({message:`Initial Password is not matched`});
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+}
+const createOTP = ()=>{
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    return otp;
+}
+const sendOTP = async (req,res)=>{
+    try {
+        const Email = req.body;
+        const user = await User.findOne({Email:Email}).populate('Email');
+        const otp= createOTP();
+        if(user){
+            if(createUser.Role !== "Customer"){
+                const mailOption = {
+                    from : 'resto6430@gmail.com',
+                    to : Email,
+                    subject : 'Registration Confrimation',
+                    text:`Your OTP is ${otp}`
+                }
+
+                transporter.sendMail(mailOption,(err,info)=>{
+                    if(err){
+                        console.log(err.message);
+                    }
+                    else{
+                        console.log(info.response);
+                    }
+                })
+            }
+        }
+        else{
+            res.status(404).json({message:`Invalid Email`});
+        }
+    } catch (error) {
+        
+    }
+}
+
+export const FrogotPassword = async (req,res)=>{
+    try {
+        const {OTP,Password,ConfirmPassword} = req.body;
+        const otp = sendOTP();
+    } catch (error) {
+        
+    }
+}
