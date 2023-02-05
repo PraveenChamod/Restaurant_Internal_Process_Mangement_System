@@ -1,4 +1,4 @@
-import ItemViewComponent from "../../components/shared/Food&Offer&TableView/ItemView";
+import ItemViewComponent from "../../components/shared/ItemView/ItemView";
 const ViewOffer = (props) => {
     return ( 
         <>
