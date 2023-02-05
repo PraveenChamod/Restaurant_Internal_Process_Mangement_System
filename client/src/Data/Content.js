@@ -40,9 +40,169 @@ export const responsive = {
         items: 3,
     },
 };
-
-export const contactDetails = [
+export const TableColumns = [
     {
-        
+        TableName:"Food Details",
+        Headers:[
+            {
+                text:'Name'
+            },
+            {
+                text:'Category'
+            },
+            {
+                text:'Qty'
+            },
+            {
+                text:'Price'
+            },
+            {
+                text:'Status'
+            },
+        ]
+    },
+    {
+        TableName:"Details Of All Tables",
+        Headers:[
+            {
+                text:'Table No'
+            },
+            {
+                text:'Maximum No of Persons'
+            },
+            {
+                text:'Reservation Fee'
+            },
+            {
+                text:'Status'
+            }
+        ]
+    },
+    {
+        TableName:"Stock Details",
+        Headers:[
+            {
+                text:'Item Name'
+            },
+            {
+                text:'Category'
+            },
+            {
+                text:'Qty'
+            },
+            {
+                text:'Price'
+            },
+            {
+                text:'Supplier ID'
+            },
+        ]
+    },
+    {
+        TableName:"Pending Orders",
+        Headers:[
+            {
+                text:'Customer Name'
+            },
+            {
+                text:'Email'
+            },
+            {
+                text:'Contact No'
+            },
+            {
+                text:'Time'
+            },
+            {
+                text:'Order Id'
+            },
+        ]
+    },
+    {
+        TableName:"Pending Reservation",
+        Headers:[
+            {
+                text:'Customer Name'
+            },
+            {
+                text:'Table No'
+            },
+            {
+                text:'Contact No'
+            },
+            {
+                text:'Date & Time'
+            },
+        ]
+    },
+    {
+        TableName:"All Offers",
+        Headers:[
+            {
+                text:'Meal Name'
+            },
+            {
+                text:'Special Price'
+            },
+            {
+                text:'Validity'
+            },
+            {
+                text:'Status'
+            },
+        ]
+    }
+]
+export const ViewThings = [
+    {
+        Title:'Food Details',
+        TextFeilds:[
+            {
+                text:'Name'
+            },
+            {
+                text:'Category'
+            },
+            {
+                text:'Price'
+            },
+            {
+                text:'Status(Available/Not)'
+            },
+        ]
+    },
+    {
+        Title:'Offer Details',
+        TextFeilds:[
+            {
+                text:'Meal Name'
+            },
+            {
+                text:'Special Price'
+            },
+            {
+                text:'Validity'
+            },
+            {
+                text:'Status(Available/Not)'
+            },
+        ]
+    },
+    {
+        Title:'Table Details',
+        TextFeilds:[
+            {
+                text:'Table No'
+            },
+            {
+                text:'Maximum No of Persons'
+            },
+            {
+                text:'Reservation Fee'
+            },
+            {
+                text:'Status(Available/Not)'
+            }
+        ]
     }
 ]

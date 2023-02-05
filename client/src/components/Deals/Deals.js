@@ -5,7 +5,6 @@ import {
   Heading,
   SubSec,
   Section3,
-  Button,
   Images,
   Img,
   Description,
@@ -17,6 +16,7 @@ import Slider from "react-slick";
 import { useState } from "react";
 import { card } from "../../Data/Content";
 import { Link } from 'react-router-dom';
+import { RegularButton } from '../shared/SharedElements/Buttons';
 const Deals = (props) => {
   const [slideIndex,setSlideIndex] = useState(0);
   const settings = {
@@ -61,7 +61,7 @@ const Deals = (props) => {
               </Slider>
           </Section2>
           <Section3>
-              <Link to="./Menu" className='btn' onClick={props.ScrollToTop1}><Button data-aos={"zoom-in-up"}>View Menu</Button></Link>
+              <Link to="./Menu" className='btn' onClick={props.ScrollToTop1}><RegularButton data-aos={"zoom-in"}>View Menu</RegularButton></Link>
           </Section3>
       </Container>
    );

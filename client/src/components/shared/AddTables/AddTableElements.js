@@ -19,13 +19,12 @@ export const Div = styled.div`
 
 export const Div1 = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  margin-top: 30px;
+  justify-content: right;
+  align-items: flex-end;
 `;
 export const Div2 = styled.div`
-  margin-right: 70px;
+    justify-content: right;
+  align-items: flex-end;
 `;
 export const Div3 = styled.div`
   margin-top: 15px;
@@ -33,7 +32,6 @@ export const Div3 = styled.div`
   height: 8%;
   display: flex;
   flex-direction: column;
-  padding-left: 30px;
 `;
 
 export const Div4 = styled.div`

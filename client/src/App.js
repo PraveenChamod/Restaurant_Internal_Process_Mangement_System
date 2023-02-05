@@ -11,12 +11,10 @@ import { useEffect } from 'react';
 import ScrollToTop from './Hooks/ScrollToTop';
 import AdminDashBoard from './Pages/Admin/AdminDashBoard';
 import AddUser from './Pages/Admin/AddUser';
-import ViewUsers from './Pages/Admin/ViewUsers';
 import ViewUser from './Pages/Admin/ViewUser';
 import AdminUserProfile from './Pages/Admin/UserProfile';
 import ManagerDashBoard from './Pages/Manager/ManagerDashBoard';
 import AddOutletStaff from './Pages/Manager/AddUser';
-import ViewStaff from './Pages/Manager/ViewUsers';
 import ViewStaffMember from './Pages/Manager/ViewUser';
 import ManagerUserProfile from './Pages/Manager/UserProfile';
 import ReportGeneration from './Pages/Manager/ReportGeneration';
@@ -26,7 +24,7 @@ import AddStockItem from './Pages/Manager/AddStockItem';
 import ViewStock from './Pages/Manager/ViewStock';
 import ViewItem from './Pages/Manager/ViewItem';
 import StaffMemberUserProfile from './Pages/Staff-Member/UserProfile';
-import AddOffers from './Pages/Staff-Member/AddOffers';
+import AddOffers from './Pages/SharedOnes/AddOffers';
 import OrderDetails from './Pages/Staff-Member/OrderDetails';
 import TableReservationDetails from './Pages/Staff-Member/TableReservationDetails';
 import CustomerDashBoard from './Pages/Customer/CustomerDashBoard';
@@ -56,6 +54,7 @@ import ViewFoods from './Pages/SharedOnes/ViewFoods';
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import { MenuItems } from './Data/Menu';
+import { TableColumns, ViewThings } from './Data/Content';
 
 function App() {
   useEffect(() => {
@@ -85,45 +84,44 @@ function App() {
           
           <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
           <Route path="/Admin/Add-User" element={<AddUser/>}/>
-          <Route path="/Admin/View-Users" element={<ViewUsers/>}/>
           <Route path="/Admin/View-User" element={<ViewUser/>}/>
           <Route path="/Admin/My-Profile" element={<AdminUserProfile/>}/>
           <Route path="/Admin/Add-Table" element={<AddTables/>}/>
-          <Route path="/Admin/View-Tables" element={<ViewTables/>}/>
-          <Route path="/Admin/View-Table" element={<ViewTable/>}/>
+          <Route path="/Admin/View-Tables" element={<ViewTables Tables={TableColumns[1]}/>}/>
+          <Route path="/Admin/View-Table" element={<ViewTable View = {ViewThings[2]}/>}/>
           <Route path="/Admin/Add-Foods" element={<AddFoods/>}/>
-          <Route path="/Admin/View-Foods" element={<ViewFoods/>}/>
-          <Route path="/Admin/View-Food" element={<ViewFood/>}/>
+          <Route path="/Admin/View-Foods" element={<ViewFoods Tables={TableColumns[0]}/>}/>
+          <Route path="/Admin/View-Food" element={<ViewFood View = {ViewThings[0]}/>}/>
 
         {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
           
           <Route path="/Manager/DashBoard" element={<ManagerDashBoard/>}/>
           <Route path="/Manager/Add-User" element={<AddOutletStaff/>}/>
-          <Route path="/Manager/View-Users" element={<ViewStaff/>}/>
           <Route path="/Manager/View-User" element={<ViewStaffMember/>}/>
           <Route path="/Manager/My-Profile" element={<ManagerUserProfile/>}/>
           <Route path="/Manager/Report-Generation" element={<ReportGeneration/>}/>
           <Route path="/Manager/ReportPreview" element={<ReportPreview/>}/>
           <Route path="/Manager/AddStcok" element={<AddStockItem/>}/>
-          <Route path="/Manager/ViewStock" element={<ViewStock/>}/>
+          <Route path="/Manager/ViewStock" element={<ViewStock Tables={TableColumns[2]}/>}/>
           <Route path="/Manager/ViewItem" element={<ViewItem/>}/>
           <Route path="/Manager/Add-Table" element={<AddTables/>}/>
-          <Route path="/Manager/View-Tables" element={<ViewTables/>}/>
-          <Route path="/Manager/View-Table" element={<ViewTables/>}/>
+          <Route path="/Manager/View-Tables" element={<ViewTables Tables={TableColumns[1]}/>}/>
+          <Route path="/Manager/View-Table" element={<ViewTable View = {ViewThings[2]}/>}/>
           <Route path="/Manager/Add-Foods" element={<AddFoods/>}/>
-          <Route path="/Manager/View-Foods" element={<ViewFoods/>}/>
-          <Route path="/Manager/View-Food" element={<ViewFood/>}/>
-          <Route path="/Staff-Member/View-Offers" element={<ViewOffers/>}/>
-          <Route path="/Staff-Member/View-Offer" element={<ViewOffer/>}/>
+          <Route path="/Manager/Add-Offers" element={<AddOffers/>}/>
+          <Route path="/Manager/View-Foods" element={<ViewFoods Tables={TableColumns[0]}/>}/>
+          <Route path="/Manager/View-Food" element={<ViewFood View = {ViewThings[0]}/>}/>
+          <Route path="/Manager/View-Offers" element={<ViewOffers Tables={TableColumns[5]}/>}/>
+          <Route path="/Manager/View-Offer" element={<ViewOffer View = {ViewThings[1]}/>}/>
 
         {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
           
           <Route path="/Staff-Member/DashBoard" element={<StaffMemberDashBoard/>}/>
           <Route path="/Staff-Member/Add-Offers" element={<AddOffers/>}/>
-          <Route path="/Staff-Member/View-Offers" element={<ViewOffers/>}/>
-          <Route path="/Staff-Member/View-Offer" element={<ViewOffer/>}/>
-          <Route path="/Staff-Member/View-Foods" element={<ViewFoods/>}/>
-          <Route path="/Staff-Member/View-Tables" element={<ViewTables/>}/>
+          <Route path="/Staff-Member/View-Offers" element={<ViewOffers Tables={TableColumns[5]}/>}/>
+          <Route path="/Staff-Member/View-Offer" element={<ViewOffer View = {ViewThings[1]}/>}/>
+          <Route path="/Staff-Member/View-Foods" element={<ViewFoods Tables={TableColumns[0]}/>}/>
+          <Route path="/Staff-Member/View-Tables" element={<ViewTables Tables={TableColumns[1]}/>}/>
           <Route path="/Staff-Member/Order-Details" element={<OrderDetails/>}/>
           <Route path="/Staff-Member/Table-Reservation-Details" element={<TableReservationDetails/>}/>
           <Route path="/Staff-Member/My-Profile" element={<StaffMemberUserProfile/>}/>
