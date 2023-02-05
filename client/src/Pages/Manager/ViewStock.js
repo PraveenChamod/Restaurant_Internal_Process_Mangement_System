@@ -1,6 +1,9 @@
-const ViewStock = () => {
+import ViewAllComponent from "../../components/shared/ViewAll/ViewAll";
+
+const ViewStock = (props) => {
     return ( 
         <>
+            <ViewAllComponent Tables1={props.Tables}/>
         </>
      );
 }

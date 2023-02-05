@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import Chef from '../../../Images/Chef.png';
 
-export const Page = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background:url(${Chef}) left bottom no-repeat;
-  background-size: 300px 300px;
-`;
 export const Div = styled.div`
   width: 50%;
   height: 50%;
@@ -20,7 +11,7 @@ export const Div = styled.div`
   align-items: center;
   flex-direction: column;
   box-shadow: 3px 3px 3px #000;
-  padding: 2% 0;
+  padding: 3% 0;
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
     width: 90%;

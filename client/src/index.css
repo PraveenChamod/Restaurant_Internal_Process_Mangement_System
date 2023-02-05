@@ -62,3 +62,20 @@ code {
     -webkit-background-clip: text;
     color: #fff;
 }
+.textFeild_Label{
+  color: #fff !important;
+}
+.MuiOutlinedInput-notchedOutline {
+  border-color: #fff !important;
+}
+
+.MuiFilledInput-root {
+  border-bottom: 1px solid #fff !important;
+}
+
+.MuiInput-root {
+  border-bottom: 1px solid #fff !important;
+}
+.MuiFormLabel-root{
+  color: #fff;
+} 

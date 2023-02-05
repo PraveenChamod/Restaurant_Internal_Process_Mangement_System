@@ -67,19 +67,6 @@ export const Section3 = styled.div`
     position:relative;
     top: -15%;
 `
-export const Button = styled.div`
-        width: 150px;
-        height: 40px;
-        color:#fff;
-        background: linear-gradient(to right, #FFBF00, #B26C29);
-        border: none;
-        cursor: pointer;
-        position: relative;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-`
 export const Images = styled.div`
     width: 100%;
     height: 100%;

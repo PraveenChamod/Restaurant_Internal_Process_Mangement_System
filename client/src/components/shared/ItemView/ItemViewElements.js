@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 export const Div = styled.div`
   width: 50%;
   height: 50%;
@@ -9,12 +10,26 @@ export const Div = styled.div`
   align-items: center;
   flex-direction: column;
   box-shadow: 3px 3px 3px #000;
-  padding: 2% 0;
+  padding: 3% 0;
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
     width: 90%;
     height: 350px;
   }
+`;
+export const H1 = styled.h1`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(
+    60deg,
+    rgb(178, 108, 41) 0%,
+    rgb(253, 190, 16) 100%
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: 1rem;
 `;
 
 export const Div1 = styled.div`
@@ -22,7 +37,7 @@ export const Div1 = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  margin-top: 30px;
+  margin-top: 10px;
 `;
 export const Div2 = styled.div`
   margin-right: 70px;
@@ -36,6 +51,12 @@ export const Div3 = styled.div`
   padding-left: 30px;
 `;
 
-export const Div4 = styled.div`
-  margin-top: 15px;
+export const Searchbar = styled.input`
+  width: 100%;
+  margin-bottom: 5px;
+  padding: 6px;
+  border: none;
+  border-radius: 20px;
+  font-size: 12px;
+  box-shadow: 3px 3px 3px #000;
 `;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import LoginImage from "../../Images/foods/pancake.jpg";
 
 import img from "../../Images/restoLogodark.png";
-import { Button } from "../Deals/DealsElements";
+import { RegularButton } from "../shared/SharedElements/Buttons";
 import {
     Page,
     Container,
@@ -70,7 +70,7 @@ const Login = () => {
                         </TextArea>
                         <Bottom>
                             <StyledLink to='/'>
-                                <Button>Login</Button>
+                                <RegularButton>Login</RegularButton>
                             </StyledLink>
                             <Option>
                                 <p>Dosen't have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Sign Up</LinkToSignUpAndLogIn></p>
@@ -99,7 +99,7 @@ const Login = () => {
                         </TextAreaSignUp>
                         <Bottom>
                             <StyledLink to='/'>
-                                <Button>Sign Up</Button>
+                                <RegularButton>Sign Up</RegularButton>
                             </StyledLink>
                             <Option>
                                 <p>Already have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Login</LinkToSignUpAndLogIn></p>

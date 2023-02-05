@@ -12,13 +12,15 @@ import {
   Searchbar
 
 } from './ViewUserElements';
+import { FormButton, RegularButton } from "../SharedElements/Buttons";
+import { Container } from "../SharedElements/SharedElements";
 
-const ViewUser = () => {
+const ViewUserComponent = () => {
 
   
 
   return (
-    <Page>
+    <Container>
       <H1>USER DETAILS</H1>
       <Div>
         <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
@@ -28,42 +30,61 @@ const ViewUser = () => {
             label="Email"
             type="email"
             variant="standard"
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'5%'}}
           />
-          <TextField id="standard-basic" label="User Name" variant="standard" />
+          <TextField 
+            id="standard-basic" 
+            label="User Name" 
+            variant="standard" 
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'5%'}}/>
           <TextField
             id="standard-basic"
-            label="Contact Numberl"
+            label="Contact Number"
             variant="standard"
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'5%'}}
           />
-          <TextField id="standard-basic" label="Role" variant="standard" />
-          <TextField id="standard-basic" label="Gender" variant="standard" />
+          <TextField 
+            id="standard-basic" 
+            label="Role" 
+            variant="standard" 
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'5%'}}/>
+          <TextField 
+            id="standard-basic" 
+            label="Gender" 
+            variant="standard" 
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'5%'}}/>
         </FormControl>
         <Div1>
           <Div2>
-            <button className="adduserbtn">
-              <Link to="./login" data-aos="fade-left">
+            <FormButton>
+              <Link to="./login" className="btn">
                 <b>DELETE</b>
               </Link>
-            </button>
+            </FormButton>
           </Div2>
           
-            <button className="adduserbtn">
-              <Link to="./login" data-aos="fade-left">
+            <FormButton>
+              <Link to="./login" className="btn">
                 <b>UPDATE</b>
               </Link>
-            </button>
+            </FormButton>
           
         </Div1>
       </Div>
       <Div3>
-        <button className="adduserbtn">
-          <Link to="./login" data-aos="fade-left">
-            <b>BACK</b>
+        <RegularButton>
+          <Link to="./login" className="btn">
+            Back
           </Link>
-        </button>
+        </RegularButton>
       </Div3>
-    </Page>
+    </Container>
   );
 };
 
-export default ViewUser;
+export default ViewUserComponent;

@@ -82,16 +82,19 @@ export const Category1 = styled.div`
     font-size: 26px;
     font-weight: 600;
     color: #B26C29;
+    font-style: italic;
 `
 export const Category2 = styled.div`
     font-size: 26px;
     font-weight: 600;
     color: #fff;
+    font-style: italic;
 `
 export const Category3 = styled.div`
     font-size: 26px;
     font-weight: 600;
     color: #B26C29;
+    font-style: italic;
 `
 export const Meals = styled.div`
     display: flex;
