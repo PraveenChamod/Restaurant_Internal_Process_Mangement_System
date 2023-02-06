@@ -150,12 +150,12 @@ export const Pictures = styled.div`
     margin-top: 5%;
 `
 export const Image=styled.img`
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
 `
 export const Left = styled.div`
-    width: 150px;
-    height: 100%;
+    width: 250px;
+    height: 200%;
     
 `
 export const Right = styled.div`
