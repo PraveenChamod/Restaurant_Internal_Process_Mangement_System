@@ -1,6 +1,8 @@
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
-import { FormControl, MenuItem, Select, TextField } from '@mui/material';
+import { FormControl, TextField } from '@mui/material';
 import * as l from './ItemDetailsElements';
+import { RegularButton } from "../../shared/SharedElements/Buttons";
+import { Link } from "react-router-dom";
 
 const ItemDetails = () => {
     return ( 
@@ -24,6 +26,13 @@ const ItemDetails = () => {
                     </FormControl>
                 </l.RightSide>
             </l.FormSection>
+            <l.Div3>
+                <RegularButton>
+                <Link to="./login" className="btn">
+                    Back
+                </Link>
+                </RegularButton>
+            </l.Div3>
         </Container>
      );
 }

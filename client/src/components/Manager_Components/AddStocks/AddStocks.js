@@ -21,7 +21,7 @@ const AddStocks = () => {
 
   return (
     <Container>
-      <Header>ADD USER</Header>
+      <Header>ADD STOCK</Header>
       <Div>
         <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
           <TextField id="standard-basic" label="Email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} />
