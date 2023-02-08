@@ -74,6 +74,7 @@ flutter:
      - assets/images/Common_Bg.png
      - assets/images/Splash_Bg.png
      - assets/images/Common_Background.png
+     - assets/images/Order_food.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

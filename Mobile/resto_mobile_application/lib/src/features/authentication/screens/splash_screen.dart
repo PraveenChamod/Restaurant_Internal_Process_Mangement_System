@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../../common_widgets/application_logo.dart';
 import '../../../constants/image_strings.dart';
+import 'home_screen.dart';
 import 'login_screen.dart';
 
 
@@ -31,10 +33,7 @@ class SplashScreen extends StatelessWidget {
                   duration: Duration(milliseconds: 2000),
                   top: 150,
                   left: 150,
-                  child: Image(
-                    image: AssetImage(commonLogo),
-                    width: 200,
-                  ),
+                  child: ApplicationLogo(),
                 ),
                 Text(
                   "Your Favourite Food Delivered Hot & Fresh",
@@ -60,7 +59,7 @@ class SplashScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (_){
-                          return const LoginScreen();
+                          return const HomeScreen();
                         }
                         )
                     );
