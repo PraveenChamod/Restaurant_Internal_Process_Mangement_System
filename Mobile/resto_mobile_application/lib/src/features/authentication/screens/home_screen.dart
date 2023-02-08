@@ -1,7 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 
+import '../../../common_widgets/application_logo.dart';
+import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
+import '../../../constants/main_features.dart';
+import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,156 +18,125 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  List<Map<String, String>> splashData = [
+    {"text": "Order Food",
+      "image": orderFood
+    },
+    {"text": "Choose Online",
+      "image": orderFood
+    },
+    {"text": "Fast Delivery",
+      "image": orderFood
+    },
+    {"text": "Reserve Dining Tables",
+      "image": orderFood
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF161b1d),
         body: Stack(
           children: <Widget>[
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(commonBackgroundImage),
-                  fit: BoxFit.cover,
+            const BackgroundImage(),
+            Column(
+              children: [
+                const SizedBox(height: 20,),
+                const ApplicationLogo(),
+                Expanded(
+                  //flex: 1,
+                  child: PageView.builder(
+                    itemCount: splashData.length,
+                    itemBuilder: (context, index) => MainFeatures(
+                      image: splashData[index]["image"] ?? '',
+                      text: splashData[index]["text"] ?? '',
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            Positioned(
-              top: 20,
-              left: 0,
-              right: 0,
-              child: Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const AnimatedPositioned(
-                    duration: Duration(milliseconds: 2000),
-                    top: 150,
-                    left: 150,
-                    child: Image(
-                      image: AssetImage(commonLogo),
-                      width: 200,
+                // const Expanded(
+                //   flex: 2,
+                //   child: SizedBox(),
+                // ),
+                const SizedBox(height: 30,),
+                Center(
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      //padding: const EdgeInsets.all(5.0),
+                      fixedSize: const Size(230, 40),
+                      backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
+                      elevation: 15,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    height: MediaQuery.of(context).size.height/5,
-                    width: MediaQuery.of(context).size.width/1.2,
-                    //padding: EdgeInsets.only(left:MediaQuery.of(context).size.width/12, right:MediaQuery.of(context).size.width/12),
-                    decoration: BoxDecoration(
-                      //color: Colors.white,
-                      color: const Color(0xFF1b1b1b),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: <Widget>[
-                        Container(
-                          width: MediaQuery.of(context).size.width/3,
-                          height: 100,
-                          color: Colors.orange,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_){
+                            return const LoginScreen();
+                          },
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width/3,
-                          height: 100,
-                          color: Colors.pink,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width/3,
-                          height: 100,
-                          color: Colors.blue,
-                        ),
-                      ],
+                      );
+                    },
+                    icon: const Icon( // <-- Icon
+                      Icons.login_sharp,
+                      size: 30.0,
+                      color: Color(0xFF1b1b1d),
                     ),
-                    // child: Scrollbar(
-                    //     child: ListView(
-                    //       children: [
-                    //         Container(
-                    //           height: 100,
-                    //           color: Colors.pink,
-                    //         ),
-                    //         Container(
-                    //           height: 100,
-                    //           color: Colors.grey,
-                    //         ),
-                    //         Container(
-                    //           height: 100,
-                    //           color: Colors.green,
-                    //         ),
-                    //       ],
-                    //     ),
-                    // ),
+                    label: const Text(
+                      'Login To Resto',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1b1b1d),
+                      ),
+                    ), // <-- Text
                   ),
-                  const SizedBox(height: 20,),
-                  const Text('Categories',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                ),
+                const SizedBox(height: 30,),
+                Center(
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      //padding: const EdgeInsets.all(5.0),
+                      fixedSize: const Size(230, 40),
+                      backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
+                      elevation: 15,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
-
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_){
+                            return const SignupScreen();
+                          },
+                        ),
+                      );
+                    },
+                    icon: const Icon( // <-- Icon
+                      Icons.person_add,
+                      size: 30.0,
+                      color: Color(0xFF1b1b1d),
+                    ),
+                    label: const Text(
+                      'Create Account',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF1b1b1d),
+                      ),
+                    ), // <-- Text
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 60,),
+              ],
             ),
           ],
         ),
-
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          iconSize: 30.0,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: Color(0xFFfebf10),
-              ),
-              label: 'Home',
-              //backgroundColor: Color(0xFF030b0b),
-              //backgroundColor: Color(0xFF1b1b1b),
-              backgroundColor: Color(0xFF030b0b),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.support_agent,
-                color: Color(0xFFfebf10),
-              ),
-              label: 'Support',
-              backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.notifications,
-                color: Color(0xFFfebf10),
-              ),
-              label: 'Notification',
-              backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.menu,
-                color: Color(0xFFfebf10),
-              ),
-              label: 'Menu',
-              backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-            ),
-          ],
-          onTap: (index) {
-            setState((){
-              _currentIndex = index;
-            });
-          },
-          selectedItemColor: const Color(0xFFfebf10),
-        ),
-        // floatingActionButton: FloatingActionButton(
-        //   backgroundColor: const Color(0xFFfebf10),
-        //   onPressed: (){},
-        //   child: const Icon(Icons.face),
-        // ),
       ),
     );
   }
 }
+
