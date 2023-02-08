@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/make_selction.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
 
@@ -22,14 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: const Color(0xFF161b1d),
         body: Stack(
           children: <Widget>[
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(commonBackgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            const BackgroundImage(),
             SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
