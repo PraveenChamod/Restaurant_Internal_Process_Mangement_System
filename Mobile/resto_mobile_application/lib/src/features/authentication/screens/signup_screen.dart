@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../constants/image_strings.dart';
+import '../../../common_widgets/application_logo.dart';
+import '../../../common_widgets/background_image.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -20,30 +21,18 @@ class _LoginScreenState extends State<SignupScreen> {
         backgroundColor: Colors.black,
         body: Stack(
           children: <Widget>[
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(commonBackgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-
+            const BackgroundImage(),
             SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 20,),
-                  const Image(
-                    image: AssetImage(commonLogo),
-                    width: 200,
-                  ),
+                  const ApplicationLogo(),
                   const SizedBox(height: 10,),
                   Center(
                     child: Container(
                       height: 470,
-                      //height: MediaQuery.of(context).size.height/1.45,
                       width: MediaQuery.of(context).size.width/1.25,
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
@@ -67,7 +56,6 @@ class _LoginScreenState extends State<SignupScreen> {
                               color: Colors.white70,
                             ),
                           ),
-                          //const SizedBox(height: 10),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
                             child: const TextField(
@@ -88,7 +76,6 @@ class _LoginScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ),
-                          //const SizedBox(height: 10,),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
                             child: const TextField(
@@ -110,7 +97,6 @@ class _LoginScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ),
-                          //const SizedBox(height: 10,),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
                             child: const TextField(
@@ -132,7 +118,6 @@ class _LoginScreenState extends State<SignupScreen> {
                               ),
                             ),
                           ),
-                          //const SizedBox(height: 10,),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
                             child: const TextField(

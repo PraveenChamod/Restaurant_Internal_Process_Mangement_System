@@ -3,11 +3,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../constants/image_strings.dart';
 import 'home_screen.dart';
-import 'login_screen.dart';
-
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,16 +24,11 @@ class SplashScreen extends StatelessWidget {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: const <Widget>[
                 SizedBox(
                   height: 25,
                 ),
-                AnimatedPositioned(
-                  duration: Duration(milliseconds: 2000),
-                  top: 150,
-                  left: 150,
-                  child: ApplicationLogo(),
-                ),
+                ApplicationLogo(),
                 Text(
                   "Your Favourite Food Delivered Hot & Fresh",
                   style: TextStyle(
@@ -45,8 +39,8 @@ class SplashScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SpinKitWave(
-                color: Colors.white,
-                size: 30.0,
+                  color: Colors.white,
+                  size: 30.0,
                 ),
               ],
             ),
@@ -57,11 +51,11 @@ class SplashScreen extends StatelessWidget {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_){
-                          return const HomeScreen();
-                        }
-                        )
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_){
+                        return const HomeScreen();
+                        },
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(

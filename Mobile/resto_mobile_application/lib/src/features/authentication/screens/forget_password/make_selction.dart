@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../constants/image_strings.dart';
+import '../../../../common_widgets/application_logo.dart';
+import '../../../../common_widgets/background_image.dart';
 import 'getphonenumber.dart';
 import 'gettemail.dart';
 
@@ -15,14 +15,7 @@ class MakeSelection extends StatelessWidget {
           backgroundColor: Colors.black,
           body: Stack(
             children: [
-              Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(commonBackgroundImage),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              const BackgroundImage(),
               Positioned(
                 top: MediaQuery.of(context).size.height/20,
                 left: 0,
@@ -31,10 +24,7 @@ class MakeSelection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const SizedBox(height: 20,),
-                    const Image(
-                      image: AssetImage(commonLogo),
-                      width: 200,
-                    ),
+                    const ApplicationLogo(),
                     const SizedBox(height: 20,),
                     SizedBox(
                       width: MediaQuery.of(context).size.width/1.25,

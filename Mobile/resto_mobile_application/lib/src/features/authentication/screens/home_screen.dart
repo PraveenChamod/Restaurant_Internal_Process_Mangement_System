@@ -1,11 +1,9 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
-
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
+import '../../../constants/homeScreen_indicator.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/main_features.dart';
 import 'login_screen.dart';
@@ -18,18 +16,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _selectedIndex = 0;
   List<Map<String, String>> splashData = [
     {"text": "Order Food",
       "image": orderFood
     },
     {"text": "Choose Online",
-      "image": orderFood
+      "image": chooseOnline
     },
     {"text": "Fast Delivery",
-      "image": orderFood
+      "image": deliveryService
     },
     {"text": "Reserve Dining Tables",
-      "image": orderFood
+      "image": dinningTable
     },
   ];
   @override
@@ -44,9 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const SizedBox(height: 20,),
                 const ApplicationLogo(),
+                const SizedBox(height: 20,),
                 Expanded(
-                  //flex: 1,
+                  flex: 1,
                   child: PageView.builder(
+                    onPageChanged: (index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
                     itemCount: splashData.length,
                     itemBuilder: (context, index) => MainFeatures(
                       image: splashData[index]["image"] ?? '',
@@ -54,11 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                // const Expanded(
-                //   flex: 2,
-                //   child: SizedBox(),
-                // ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...List.generate(splashData.length, (index) =>
+                        Indicator(isActive: _selectedIndex == index ? true : false),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20,),
                 Center(
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -94,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ), // <-- Text
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 20,),
                 Center(
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -130,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ), // <-- Text
                   ),
                 ),
-                const SizedBox(height: 60,),
+                const SizedBox(height: 50,),
               ],
             ),
           ],
