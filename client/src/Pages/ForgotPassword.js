@@ -3,12 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FormButton, RegularButton } from "../components/shared/SharedElements/Buttons";
 import { Container, Header } from "../components/shared/SharedElements/SharedElements";
-import { 
-  Div,
-  Div1,
-  Div2,
-  Div3,
-} from'./ForgotPasswordElements';
+import { Div, Div1, Div2, Div3} from'./ForgotPasswordElements';
 const ForgotPassword = () => {
   
   return (
