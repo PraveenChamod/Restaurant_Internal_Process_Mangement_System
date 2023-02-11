@@ -1,5 +1,5 @@
 import ItemViewComponent from "../../components/shared/ItemView/ItemView";
-const ViewFood = (props) => {
+const AdminViewFood = (props) => {
     return ( 
         <>
             <ItemViewComponent View1={props.View}/>
@@ -7,4 +7,4 @@ const ViewFood = (props) => {
      );
 }
  
-export default ViewFood;
+export default AdminViewFood;

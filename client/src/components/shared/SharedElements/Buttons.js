@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export const RegularButton = styled.div`
+export const RegularButton = styled.button`
     width: 150px;
     height: 40px;
     color:#fff;
@@ -15,7 +15,7 @@ export const RegularButton = styled.div`
     font-weight: 500;
     text-transform: uppercase;
 `
-export const FormButton = styled.div`
+export const FormButton = styled.button`
     position: relative;
     background: linear-gradient(to right, #FFBF00, #B26C29);
     border-radius: 20px;

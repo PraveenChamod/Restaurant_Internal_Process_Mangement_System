@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 import { createToken, handleErrors } from "../util/AuthUtil.js";
 import { sendRegistrationSms, transporter } from "../util/NotificationUtil.js";
+import { UploadProfileImage } from "./AuthController.js";
 
 const maxAge = 3 * 24 * 60 * 60;
 
@@ -73,3 +74,43 @@ export const RegisterCustomer = async (req,res)=>{
     }
 }
 
+// Method : PATCH
+// End Point : "api/v1/customer/UpdateProfile/:Email";
+// Description : Update Profile
+export const UpdateProfile = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === 'Customer'){
+            const {Email} = req.params;
+            const logeduser = await User.findOne({Email:Email}).populate('Email');
+            if(logeduser !== null){
+                const {Name,ContactNumber,Address,Email1} = req.body;
+                const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address}
+                await User.findByIdAndUpdate(logeduser._id,userDetails,{new:true});
+                const updateCustomer = await Customer.findByIdAndUpdate(logeduser._id,userDetails,{new:true});
+                createToken(updateCustomer._id);
+                res.status(201).json({message:'Update User Successfully'});
+            }
+            else{
+                res.json("error");
+            }
+        }
+        else{
+            res.status(400).json({message:'User has not previlages'});
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+}
+
+export const OrderItem = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === 'Customer'){
+            const{Email} = req.params;
+            
+        }
+    } catch (error) {
+        
+    }
+}

@@ -1,6 +1,6 @@
 import AddTableComponent from "../../components/shared/AddTables/AddTable";
 
-const AddTables = () => {
+const ManagerAddTables = () => {
     return ( 
         <>
             <AddTableComponent/>
@@ -8,4 +8,4 @@ const AddTables = () => {
      );
 }
  
-export default AddTables;
+export default ManagerAddTables;

@@ -60,7 +60,7 @@ export const Title = styled.h2`
         position: relative;
         top: -20%;
     `
-export const TextArea = styled.div`
+export const TextArea = styled.form`
         width: 80%;
         height: 70%;
         display: flex;
@@ -179,9 +179,10 @@ export const SignUpPage = styled.div`
             height: 350px;
         }
     `
-export const TextAreaSignUp = styled.div`
+export const TextAreaSignUp = styled.form`
         display: flex;
         justify-content: center;
+        flex-direction: column;
         align-items: center;
         width: 90%;
         position: relative;
@@ -194,7 +195,7 @@ export const Column = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin: 0 5%;
+        margin: 0% 5% 10% 5%;
         
     `
 export const LabelSignUp = styled.label`

@@ -1,6 +1,6 @@
 import ViewUserComponent from "../../components/shared/ViewUser/ViewUser";
 
-const ViewUser = () => {
+const ManagerViewUser = () => {
     return ( 
         <>
             <ViewUserComponent/>
@@ -8,4 +8,4 @@ const ViewUser = () => {
      );
 }
  
-export default ViewUser;
+export default ManagerViewUser;

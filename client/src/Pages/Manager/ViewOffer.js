@@ -1,5 +1,5 @@
 import ItemViewComponent from "../../components/shared/ItemView/ItemView";
-const ViewOffer = (props) => {
+const ManagerViewOffer = (props) => {
     return ( 
         <>
             <ItemViewComponent View1 = {props.View}/>
@@ -7,4 +7,4 @@ const ViewOffer = (props) => {
      );
 }
  
-export default ViewOffer;
+export default ManagerViewOffer;

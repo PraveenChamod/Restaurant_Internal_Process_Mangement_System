@@ -1,6 +1,6 @@
 import AddFoodsComponent from "../../components/shared/AddFoods/AddFoods";
 
-const AddFoods = () => {
+const ManagerAddFoods = () => {
     return ( 
         <>
             <AddFoodsComponent/>
@@ -8,4 +8,4 @@ const AddFoods = () => {
      );
 }
  
-export default AddFoods;
+export default ManagerAddFoods;

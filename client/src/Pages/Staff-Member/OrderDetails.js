@@ -1,8 +1,8 @@
-const OrderDetails = () => {
+const StaffMemberOrderDetails = () => {
     return ( 
         <>
         </>
      );
 }
  
-export default OrderDetails;
+export default StaffMemberOrderDetails;

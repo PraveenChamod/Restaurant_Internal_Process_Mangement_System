@@ -1,8 +1,8 @@
-const TableReservationDetails = () => {
+const StaffMemberTableReservationDetails = () => {
     return ( 
         <>
         </>
      );
 }
  
-export default TableReservationDetails;
+export default StaffMemberTableReservationDetails;

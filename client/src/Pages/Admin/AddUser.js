@@ -1,6 +1,6 @@
 import AddUserComponent from "../../components/shared/AddUser/AddUser";
 
-const AddUser = () => {
+const AdminAddUser = () => {
     return ( 
         <>
             <AddUserComponent/>
@@ -8,4 +8,4 @@ const AddUser = () => {
      );
 }
  
-export default AddUser;
+export default AdminAddUser;

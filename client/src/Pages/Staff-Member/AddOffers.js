@@ -1,6 +1,6 @@
 import AddOffersComponent from "../../components/shared/AddOffers/AddOffers";
 
-const AddOffers = () => {
+const StaffMemberAddOffers = () => {
     return ( 
         <>
             <AddOffersComponent/>
@@ -8,4 +8,4 @@ const AddOffers = () => {
      );
 }
  
-export default AddOffers;
+export default StaffMemberAddOffers;

@@ -1,8 +1,8 @@
-const PlaceOrder = () => {
+const StaffMemberPlaceOrder = () => {
     return ( 
         <>
         </>
      );
 }
  
-export default PlaceOrder;
+export default StaffMemberPlaceOrder;

@@ -1,6 +1,6 @@
 import ViewAllComponent from "../../components/shared/ViewAll/ViewAll";
 
-const ViewTables = (props) => {
+const ManagerViewTables = (props) => {
     return ( 
         <>
             <ViewAllComponent Tables1 = {props.Tables}/>
@@ -8,4 +8,4 @@ const ViewTables = (props) => {
      );
 }
  
-export default ViewTables;
+export default ManagerViewTables;

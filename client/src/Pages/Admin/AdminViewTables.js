@@ -1,6 +1,6 @@
 import ViewAllComponent from "../../components/shared/ViewAll/ViewAll";
 
-const StaffMemberViewOffers = (props) => {
+const AdminViewTables = (props) => {
     return ( 
         <>
             <ViewAllComponent Tables1 = {props.Tables}/>
@@ -8,4 +8,4 @@ const StaffMemberViewOffers = (props) => {
      );
 }
  
-export default StaffMemberViewOffers;
+export default AdminViewTables;
