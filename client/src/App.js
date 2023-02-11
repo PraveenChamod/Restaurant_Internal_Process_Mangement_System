@@ -39,7 +39,6 @@ import DeliveryOrderDetails from './Pages/Deliverer/OrderDetails';
 import SupplierDashBoard from './Pages/Supplier/SupplierDashBoard';
 import SupplierUserProfile from './Pages/Supplier/UserProfile';
 import Messages from './Pages/Supplier/Messages';
-import FrogotPassword from './Pages/FrogotPassword';
 import PasswordReset from './Pages/PasswordReset';
 import { Cards, Roles } from './Data/DashBoardLinks';
 import PlaceOrder from './Pages/Staff-Member/PlaceOrder';
@@ -55,19 +54,24 @@ import "aos/dist/aos.css";
 import Aos from 'aos';
 import { MenuItems } from './Data/Menu';
 import { TableColumns, ViewThings } from './Data/Content';
+import ForgotPassword from './Pages/ForgotPassword';
 
 function App() {
   useEffect(() => {
     Aos.init({duration:1000});
   }, [])
   const scrollToTop = ()=>{
-    if(window.pageYOffset > 200){
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    if(window.pageYOffset > 200)
+    {
+      window.scrollTo(
+        {
+          top: 0, 
+          behavior: "smooth",
+        }
+      );
     }
-}
+  }
+
   return (
     <div className="App">
       <ScrollToTop/> 
@@ -76,7 +80,7 @@ function App() {
           <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
           <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
           <Route path="/login" element={<LoginPg/>}/>
-          <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
+          <Route path="/FrogotPassword" element={<ForgotPassword/>}/>
           <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
 
 
