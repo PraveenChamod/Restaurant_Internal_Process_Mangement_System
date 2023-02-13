@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../Hooks/useAuth";
 import LoginImage from "../../Images/foods/pancake.jpg";
@@ -118,7 +118,9 @@ const Login = () => {
                             {/* <Label>Password</Label> */}
                             <Input type ="password" name="Password" placeholder="Enter the password" value={Password} onChange={e=>setPassword(e.target.value)}/>
                             <ForgotPWD>
-                                <p>Forgot Your Password ?</p>
+                                <Link to='/FrogotPassword' className="btn">
+                                    <p>Forgot Your Password ?</p>
+                                </Link>
                             </ForgotPWD>
                         <Bottom>
                             {!loading && <RegularButton>Login</RegularButton> }

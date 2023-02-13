@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
 import '../login_screen.dart';
 
@@ -18,14 +19,7 @@ class _GetEmailState extends State<GetEmail> {
         backgroundColor: Colors.black,
         body: Stack(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(commonBackgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            const BackgroundImage(),
             SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(

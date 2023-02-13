@@ -6,7 +6,6 @@ import {Cart} from './Pages/Customer/Cart'
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import LoginPg from './Pages/Login';
-
 import { Fragment, useEffect } from 'react';
 import ScrollToTop from './Hooks/ScrollToTop';
 import AdminDashBoard from './Pages/Admin/AdminDashBoard';
@@ -35,7 +34,6 @@ import DeliveryOrderDetails from './Pages/Deliverer/OrderDetails';
 import SupplierDashBoard from './Pages/Supplier/SupplierDashBoard';
 import SupplierUserProfile from './Pages/Supplier/UserProfile';
 import Messages from './Pages/Supplier/Messages';
-import FrogotPassword from './Pages/FrogotPassword';
 import PasswordReset from './Pages/PasswordReset';
 import { Cards, Roles } from './Data/DashBoardLinks';
 import "aos/dist/aos.css";
@@ -43,7 +41,7 @@ import Aos from 'aos';
 import { MenuItems } from './Data/Menu';
 import { TableColumns, ViewThings } from './Data/Content';
 import AuthState from './Context/Auth/AuthState';
-import RequireAuth from './components/Routing/RequireAuth';
+// import RequireAuth from './components/Routing/RequireAuth';
 import AdminAddUser from './Pages/Admin/AddUser';
 import AdminViewUser from './Pages/Admin/AdminViewUser';
 import AdminAddTables from './Pages/Admin/AdminAddTable';
@@ -69,19 +67,24 @@ import StaffMemberViewTables from './Pages/Staff-Member/StaffMemberViewTables';
 import StaffMemberOrderDetails from './Pages/Staff-Member/OrderDetails';
 import StaffMemberTableReservationDetails from './Pages/Staff-Member/TableReservationDetails';
 import StaffMemberPlaceOrder from './Pages/Staff-Member/PlaceOrder';
+import FrogotPassword from './Pages/ForgotPassword';
 
 function App() {
   useEffect(() => {
     Aos.init({duration:1000});
   }, [])
   const scrollToTop = ()=>{
-    if(window.pageYOffset > 200){
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    if(window.pageYOffset > 200)
+    {
+      window.scrollTo(
+        {
+          top: 0, 
+          behavior: "smooth",
+        }
+      );
     }
-}
+  }
+
   return (
     <div>
       <AuthState>

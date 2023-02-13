@@ -7,10 +7,14 @@ const OrderSchema = mongoose.Schema({
     },
     Foods:{
         type:mongoose.Schema.ObjectId,
-        ref:'Item'
+        ref:'Foods'
     },
     Date:{
         type:Date,
+        required:true
+    },
+    TotalPrice:{
+        type:Number,
         required:true
     }
 },

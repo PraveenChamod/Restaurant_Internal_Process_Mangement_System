@@ -1,7 +1,7 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
 
 class GetPhoneNumber extends StatefulWidget {
@@ -22,14 +22,7 @@ class _GetPhoneNumberState extends State<GetPhoneNumber> {
         backgroundColor: Colors.black,
         body: Stack(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(commonBackgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            const BackgroundImage(),
             SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(

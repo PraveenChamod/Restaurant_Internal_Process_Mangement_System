@@ -433,8 +433,3 @@ export const  deleteOffers =async (req,res)=>{
    
 }
 
-
-
-
-
-//
