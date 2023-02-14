@@ -5,10 +5,11 @@ import 'image_strings.dart';
 class MainFeatures extends StatefulWidget {
   const MainFeatures({
     Key? key,
+    required this.title,
     required this.text,
     required this.image
   }) : super(key: key);
-  final String text, image;
+  final String title, text, image;
 
   @override
   State<MainFeatures> createState() => _MainFeaturesState();
@@ -18,10 +19,10 @@ class _MainFeaturesState extends State<MainFeatures> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 8, left: 8),
+      margin: const EdgeInsets.only(right: 10, left: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        //color: Colors.amberAccent,
+        color: Colors.black38,
         border: Border.all(
           color: const Color(0xFFfebf10),
         ),
@@ -34,17 +35,22 @@ class _MainFeaturesState extends State<MainFeatures> {
           ),
           Image(
             image: AssetImage(widget.image),
-            width: 260,
-            //height: 260,
-            //height: 500,
+            width: 250,
           ),
           const Spacer(
             flex: 1,
           ),
-          Text(widget.text,
+          Text(widget.title,
             style: const TextStyle(
               fontSize: 20,
               color: Colors.white,
+            ),
+          ),
+          Text(widget.text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.white70,
             ),
           ),
           const Spacer(

@@ -18,16 +18,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _selectedIndex = 0;
   List<Map<String, String>> splashData = [
-    {"text": "Order Food",
+    {"title": "Food Orders",
+      "text": "Take orders on your site for delivery",
       "image": orderFood
     },
-    {"text": "Choose Online",
+    {"title": "Restaurant Menus",
+      "text": "Create and display your menu online",
       "image": chooseOnline
     },
-    {"text": "Fast Delivery",
+    {"title": "Fast Delivery",
+      "text": "Pick out your fresh favorites for delivery right to your doorstep.",
       "image": deliveryService
     },
-    {"text": "Reserve Dining Tables",
+    {"title": "Table Reservations",
+      "text": "Reserve Dining Tables on your own choice",
       "image": dinningTable
     },
   ];
@@ -35,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFF161b1d),
+        backgroundColor: const Color(0xFF151b1d),
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
@@ -44,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 20,),
                 const ApplicationLogo(),
                 const SizedBox(height: 20,),
-                Expanded(
-                  flex: 1,
+                SizedBox(
+                  height: 335,
                   child: PageView.builder(
                     onPageChanged: (index) {
                       setState(() {
@@ -54,8 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     itemCount: splashData.length,
                     itemBuilder: (context, index) => MainFeatures(
-                      image: splashData[index]["image"] ?? '',
-                      text: splashData[index]["text"] ?? '',
+                        image: splashData[index]["image"] ?? '',
+                        title: splashData[index]["title"] ?? '',
+                        text: splashData[index]["text"] ?? ''
                     ),
                   ),
                 ),
@@ -140,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ), // <-- Text
                   ),
                 ),
-                const SizedBox(height: 50,),
               ],
             ),
           ],

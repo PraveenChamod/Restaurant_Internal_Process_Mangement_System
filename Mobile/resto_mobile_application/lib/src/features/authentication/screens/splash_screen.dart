@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../common_widgets/application_logo.dart';
+import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'home_screen.dart';
 
@@ -10,10 +11,11 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF161b1d),
       body: SafeArea(
         child: Stack(
           children: <Widget>[
+            //const BackgroundImage(),
             Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(

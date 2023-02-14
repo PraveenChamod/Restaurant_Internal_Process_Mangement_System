@@ -57,7 +57,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
   #Splash Screen
-    - assets/images/Splash_Bg.png
+    - assets/images/SplashScreen_Background.png
   #Forget Password Screen
     - assets/images/Lock.png
   #Common Background
@@ -69,6 +69,11 @@ flutter:
     - assets/images/Choose_online.png
   #Application Logo
     - assets/logo/Logo.png
+  #Food Images
+    - assets/Food Types/Burger/Chicken_Burger.jpg
+    - assets/Food Types/Koththu/Chicken_Koththu.jpg
+    - assets/Food Types/Pizza/Cheese_Pizza.jpg
+    - assets/Food Types/Rice/Veg_Rice.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
