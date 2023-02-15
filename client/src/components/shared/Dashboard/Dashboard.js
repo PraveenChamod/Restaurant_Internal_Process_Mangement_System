@@ -43,7 +43,7 @@ const Dashboard = (props) => {
   }
   return (
     <Div>
-      <Container>
+      <Container> 
       <SideNavBar>
         <UserHeader>
           <Title>{props.Navs1.Role}</Title>

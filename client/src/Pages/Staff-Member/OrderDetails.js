@@ -1,7 +1,9 @@
-const StaffMemberOrderDetails = () => {
+const OrderDetails = () => {
     return ( 
         <>
+         <OrderDetailsComponent/>
         </>
+       
      );
 }
  

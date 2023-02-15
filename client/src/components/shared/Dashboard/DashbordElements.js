@@ -3,6 +3,8 @@ export const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    
 `
 export const Container = styled.div`
     width: 70%;
