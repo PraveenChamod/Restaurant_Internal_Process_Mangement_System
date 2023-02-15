@@ -6,6 +6,7 @@ import 'package:social_login_buttons/social_login_buttons.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
+import 'Customer/customer_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -123,13 +124,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //       builder: (_){
-                                //         return const LoginScreen();
-                                //       },
-                                //   ),
-                                // );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (_){
+                                        return const CustomerHome();
+                                      },
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.all(5.0),
