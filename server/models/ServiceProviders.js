@@ -4,7 +4,7 @@ import validator from "validator";
 const serviceProvidersSchema = mongoose.Schema({
     Order:{
         type:mongoose.Schema.ObjectId,
-        ref:'Order'
+        ref:'Order',
     },
     Name:{
         type:String,

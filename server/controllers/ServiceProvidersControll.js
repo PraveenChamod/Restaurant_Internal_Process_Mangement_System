@@ -8,6 +8,7 @@ import Offers from "../models/Offers.js"
 import multer from "multer";
 import { transporter } from "../util/NotificationUtil.js";
 import Order from "../models/Order.js";
+import mongoose from "mongoose";
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Manager++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -436,23 +437,29 @@ export const  deleteOffers =async (req,res)=>{
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++staff-member+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-
+// Method : GET
+// End Point : "api/v1/serviceProvider/Orders/PendingOrders";
+// Description : Get Pending Orders
  export const ViewPendingOrders = async(req,res,next)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const findOrders = await Order.find();
-            if(findOrders.Status === "Pending"){
-                const PendingOrders = findOrders;
-                res.status(201).json({
-                    status: 'success',
-                    message: 'Pending Orders',
-                    data: {
-                        PendingOrders
+            console.log(findOrders);
+            let pendingOrders = [];
+            findOrders.map(order=>{
+                    if(order.Status === "Pending"){
+                        pendingOrders.push(order);
                     }
                 })
-                next();
-            }
+            res.status(201).json({
+                status: 'success',
+                message: 'Pending Orders',
+                data: {
+                    pendingOrders
+                }
+            })
+            next();
         }
         else{
             res.status(401).json({
@@ -468,6 +475,9 @@ export const  deleteOffers =async (req,res)=>{
     }
  }
 
+// Method : GET
+// End Point : "api/v1/serviceProvider/Orders/ViewOrder/:_id";
+// Description : View Order
  export const ViewOrder = async(req,res)=>{
     try {
         const user = req.user;
@@ -492,22 +502,30 @@ export const  deleteOffers =async (req,res)=>{
     }
  }
 
- export const getDeliverers = async(req,res)=>{
+ 
+// Method : GET
+// End Point : "api/v1/serviceProvider/Orders/getDeliverers";
+// Description : Get Available Deliverers
+ export const getAvailableDeliverers = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
-            const Role = req.body.Role;
-            const Deliverers = await User.find({Role:Role}).populate('Role');
+            const Deliverers = await User.find({Role:"Deliverer"}).populate('Role');
             if(Deliverers !== null){
-                if(Deliverers.Order !== undefined){
-                    let users = [];
+                let deliverers = [];
                     Deliverers.map(user=>{
-                        if(user.Role === Role){
-                            users.push(user);
+                        if(user.Order === undefined){
+                            deliverers.push(user);
                         }
                     })
-                    return users;
-                }
+                    res.status(201).json({
+                        status: 'Success',
+                        message: 'Aavilable Deliverers',
+                        data:{
+                            deliverers
+                        }
+                    })
+                return deliverers; 
             }
         }
         else{
@@ -524,23 +542,47 @@ export const  deleteOffers =async (req,res)=>{
         });
     }
  }
- export const SendOrderConfrimation = async(req,res)=>{
+
+// Method : POST
+// End Point : "api/v1/serviceProvider/Orders/ConfirmOrder/:_id";
+// Description : Confirm Order
+export const SendOrderConfrimation = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
-            const findOrder = await Order.findById({_id:_id});
+            const findOrder = await Order.findById(_id);
             if(findOrder !== null){
                 const session = await mongoose.startSession();
                 try {
                     session.startTransaction();
+                    const {Email} = req.body;
+                    const findDeliverer = await ServiceProviders.findOne({Email:Email}).populate('Email');
+                    console.log(findDeliverer);
+                    const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,Status:'Confirm'},{new:true,runValidators:true}).session(session);
+                    await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:findOrder.id},{new:true,runValidators:true}).session(session);
+                    await session.commitTransaction();
+                    session.endSession();
                     
+                    res.status(201).json({
+                        status: 'success',
+                        message: 'Confirm Order successfully',
+                        data: {
+                            UpdateOrder
+                        }
+                    })
                 } catch (error) {
-                    
+                    res.status(401).json({
+                        status: 'Error',
+                        message: error.message,
+                    });
                 }
             }
         }
     } catch (error) {
-        
+        res.status(500).json({
+            status: 'Server Error',
+            message: error.message,
+        });
     }
  }
