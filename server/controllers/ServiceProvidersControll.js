@@ -7,6 +7,7 @@ import Foods from "../models/Foods.js";
 import Offers from "../models/Offers.js"
 import multer from "multer";
 import { transporter } from "../util/NotificationUtil.js";
+import Order from "../models/Order.js";
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Manager++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -433,3 +434,113 @@ export const  deleteOffers =async (req,res)=>{
    
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++staff-member+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+ export const ViewPendingOrders = async(req,res,next)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const findOrders = await Order.find();
+            if(findOrders.Status === "Pending"){
+                const PendingOrders = findOrders;
+                res.status(201).json({
+                    status: 'success',
+                    message: 'Pending Orders',
+                    data: {
+                        PendingOrders
+                    }
+                })
+                next();
+            }
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
+
+ export const ViewOrder = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const {OrderId} = req.params;
+            const findOrder = await Order.findById({_id:OrderId});
+            if(findOrder !== null){
+                res.status(201).json({
+                    status: 'success',
+                    message: 'Order Details',
+                    data: {
+                        findOrder
+                    }
+                })  
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
+
+ export const getDeliverers = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const Role = req.body.Role;
+            const Deliverers = await User.find({Role:Role}).populate('Role');
+            if(Deliverers !== null){
+                if(Deliverers.Order !== undefined){
+                    let users = [];
+                    Deliverers.map(user=>{
+                        if(user.Role === Role){
+                            users.push(user);
+                        }
+                    })
+                    return users;
+                }
+            }
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'This user has not authorization to do this operation',
+            }) 
+        }
+        
+    } catch (error) {
+        res.status(401).json({
+            status: 'Error',
+            message: error.message,
+        });
+    }
+ }
+ export const SendOrderConfrimation = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const {_id} = req.params;
+            const findOrder = await Order.findById({_id:_id});
+            if(findOrder !== null){
+                const session = await mongoose.startSession();
+                try {
+                    session.startTransaction();
+                    
+                } catch (error) {
+                    
+                }
+            }
+        }
+    } catch (error) {
+        
+    }
+ }
