@@ -11,6 +11,7 @@ export const Container = styled.div`
 `
 export const Header = styled.h1`
     justify-content: center;
+    text-transform:uppercase;
   align-items: center;
   text-align: center;
   background: linear-gradient(
