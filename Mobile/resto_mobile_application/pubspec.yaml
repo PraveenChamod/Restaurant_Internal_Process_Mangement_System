@@ -31,10 +31,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   device_preview: ^1.1.0
   flutter_spinkit: ^5.1.0
@@ -45,12 +41,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
@@ -66,16 +56,24 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/logo/restologodark.png
-     - assets/logo/Logo.png
-     - assets/images/SplashScreen_Bg.png
-     - assets/images/Common_Background_Img.png
-     - assets/images/Lock.png
-     - assets/images/Common_Bg.png
-     - assets/images/Splash_Bg.png
-     - assets/images/Common_Background.png
-     - assets/images/Order_food.png
-  #   - images/a_dot_ham.jpeg
+  #Splash Screen
+    - assets/images/SplashScreen_Background.png
+  #Forget Password Screen
+    - assets/images/Lock.png
+  #Common Background
+    - assets/images/Common_Background.png
+  #Home Screen Page view
+    - assets/images/Order_food.png
+    - assets/images/Delivery_service.png
+    - assets/images/Dinning_table.png
+    - assets/images/Choose_online.png
+  #Application Logo
+    - assets/logo/Logo.png
+  #Food Images
+    - assets/Food Types/Burger/Chicken_Burger.jpg
+    - assets/Food Types/Koththu/Chicken_Koththu.jpg
+    - assets/Food Types/Pizza/Cheese_Pizza.jpg
+    - assets/Food Types/Rice/Veg_Rice.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

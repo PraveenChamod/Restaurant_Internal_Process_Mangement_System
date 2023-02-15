@@ -27,9 +27,6 @@ const customerSchema = mongoose.Schema({
         required:[true,"User must provide his/her contact number"],
         maxlength:10,
     },
-    Address:{
-        type:String,
-    },
     Email:{
         type:String,
         required:[true,"Customer must have to enter the email"],
@@ -68,14 +65,18 @@ const customerSchema = mongoose.Schema({
     },
     cart: [
         {
-            item: { type: mongoose.Schema.ObjectId, ref: 'Item', require: true},
+            item: { type: mongoose.Schema.ObjectId, ref: 'Foods', require: true},
             unit: { type: Number, require: true}
         }
     ],
-    orders: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'Order'
-    }]
+    // orders: [{
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Order'
+    // }],
+    OrderFoods:{
+        type:Boolean,
+        default:false
+    }
 
 },
 {

@@ -108,7 +108,7 @@ export const addItems = async(req,res)=>{
 }
 // Method : GET
 // End Point : "api/v1/serviceProvider/getFoods";
-// Description : Get Foods
+// Description : Get Items
 
 export const getItems = async (req,res)=>{
     try {
@@ -162,7 +162,7 @@ export const getItemByCategory = async (req,res)=>{
 }
 
 // Method : DELETE
-// End Point : "api/v1/serviceProvider/deleteFoodBySerialNo/:SerialNo";
+// End Point : "api/v1/serviceProvider/Manager/deleteItemBySerialNo/:SerialNo";
 // Description : Get Foods By Category
 
 export const deleteItemBySerialNo = async (req,res)=>{
@@ -188,8 +188,9 @@ export const deleteItemBySerialNo = async (req,res)=>{
     }
 }
 
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Staff-Member++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
+// Method : POST
+// End Point : "api/v1/serviceProvider/Manager/AddFoods";
+// Description : Get Foods By Category
 const imageStorage = multer.diskStorage({
     destination:"images/Foods",
     filename: (req,file,cb)=>{
@@ -432,8 +433,3 @@ export const  deleteOffers =async (req,res)=>{
    
 }
 
-
-
-
-
-//

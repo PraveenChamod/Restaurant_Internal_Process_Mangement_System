@@ -1,32 +1,64 @@
 import 'package:flutter/material.dart';
 
-class MainFeatures extends StatelessWidget {
+import 'image_strings.dart';
+
+class MainFeatures extends StatefulWidget {
   const MainFeatures({
     Key? key,
+    required this.title,
     required this.text,
     required this.image
   }) : super(key: key);
-  final String text, image;
+  final String title, text, image;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const Spacer(),
+  State<MainFeatures> createState() => _MainFeaturesState();
+}
 
-        Image(
-          image: AssetImage(image),
-          //width: 275,
-          height: 280,
-          //height: 500,
+class _MainFeaturesState extends State<MainFeatures> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 10, left: 10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.black38,
+        border: Border.all(
+          color: const Color(0xFFfebf10),
         ),
-        Text(text,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: <Widget>[
+          const Spacer(
+            flex: 1,
           ),
-        ),
-      ],
+          Image(
+            image: AssetImage(widget.image),
+            width: 250,
+          ),
+          const Spacer(
+            flex: 1,
+          ),
+          Text(widget.title,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+          Text(widget.text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.white70,
+            ),
+          ),
+          const Spacer(
+            flex: 1,
+          ),
+        ],
+      ),
     );
   }
 }
+

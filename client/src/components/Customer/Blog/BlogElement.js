@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Img from '../../../Images/Blogbg.png';
+import Img from '../../../Images/Bolgbg.png';
 import Img1 from '../../../Images/restoLogodark.png';
 
 export const Page = styled.div`

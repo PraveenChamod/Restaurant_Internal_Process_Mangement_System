@@ -1,21 +1,21 @@
 import styled from "styled-components";
-export const RegularButton = styled.div`
+export const RegularButton = styled.button`
     width: 150px;
-        height: 40px;
-        color:#fff;
-        background: linear-gradient(to right, #FFBF00, #B26C29);
-        border: none;
-        cursor: pointer;
-        position: relative;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-decoration: none;
-        font-weight: 500;
-        text-transform: uppercase;
+    height: 40px;
+    color:#fff;
+    background: linear-gradient(to right, #FFBF00, #B26C29);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
 `
-export const FormButton = styled.div`
+export const FormButton = styled.button`
     position: relative;
     background: linear-gradient(to right, #FFBF00, #B26C29);
     border-radius: 20px;

@@ -1,11 +1,9 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
-
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
+import '../../../constants/homeScreen_indicator.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/main_features.dart';
 import 'login_screen.dart';
@@ -18,25 +16,30 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _selectedIndex = 0;
   List<Map<String, String>> splashData = [
-    {"text": "Order Food",
+    {"title": "Food Orders",
+      "text": "Take orders on your site for delivery",
       "image": orderFood
     },
-    {"text": "Choose Online",
-      "image": orderFood
+    {"title": "Restaurant Menus",
+      "text": "Create and display your menu online",
+      "image": chooseOnline
     },
-    {"text": "Fast Delivery",
-      "image": orderFood
+    {"title": "Fast Delivery",
+      "text": "Pick out your fresh favorites for delivery right to your doorstep.",
+      "image": deliveryService
     },
-    {"text": "Reserve Dining Tables",
-      "image": orderFood
+    {"title": "Table Reservations",
+      "text": "Reserve Dining Tables on your own choice",
+      "image": dinningTable
     },
   ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xFF161b1d),
+        backgroundColor: const Color(0xFF151b1d),
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
@@ -44,21 +47,33 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 const SizedBox(height: 20,),
                 const ApplicationLogo(),
-                Expanded(
-                  //flex: 1,
+                const SizedBox(height: 20,),
+                SizedBox(
+                  height: 335,
                   child: PageView.builder(
+                    onPageChanged: (index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
                     itemCount: splashData.length,
                     itemBuilder: (context, index) => MainFeatures(
-                      image: splashData[index]["image"] ?? '',
-                      text: splashData[index]["text"] ?? '',
+                        image: splashData[index]["image"] ?? '',
+                        title: splashData[index]["title"] ?? '',
+                        text: splashData[index]["text"] ?? ''
                     ),
                   ),
                 ),
-                // const Expanded(
-                //   flex: 2,
-                //   child: SizedBox(),
-                // ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ...List.generate(splashData.length, (index) =>
+                        Indicator(isActive: _selectedIndex == index ? true : false),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20,),
                 Center(
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -94,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ), // <-- Text
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(height: 20,),
                 Center(
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -130,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ), // <-- Text
                   ),
                 ),
-                const SizedBox(height: 60,),
               ],
             ),
           ],

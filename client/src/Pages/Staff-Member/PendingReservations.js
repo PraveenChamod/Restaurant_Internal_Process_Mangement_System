@@ -1,8 +1,8 @@
-const PendingReservations = () => {
+const StaffMemberPendingReservations = () => {
     return ( 
         <>
         </>
      );
 }
  
-export default PendingReservations;
+export default StaffMemberPendingReservations;

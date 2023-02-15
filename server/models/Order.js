@@ -7,10 +7,27 @@ const OrderSchema = mongoose.Schema({
     },
     Foods:{
         type:mongoose.Schema.ObjectId,
-        ref:'Item'
+        ref:'Foods'
     },
     Date:{
         type:Date,
+        required:true,
+        default:Date.now()
+    },
+    TotalPrice:{
+        type:Number,
+        required:true
+    },
+    paymentMethod:{
+        type:String,
+        enum:{
+            values:['Cash on Delivery','Card Payments'],
+            message:"Select One Payment Method"
+        },
+        required:[true,"Please Select the Payment Method"]
+    },
+    Quantity:{
+        type:Number,
         required:true
     }
 },
