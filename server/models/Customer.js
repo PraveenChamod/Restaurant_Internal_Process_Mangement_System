@@ -65,14 +65,18 @@ const customerSchema = mongoose.Schema({
     },
     cart: [
         {
-            item: { type: mongoose.Schema.ObjectId, ref: 'Item', require: true},
+            item: { type: mongoose.Schema.ObjectId, ref: 'Foods', require: true},
             unit: { type: Number, require: true}
         }
     ],
-    orders: [{
-        type: mongoose.Schema.ObjectId,
-        ref: 'Order'
-    }]
+    // orders: [{
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'Order'
+    // }],
+    OrderFoods:{
+        type:Boolean,
+        default:false
+    }
 
 },
 {

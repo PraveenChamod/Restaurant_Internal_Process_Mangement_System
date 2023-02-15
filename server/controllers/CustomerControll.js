@@ -3,14 +3,15 @@ import mongoose from "mongoose";
 import Customer from "../models/Customer.js";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
-import geoCorder from 'geocoder';
 import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 import { createToken, handleErrors } from "../util/AuthUtil.js";
 import { sendRegistrationSms, transporter } from "../util/NotificationUtil.js";
 import { UploadProfileImage } from "./AuthController.js";
 import Order from "../models/Order.js";
 import Foods from "../models/Foods.js";
+import Stripe from 'stripe';
 
+const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 const maxAge = 3 * 24 * 60 * 60;
 process.env.GEOCODER_PROVIDER = 'google';
 process.env.GEOCODER_API_KEY = 'AIzaSyCzww-sVilydidTfz54KfF50tWWIwgahC4';
@@ -79,11 +80,11 @@ export const RegisterCustomer = async (req,res)=>{
     }
 }
 
-const getLocation =(address)=>{
-    geoCorder.geocode(address,async (req,res)=>{
-        console.log(res);
-    })
-}
+// const getLocation =(address)=>{
+//     geoCorder.geocode(address,async (req,res)=>{
+//         console.log(res);
+//     })
+// }
 
 // Method : PATCH
 // End Point : "api/v1/customer/UpdateProfile/:Email";
@@ -100,10 +101,11 @@ export const UpdateProfile = async(req,res)=>{
 
                     const {Name,ContactNumber,Address,Email1} = req.body;
                     const locationAddress = JSON.stringify({Address});
-                    getLocation(locationAddress);
+                    // getLocation(locationAddress);
                     const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address}
-                    const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,logedCustomer,{new:true});
-                    const updateUser = await User.findByIdAndUpdate(logedUser._id,logedUser,{new:true});
+                    const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
+                    console.log(updateCustomer);
+                    const updateUser = await User.findByIdAndUpdate(logedUser._id,userDetails,{new:true});
                     console.log(updateUser);
                     createToken(updateCustomer._id,updateCustomer.Email);
                     res.status(201).json({message:'Update User Successfully'});
@@ -127,43 +129,100 @@ export const UpdateProfile = async(req,res)=>{
 // Method : POST
 // End Point : "api/v1/customer/OrderItem";
 // Description : Ordering Item
-export const OrderItem = async(req,res)=>{
+export const OrderItem = async(req,res,next)=>{
     try {
         const user = req.user;
-        console.log(user);
+        // console.log(user);
         if(user.Role === 'Customer'){
-            const {FoodName,SerialNo,Category,Quantity} = req.body;
+            const {SerialNo,Quantity,paymentMethod} = req.body;
             const findFood = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
+            const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
             if(findFood){
                 const TotalPrice = findFood.Price * Quantity;
                 if(user.Address !== null){
-                    const createOrder = await Order.create({
-                        Customer:{
-                            Name:user.Name,
-                            Email:user.Email,
-                            ContactNumber:user.ContactNumber,
-                            Address:user.Address,
-                        },
-                        Foods:{
-                            FoodName:FoodName,
-                            SerialNo:SerialNo,
-                            Category:Category,
-                            Quantity:Quantity,
-                        },
-                        TotalPrice:TotalPrice,
-                        Date:Date.now()
-                    })
-                    res.status(200).json(createOrder);
+                    const OrderData = {Customer:logedCustomer.id,Quantity:Quantity,TotalPrice:TotalPrice,paymentMethod:paymentMethod,Foods:findFood.id}
+                
+                    const session = await mongoose.startSession();
+                    // console.log(session);
+                    try {
+                        session.startTransaction();
+                        const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer,{OrderFoods:true},{new:true,runValidators:true}).session(session);
+                        const updateFood = await Foods.findByIdAndUpdate(findFood._id,{OrderItems:true},{new:true,runValidators:true}).session(session);
+                        const newOrder = await Order.create([OrderData],{session});
+                        const commit = await session.commitTransaction();
+                        session.endSession();
+                    
+                        res.status(201).json({
+                            status: 'success',
+                            message: 'Order created successfully',
+                            data: {
+                                newOrder
+                            }
+                        })
+                    } catch (error) {
+                        res.status(500).json(error.message);
+                    }
+                    next();
                 }
                 else{
                     res.status(400).json({message:'Add Delivery Address First'});
                 }
             }
             else{
-                req.status(404).json({message:'This Food is not available'});
+                res.status(404).json({message:'This Food is not available'});
             }
         }
     } catch (error) {
         
+    }
+}
+
+// Method : POST
+// End Point : "api/v1/customer/PlaceOrder/:OrderId";
+// Description : PlaceOrder
+export const PlaceOrder = async(req,res)=>{
+    try {
+        const {_id} = req.params;
+        console.log(_id);
+        const user = req.user;
+        const findOrder = await Order.findById(_id);
+        if(findOrder){
+            if(findOrder.paymentMethod === "Card Payments"){
+                const findFood = await Foods.findById({_id:findOrder.Foods});
+                const session = await stripe.checkout.sessions.create({
+                    payment_method_types: ['card'],
+                    success_url: `${req.protocol}://${req.get('host')}/?order=${_id}&price=${findOrder.TotalPrice}`,
+                    // success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+                    cancel_url: `${req.protocol}://${req.get('host')}/order`,
+                    customer_email: user.Email,
+                    client_reference_id:_id,
+                    line_items: [{
+                        price_data: {
+                            currency: 'usd',
+                            unit_amount: 2000,
+                            product_data:{
+                                name:findFood.FoodName
+                            }
+                        },
+                        quantity: 1,
+                      }],
+                    mode:'payment'
+                });
+            
+                // 3) Create session as response
+                res.status(200).json({
+                    status: 'success',
+                    session
+                });
+            }
+        }
+        else{
+            res.status(404).json({
+                status:'Error',
+                message:'Order is not found'
+            })
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
     }
 }

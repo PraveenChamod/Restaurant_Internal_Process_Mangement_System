@@ -22,8 +22,11 @@ const FoodsSchema = mongoose.Schema({
     Category:{
         type:String,
         required:[true,"Please Select the category"]
+    },
+    OrderItems:{
+        type:Boolean,
+        default:false
     }
-
 });
 
 const Foods = mongoose.model('Foods',FoodsSchema);

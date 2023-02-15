@@ -63,6 +63,7 @@ export const UploadProfileImage =  (req,res,next)=>{
                     }
                     else{
                         user.ProfileImage = req.file.filename;
+                        
                     }
                 })
                 const saveResult = await user.save();

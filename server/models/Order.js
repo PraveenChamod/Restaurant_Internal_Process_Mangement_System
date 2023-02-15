@@ -11,9 +11,22 @@ const OrderSchema = mongoose.Schema({
     },
     Date:{
         type:Date,
-        required:true
+        required:true,
+        default:Date.now()
     },
     TotalPrice:{
+        type:Number,
+        required:true
+    },
+    paymentMethod:{
+        type:String,
+        enum:{
+            values:['Cash on Delivery','Card Payments'],
+            message:"Select One Payment Method"
+        },
+        required:[true,"Please Select the Payment Method"]
+    },
+    Quantity:{
         type:Number,
         required:true
     }
