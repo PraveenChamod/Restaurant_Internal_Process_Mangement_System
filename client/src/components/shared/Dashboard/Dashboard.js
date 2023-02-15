@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import useAuth from '../../../Hooks/useAuth';
 import leftImage from '../../../Images/InnerUi/chef.png';
 import rightImage from '../../../Images/InnerUi/lime.png'
 import {
@@ -29,10 +31,16 @@ import {
 
 const Dashboard = (props) => {
 
+  const { logout,user } = useAuth();
   const data1 = Array.from(props.Navs1.Navs);
 
   const cardData = Array.from(props.cards1.CardContent);
 
+  const onclick = (link)=>{
+    if(link === '/login'){
+      logout();
+    }
+  }
   return (
     <Div>
       <Container> 
@@ -45,10 +53,12 @@ const Dashboard = (props) => {
           {
             data1.map(data=>{
               return(
-                <Nav>
-                  <Icon>{data.icon}</Icon>
-                  <NavText>{data.text}</NavText>
-                </Nav>
+                <Link to = {data.link} onClick={()=>{onclick(data.link)}} className='btn'>
+                  <Nav>
+                    <Icon>{data.icon}</Icon>
+                    <NavText>{data.text}</NavText>
+                  </Nav>        
+                </Link>
               )
             })
           }

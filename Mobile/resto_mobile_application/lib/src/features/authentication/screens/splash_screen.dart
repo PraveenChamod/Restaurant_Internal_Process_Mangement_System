@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../../common_widgets/application_logo.dart';
+import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
-import 'login_screen.dart';
-
+import 'home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF161b1d),
       body: SafeArea(
         child: Stack(
           children: <Widget>[
+            //const BackgroundImage(),
             Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -23,19 +26,11 @@ class SplashScreen extends StatelessWidget {
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: const <Widget>[
                 SizedBox(
                   height: 25,
                 ),
-                AnimatedPositioned(
-                  duration: Duration(milliseconds: 2000),
-                  top: 150,
-                  left: 150,
-                  child: Image(
-                    image: AssetImage(commonLogo),
-                    width: 200,
-                  ),
-                ),
+                ApplicationLogo(),
                 Text(
                   "Your Favourite Food Delivered Hot & Fresh",
                   style: TextStyle(
@@ -46,8 +41,8 @@ class SplashScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SpinKitWave(
-                color: Colors.white,
-                size: 30.0,
+                  color: Colors.white,
+                  size: 30.0,
                 ),
               ],
             ),
@@ -58,11 +53,11 @@ class SplashScreen extends StatelessWidget {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_){
-                          return const LoginScreen();
-                        }
-                        )
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_){
+                        return const HomeScreen();
+                        },
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(

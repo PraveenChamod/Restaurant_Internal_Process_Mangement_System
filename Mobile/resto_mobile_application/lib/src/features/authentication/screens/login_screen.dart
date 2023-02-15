@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/make_selction.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import '../../../common_widgets/application_logo.dart';
+import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
+import 'Customer/customer_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  int _currentIndex = 0;
+  //int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
 
@@ -22,24 +25,14 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: const Color(0xFF161b1d),
         body: Stack(
           children: <Widget>[
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(commonBackgroundImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+            const BackgroundImage(),
             SingleChildScrollView(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 20,),
-                  const Image(
-                    image: AssetImage(commonLogo),
-                    width: 200,
-                  ),
+                  const ApplicationLogo(),
                   const SizedBox(height: 10,),
                   Center(
                     child: Container(
@@ -131,13 +124,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //       builder: (_){
-                                //         return const LoginScreen();
-                                //       },
-                                //   ),
-                                // );
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (_){
+                                        return const CustomerHome();
+                                      },
+                                  ),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.all(5.0),

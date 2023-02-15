@@ -1,5 +1,3 @@
-import OrderDetailsComponent from "../../components/Staff-Member_Components/OrderDetails/OrderDetails";
-
 const OrderDetails = () => {
     return ( 
         <>
@@ -9,4 +7,4 @@ const OrderDetails = () => {
      );
 }
  
-export default OrderDetails;
+export default StaffMemberOrderDetails;

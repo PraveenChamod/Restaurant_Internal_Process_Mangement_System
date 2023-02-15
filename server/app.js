@@ -6,8 +6,10 @@ import AuthRoutes from "./routes/AuthRoutes.js";
 import { requireAuth } from "./middleware/Authmiddleware.js";
 import ServiceProviderrouter from "./routes/ServiceProvideRoutes.js";
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 const app = express();
+dotenv.config();
 app.use(cors());
 app.use(express.json({extended:true}));
 app.use(express.urlencoded({extended:true}));

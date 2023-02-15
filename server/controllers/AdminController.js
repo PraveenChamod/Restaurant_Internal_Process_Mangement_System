@@ -102,7 +102,7 @@ export const updateUserByEmail = async (req,res)=>{
             }
             if(findUser !== null){
                 const user = {Name:Name,ContactNumber:ContactNumber,Email:Email,Role:Role};
-                await User.findOneAndUpdate(Email,user,{new:true});
+                await User.findByIdAndUpdate(findUser._id,user,{new:true});
                 res.json(user);
             }   
         }
