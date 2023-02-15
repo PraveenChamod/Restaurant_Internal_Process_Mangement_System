@@ -530,6 +530,15 @@ export const  deleteOffers =async (req,res)=>{
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
             const findOrder = await Order.findById({_id:_id});
+            if(findOrder !== null){
+                const session = await mongoose.startSession();
+                try {
+                    session.startTransaction();
+                    
+                } catch (error) {
+                    
+                }
+            }
         }
     } catch (error) {
         

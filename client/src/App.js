@@ -98,19 +98,40 @@ function App() {
                 <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
                 <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
 
- 
-        {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-          
-          <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
-          <Route path="/Admin/Add-User" element={<AddUser/>}/>
-          <Route path="/Admin/View-User" element={<ViewUser/>}/>
-          <Route path="/Admin/My-Profile" element={<AdminUserProfile/>}/>
-          <Route path="/Admin/Add-Table" element={<AddTables/>}/>
-          <Route path="/Admin/View-Tables" element={<ViewTables Tables={TableColumns[1]}/>}/>
-          <Route path="/Admin/View-Table" element={<ViewTable View = {ViewThings[2]}/>}/>
-          <Route path="/Admin/Add-Foods" element={<AddFoods/>}/>
-          <Route path="/Admin/View-Foods" element={<ViewFoods Tables={TableColumns[0]}/>}/>
-          <Route path="/Admin/View-Food" element={<ViewFood View = {ViewThings[0]}/>}/>
+
+              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+              {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
+                <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
+                <Route path="/Admin/Add-User" element={<AdminAddUser/>}/>
+                <Route path="/Admin/View-User" element={<AdminViewUser/>}/>
+                <Route path="/Admin/My-Profile" element={<AdminUserProfile/>}/>
+                <Route path="/Admin/Add-Table" element={<AdminAddTables/>}/>
+                <Route path="/Admin/View-Tables" element={<AdminViewTables Tables={TableColumns[1]}/>}/>
+                <Route path="/Admin/View-Table" element={<AdminViewTable View = {ViewThings[2]}/>}/>
+                <Route path="/Admin/Add-Foods" element={<AdminAddFoods/>}/>
+                <Route path="/Admin/View-Foods" element={<AdminViewFoods Tables={TableColumns[0]}/>}/>
+                <Route path="/Admin/View-Food" element={<AdminViewFood View = {ViewThings[0]}/>}/>
+              {/* </Route> */}
+              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                
+                <Route path="/Manager/DashBoard" element={<ManagerDashBoard Navs = {Roles[1]} Card = {Cards[1]}/>}/>
+                <Route path="/Manager/Add-User" element={<AddOutletStaff/>}/>
+                <Route path="/Manager/View-User" element={<ManagerViewUser/>}/>
+                <Route path="/Manager/My-Profile" element={<ManagerUserProfile/>}/>
+                <Route path="/Manager/Report-Generation" element={<ReportGeneration/>}/>
+                <Route path="/Manager/ReportPreview" element={<ReportPreview/>}/>
+                <Route path="/Manager/AddStock" element={<AddStockItem/>}/>
+                <Route path="/Manager/ViewStock" element={<ViewStock Tables={TableColumns[2]}/>}/>
+                <Route path="/Manager/ViewItem" element={<ViewItem/>}/>
+                <Route path="/Manager/Add-Table" element={<ManagerAddTables/>}/>
+                <Route path="/Manager/View-Tables" element={<ManagerViewTables Tables={TableColumns[1]}/>}/>
+                <Route path="/Manager/View-Table" element={<ManagerViewTable View = {ViewThings[2]}/>}/>
+                <Route path="/Manager/Add-Foods" element={<ManagerAddFoods/>}/>
+                <Route path="/Manager/Add-Offers" element={<AddOffers/>}/>
+                <Route path="/Manager/View-Foods" element={<ManagerViewFoods Tables={TableColumns[0]}/>}/>
+                <Route path="/Manager/View-Food" element={<ManagerViewFood View = {ViewThings[0]}/>}/>
+                <Route path="/Manager/View-Offers" element={<ManagerViewOffers Tables={TableColumns[5]}/>}/>
+                <Route path="/Manager/View-Offer" element={<ManagerViewOffer View = {ViewThings[1]}/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
