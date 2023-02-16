@@ -102,15 +102,15 @@ function App() {
         {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
           
           <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
-          <Route path="/Admin/Add-User" element={<AddUser/>}/>
-          <Route path="/Admin/View-User" element={<ViewUser/>}/>
+          <Route path="/Admin/Add-User" element={<AdminAddUser/>}/>
+          <Route path="/Admin/View-User" element={<AdminViewUser/>}/>
           <Route path="/Admin/My-Profile" element={<AdminUserProfile/>}/>
-          <Route path="/Admin/Add-Table" element={<AddTables/>}/>
-          <Route path="/Admin/View-Tables" element={<ViewTables Tables={TableColumns[1]}/>}/>
-          <Route path="/Admin/View-Table" element={<ViewTable View = {ViewThings[2]}/>}/>
-          <Route path="/Admin/Add-Foods" element={<AddFoods/>}/>
-          <Route path="/Admin/View-Foods" element={<ViewFoods Tables={TableColumns[0]}/>}/>
-          <Route path="/Admin/View-Food" element={<ViewFood View = {ViewThings[0]}/>}/>
+          <Route path="/Admin/Add-Table" element={<AdminAddTables/>}/>
+          <Route path="/Admin/View-Tables" element={<AdminViewTables Tables={TableColumns[1]}/>}/>
+          <Route path="/Admin/View-Table" element={<AdminViewTable View = {ViewThings[2]}/>}/>
+          <Route path="/Admin/Add-Foods" element={<AdminAddFoods/>}/>
+          <Route path="/Admin/View-Foods" element={<AdminViewFoods Tables={TableColumns[0]}/>}/>
+          <Route path="/Admin/View-Food" element={<AdminViewFood View = {ViewThings[0]}/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -148,6 +148,7 @@ function App() {
                 <Route path="/Supplier/DashBoard" element={<SupplierDashBoard/>}/>
                 <Route path="/Supplier/My-Profile" element={<SupplierUserProfile/>}/>     
                 <Route path="/Supplier/Messages" element={<Messages/>}/> 
+                
             </Routes>
             <Footer/>
           </div>
