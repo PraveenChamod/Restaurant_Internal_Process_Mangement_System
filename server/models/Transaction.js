@@ -12,6 +12,11 @@ const TransactionSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Order',
     }
+},
+{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true
 })
 
 const Transaction = mongoose.model('Transaction',TransactionSchema)

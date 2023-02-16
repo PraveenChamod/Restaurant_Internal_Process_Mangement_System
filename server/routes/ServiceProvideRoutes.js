@@ -24,11 +24,17 @@ ServiceProviderrouter.route('/offer/getOffer').get(l.getOffers);
 ServiceProviderrouter.route('/offer/updateOffer').post(l.updateOffer);
 ServiceProviderrouter.route('/offer/deleteOffer').post(l.deleteOffers);
 
+//Tables CRUD
+ServiceProviderrouter.route('/Tables/AddTable').post(l.AddTable);
 //Order Handling
 ServiceProviderrouter.route('/Orders/PendingOrders').get(l.ViewPendingOrders);
 ServiceProviderrouter.route('/Orders/ViewOrder/:_id').get(l.ViewOrder);
 ServiceProviderrouter.route('/Orders/getDeliverers').get(l.getAvailableDeliverers);
 ServiceProviderrouter.route('/Orders/ConfirmOrder/:_id').post(l.SendOrderConfrimation);
 
+//Table Reservation Handling
+ServiceProviderrouter.route('/Reservations/PendingReservations').get(l.ViewPendingReservations);
+ServiceProviderrouter.route('/Reservations/ViewReservation/:_id').get(l.ViewReservation);
+ServiceProviderrouter.route('/Reservations/ConfirmReservation/:_id').post(l.SendReservationConfirmation);
 
 export default ServiceProviderrouter;

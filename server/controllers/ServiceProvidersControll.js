@@ -9,6 +9,8 @@ import multer from "multer";
 import { transporter } from "../util/NotificationUtil.js";
 import Order from "../models/Order.js";
 import mongoose from "mongoose";
+import Table from "../models/Tables.js";
+import TableReservation from "../models/TableReservation.js";
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Manager++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -204,22 +206,22 @@ const image = multer({storage:imageStorage}).single('image');
 export const addFoods = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
-            const {FoodName,Price,Category} = req.body;
+        if(user.Role === "Manager" || user.Role=== "Admin"){
+            const {FoodName,Price,Category,Quantity} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             const existingFood = await Foods.findOne({SerialNo:SerialNumber});
-            var FoodImage;
-            image(req,res,(err)=>{
-                if(err){
-                    console.log(err)
-                }
-                else{
-                    FoodImage = req.file.filename;
-                }
-            })
             if(existingFood !== null){
                 res.status(501).json({message:`This item is already added`});
             }else{
+                const FoodImage = "";
+                image(req,res,(err)=>{
+                    if(err){
+                        console.log(err)
+                    }
+                    else{
+                        FoodImage = req.file.filename;
+                    }
+                })
                 const AddFoods = await Foods.create({
                     FoodName:FoodName,
                     Quantity:Quantity,
@@ -228,7 +230,13 @@ export const addFoods = async(req,res)=>{
                     Category:Category,
                     FoodImage:FoodImage
                 })
-                res.json(AddFoods);
+                res.status(200).json({
+                    status: 'success',
+                    message:"Added new food",
+                    data:{
+                        AddFoods
+                    }
+                });
             }
         }
         else{
@@ -244,7 +252,7 @@ export const getFoods = async (req,res)=>{
 
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
+        if(user.Role === "Staff-Member" || user.Role === "Manager" || user.Role=== "Admin"){
             const foods = await Foods.find();
             if(foods !== null){
                 res.json(foods);
@@ -310,7 +318,7 @@ export const  deleteFoods =async (req,res)=>{
 
     try{
          const user = req.user;
-         if(user.Role==="Staff-Member"){
+         if(user.Role === "Manager" || user.Role === "Admin"){
             const {SerialNo} = req.params;
             const Food = await Foods.findOne({SerialNo:SerialNo});
             console.log(Food);
@@ -435,6 +443,56 @@ export const  deleteOffers =async (req,res)=>{
    
 }
 
+//+++++++++++++++++++++++++++++++++++++++++++++++Tables CRUD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+// Method : POST
+// End Point : "api/v1/serviceProvider/Tables/AddTable";
+// Description : Add Table
+export const AddTable = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role === "Admin"){
+            const {TableNo,NoOfPersons,price} = req.body;
+            const existingTable = await Table.findOne({TableNo:TableNo}).populate('TableNo');
+            if(existingTable){
+                res.status(400).json({
+                    status: 'Error',
+                    message:"This Table is Already Exist",
+                })
+            }
+            else{
+                const addTable = await Table.create({
+                    TableNo:TableNo,
+                    NoOfPersons:NoOfPersons,
+                    price:price
+                })
+                res.status(201).json({
+                    status:'Success',
+                    message:'A New Table is Added',
+                    data:{
+                        addTable
+                    }
+                })
+
+            }
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+}
+
+
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++staff-member+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Method : GET
@@ -482,8 +540,8 @@ export const  deleteOffers =async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
-            const {OrderId} = req.params;
-            const findOrder = await Order.findById({_id:OrderId});
+            const {_id} = req.params;
+            const findOrder = await Order.findById(_id);
             if(findOrder !== null){
                 res.status(201).json({
                     status: 'success',
@@ -510,10 +568,11 @@ export const  deleteOffers =async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
-            const Deliverers = await User.find({Role:"Deliverer"}).populate('Role');
+            const Deliverers = await ServiceProviders.find({Role:"Deliverer"}).populate('Role');
             if(Deliverers !== null){
                 let deliverers = [];
                     Deliverers.map(user=>{
+                        console.log(user)
                         if(user.Order === undefined){
                             deliverers.push(user);
                         }
@@ -526,6 +585,12 @@ export const  deleteOffers =async (req,res)=>{
                         }
                     })
                 return deliverers; 
+            }
+            else{
+                res.status(401).json({
+                    status: 'Warning',
+                    message: 'There are no available deliverers',
+                })
             }
         }
         else{
@@ -560,13 +625,14 @@ export const SendOrderConfrimation = async(req,res)=>{
                     const findDeliverer = await ServiceProviders.findOne({Email:Email}).populate('Email');
                     console.log(findDeliverer);
                     const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,Status:'Confirm'},{new:true,runValidators:true}).session(session);
-                    await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:findOrder.id},{new:true,runValidators:true}).session(session);
+                    const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:findOrder.id},{new:true,runValidators:true}).session(session);
+                    console.log(updateDeliverer);
                     await session.commitTransaction();
                     session.endSession();
                     
                     res.status(201).json({
                         status: 'success',
-                        message: 'Confirm Order successfully',
+                        message: 'Order is Confirmed',
                         data: {
                             UpdateOrder
                         }
@@ -586,3 +652,109 @@ export const SendOrderConfrimation = async(req,res)=>{
         });
     }
  }
+
+// Method : GET
+// End Point : "api/v1/serviceProvider/Reservations/PendingReservations";
+// Description : View Reservation
+export const ViewPendingReservations = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const findReservations = await TableReservation.find();
+            let pendingReservations = [];
+            findReservations.map(order=>{
+                    if(order.Status === "Pending"){
+                        pendingReservations.push(order);
+                    }
+                })
+            res.status(201).json({
+                status: 'success',
+                message: 'Pending Reservations',
+                data: {
+                    pendingReservations
+                }
+            })
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status: 'Server Error',
+            message: error.message,
+        });
+    }
+}
+
+// Method : GET
+// End Point : "api/v1/serviceProvider/Reservations/ViewReservation/:_id";
+// Description : View Order
+export const ViewReservation = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const {_id} = req.params;
+            console.log(_id);
+            const findReservation = await TableReservation.findById(_id);
+            if(findReservation !== null){
+                res.status(201).json({
+                    status: 'success',
+                    message: 'Reservation Details',
+                    data: {
+                        findReservation
+                    }
+                })  
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
+
+// Method : POST
+// End Point : "api/v1/serviceProvider/Reservation/ConfirmReservation/:_id";
+// Description : Confirm Reservation
+export const SendReservationConfirmation = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const {_id} = req.params;
+            const findReservation = await TableReservation.findById(_id);
+            // const findTable = await Table.findById(findReservation.Table);
+            if(findReservation !== null){
+                const session = await mongoose.startSession();
+                try {
+                    session.startTransaction();
+                    const UpdateReservation = await TableReservation.findByIdAndUpdate(findReservation.id,{Status:'Confirm'},{new:true,runValidators:true}).session(session);
+                    const UpdateTable = await Table.findByIdAndUpdate(findReservation.Table._id)
+                    await session.commitTransaction();
+                    session.endSession();
+                    
+                    res.status(201).json({
+                        status: 'success',
+                        message: 'Table Reservation is Confirmed',
+                        data: {
+                            UpdateReservation
+                        }
+                    })
+                } catch (error) {
+                    res.status(401).json({
+                        status: 'Error',
+                        message: error.message,
+                    });
+                }
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            status: 'Server Error',
+            message: error.message,
+        });
+    }
+}

@@ -7,6 +7,7 @@ const FoodsSchema = mongoose.Schema({
     },
     Quantity:{
         type:String,
+        required:[true,"Must Provide the available no of item"]
     },
     Price:{
         type:Number,
@@ -18,6 +19,7 @@ const FoodsSchema = mongoose.Schema({
     },
     FoodImage:{
         type:String,
+        required:[true,"Must Upload Image"]
     },
     Category:{
         type:String,
@@ -27,6 +29,11 @@ const FoodsSchema = mongoose.Schema({
         type:Boolean,
         default:false
     }
+},
+{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true
 });
 
 const Foods = mongoose.model('Foods',FoodsSchema);
