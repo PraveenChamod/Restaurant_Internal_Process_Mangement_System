@@ -10,6 +10,8 @@ import { UploadProfileImage } from "./AuthController.js";
 import Order from "../models/Order.js";
 import Foods from "../models/Foods.js";
 import Stripe from 'stripe';
+import Table from "../models/Tables.js";
+import TableReservation from "../models/TableReservation.js";
 
 const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 const maxAge = 3 * 24 * 60 * 60;
@@ -224,5 +226,66 @@ export const PlaceOrder = async(req,res)=>{
         }
     } catch (error) {
         res.status(500).json(error.message);
+    }
+}
+
+
+// Method : POST
+// End Point : "api/v1/customer/ReserveTable";
+// Description : Reserve Table
+export const ReserveTable = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Customer"){
+            const {TableNo,NoOfPersons,Date,Time} = req.body;
+            const findTable = await Table.findOne({TableNo:TableNo}).populate('TableNo');
+            const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
+            if(findTable){
+                const amount = findTable.price;
+                if(findTable.NoOfPersons < NoOfPersons){
+                    res.status(300).json({
+                        status:'Warning',
+                        message:`This Table Cannot allocated for ${NoOfPersons} persons` 
+                    });
+                }
+                else{
+                    const ReservationData = {Customer:logedCustomer.id,TableNo:TableNo,NoOfPersons:NoOfPersons,amount:amount,Table:findTable.id,Date:Date,Time:Time}
+                
+                    const session = await mongoose.startSession();
+                    // console.log(session);
+                    try {
+                        session.startTransaction();
+                        const updateFood = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
+                        const newReservation = await TableReservation.create([ReservationData],{session});
+                        const commit = await session.commitTransaction();
+                        session.endSession();
+                    
+                        res.status(201).json({
+                            status: 'success',
+                            message: 'Reservation successfully',
+                            data: {
+                                newReservation
+                            }
+                        })
+                    } catch (error) {
+                        res.status(400).json({
+                            status:'Error',
+                            message:error.message
+                        });
+                    }
+                }
+            }
+            else{
+                res.status(404).json({
+                    status:'Error',
+                    message:'This Food is not available'
+                });
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        });
     }
 }
