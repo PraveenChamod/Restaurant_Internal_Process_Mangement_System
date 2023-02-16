@@ -1,5 +1,4 @@
-import OrderDetailsComponent from "../../components/Staff-Member_Components/OrderDetails/OrderDetails";
-const StaffMemberOrderDetails = () => {
+const OrderDetails = () => {
     return ( 
         <>
          <OrderDetailsComponent/>

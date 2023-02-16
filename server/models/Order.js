@@ -9,6 +9,10 @@ const OrderSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Foods'
     },
+    ServiceProvider:{
+        type:mongoose.Schema.ObjectId,
+        ref:'ServiceProviders'
+    },
     Date:{
         type:Date,
         required:true,
@@ -28,6 +32,11 @@ const OrderSchema = mongoose.Schema({
     },
     Quantity:{
         type:Number,
+        required:true
+    },
+    Status:{
+        type:String,
+        default:'Pending',
         required:true
     }
 },

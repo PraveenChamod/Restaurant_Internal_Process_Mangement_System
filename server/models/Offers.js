@@ -11,7 +11,11 @@ const offerSchema = mongoose.Schema({
     },
     SerialNo:{
         type:String,
-        required:[true,"Serial No Must Be Add"]
+        required:[true,"Serial Number Must Be Add"]
+    },
+    Validity:{
+        type:String,
+        required:[true,"Must Provide the validity of the offer"]
     }
 },
 {
