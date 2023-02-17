@@ -68,6 +68,7 @@ import StaffMemberOrderDetails from './Pages/Staff-Member/OrderDetails';
 import StaffMemberTableReservationDetails from './Pages/Staff-Member/TableReservationDetails';
 import StaffMemberPlaceOrder from './Pages/Staff-Member/PlaceOrder';
 import FrogotPassword from './Pages/ForgotPassword';
+import CustomerProfile from './components/Customer/CustomerProfile/CustomerProfile';
 
 function App() {
   useEffect(() => {
@@ -85,97 +86,111 @@ function App() {
     }
   }
   return (
-    <div>
-      <AuthState>
-          <Fragment>
-          <div className="App">
-            <ScrollToTop/> 
-            <Navbar ScrollToTop={scrollToTop}/>
-            <Routes>
-                <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
-                <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
-                <Route path="/login" element={<LoginPg/>}/>
-                <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
-                <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
-
-
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-              {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
-                <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
-                <Route path="/Admin/Add-User" element={<AdminAddUser/>}/>
-                <Route path="/Admin/View-User" element={<AdminViewUser/>}/>
-                <Route path="/Admin/My-Profile" element={<AdminUserProfile/>}/>
-                <Route path="/Admin/Add-Table" element={<AdminAddTables/>}/>
-                <Route path="/Admin/View-Tables" element={<AdminViewTables Tables={TableColumns[1]}/>}/>
-                <Route path="/Admin/View-Table" element={<AdminViewTable View = {ViewThings[2]}/>}/>
-                <Route path="/Admin/Add-Foods" element={<AdminAddFoods/>}/>
-                <Route path="/Admin/View-Foods" element={<AdminViewFoods Tables={TableColumns[0]}/>}/>
-                <Route path="/Admin/View-Food" element={<AdminViewFood View = {ViewThings[0]}/>}/>
-              {/* </Route> */}
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-                
-                <Route path="/Manager/DashBoard" element={<ManagerDashBoard Navs = {Roles[1]} Card = {Cards[1]}/>}/>
-                <Route path="/Manager/Add-User" element={<AddOutletStaff/>}/>
-                <Route path="/Manager/View-User" element={<ManagerViewUser/>}/>
-                <Route path="/Manager/My-Profile" element={<ManagerUserProfile/>}/>
-                <Route path="/Manager/Report-Generation" element={<ReportGeneration/>}/>
-                <Route path="/Manager/ReportPreview" element={<ReportPreview/>}/>
-                <Route path="/Manager/AddStock" element={<AddStockItem/>}/>
-                <Route path="/Manager/ViewStock" element={<ViewStock Tables={TableColumns[2]}/>}/>
-                <Route path="/Manager/ViewItem" element={<ViewItem/>}/>
-                <Route path="/Manager/Add-Table" element={<ManagerAddTables/>}/>
-                <Route path="/Manager/View-Tables" element={<ManagerViewTables Tables={TableColumns[1]}/>}/>
-                <Route path="/Manager/View-Table" element={<ManagerViewTable View = {ViewThings[2]}/>}/>
-                <Route path="/Manager/Add-Foods" element={<ManagerAddFoods/>}/>
-                <Route path="/Manager/Add-Offers" element={<AddOffers/>}/>
-                <Route path="/Manager/View-Foods" element={<ManagerViewFoods Tables={TableColumns[0]}/>}/>
-                <Route path="/Manager/View-Food" element={<ManagerViewFood View = {ViewThings[0]}/>}/>
-                <Route path="/Manager/View-Offers" element={<ManagerViewOffers Tables={TableColumns[5]}/>}/>
-                <Route path="/Manager/View-Offer" element={<ManagerViewOffer View = {ViewThings[1]}/>}/>
-
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-                
-                <Route path="/Staff-Member/DashBoard" element={<StaffMemberDashBoard Navs = {Roles[1]}/>}/>
-                <Route path="/Staff-Member/Add-Offers" element={<StaffMemberAddOffers/>}/>
-                <Route path="/Staff-Member/View-Offers" element={<StaffMemberViewOffers Tables={TableColumns[5]}/>}/>
-                <Route path="/Staff-Member/View-Offer" element={<StaffMemberViewOffer View = {ViewThings[1]}/>}/>
-                <Route path="/Staff-Member/View-Foods" element={<StaffMemberViewFoods Tables={TableColumns[0]}/>}/>
-                <Route path="/Staff-Member/View-Tables" element={<StaffMemberViewTables Tables={TableColumns[1]}/>}/>
-                <Route path="/Staff-Member/Order-Details" element={<StaffMemberOrderDetails/>}/>
-                <Route path="/Staff-Member/Table-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
-                <Route path="/Staff-Member/My-Profile" element={<StaffMemberUserProfile/>}/>
-                <Route path="/Staff-Member/Place-Order" element={<StaffMemberPlaceOrder/>}/>
-
-                
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-                  
-                <Route path="/Customer/DashBoard" element={<CustomerDashBoard/>}/>
-                <Route path="/Customer/My-Profile" element={<CustomerUserProfile/>}/>     
-                <Route path="/Customer/Place-Order" element={<Order/>}/>     
-                <Route path="/Customer/My-Cart" element={<Cart/>}/>     
-                <Route path="/Customer/My-Orders" element={<MyOrders/>}/>   
-                <Route path="/Customer/Table-Reservation" element={<TableReservationDetails/>}/>     
-                <Route path="/Customer/Add-Review" element={<AddReview/>}/>     
-                <Route path="/Customer/Delivery-Tracking" element={<DeliveryTracking/>}/>     
-
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-                  
-                <Route path="/Deliverer/DashBoard" element={<DelivererDashBoard/>}/>
-                <Route path="/Deliverer/My-Profile" element={<DelivererUserProfile/>}/>     
-                <Route path="/Deliverer/Place-Order" element={<DeliveryOrderDetails/>}/>     
-              
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
-                  
-                <Route path="/Supplier/DashBoard" element={<SupplierDashBoard/>}/>
-                <Route path="/Supplier/My-Profile" element={<SupplierUserProfile/>}/>     
-                <Route path="/Supplier/Messages" element={<Messages/>}/> 
-            </Routes>
-            <Footer/>
-          </div>
-          </Fragment>
-      </AuthState>
+    <div className="App">
+      <CustomerProfile/>
     </div>
+
+
+
+
+
   );
+
+
+
+
+  // return (
+  //   <div>
+  //     <AuthState>
+  //         <Fragment>
+  //         <div className="App">
+  //           <ScrollToTop/> 
+  //           <Navbar ScrollToTop={scrollToTop}/>
+  //           <Routes>
+  //               <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
+  //               <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
+  //               <Route path="/login" element={<LoginPg/>}/>
+  //               <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
+  //               <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
+
+
+  //             {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+  //             {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
+  //               <Route path="/Admin/DashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]}/>} />
+  //               <Route path="/Admin/Add-User" element={<AdminAddUser/>}/>
+  //               <Route path="/Admin/View-User" element={<AdminViewUser/>}/>
+  //               <Route path="/Admin/My-Profile" element={<AdminUserProfile/>}/>
+  //               <Route path="/Admin/Add-Table" element={<AdminAddTables/>}/>
+  //               <Route path="/Admin/View-Tables" element={<AdminViewTables Tables={TableColumns[1]}/>}/>
+  //               <Route path="/Admin/View-Table" element={<AdminViewTable View = {ViewThings[2]}/>}/>
+  //               <Route path="/Admin/Add-Foods" element={<AdminAddFoods/>}/>
+  //               <Route path="/Admin/View-Foods" element={<AdminViewFoods Tables={TableColumns[0]}/>}/>
+  //               <Route path="/Admin/View-Food" element={<AdminViewFood View = {ViewThings[0]}/>}/>
+  //             {/* </Route> */}
+  //             {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                
+  //               <Route path="/Manager/DashBoard" element={<ManagerDashBoard Navs = {Roles[1]} Card = {Cards[1]}/>}/>
+  //               <Route path="/Manager/Add-User" element={<AddOutletStaff/>}/>
+  //               <Route path="/Manager/View-User" element={<ManagerViewUser/>}/>
+  //               <Route path="/Manager/My-Profile" element={<ManagerUserProfile/>}/>
+  //               <Route path="/Manager/Report-Generation" element={<ReportGeneration/>}/>
+  //               <Route path="/Manager/ReportPreview" element={<ReportPreview/>}/>
+  //               <Route path="/Manager/AddStock" element={<AddStockItem/>}/>
+  //               <Route path="/Manager/ViewStock" element={<ViewStock Tables={TableColumns[2]}/>}/>
+  //               <Route path="/Manager/ViewItem" element={<ViewItem/>}/>
+  //               <Route path="/Manager/Add-Table" element={<ManagerAddTables/>}/>
+  //               <Route path="/Manager/View-Tables" element={<ManagerViewTables Tables={TableColumns[1]}/>}/>
+  //               <Route path="/Manager/View-Table" element={<ManagerViewTable View = {ViewThings[2]}/>}/>
+  //               <Route path="/Manager/Add-Foods" element={<ManagerAddFoods/>}/>
+  //               <Route path="/Manager/Add-Offers" element={<AddOffers/>}/>
+  //               <Route path="/Manager/View-Foods" element={<ManagerViewFoods Tables={TableColumns[0]}/>}/>
+  //               <Route path="/Manager/View-Food" element={<ManagerViewFood View = {ViewThings[0]}/>}/>
+  //               <Route path="/Manager/View-Offers" element={<ManagerViewOffers Tables={TableColumns[5]}/>}/>
+  //               <Route path="/Manager/View-Offer" element={<ManagerViewOffer View = {ViewThings[1]}/>}/>
+
+  //             {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                
+  //               <Route path="/Staff-Member/DashBoard" element={<StaffMemberDashBoard Navs = {Roles[1]}/>}/>
+  //               <Route path="/Staff-Member/Add-Offers" element={<StaffMemberAddOffers/>}/>
+  //               <Route path="/Staff-Member/View-Offers" element={<StaffMemberViewOffers Tables={TableColumns[5]}/>}/>
+  //               <Route path="/Staff-Member/View-Offer" element={<StaffMemberViewOffer View = {ViewThings[1]}/>}/>
+  //               <Route path="/Staff-Member/View-Foods" element={<StaffMemberViewFoods Tables={TableColumns[0]}/>}/>
+  //               <Route path="/Staff-Member/View-Tables" element={<StaffMemberViewTables Tables={TableColumns[1]}/>}/>
+  //               <Route path="/Staff-Member/Order-Details" element={<StaffMemberOrderDetails/>}/>
+  //               <Route path="/Staff-Member/Table-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
+  //               <Route path="/Staff-Member/My-Profile" element={<StaffMemberUserProfile/>}/>
+  //               <Route path="/Staff-Member/Place-Order" element={<StaffMemberPlaceOrder/>}/>
+
+                
+  //             {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                  
+  //               <Route path="/Customer/DashBoard" element={<CustomerDashBoard/>}/>
+  //               <Route path="/Customer/My-Profile" element={<CustomerUserProfile/>}/>     
+  //               <Route path="/Customer/Place-Order" element={<Order/>}/>     
+  //               <Route path="/Customer/My-Cart" element={<Cart/>}/>     
+  //               <Route path="/Customer/My-Orders" element={<MyOrders/>}/>   
+  //               <Route path="/Customer/Table-Reservation" element={<TableReservationDetails/>}/>     
+  //               <Route path="/Customer/Add-Review" element={<AddReview/>}/>     
+  //               <Route path="/Customer/Delivery-Tracking" element={<DeliveryTracking/>}/>     
+
+  //             {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                  
+  //               <Route path="/Deliverer/DashBoard" element={<DelivererDashBoard/>}/>
+  //               <Route path="/Deliverer/My-Profile" element={<DelivererUserProfile/>}/>     
+  //               <Route path="/Deliverer/Place-Order" element={<DeliveryOrderDetails/>}/>     
+              
+  //             {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                  
+  //               <Route path="/Supplier/DashBoard" element={<SupplierDashBoard/>}/>
+  //               <Route path="/Supplier/My-Profile" element={<SupplierUserProfile/>}/>     
+  //               <Route path="/Supplier/Messages" element={<Messages/>}/> 
+  //           </Routes>
+  //           <Footer/>
+  //         </div>
+  //         </Fragment>
+  //     </AuthState>
+  //   </div>
+  // );
 }
 
 export default App;
