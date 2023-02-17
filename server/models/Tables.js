@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 
 const tableSchema = mongoose.Schema({
-    Customer:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Customer',
-    },
     TableNo:{
-        type:Selection,
-        required:[true,"You must have select the table no"]
-    },
-    DateAndTime:{
-        type:DataView,
-        required:[true,"You must have provide the date & time"]
+        type:String,
+        required:[true,"You must have select the table no"],
+        unique:true
     },
     NoOfPersons:{
         type:Number,
-        required:[true,"You must have provide the number of persons"]
+        required:[true,"You must have provide the maximum number of persons"]
+    },
+    price:{
+        type:Number,
+        required:[true,"You must provide the table reservation fee"]
+    },
+    Status:{
+        type:String,
+        required:true,
+        default:'Available'
     }
     },{
         toJSON: { virtuals: true },
