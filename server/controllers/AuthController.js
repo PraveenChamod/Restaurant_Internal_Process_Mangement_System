@@ -38,7 +38,7 @@ export const LogInUser = async (req,res)=>{
             res.status(400).json('Invallid Email');
         }
     } catch (err) {
-        res.status(400).json({ errors:message });
+        res.status(400).json({ err:message });
     }
     
 }

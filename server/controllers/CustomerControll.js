@@ -12,6 +12,7 @@ import Foods from "../models/Foods.js";
 import Stripe from 'stripe';
 import Table from "../models/Tables.js";
 import TableReservation from "../models/TableReservation.js";
+import Review from "../models/Reviews.js";
 
 const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 const maxAge = 3 * 24 * 60 * 60;
@@ -287,5 +288,44 @@ export const ReserveTable = async(req,res)=>{
             status:'Server Error',
             message:error.message
         });
+    }
+}
+
+
+// Method : POST
+// End Point : "api/v1/customer/Reveiw";
+// Description : Add Review
+export const AddReview = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Customer"){
+            const {review,rate} = req.body;
+                const session = await mongoose.startSession();
+                // console.log(session);
+                try {
+                    session.startTransaction();
+                    const ReviewData = {
+                        Review:review,
+                        Rate:rate}
+                    const newreview = await Review.create([ReviewData],{session});
+                    const commit = await session.commitTransaction();
+                    session.endSession();
+                
+                    res.status(201).json({
+                        status: 'success',
+                        message: 'Submitted Review successfully'
+                    })
+                } catch (error) {
+                    res.status(500).json(error.message);
+                }
+                // return res.json(review);
+            
+        }   
+        else{
+            res.json({message:"You are not a Customer"});
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.status(404).json(error.message);
     }
 }
