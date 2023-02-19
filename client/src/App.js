@@ -71,6 +71,7 @@ import FrogotPassword from './Pages/ForgotPassword';
 import OrderDetailsComponent from './components/Staff-Member_Components/OrderDetails/OrderDetails';
 import CustomerProfile from './components/Customer/CustomerProfile/CustomerProfile';
 import UserProfileComponent from './components/shared/UserProfile/UserProfile';
+import EditProfileComponent from './components/shared/EditProfile/Editprofile';
 
 function App() {
   useEffect(() => {
