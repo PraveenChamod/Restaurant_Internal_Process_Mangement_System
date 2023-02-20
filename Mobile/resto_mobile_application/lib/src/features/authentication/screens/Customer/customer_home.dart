@@ -72,108 +72,116 @@ class _CustomerHomeState extends State<CustomerHome> {
           body: Stack(
             children: <Widget>[
               const BackgroundImage(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text(
-                      "Find the best meal for you",
-                      style: TextStyle(
-                        fontSize: 32,
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TextField(
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.white70,
-                        ),
-                        hintText: "Find Your Favourite..",
-                        hintStyle: const TextStyle(fontSize: 20.0, color: Colors.white70),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade600),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade600),
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Text(
+                        "Find the best meal for you",
+                        style: TextStyle(
+                          fontSize: 32,
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10,),
-                  //Horizontal Listview of food types
-                  Container(
-                    height: 50,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: foodTypes.length,
-                      itemBuilder: (context, index) {
-                        return FoodTypes(
-                          foodType: foodTypes[index][0],
-                          isSelected: foodTypes[index][1],
-                          onTap: () {
-                            foodTypeSelected(index);
-                          },
-                        );
-                      },
+                    const SizedBox(height: 10,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: TextField(
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(
+                            Icons.search,
+                            color: Colors.white70,
+                          ),
+                          hintText: "Find Your Favourite..",
+                          hintStyle: const TextStyle(fontSize: 20.0, color: Colors.white70),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                            borderSide: BorderSide(color: Colors.grey.shade600),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
+                            borderSide: BorderSide(color: Colors.grey.shade600),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  //Horizontal Listview of food tiles
-                  Container(
-                    height: 280,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: const <Widget>[
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-                          foodName: "Pizza",
-                          foodPrice: "4.60",
-                          foodSpecialIngredient: 'With Almond Milk',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Burger/Chicken_Burger.jpg",
-                          foodName: "Burger",
-                          foodPrice: "4.50",
-                          foodSpecialIngredient: 'With Coconut Milk',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-                          foodName: "Koththu",
-                          foodPrice: "5.60",
-                          foodSpecialIngredient: 'With Chocolate',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
-                          foodName: "Rice",
-                          foodPrice: "3.60",
-                          foodSpecialIngredient: 'With Chilies',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-                          foodName: "Koththu",
-                          foodPrice: "5.60",
-                          foodSpecialIngredient: 'With Chocolate',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
-                          foodName: "Rice",
-                          foodPrice: "3.60",
-                          foodSpecialIngredient: 'With Chilies',
-                        ),
-                      ],
+                    const SizedBox(height: 10,),
+                    //Horizontal Listview of food types
+                    Container(
+                      height: 50,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: foodTypes.length,
+                        itemBuilder: (context, index) {
+                          return FoodTypes(
+                            foodType: foodTypes[index][0],
+                            isSelected: foodTypes[index][1],
+                            onTap: () {
+                              foodTypeSelected(index);
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                    //Horizontal Listview of food tiles
+                    Container(
+                      height: 280,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: const <Widget>[
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Pizza/Cheese_Pizza.jpg",
+                            foodName: "Pizza",
+                            foodPrice: "4.60",
+                            foodSpecialIngredient: 'With Almond Milk',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Burger/Chicken_Burger.jpg",
+                            foodName: "Burger",
+                            foodPrice: "4.50",
+                            foodSpecialIngredient: 'With Coconut Milk',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+                            foodName: "Koththu",
+                            foodPrice: "5.60",
+                            foodSpecialIngredient: 'With Chocolate',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
+                            foodName: "Rice",
+                            foodPrice: "3.60",
+                            foodSpecialIngredient: 'With Chilies',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+                            foodName: "Koththu",
+                            foodPrice: "5.60",
+                            foodSpecialIngredient: 'With Chocolate',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
+                            foodName: "Rice",
+                            foodPrice: "3.60",
+                            foodSpecialIngredient: 'With Chilies',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -255,7 +263,6 @@ class FoodTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             //Food Image
             Center(
               child: ClipRRect(
