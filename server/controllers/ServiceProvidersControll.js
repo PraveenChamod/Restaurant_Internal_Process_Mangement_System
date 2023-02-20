@@ -45,21 +45,34 @@ export const RegisterOutletStaff = async (req,res)=>{
                         Role:Role
                     })
                     //send Email
-                    const mailOption = {
-                        from : 'resto6430@gmail.com',
-                        to : Email,
-                        subject : 'Registration Confrimation',
-                        text : `Hi Welcome to Resto. You successfully registered to the system.`
+                    //send Email
+                    if(createUser.Role !== "Customer"){
+                        const mailOption = {
+                            from : 'resto6430@gmail.com',
+                            to : Email,
+                            subject : 'Registration Confrimation',
+                            attachments:[{
+                                filename : 'logo.png',
+                                path:'E:/WEB/Restaurant_Management_System/server/Template/logo.png',
+                                cid:'logo'
+                            },
+                            {
+                                filename : 'welcome_vector.png',
+                                path:'E:/WEB/Restaurant_Management_System/server/Template/welcome_vector.png',
+                                cid:'welcome'
+                            }],
+                            html: { path:'E:/WEB/Restaurant_Management_System/server/Template/Email.html' }
+                        }
+    
+                        transporter.sendMail(mailOption,(err,info)=>{
+                            if(err){
+                                console.log(err.message);
+                            }
+                            else{
+                                console.log(info.response);
+                            }
+                        })
                     }
-
-                    transporter.sendMail(mailOption,(err,info)=>{
-                        if(err){
-                            console.log(err.message);
-                        }
-                        else{
-                            console.log(info.response);
-                        }
-                    })
                     const token = createToken(createUser._id,createUser.Email);
                     res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
                     res.json(token);
