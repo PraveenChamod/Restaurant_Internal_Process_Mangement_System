@@ -23,4 +23,6 @@ export const Header = styled.h1`
   -webkit-background-clip: text;
   background-clip: text;
   letter-spacing: 1rem;
+  margin-bottom: 15px;
+
 `
