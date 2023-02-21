@@ -1,5 +1,5 @@
 //structure
-import './style.css'
+
 
 import { Container, Header } from '../../shared/SharedElements/SharedElements';
 import { BottomArea, Hr, LeftForm, MainFormDiv, RightForm, TitleText, ToptArea,BottomLeftForm,BottomRightForm, BackButton } from "./OrderDetailsElements";

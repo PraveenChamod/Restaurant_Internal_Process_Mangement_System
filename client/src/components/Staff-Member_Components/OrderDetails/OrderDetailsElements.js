@@ -37,7 +37,7 @@ margin-left:8%;
 flex-direction:column;
 `
 export const Hr = styled.hr`
-width:100%;
+/* width:100% */
 `
 
 export const BottomArea = styled.div`

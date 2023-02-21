@@ -265,7 +265,7 @@ export const getFoods = async (req,res)=>{
 
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Manager" || user.Role=== "Admin"){
+        if(user.Role === "Staff-Member" || user.Role === "Manager" || user.Role=== "Admin" || user.Role === "Customer"){
             const foods = await Foods.find();
             if(foods !== null){
                 res.json(foods);
@@ -285,7 +285,7 @@ export const getFoods = async (req,res)=>{
 export const getFoodByCategory = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
+        if(user.Role === "Staff-Member" || user.Role === "Customer"){
             const Category = req.body.Category;
             const findFoods = await Foods.find({Category:Category}).populate('Category');
             if(findFoods !== null){
@@ -392,7 +392,7 @@ export const getOffers = async (req,res)=>{
 
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
+        if(user.Role === "Staff-Member" || user.Role === "Customer"){
             const offers = await Offers.find();
             if(offers !== null){
                 res.json(offers);

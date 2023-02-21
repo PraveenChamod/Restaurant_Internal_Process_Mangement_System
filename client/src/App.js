@@ -2,7 +2,6 @@ import './App.css';
 import {BrowserRouter as Router, Outlet, Route, Routes} from 'react-router-dom'
 import {Home} from './Pages/Home';
 import {Menu} from './Pages/Menu'
-import {Cart} from './Pages/Customer/Cart'
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import LoginPg from './Pages/Login';
@@ -24,6 +23,7 @@ import AddOffers from './Pages/Manager/AddOffers';
 import TableReservationDetails from './Pages/Staff-Member/TableReservationDetails';
 import CustomerDashBoard from './Pages/Customer/CustomerDashBoard';
 import CustomerUserProfile from './Pages/Customer/UserProfile';
+import Cart from './Pages/Customer/Cart';
 import Order from './Pages/Customer/Order';
 import MyOrders from './Pages/Customer/MyOrders';
 import AddReview from './Pages/Customer/Review';
@@ -72,6 +72,7 @@ import OrderDetailsComponent from './components/Staff-Member_Components/OrderDet
 import CustomerProfile from './components/Customer/CustomerProfile/CustomerProfile';
 import UserProfileComponent from './components/shared/UserProfile/UserProfile';
 import EditProfileComponent from './components/shared/EditProfile/Editprofile';
+import CartData from './Data/CartData';
 
 function App() {
   useEffect(() => {
@@ -156,7 +157,7 @@ function App() {
                 <Route path="/Customer/DashBoard" element={<CustomerDashBoard/>}/>
                 <Route path="/Customer/My-Profile" element={<CustomerUserProfile/>}/>     
                 <Route path="/Customer/Place-Order" element={<Order/>}/>     
-                <Route path="/Customer/My-Cart" element={<Cart/>}/>     
+                <Route path="/Customer/My-Cart" element={<Cart cartData = {CartData}/>}/>     
                 <Route path="/Customer/My-Orders" element={<MyOrders/>}/>   
                 <Route path="/Customer/Table-Reservation" element={<TableReservationDetails/>}/>     
                 <Route path="/Customer/Add-Review" element={<AddReview/>}/>     

@@ -13,6 +13,7 @@ import Stripe from 'stripe';
 import Table from "../models/Tables.js";
 import TableReservation from "../models/TableReservation.js";
 import Review from "../models/Reviews.js";
+import globalArray from "../Data/GlobalArray.js";
 
 const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 const maxAge = 3 * 24 * 60 * 60;
@@ -129,6 +130,19 @@ export const UpdateProfile = async(req,res)=>{
     }
 }
 
+export const selectItems = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Customer"){
+            const {SerialNo} = req.body;
+            const food = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
+            globalArray.Add(food);
+        }
+    } catch (error) {
+        
+    }
+}
+
 // Method : POST
 // End Point : "api/v1/customer/OrderItem";
 // Description : Ordering Item
@@ -138,10 +152,13 @@ export const OrderItem = async(req,res,next)=>{
         // console.log(user);
         if(user.Role === 'Customer'){
             const {SerialNo,Quantity,paymentMethod} = req.body;
-            const findFood = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
+            let OrderFoods = [];
+            OrderFoods = globalArray.Get();
+            const findFood = await Foods.findOne({SerialNo:OrderFoods.SerialNo}).populate('SerialNo');
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
             if(findFood){
-                const TotalPrice = findFood.Price * Quantity;
+                const ItemPrice = findFood.Price * Quantity;
+                const TotalPrice = 0;
                 if(user.Address !== null){
                     const OrderData = {Customer:logedCustomer.id,Quantity:Quantity,TotalPrice:TotalPrice,paymentMethod:paymentMethod,Foods:findFood.id}
                 
@@ -329,3 +346,22 @@ export const AddReview = async (req,res)=>{
         res.status(404).json(error.message);
     }
 }
+
+
+
+// Method : POST
+// End Point : "api/v1/customer/Reveiw";
+// Description : Add to cart
+
+export const AddToCart = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Customer"){
+            const existingUser = await Customer.findById(user.id);
+            const food = req.body;
+            
+        }
+    } catch (error) {
+        
+    }
+} 
