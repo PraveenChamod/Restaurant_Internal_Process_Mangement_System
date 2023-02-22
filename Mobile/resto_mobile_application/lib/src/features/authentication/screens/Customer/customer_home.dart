@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../common_widgets/background_image.dart';
+import '../../../../constants/homeScreen_indicator.dart';
 import '../../../../constants/image_strings.dart';
+import '../../../../constants/main_features.dart';
 
 class CustomerHome extends StatefulWidget {
   const CustomerHome({Key? key}) : super(key: key);
@@ -11,8 +12,68 @@ class CustomerHome extends StatefulWidget {
 }
 
 class _CustomerHomeState extends State<CustomerHome> {
+  var _selectedIndex = 0;
+  //Main Features List
+  List<Map<String, String>> splashData = [
+    {"title": "Restaurant Menus",
+      "text": "Create and display your menu online",
+      "image": chooseOnline
+    },
+    {"title": "Online Order",
+      "text": "Take orders on your site for delivery",
+      "image": orderFood
+    },
+    // {"title": "Fast Delivery",
+    //   "text": "Pick out your fresh favorites for delivery right to your doorstep.",
+    //   "image": deliveryService
+    // },
+    {"title": "Table Reservations",
+      "text": "Reserve Dining Tables on your own choice",
+      "image": dinningTable
+    },
+  ];
 
-  //List of food types
+  //List of food items(Dummy)
+  List<Map<String, String>> foodItems = [
+    {
+      "foodImagePath": "assets/Food Types/Pizza/Cheese_Pizza.jpg",
+      "foodName": "Pizza",
+      "foodPrice": "4.70",
+      "foodSpecialIngredient": "With Almond Milk",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Burger/Chicken_Burger.jpg",
+      "foodName": "Burger",
+      "foodPrice": "4.50",
+      "foodSpecialIngredient": "With Coconut Milk",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+      "foodName": "Koththu",
+      "foodPrice": "5.60",
+      "foodSpecialIngredient": "With Chocolate",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Rice/Veg_Rice.jpg",
+      "foodName": "Rice",
+      "foodPrice": "3.60",
+      "foodSpecialIngredient": "With Chilies",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Pizza/Cheese_Pizza.jpg",
+      "foodName": "Pizza",
+      "foodPrice": "4.70",
+      "foodSpecialIngredient": "With Almond Milk",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+      "foodName": "Koththu",
+      "foodPrice": "5.60",
+      "foodSpecialIngredient": "With Chocolate",
+    },
+  ];
+
+  //List of food types(Dummy)
   final List foodTypes = [
     [
       'Pizza',
@@ -60,120 +121,146 @@ class _CustomerHomeState extends State<CustomerHome> {
           appBar: AppBar(
             foregroundColor: const Color(0xFFfebf10),
             elevation: 0,
-            leading: const Icon(Icons.menu),
+            leading: const Icon(
+              Icons.menu,
+            ),
+
+
             actions: const [
               Padding(
-                padding: EdgeInsets.only(right: 25.0),
-                child: Icon(Icons.person),
+                padding: EdgeInsets.only(right: 20.0),
+                child: Icon(Icons.search),
               ),
             ],
             backgroundColor: const Color(0xFF030b0b),
+            centerTitle: true,
           ),
           body: Stack(
             children: <Widget>[
               const BackgroundImage(),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Text(
-                      "Find the best meal for you",
-                      style: TextStyle(
-                        fontSize: 32,
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: TextField(
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(
-                          Icons.search,
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Text(
+                        "Find The Best Meal For You",
+                        style: TextStyle(
+                          fontSize: 32,
+                          //fontWeight: FontWeight.bold,
                           color: Colors.white70,
                         ),
-                        hintText: "Find Your Favourite..",
-                        hintStyle: const TextStyle(fontSize: 20.0, color: Colors.white70),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade600),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade600),
+                      ),
+                    ),
+                    //const SizedBox(height: 10,),
+                    const Divider(),
+                    SizedBox(
+                      //height: 335,
+                      height: 195,
+                      child: PageView.builder(
+                        onPageChanged: (index) {
+                          setState(() {
+                            _selectedIndex = index;
+                          });
+                        },
+                        itemCount: splashData.length,
+                        itemBuilder: (context, index) => MainFeatures(
+                            image: splashData[index]["image"] ?? '',
+                            title: splashData[index]["title"] ?? '',
+                            text: splashData[index]["text"] ?? ''
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 10,),
-                  //Horizontal Listview of food types
-                  Container(
-                    height: 50,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: foodTypes.length,
-                      itemBuilder: (context, index) {
-                        return FoodTypes(
-                          foodType: foodTypes[index][0],
-                          isSelected: foodTypes[index][1],
-                          onTap: () {
-                            foodTypeSelected(index);
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  //Horizontal Listview of food tiles
-                  Container(
-                    height: 280,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: const <Widget>[
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-                          foodName: "Pizza",
-                          foodPrice: "4.60",
-                          foodSpecialIngredient: 'With Almond Milk',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Burger/Chicken_Burger.jpg",
-                          foodName: "Burger",
-                          foodPrice: "4.50",
-                          foodSpecialIngredient: 'With Coconut Milk',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-                          foodName: "Koththu",
-                          foodPrice: "5.60",
-                          foodSpecialIngredient: 'With Chocolate',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
-                          foodName: "Rice",
-                          foodPrice: "3.60",
-                          foodSpecialIngredient: 'With Chilies',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-                          foodName: "Koththu",
-                          foodPrice: "5.60",
-                          foodSpecialIngredient: 'With Chocolate',
-                        ),
-                        FoodTile(
-                          foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
-                          foodName: "Rice",
-                          foodPrice: "3.60",
-                          foodSpecialIngredient: 'With Chilies',
+                    const Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ...List.generate(splashData.length, (index) =>
+                            Indicator(isActive: _selectedIndex == index ? true : false),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    const Divider(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Text(
+                        "Categories",
+                        style: TextStyle(
+                          fontSize: 20,
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    //Horizontal Listview of food types
+                    SizedBox(
+                      height: 30,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: foodTypes.length,
+                        itemBuilder: (context, index) {
+                          return FoodTypes(
+                            foodType: foodTypes[index][0],
+                            isSelected: foodTypes[index][1],
+                            onTap: () {
+                              foodTypeSelected(index);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    //Horizontal Listview of food tiles
+                    SizedBox(
+                      height: 255,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: foodItems.length,
+                        itemBuilder: (context, index) {
+                          return FoodTile(
+                            foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                            foodName: foodItems[index]["foodName"] ?? '',
+                            foodPrice: foodItems[index]["foodPrice"] ?? '',
+                            foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                          );
+                        },
+                      ),
+                    ),
+                    //const SizedBox(height: 10,),
+                    const Divider(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Text(
+                        "Today's Special",
+                        style: TextStyle(
+                          fontSize: 20,
+                          //fontWeight: FontWeight.bold,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ),
+                    const Divider(),
+                    SizedBox(
+                      height: 255,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: foodItems.length,
+                        itemBuilder: (context, index) {
+                          return FoodTile(
+                            foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                            foodName: foodItems[index]["foodName"] ?? '',
+                            foodPrice: foodItems[index]["foodPrice"] ?? '',
+                            foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                          );
+                        },
+                      ),
+                    ),
+                    const Divider(),
+                  ],
+                ),
               ),
             ],
           ),
@@ -207,10 +294,10 @@ class _CustomerHomeState extends State<CustomerHome> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.menu,
+                  Icons.shopping_cart,
                   color: Color(0xFFfebf10),
                 ),
-                label: 'Menu',
+                label: 'Cart',
                 backgroundColor: Color.fromRGBO(22, 26, 29, 100),
               ),
             ],
@@ -244,7 +331,7 @@ class FoodTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0),
+      padding: const EdgeInsets.only(left: 20.0),
       child: Container(
         padding: const EdgeInsets.all(12),
         width: 200,
@@ -255,7 +342,6 @@ class FoodTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             //Food Image
             Center(
               child: ClipRRect(
@@ -344,15 +430,26 @@ class FoodTypes extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(left: 20.0),
+
       child: GestureDetector(
         onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.only(left:25.0),
-          child: Text(
-            foodType,
-            style: TextStyle(
-              color: isSelected ? const Color(0xFFfebf10) : Colors.white70,
-              fontSize: 20.0,
+        child: Container(
+          //margin: EdgeInsets.only(left: 10),
+          height: 20,
+          width: 100,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            //color: isSelected ? const Color(0xFFfebf10) : const Color(0xFF1A1E21),
+            color: isSelected ? const Color(0xFFfebf10) : Colors.black54,
+          ),
+          child: Center(
+            child: Text(
+              foodType,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: isSelected ? Colors.black : Colors.white70,
+                fontSize: 15.0,
+              ),
             ),
           ),
         ),

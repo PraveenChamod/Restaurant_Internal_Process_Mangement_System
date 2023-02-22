@@ -68,6 +68,10 @@ import StaffMemberOrderDetails from './Pages/Staff-Member/OrderDetails';
 import StaffMemberTableReservationDetails from './Pages/Staff-Member/TableReservationDetails';
 import StaffMemberPlaceOrder from './Pages/Staff-Member/PlaceOrder';
 import FrogotPassword from './Pages/ForgotPassword';
+import OrderDetailsComponent from './components/Staff-Member_Components/OrderDetails/OrderDetails';
+import CustomerProfile from './components/Customer/CustomerProfile/CustomerProfile';
+import UserProfileComponent from './components/shared/UserProfile/UserProfile';
+import EditProfileComponent from './components/shared/EditProfile/Editprofile';
 
 function App() {
   useEffect(() => {
@@ -84,6 +88,13 @@ function App() {
       );
     }
   }
+  // return (
+  //   <div className="App">
+  //     <OrderDetailsComponent></OrderDetailsComponent>
+
+  //   </div>
+  // );
+
   return (
     <div>
       <AuthState>
@@ -97,7 +108,6 @@ function App() {
                 <Route path="/login" element={<LoginPg/>}/>
                 <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
                 <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
-
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
               {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
@@ -162,7 +172,7 @@ function App() {
                   
                 <Route path="/Deliverer/DashBoard" element={<DelivererDashBoard/>}/>
                 <Route path="/Deliverer/My-Profile" element={<DelivererUserProfile/>}/>     
-                <Route path="/Deliverer/Place-Order" element={<DeliveryOrderDetails/>}/>     
+                <Route path="/Deliverer/Place-Order" element={<DeliveryOrderDetails/>}/>   
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   

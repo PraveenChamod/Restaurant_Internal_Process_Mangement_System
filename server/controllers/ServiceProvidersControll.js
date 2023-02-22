@@ -493,7 +493,7 @@ export const AddTable = async(req,res)=>{
 
 
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++staff-member+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`staff-membe`r+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Method : GET
 // End Point : "api/v1/serviceProvider/Orders/PendingOrders";
@@ -758,3 +758,43 @@ export const SendReservationConfirmation = async(req,res)=>{
         });
     }
 }
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++Deliverer+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export const CheckOrderDetails = async(req, res)=>{
+    const user = req.user;
+    try {
+        if(user.Role === "Deliverer"){
+            const findOrder = await Order.find();
+            const deliverer = await ServiceProviders.findById(user.id);
+            let pendingOrders = [];
+            findOrder.map(order=>{
+                if(order.ServiceProvider === deliverer.id){
+                    pendingOrders.push(order);
+                }
+            })
+            res.status(201).json({
+                status: 'success',
+                message: 'Pending Orders',
+                data: {
+                    pendingOrders
+                }
+            })
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }   
+    } catch (error) {
+        res.status(500).json({
+            status: 'Server Error',
+            message: error.message,
+        });
+    }
+}
+
+
+
+
