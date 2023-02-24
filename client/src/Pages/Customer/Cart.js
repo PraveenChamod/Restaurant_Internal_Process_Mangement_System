@@ -1,13 +1,12 @@
-import React from 'react'
-import AboutUs from '../../components/AboutUs/AboutUs'
-import LoginPg from '../Login'
+import React from 'react';
+import MyCart from '../../components/Customer/Cart/MyCart';
 
 export const Cart = () => {
   return (
     <div>
-        {/* <h1>Cart</h1> */}
-        {/* <LoginPg/> */}
-        <AboutUs/>
+        <MyCart/>
     </div>
   )
 }
+
+export default Cart;
