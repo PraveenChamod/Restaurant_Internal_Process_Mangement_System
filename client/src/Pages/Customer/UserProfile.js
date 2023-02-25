@@ -1,8 +1,7 @@
-import UserProfileComponent from "../../components/shared/UserProfile/UserProfile";
-
+import CustomerProfile from "../../components/Customer/CustomerProfile/CustomerProfile";
 const CustomerUserProfile = () => {
     return ( 
-        <UserProfileComponent />
+        <CustomerProfile />
 
      );
 }

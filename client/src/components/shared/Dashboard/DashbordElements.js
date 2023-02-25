@@ -8,7 +8,6 @@ export const Div = styled.div`
 `
 export const Container = styled.div`
     width: 70%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,17 +18,17 @@ export const Container = styled.div`
 `
 export const SideNavBar = styled.div`
     width: 35%;
-    height: 100%;
     background-color: #FDBE10cd;
     border-radius:20px;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 4% 0;
+    justify-content: center;
+    height: 100vh;
 `
 export const UserHeader = styled.div`
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     color: #fff;
@@ -63,7 +62,6 @@ export const Header = styled.h2`
 `
 export const Menu = styled.div`
     display: flex;
-  
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -142,6 +140,7 @@ export const Count = styled.div`
 `
 export const Text = styled.div`
     color: #fff;
+    text-align: center;
 `
 export const Pictures = styled.div`
     display: flex;

@@ -136,7 +136,7 @@ export const getItems = async (req,res)=>{
                 res.json(items);
             }
             else{
-                res.status(404).json({message:"There are no any recordes plase add items"});
+                res.status(404).json({message:"There are no any recordes please add items"});
             }
         }
         else{
@@ -219,9 +219,11 @@ const image = multer({storage:imageStorage}).single('image');
 export const addFoods = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Manager" || user.Role=== "Admin"){
+        if(user.Role === 'Manager' || user.Role === 'Admin'){
             const {FoodName,Price,Category,Quantity} = req.body;
+            console.log(Category);
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
+            console.log(SerialNumber);
             const existingFood = await Foods.findOne({SerialNo:SerialNumber});
             if(existingFood !== null){
                 res.status(501).json({message:`This item is already added`});
@@ -506,7 +508,7 @@ export const AddTable = async(req,res)=>{
 
 
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++`staff-membe`r+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++staff-member+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Method : GET
 // End Point : "api/v1/serviceProvider/Orders/PendingOrders";

@@ -14,37 +14,37 @@ export const Roles = [
             {
                 text:'Home',
                 icon:<FaHouseUser style={iconStyle}/>,
-                link:"/Admin/Home"
+                link:"/AdminMy-Profile"
             },
             {
                 text:'Add User',
                 icon:<FaUserPlus style={iconStyle}/>,
-                link:"/Admin/Add-User"
+                link:"/AdminAdd-User"
             },
             {
                 text:'View User',
                 icon:<FaUser style={iconStyle}/>,
-                link:"/Admin/View-User"
+                link:"/AdminView-User"
             },
             {
                 text:'Add Tables',
                 icon:<GiTabletopPlayers style={iconStyle}/>,
-                link:"/Admin/Add-Table"
+                link:"/AdminAdd-Table"
             },
             {
                 text:'View Tables',
                 icon:<GoSearch style={iconStyle}/>,
-                link:"/Admin/View-Tables"
+                link:"/AdminView-Tables"
             },
             {
                 text:'Add Foods',
                 icon:<GiMeal style={iconStyle}/>,
-                link:"/Admin/Add-Foods"
+                link:"/AdminAdd-Foods"
             },
             {
                 text:'View Foods',
                 icon:<IoFastFoodSharp style={iconStyle}/>,
-                link:"/Admin/View-Foods"
+                link:"/AdminView-Foods"
             },
             {
                 text:'Log Out',
@@ -57,54 +57,59 @@ export const Roles = [
         Role:'Manager',
         Navs:[
             {
+                text:'Home',
+                icon:<FaHouseUser style={iconStyle}/>,
+                link:"/ManagerMy-Profile"
+            },
+            {
                 text:'Add User',
                 icon:<FaUserPlus style={iconStyle}/>,
-                link:"/Manager/Add-User"
+                link:"/ManagerAdd-User"
             },
             {
                 text:'View User',
                 icon:<FaUser style={iconStyle}/>,
-                link:"/Manager/View-User"
+                link:"/ManagerView-User"
             },
             {
                 text:'Add Stock',
                 icon:<BsGraphUp style={iconStyle}/>,
-                link:"/Manager/AddStock"
+                link:"/ManagerAddStock"
             },
             {
                 text:'View Stocks',
                 icon:<AiOutlineStock style={iconStyle}/>,
-                link:"/Manager/ViewStock"
+                link:"/ManagerViewStock"
             },
             {
                 text:'Add Tables',
                 icon:<GiTabletopPlayers style={iconStyle}/>,
-                link:"/Manager/Add-Table"
+                link:"/ManagerAdd-Table"
             },
             {
                 text:'View Tables',
                 icon:<GoSearch style={iconStyle}/>,
-                link:"/Manager/View-Tables"
+                link:"/ManagerView-Tables"
             },
             {
                 text:'Add Foods',
                 icon:<GiMeal style={iconStyle}/>,
-                link:"/Manager/Add-Foods"
+                link:"/ManagerAdd-Foods"
             },
             {
                 text:'View Foods',
                 icon:<IoFastFoodSharp style={iconStyle}/>,
-                link:"/Manager/View-Foods"
+                link:"/ManagerView-Foods"
             },
             {
                 text:'Add Offers',
                 icon:<FaUsers style={iconStyle}/>,
-                link:"/Manager/Add-Offers"
+                link:"/ManagerAdd-Offers"
             },
             {
                 text:'View Offers',
                 icon:<GiHotMeal style={iconStyle}/>,
-                link:"/Manager/View-Offers"
+                link:"/ManagerView-Offers"
             },
             {
                 text:'Log Out',
@@ -117,39 +122,118 @@ export const Roles = [
         Role:'Staff Member',
         Navs:[
             {
+                text:'Home',
+                icon:<FaHouseUser style={iconStyle}/>,
+                link:"/Staff-MemberMy-Profile"
+            },
+            {
                 text:'Add Offers',
                 icon:<FaUsers style={iconStyle}/>,
-                link:"/Manager/Add-Offers"
+                link:"/Staff-MemberAdd-Offers"
             },
             {
                 text:'View Offers',
                 icon:<GiHotMeal style={iconStyle}/>,
-                link:"/Manager/View-Offers"
+                link:"/Staff-MemberView-Offers"
             },
             {
                 text:'View Foods',
                 icon:<IoFastFoodSharp style={iconStyle}/>,
-                link:"/Manager/View-Foods"
+                link:"/Staff-MemberView-Foods"
             },
             {
                 text:'View Tables',
                 icon:<GoSearch style={iconStyle}/>,
-                link:"/Manager/View-Tables"
+                link:"/Staff-MemberView-Tables"
             },
-            {
-                text:'Order Details',
+            {                text:'Order Details',
                 icon:<FaUserMinus style={iconStyle}/>,
-                link:"/Staff-Member/Order-Details"
+                link:"/Staff-MemberOrder-Details"
             },
             {
                 text:'Table Reservation Details',
                 icon:<FaUserMinus style={iconStyle}/>,
-                link:"/Staff-Member/Table-Reservation-Details"
+                link:"/Staff-MemberTable-Reservation-Details"
             },
             {
                 text:'Place Order',
                 icon:<FaUserMinus style={iconStyle}/>,
-                link:"/Staff-Member/Place-Order"
+                link:"/Staff-MemberPlace-Order"
+            },
+            {
+                text:'Log Out',
+                icon:<BiLogOut style={iconStyle}/>,
+                link:"/login"
+            }
+        ]
+    },
+    {
+        Role:'Deliverer',
+        Navs:[
+            {
+                text:'Home',
+                icon:<FaHouseUser style={iconStyle}/>,
+                link:"/DelivererMy-Profile"
+            },
+            {
+                text:'View Pending Orders',
+                icon:<FaUsers style={iconStyle}/>,
+                link:"/DelivererOrderDetails"
+            },
+            {
+                text:'Log Out',
+                icon:<BiLogOut style={iconStyle}/>,
+                link:"/login"
+            }
+        ]
+    },
+    {
+        Role:'Supplier',
+        Navs:[
+            {
+                text:'Home',
+                icon:<FaHouseUser style={iconStyle}/>,
+                link:"/SupplierMy-Profile"
+            },
+            {
+                text:'View Orders',
+                icon:<FaUsers style={iconStyle}/>,
+                link:"/SupplierMessages"
+            },
+            {
+                text:'Log Out',
+                icon:<BiLogOut style={iconStyle}/>,
+                link:"/login"
+            }
+        ]
+    },
+    {
+        Role:'Customer',
+        Navs:[
+            {
+                text:'Home',
+                icon:<FaHouseUser style={iconStyle}/>,
+                link:"/CustomerMy-Profile"
+            },
+            {
+                text:'Order Meal',
+                icon:<FaUsers style={iconStyle}/>,
+                link:"/CustomerPlace-Order"
+            },
+            {
+                text:'My Orders',
+                icon:<BiLogOut style={iconStyle}/>,
+                link:"/CustomerMy-Orders"
+            },
+            {
+                text:'Reserve Table',
+                icon:<BiLogOut style={iconStyle}/>,
+                link:"/CustomerTable-Reservation"
+            },
+            {
+                text:'Add Review',
+                icon:<BiLogOut style={iconStyle}/>,
+                link:"/CustomerAdd-Review"
             },
             {
                 text:'Log Out',
@@ -199,6 +283,41 @@ export const Cards = [
                 count:'5',
                 icon:<GiRoundTable/>
             }
+        ]
+    },
+    {
+        Role:"Staff-Member",
+        CardContent:[
+            {
+                text:'Pending Orders',
+                count:'64',
+                icon:<IoFastFoodSharp/>
+            },
+            {
+                text:'Pending Reservations',
+                count:'9',
+                icon:<GiHotMeal/>
+            },
+        ]
+    },
+    {
+        Role:"Deliverer",
+        CardContent:[
+            {
+                text:'Order Details',
+                count:'64',
+                icon:<IoFastFoodSharp/>
+            },
+        ]
+    },
+    {
+        Role:"Supplier",
+        CardContent:[
+            {
+                text:'Pending Orders',
+                count:'64',
+                icon:<IoFastFoodSharp/>
+            },
         ]
     }
 ]

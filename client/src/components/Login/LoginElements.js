@@ -12,7 +12,7 @@ export const Container = styled.div`
         width: 79%;
         margin-top: 6%;
         box-shadow: 3px 3px 3px #000;
-        height: 80%;
+        height: 85%;
         border-radius: 20px;
         @media screen and (max-width:769px){
             flex-direction: column;
@@ -114,8 +114,7 @@ export const Bottom = styled.div`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: relative;
-        top: -8%;
+        
         @media screen and (max-width:769px){
             height: 20%;
             font-size: 12px;
@@ -227,3 +226,22 @@ export const IMG = styled.img`
          width: 150px;
         height: 150px;
     `
+export const SocialMedia = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3%;
+`
+export const Icon = styled.div`
+    &{margin: 0 5%;
+    width: 30px;
+    height: 30px;
+    font-size: 28px;
+    }
+    &:hover{
+        cursor: pointer;
+        transform: scale(1.3);
+        transition: 0.5 ease-out;
+    }
+
+`

@@ -60,14 +60,27 @@ class _CustomerHomeState extends State<CustomerHome> {
           appBar: AppBar(
             foregroundColor: const Color(0xFFfebf10),
             elevation: 0,
-            leading: const Icon(Icons.menu),
+            leading: const Icon(
+              Icons.menu,
+            ),
+            title: const Text(
+              "Hi Praveen,",
+              //textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 20,
+                //fontWeight: FontWeight.bold,
+                color: Color(0xFFfebf10),
+              ),
+            ),
+
             actions: const [
               Padding(
                 padding: EdgeInsets.only(right: 25.0),
-                child: Icon(Icons.person),
+                child: Icon(Icons.search),
               ),
             ],
             backgroundColor: const Color(0xFF030b0b),
+            centerTitle: true,
           ),
           body: Stack(
             children: <Widget>[
@@ -180,6 +193,51 @@ class _CustomerHomeState extends State<CustomerHome> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 10,),
+                    Container(
+                      height: 280,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: const <Widget>[
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Pizza/Cheese_Pizza.jpg",
+                            foodName: "Pizza",
+                            foodPrice: "4.60",
+                            foodSpecialIngredient: 'With Almond Milk',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Burger/Chicken_Burger.jpg",
+                            foodName: "Burger",
+                            foodPrice: "4.50",
+                            foodSpecialIngredient: 'With Coconut Milk',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+                            foodName: "Koththu",
+                            foodPrice: "5.60",
+                            foodSpecialIngredient: 'With Chocolate',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
+                            foodName: "Rice",
+                            foodPrice: "3.60",
+                            foodSpecialIngredient: 'With Chilies',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+                            foodName: "Koththu",
+                            foodPrice: "5.60",
+                            foodSpecialIngredient: 'With Chocolate',
+                          ),
+                          FoodTile(
+                            foodImagePath: "assets/Food Types/Rice/Veg_Rice.jpg",
+                            foodName: "Rice",
+                            foodPrice: "3.60",
+                            foodSpecialIngredient: 'With Chilies',
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -215,10 +273,10 @@ class _CustomerHomeState extends State<CustomerHome> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.menu,
+                  Icons.shopping_cart,
                   color: Color(0xFFfebf10),
                 ),
-                label: 'Menu',
+                label: 'Cart',
                 backgroundColor: Color.fromRGBO(22, 26, 29, 100),
               ),
             ],

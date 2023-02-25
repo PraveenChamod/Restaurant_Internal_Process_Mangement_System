@@ -5,7 +5,7 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
 import { createToken, handleErrors } from "../util/AuthUtil.js";
-import { sendRegistrationSms, transporter } from "../util/NotificationUtil.js";
+import { transporter } from "../util/NotificationUtil.js";
 import { UploadProfileImage } from "./AuthController.js";
 import Order from "../models/Order.js";
 import Foods from "../models/Foods.js";
@@ -14,7 +14,17 @@ import Table from "../models/Tables.js";
 import TableReservation from "../models/TableReservation.js";
 import Review from "../models/Reviews.js";
 import globalArray from "../Data/GlobalArray.js";
+import dotenv from 'dotenv';
+import multer from "multer";
 
+const imageStorage = multer.diskStorage({
+    destination:"images/Users",
+    filename: (req,file,cb)=>{
+        cb(null,Date.now()+'_'+file.originalname)
+    }
+})
+const image = multer({storage:imageStorage}).single('image');
+dotenv.config();
 const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 const maxAge = 3 * 24 * 60 * 60;
 process.env.GEOCODER_PROVIDER = 'google';
@@ -28,10 +38,7 @@ export const RegisterCustomer = async (req,res)=>{
     const existingCustomer = await Customer.findOne({Email:Email});
     const existingUser = await User.findOne({Email:Email});
     try {
-        if(existingCustomer !== null || existingUser !== null){
-            return res.json({"message":"A Customer is already exist"});
-        }
-        else{
+        if(existingCustomer === null || existingUser === null){
             const salt = await GenerateSalt();
             const encryptedPassword = await GeneratePassword(Password,salt);
             const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
@@ -53,10 +60,7 @@ export const RegisterCustomer = async (req,res)=>{
                 Role:Role
             })
             //send sms
-            const ConfirmationMessage = 1234
-            const from = "Vonage APIs";
-            const to = "+94"+ContactNumber.slice(1);
-            console.log(to);
+            
             // await sendRegistrationSms(to,from,ConfirmationMessage);
 
             //send Email
@@ -78,6 +82,9 @@ export const RegisterCustomer = async (req,res)=>{
 
             const token = createToken(createUser._id,createUser.Email);
             res.json(token);
+        }
+        else{
+            return res.json({"message":"A Customer is already exist"});
         }
     } catch (error) {
         res.status(500).json(error.message);
@@ -101,8 +108,16 @@ export const UpdateProfile = async(req,res)=>{
             if(user.Email == Email){
                 const logedCustomer = await Customer.findOne({Email:Email}).populate('Email');
                 const logedUser = await User.findOne({Email:Email}).populate('Email');
-                if(logedUser !== null){
-
+                if(logedCustomer !== null){
+                        image(req,res,(err)=>{
+                            if(err){
+                                console.log(err)
+                            }
+                            else{
+                                logedUser.ProfileImage = req.file.filename;
+                                logedCustomer.ProfileImage = req.file.filename
+                            }
+                        })
                     const {Name,ContactNumber,Address,Email1} = req.body;
                     const locationAddress = JSON.stringify({Address});
                     // getLocation(locationAddress);
@@ -154,7 +169,7 @@ export const OrderItem = async(req,res,next)=>{
             const {SerialNo,Quantity,paymentMethod} = req.body;
             let OrderFoods = [];
             OrderFoods = globalArray.Get();
-            const findFood = await Foods.findOne({SerialNo:OrderFoods.SerialNo}).populate('SerialNo');
+            const findFood = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
             if(findFood){
                 const ItemPrice = findFood.Price * Quantity;
@@ -210,24 +225,41 @@ export const PlaceOrder = async(req,res)=>{
             if(findOrder.paymentMethod === "Card Payments"){
                 const findFood = await Foods.findById({_id:findOrder.Foods});
                 const session = await stripe.checkout.sessions.create({
-                    payment_method_types: ['card'],
-                    success_url: `${req.protocol}://${req.get('host')}/?order=${_id}&price=${findOrder.TotalPrice}`,
-                    // success_url: `${req.protocol}://${req.get('host')}/my-tours`,
-                    cancel_url: `${req.protocol}://${req.get('host')}/order`,
-                    customer_email: user.Email,
-                    client_reference_id:_id,
-                    line_items: [{
+                    line_items: [
+                      {
                         price_data: {
-                            currency: 'usd',
-                            unit_amount: 2000,
-                            product_data:{
-                                name:findFood.FoodName
-                            }
+                          currency: 'lkr',
+                          product_data: [{
+                            name: findFood.name,
+                          }],
+                          unit_amount: findFood.Price,
                         },
-                        quantity: 1,
-                      }],
-                    mode:'payment'
-                });
+                        quantity: findOrder.Quantity,
+                      },
+                    ],
+                    mode: 'payment',
+                    success_url: 'http://localhost:3000/checkout-success',
+                    cancel_url: 'http://localhost:3000/cart',
+                  });
+                // const session = await stripe.checkout.sessions.create({
+                //     payment_method_types: ['card'],
+                //     success_url: `${req.protocol}://${req.get('host')}/?order=${_id}&price=${findOrder.TotalPrice}`,
+                //     // success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+                //     cancel_url: `${req.protocol}://${req.get('host')}/order`,
+                //     customer_email: user.Email,
+                //     client_reference_id:_id,
+                //     line_items: [{
+                //         price_data: {
+                //             currency: 'usd',
+                //             unit_amount: 2000,
+                //             product_data:{
+                //                 name:findFood.FoodName
+                //             }
+                //         },
+                //         quantity: 1,
+                //       }],
+                //     mode:'payment'
+                // });
             
                 // 3) Create session as response
                 res.status(200).json({
