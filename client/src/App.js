@@ -88,12 +88,7 @@ function App() {
       );
     }
   }
-  // return (
-  //   <div className="App">
-  //     <OrderDetailsComponent></OrderDetailsComponent>
-
-  //   </div>
-  // );
+  
 
   return (
     <div>
