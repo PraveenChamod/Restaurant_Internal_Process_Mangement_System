@@ -19,7 +19,7 @@ class _MainFeaturesState extends State<MainFeatures> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 10, left: 10),
+      margin: const EdgeInsets.only(right: 20, left: 20),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.black38,
@@ -35,7 +35,7 @@ class _MainFeaturesState extends State<MainFeatures> {
           ),
           Image(
             image: AssetImage(widget.image),
-            width: 250,
+            width: 130,
           ),
           const Spacer(
             flex: 1,
