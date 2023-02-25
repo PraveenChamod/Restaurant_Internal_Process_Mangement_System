@@ -3,6 +3,7 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/homeScreen_indicator.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/main_features.dart';
+import 'customer_search.dart';
 
 class CustomerHome extends StatefulWidget {
   const CustomerHome({Key? key}) : super(key: key);
@@ -17,11 +18,11 @@ class _CustomerHomeState extends State<CustomerHome> {
   List<Map<String, String>> splashData = [
     {"title": "Restaurant Menus",
       "text": "Create and display your menu online",
-      "image": chooseOnline
+      "image": chooseOnline,
     },
     {"title": "Online Order",
       "text": "Take orders on your site for delivery",
-      "image": orderFood
+      "image": orderFood,
     },
     // {"title": "Fast Delivery",
     //   "text": "Pick out your fresh favorites for delivery right to your doorstep.",
@@ -29,7 +30,7 @@ class _CustomerHomeState extends State<CustomerHome> {
     // },
     {"title": "Table Reservations",
       "text": "Reserve Dining Tables on your own choice",
-      "image": dinningTable
+      "image": dinningTable,
     },
   ];
 
@@ -117,19 +118,60 @@ class _CustomerHomeState extends State<CustomerHome> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          //drawer: NavigationBar(),
+          drawer: Drawer(
+            child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: [
+                const DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                  ),
+                  child: Text('Drawer Header'),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.home,
+                  ),
+                  title: const Text('Page 1'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.train,
+                  ),
+                  title: const Text('Page 2'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
           backgroundColor: Colors.black,
           appBar: AppBar(
             foregroundColor: const Color(0xFFfebf10),
             elevation: 0,
-            leading: const Icon(
-              Icons.menu,
-            ),
-
-
-            actions: const [
+            title: const Text('Wellcome To Resto'),
+            actions:  <Widget>[
               Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: Icon(Icons.search),
+                padding: const EdgeInsets.only(right: 20.0),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_){
+                          return const CustomerSearch();
+                        },
+                      ),
+                    );
+                  },
+                    icon: const Icon(Icons.search),
+                ),
+                //child: Icon(Icons.search),
               ),
             ],
             backgroundColor: const Color(0xFF030b0b),
@@ -146,11 +188,12 @@ class _CustomerHomeState extends State<CustomerHome> {
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0),
                       child: Text(
+                        textAlign: TextAlign.center,
                         "Find The Best Meal For You",
                         style: TextStyle(
                           fontSize: 32,
                           //fontWeight: FontWeight.bold,
-                          color: Colors.white70,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -167,9 +210,9 @@ class _CustomerHomeState extends State<CustomerHome> {
                         },
                         itemCount: splashData.length,
                         itemBuilder: (context, index) => MainFeatures(
-                            image: splashData[index]["image"] ?? '',
-                            title: splashData[index]["title"] ?? '',
-                            text: splashData[index]["text"] ?? ''
+                          image: splashData[index]["image"] ?? '',
+                          title: splashData[index]["title"] ?? '',
+                          text: splashData[index]["text"] ?? '',
                         ),
                       ),
                     ),
