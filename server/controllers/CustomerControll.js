@@ -120,8 +120,10 @@ export const UpdateProfile = async(req,res)=>{
                         })
                     const {Name,ContactNumber,Address,Email1} = req.body;
                     const locationAddress = JSON.stringify({Address});
+                    const uploadImage = await logedCustomer.save();
+                    const uploadImage1 = await logedUser.save();
                     // getLocation(locationAddress);
-                    const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address}
+                    const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address,uploadImage}
                     const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
                     console.log(updateCustomer);
                     const updateUser = await User.findByIdAndUpdate(logedUser._id,userDetails,{new:true});

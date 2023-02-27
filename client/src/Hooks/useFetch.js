@@ -6,7 +6,8 @@ const useFetch = (url) => {
     // const CancelToken = axios.CancelToken();
     // const source = CancelToken.source()
 
-    const [data, setData] = useState();
+    const [data, setData] = useState(null);
+    const [isPending, setIspending] = useState(true);
 
     useEffect(() => {
       
@@ -19,7 +20,7 @@ const useFetch = (url) => {
                 } else {
                     console.log('error');
                 }
-
+                setIspending(false);
             } catch (error) {
                 console.log(error);
                 console.log(error.response?.data);
@@ -28,6 +29,7 @@ const useFetch = (url) => {
                     console.log('fetch aborted');
                 } else {
                     setData(null);
+                    setIspending(false);
                 }
             }
         }
@@ -42,7 +44,7 @@ const useFetch = (url) => {
         }
     }, [url]);// eslint-disable-line react-hooks/exhaustive-deps
     
-    return {data}
+    return {data,isPending}
 }
  
 export default useFetch;
