@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../features/authentication/screens/Customer/customer_home.dart';
+import '../features/authentication/screens/Customer/customer_main_page.dart';
 
 class DrawerItemAppbar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
@@ -17,7 +18,7 @@ class DrawerItemAppbar extends StatelessWidget implements PreferredSizeWidget{
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_){
-                return const CustomerHome();
+                return const CustomerMainPage();
               },
             ),
           );

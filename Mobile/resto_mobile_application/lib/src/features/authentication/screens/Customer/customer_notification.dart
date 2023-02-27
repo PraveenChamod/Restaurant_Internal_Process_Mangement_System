@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../common_widgets/background_image.dart';
 
-class CustomerCart extends StatelessWidget {
-  const CustomerCart({Key? key}) : super(key: key);
+class CustomerNotification extends StatelessWidget {
+  const CustomerNotification({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

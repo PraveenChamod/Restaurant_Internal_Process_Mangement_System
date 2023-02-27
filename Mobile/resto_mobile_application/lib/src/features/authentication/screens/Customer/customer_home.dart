@@ -29,10 +29,10 @@ class _CustomerHomeState extends State<CustomerHome> {
       "text": "Take orders on your site for delivery",
       "image": orderFood,
     },
-    {"title": "Fast Delivery",
-      "text": "Pick out your fresh favorites for delivery right to your doorstep.",
-      "image": deliveryService
-    },
+    // {"title": "Fast Delivery",
+    //   "text": "Pick out your fresh favorites for delivery right to your doorstep.",
+    //   "image": deliveryService
+    // },
     {"title": "Table Reservations",
       "text": "Reserve Dining Tables on your own choice",
       "image": dinningTable,
@@ -108,325 +108,121 @@ class _CustomerHomeState extends State<CustomerHome> {
       foodTypes[index][1] = true;
     });
   }
-
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          drawer: Drawer(
-            backgroundColor: Colors.white,
-            width: MediaQuery.of(context).size.width/1.5,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),
-            ),
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF161b1d),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage: AssetImage('assets/Food Types/Burger/Chicken_Burger.jpg'),
-                      ),
-                      SizedBox(height: 10.0,),
-                      Text('Praveen Chamod',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white70,
-                        ),
-                      ),
-                      SizedBox(height: 10.0,),
-                      Text('praveenchamod23@gmail.com',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.person,
-                  ),
-                  title: const Text('My Account'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const MyAccountScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.delivery_dining,
-                  ),
-                  title: const Text('Orders'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const OrdersScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.favorite,
-                  ),
-                  title: const Text('Favourites'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const FavouritesScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.settings,
-                  ),
-                  title: const Text('Settings'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const SettingsScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.help,
-                  ),
-                  title: const Text('Help Center'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const HelpCenterScreen();
-                        },
-                      ),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.logout,
-                  ),
-                  title: const Text('Log Out'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
-          backgroundColor: const Color(0xFF161b1d),
-          appBar: AppBar(
-            foregroundColor: const Color(0xFFfebf10),
-            elevation: 0,
-            title: const Text('Wellcome To Resto'),
-            actions:  <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const CustomerSearch();
-                        },
-                      ),
-                    );
-                  },
-                    icon: const Icon(Icons.search),
-                ),
-                //child: Icon(Icons.search),
-              ),
-            ],
-            backgroundColor: const Color(0xFF161b1d),
-            centerTitle: true,
-          ),
-          body: Stack(
+    return Stack(
+      children: <Widget>[
+        const BackgroundImage(),
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            //mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              const BackgroundImage(),
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Divider(),
-                    SizedBox(
-                      height: 215,
-                      child: PageView.builder(
-                        onPageChanged: (index) {
-                          setState(() {
-                            _selectedIndex = index;
-                          });
-                        },
-                        itemCount: splashData.length,
-                        itemBuilder: (context, index) => MainFeatures(
-                          image: splashData[index]["image"] ?? '',
-                          title: splashData[index]["title"] ?? '',
-                          text: splashData[index]["text"] ?? '',
-                        ),
-                      ),
-                    ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ...List.generate(splashData.length, (index) =>
-                            Indicator(isActive: _selectedIndex == index ? true : false),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0,),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        "Popular Categories",
-                        style: TextStyle(
-                          fontSize: 20,
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    //Horizontal Listview of food types
-                    SizedBox(
-                      height: 30,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodTypes.length,
-                        itemBuilder: (context, index) {
-                          return FoodTypes(
-                            foodType: foodTypes[index][0],
-                            isSelected: foodTypes[index][1],
-                            onTap: () {
-                              foodTypeSelected(index);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    //Horizontal Listview of food tiles
-                    SizedBox(
-                      height: 230,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodItems.length,
-                        itemBuilder: (context, index) {
-                          return FoodTile(
-                            foodImagePath: foodItems[index]["foodImagePath"] ?? '',
-                            foodName: foodItems[index]["foodName"] ?? '',
-                            foodPrice: foodItems[index]["foodPrice"] ?? '',
-                            foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
-                          );
-                        },
-                      ),
-                    ),
-                    const Divider(),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        "Today's Special",
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const Divider(),
-                    SizedBox(
-                      height: 225,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodItems.length,
-                        itemBuilder: (context, index) {
-                          return FoodTile(
-                            foodImagePath: foodItems[index]["foodImagePath"] ?? '',
-                            foodName: foodItems[index]["foodName"] ?? '',
-                            foodPrice: foodItems[index]["foodPrice"] ?? '',
-                            foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
-                          );
-                        },
-                      ),
-                    ),
-                    const Divider(),
-                  ],
+              const Divider(),
+              SizedBox(
+                height: 215,
+                child: PageView.builder(
+                  onPageChanged: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
+                  },
+                  itemCount: splashData.length,
+                  itemBuilder: (context, index) => MainFeatures(
+                    image: splashData[index]["image"] ?? '',
+                    title: splashData[index]["title"] ?? '',
+                    text: splashData[index]["text"] ?? '',
+                  ),
                 ),
               ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...List.generate(splashData.length, (index) =>
+                      Indicator(isActive: _selectedIndex == index ? true : false),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10.0,),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Popular Categories",
+                  style: TextStyle(
+                    fontSize: 20,
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              //Horizontal Listview of food types
+              SizedBox(
+                height: 30,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodTypes.length,
+                  itemBuilder: (context, index) {
+                    return FoodTypes(
+                      foodType: foodTypes[index][0],
+                      isSelected: foodTypes[index][1],
+                      onTap: () {
+                        foodTypeSelected(index);
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 10,),
+              //Horizontal Listview of food tiles
+              SizedBox(
+                height: 230,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodItems.length,
+                  itemBuilder: (context, index) {
+                    return FoodTile(
+                      foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                      foodName: foodItems[index]["foodName"] ?? '',
+                      foodPrice: foodItems[index]["foodPrice"] ?? '',
+                      foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                    );
+                  },
+                ),
+              ),
+              const Divider(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Today's Special",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const Divider(),
+              SizedBox(
+                height: 225,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodItems.length,
+                  itemBuilder: (context, index) {
+                    return FoodTile(
+                      foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                      foodName: foodItems[index]["foodName"] ?? '',
+                      foodPrice: foodItems[index]["foodPrice"] ?? '',
+                      foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                    );
+                  },
+                ),
+              ),
+              const Divider(),
             ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            iconSize: 25.0,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Home',
-                backgroundColor: Color(0xFF161b1d),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.support_agent,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Support',
-                backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Notification',
-                backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.shopping_cart,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Cart',
-                backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-              ),
-            ],
-            onTap: (index) {
-              setState((){
-                _currentIndex = index;
-              });
-            },
-            selectedItemColor: const Color(0xFFfebf10),
           ),
         ),
+      ],
     );
   }
 }

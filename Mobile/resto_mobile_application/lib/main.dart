@@ -4,6 +4,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_home.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_main_page.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_search.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/Products_Menu_Titles.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/getphonenumber.dart';
@@ -14,16 +15,16 @@ import 'package:resto_mobile_application/src/features/authentication/screens/log
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 
-void main() => runApp(
-  DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => const MyApp(), // Wrap your app
-  ),
-);
+// void main() => runApp(
+//   DevicePreview(
+//     enabled: !kReleaseMode,
+//     builder: (context) => const MyApp(), // Wrap your app
+//   ),
+// );
 
-// void main() {
-//   runApp(const MyApp());
-// }
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
       //home: const HomeScreen(),
+      //home: const CustomerMainPage(),
       //home: const CustomerHome(),
       //home: const CustomerSearch(),
       //home: const ProductMenuTitles(),

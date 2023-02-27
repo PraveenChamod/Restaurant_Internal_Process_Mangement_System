@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'customer_appbar.dart';
+import 'customer_cart.dart';
 import 'customer_home.dart';
+import 'customer_home_drawer.dart';
+import 'customer_notification.dart';
+import 'customer_support.dart';
 
 class CustomerMainPage extends StatefulWidget {
   const CustomerMainPage({Key? key}) : super(key: key);
@@ -14,15 +18,29 @@ class _CustomerMainPageState extends State<CustomerMainPage> {
   int _currentIndex = 0;
   final screens = [
     const CustomerHome(),
-    const CustomerHome(),
-    const CustomerHome(),
-    const CustomerHome(),
+    const CustomerSupport(),
+    const CustomerNotification(),
+    const CustomerCart(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: screens[index],
+        drawer: _currentIndex == 0 || _currentIndex == 1 || _currentIndex == 2 || _currentIndex == 3
+            ? const CustomerHomeDrawer()
+            : null,
+        appBar: _currentIndex == 0
+            ? const CustomerAppbar(title: 'Welcome To Resto',)
+            : _currentIndex == 1
+            ? const CustomerAppbar(title: 'Customer Support',)
+            : _currentIndex == 2
+            ? const CustomerAppbar(title: 'Notification',)
+            : _currentIndex == 3
+            ? const CustomerAppbar(title: 'Cart',)
+            : null,
+        body: screens[_currentIndex],
+        backgroundColor: const Color(0xFF161b1d),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           iconSize: 25.0,

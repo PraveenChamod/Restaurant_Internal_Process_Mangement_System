@@ -31,7 +31,7 @@ class _MainFeaturesState extends State<MainFeatures> {
           MaterialPageRoute(
             builder: (_) {
               return widget.title == "Restaurant Menus"
-                  ? const LoginScreen()
+                  ? const ProductMenuTitles()
                   : widget.title == "Online Order"
                   ? const SignupScreen()
                   : const LoginScreen();

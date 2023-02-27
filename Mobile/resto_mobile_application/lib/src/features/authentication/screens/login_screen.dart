@@ -7,6 +7,7 @@ import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_home.dart';
+import 'Customer/customer_main_page.dart';
 import 'Products/Products_Menu_Titles.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -158,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (_){
-                                        return const CustomerHome();
+                                        return const CustomerMainPage();
                                       },
                                   ),
                                 );
