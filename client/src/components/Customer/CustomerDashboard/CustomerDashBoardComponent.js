@@ -3,8 +3,18 @@ import profileImage from '../../../Images/person2.jpg';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 import { useEffect } from 'react';
+import useAuth from '../../../Hooks/useAuth';
 const CustomerDashboardComponent = (props) => {
     const data1 = Array.from(props.Navs1.Navs);
+
+    const { logout,user } = useAuth();
+
+    const onclick = (link)=>{
+        if(link === '/login'){
+          logout();
+        }
+      }
+
     return ( 
         <l.Container>
             <l.Section>
@@ -19,13 +29,13 @@ const CustomerDashboardComponent = (props) => {
                 <l.Options>
                     <l.Content>
                         {
-                            data1.map(link=>{
+                            data1.map(Nav=>{
                                 return(
                                     <l.ButtonSection>
-                                        <Link to={link.link} className='btn'>
+                                        <Link to={Nav.link} onClick={()=>{onclick(Nav.link)}} className='btn'>
                                             <l.Button>
-                                                <l.Icon>{link.icon}</l.Icon>
-                                                <l.Text>{link.text}</l.Text>
+                                                <l.Icon>{Nav.icon}</l.Icon>
+                                                <l.Text>{Nav.text}</l.Text>
                                             </l.Button>
                                         </Link>
                                     </l.ButtonSection>
