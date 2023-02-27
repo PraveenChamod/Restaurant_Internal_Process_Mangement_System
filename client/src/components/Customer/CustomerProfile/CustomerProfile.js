@@ -17,9 +17,20 @@ import {
 import { RegularButton, UploadButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
 import axios from "axios";
+import useAuth from "../../../Hooks/useAuth";
 
-const CustomerProfile = () => {
+const CustomerProfile = (props) => {
   const[image,setImage] = useState();
+
+  const{loadUser}=useAuth();
+
+  const[Name,setName] = useState(props.user.Name);
+  const[ContactNumber,setContactNumber] = useState(props.user.ContactNumber);
+  const[Email,setEmail] = useState(props.user.Email);
+  const[Address,setAddress] = useState(props.user.Address);
+
+
+
   const handleUpload = (e)=>{
     setImage(e.target.files[0]);
     console.log(e.target.files

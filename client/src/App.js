@@ -159,7 +159,7 @@ function App() {
                 <Route path="/CustomerMy-Profile" element={<CustomerUserProfile/>}/>     
                 <Route path="/CustomerPlace-Order" element={<Order/>}/>     
                 <Route path="/CustomerMy-Cart" element={<Cart cartData = {CartData}/>}/>     
-                <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>   
+                {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
                 <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview/>}/>     
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/>     
