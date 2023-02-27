@@ -87,7 +87,7 @@ export const getUserProfile = async(req,res)=>{
             }
             else{
                   const user = await User.findById(decodeToken.id);
-                  res.json(user);
+                  res.status(200).json(user);
               }
           })
     }

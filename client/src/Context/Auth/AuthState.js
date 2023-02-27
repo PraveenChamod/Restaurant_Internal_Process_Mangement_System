@@ -9,7 +9,8 @@ import {
     CLEAR_ERRORS,
     SET_LOADING,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    GOOGLE_OAUTH
 } from '../type';
 import axios from 'axios';
 import AuthReducer from "./AuthReducer";
@@ -53,13 +54,23 @@ const AuthState = (props) => {
         }
     }
 
+    // const googleAuth = () => {
+	// 	window.open(
+	// 		`api/v1/Auth/google/callback`,
+	// 		"_self"
+	// 	);
+    //     dispatch({
+    //         type:GOOGLE_OAUTH
+    //     })
+	// };
+
     const logingUser = async (formData)=>{
         dispatch({type:SET_LOADING});
         const res = await axios.post('api/v1/Auth/LoginUser',formData);
             console.log(res.data);
             dispatch({
                 type:LOGIN_SUCCESS,
-                payload:res.data.user
+                payload:res
             })
             loadUser();
     }
@@ -72,7 +83,6 @@ const AuthState = (props) => {
                 type:REGISTER_SUCCESS,
                 payload:res.data
             })
-            loadUser();
         } catch (error) {
             console.log(error.response.data);
             dispatch({
@@ -92,7 +102,8 @@ const AuthState = (props) => {
                 logingUser,
                 logout,
                 loadUser,
-                RegisterUser
+                RegisterUser,
+                // googleAuth
             }}
         >
             {props.children}

@@ -1,8 +1,14 @@
-import UserProfileComponent from "../../components/shared/UserProfile/UserProfile";
-
+import CustomerProfile from "../../components/Customer/CustomerProfile/CustomerProfile";
+import useFetch from "../../Hooks/useFetch";
 const CustomerUserProfile = () => {
+    const {data,isPending} = useFetch('api/v1/Auth/getProfile');
+    const user = data
+    console.log(data);
     return ( 
-        <UserProfileComponent />
+        <>
+        {isPending && <p>Loading</p>}
+        {data && <CustomerProfile user={user} />}
+        </>
 
      );
 }

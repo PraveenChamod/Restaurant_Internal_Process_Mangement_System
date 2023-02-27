@@ -84,8 +84,8 @@ export const Icon = styled.div`
 	margin: 0 0.5%;
 `
 export const Image = styled.img`
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 `
 export const HR = styled.hr`
         border: none;
