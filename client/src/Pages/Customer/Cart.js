@@ -1,12 +1,10 @@
-import React from 'react';
-import MyCart from '../../components/Customer/Cart/MyCart';
-
-export const Cart = () => {
-  return (
-    <div>
-        <MyCart/>
-    </div>
-  )
-}
-
-export default Cart;
+import CartComponent from '../../components/Customer/Cart/CartComponent';
+ const Cart = (props) => {
+  return ( 
+    <>
+      <CartComponent cartData1 = {props.cartData}/>
+    </>
+   );
+ }
+  
+ export default Cart;

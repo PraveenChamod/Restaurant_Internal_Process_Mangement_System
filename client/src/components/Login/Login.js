@@ -4,8 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../Hooks/useAuth";
 import LoginImage from "../../Images/foods/pancake.jpg";
-
+import { RotatingLines } from  'react-loader-spinner'
 import img from "../../Images/restoLogodark.png";
+import { FcGoogle } from 'react-icons/fc';
+import { SiFacebook } from 'react-icons/si';
+import { AiFillTwitterCircle } from 'react-icons/ai';
 import { RegularButton } from "../shared/SharedElements/Buttons";
 import {
     Page,
@@ -29,7 +32,9 @@ import {
     Column,
     LabelSignUp,
     InputSignUp,
-    IMG
+    IMG,
+    SocialMedia,
+    Icon
 } from './LoginElements'
 const Login = () => {
     const[change,setChange] = useState(false);
@@ -41,7 +46,7 @@ const Login = () => {
         }
     }
 
-    const {RegisterUser,logingUser,loadUser,user,loading,isAuthenticated} = useAuth();
+    const {RegisterUser,logingUser,user,loading,isAuthenticated} = useAuth();
     const[Name,setName] = useState('');
     const[Email,setEmail] = useState('');
     const[Password,setPassword] = useState('');
@@ -76,23 +81,23 @@ const Login = () => {
             console.log(user);
             switch (user.Role) {
                 case 'Admin':
-                    navigate('/Admin/DashBoard');
+                    navigate('/AdminDashBoard');
                     break;
                 case 'Manager':
-                    navigate('/Manager/DashBoard')
+                    navigate('/ManagerDashBoard')
                     break;
                 case 'Staff-Member':
-                    navigate('/Staff-Member/DashBoard')
+                    navigate('/Staff-MemberDashBoard')
                     break;
                 case 'Supplier':
-                    navigate('/Suppliier/DashBoard')
+                    navigate('/SuppliierDashBoard')
                     break;
                 case 'Deliverer':
-                    navigate('/Deliverer/DashBoard')
+                    navigate('/DelivererDashBoard')
                     break;
                 
                 case 'Customer':
-                    navigate('/Customer/DashBoard')
+                    navigate('/CustomerDashBoard')
                     
                     break;
                 default:
@@ -105,7 +110,7 @@ const Login = () => {
         <Page>
             <Container>
                 {
-                    change ?
+                    !change ?
 
                     <LoginPage>
                         <Heading>
@@ -122,8 +127,22 @@ const Login = () => {
                                     <p>Forgot Your Password ?</p>
                                 </Link>
                             </ForgotPWD>
+                            <SocialMedia>
+                                <Icon><FcGoogle/></Icon>
+                                <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
+                                <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
+                            </SocialMedia>
                         <Bottom>
                             {!loading && <RegularButton>Login</RegularButton> }
+                            {loading && <RegularButton>
+                                <RotatingLines
+                                    strokeColor="#fff"
+                                    strokeWidth="2"
+                                    animationDuration="1"
+                                    width="20"
+                                    visible={true}
+                                />
+                            </RegularButton>}
                             <Option>
                                 <p>Dosen't have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Sign Up</LinkToSignUpAndLogIn></p>
                             </Option>
@@ -149,8 +168,22 @@ const Login = () => {
                                 {/* <LabelSignUp>Confirm Password</LabelSignUp> */}
                                 <InputSignUp type ="password" name="ConfPassword" placeholder="Re-enter the password" value={ConfirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                             </Column>
+                            <SocialMedia>
+                                <Icon><FcGoogle/></Icon>
+                                <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
+                                <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
+                            </SocialMedia>
                         <Bottom>
-                            <RegularButton>Sign Up</RegularButton>
+                        {loading && <RegularButton>
+                                <RotatingLines
+                                    strokeColor="#fff"
+                                    strokeWidth="2"
+                                    animationDuration="1"
+                                    width="20"
+                                    visible={true}
+                                />
+                            </RegularButton>}
+                            {!loading && <RegularButton>Sign Up</RegularButton>}
                             <Option>
                                 <p>Already have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Login</LinkToSignUpAndLogIn></p>
                             </Option>

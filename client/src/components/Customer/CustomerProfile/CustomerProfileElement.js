@@ -18,16 +18,15 @@ export const Page1 = styled.div`
     width: 100%;
     align-items: center;
     flex-direction: column;
-    background:url(${Img1}) left top no-repeat;
     background-size: 10rem;
 `
 
-export const Div = styled.div`
+export const Div = styled.form`
   display: flex;
   flex-direction: row;
   width: 65%;
   height: 65%;
-  background: rgba(26, 30, 33, 0.6);
+  background: #1A1E21;
   border-radius: 25px;
   box-shadow: 3px 3px 3px #000;
   @media screen and (max-width: 769px) {
@@ -101,4 +100,19 @@ export const RemoveButton = styled.div`
         font-weight: 500;
         text-transform: uppercase;
 
+`
+export const Label = styled.label`
+  height: 40px;
+        color:#fff;
+        background: linear-gradient(to right, #FFBF00, #B26C29);
+        border: none;
+        cursor: pointer;
+        position: relative;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        width: 65%;
+        text-transform: uppercase;
 `
