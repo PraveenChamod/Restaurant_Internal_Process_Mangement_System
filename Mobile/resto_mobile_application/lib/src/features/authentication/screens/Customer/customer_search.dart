@@ -113,6 +113,7 @@ class _CustomerSearchState extends State<CustomerSearch> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25.0),
                         child: TextField(
+                          autofocus: true,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20.0,

@@ -13,21 +13,35 @@ import { transporter } from "../util/NotificationUtil.js";
 export const getUsers = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Admin"){
+        if(user.Role === "Admin" || user.Role === "Manager"){
             const users = await User.find();
             if(users !== null){
-                return res.json(users);
+                res.status(201).json({
+                    status:'Success',
+                    message:'All Users in the stystem',
+                    data:{
+                        users
+                    }
+                });
             }
             else{
-                return res.json({"message":"There are no any records exits!"});
+                res.status(401).json({
+                    status:'Error',
+                    message:'There are no users',
+                });
             }
         }   
         else{
-            res.json({message:"Admin is not logging to the system"});
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }
     } catch (error) {
-        console.log(error.message);
-        res.status(404).json(error.message);
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
 }
 
@@ -38,20 +52,33 @@ export const getUsers = async (req,res)=>{
 export const getUserByEmail = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Admin"){
+        if(user.Role === "Admin" || user.Role === "Manager"){
             const Email = req.body.Email;
             const findUser = await User.findOne({Email:Email});
             if(findUser === null){
                 res.json('this user dosen\'t exits');
             }
-            res.json(findUser);
+            else{
+                res.status(201).json({
+                    status:'Success',
+                    message:'User Details',
+                    data:{
+                        findUser
+                    }
+                });
+            }
         }
         else{
-            res.json({message:`Admin is note logging to the system`});
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }
     } catch (error) {
-        console.log(error.message);
-        res.status(404).json(error.message);
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
     
 }
@@ -63,7 +90,7 @@ export const getUserByEmail = async (req,res)=>{
 export const getUsersByRole = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Admin"){
+        if(user.Role === "Admin" || user.Role === "Manager"){
             const Role = req.body.Role;
             const Users = await User.find({Role:Role}).populate('Role');
             if(Users !== null){
@@ -73,15 +100,27 @@ export const getUsersByRole = async(req,res)=>{
                         users.push(user);
                     }
                 })
-                res.json(users);
+                res.status(201).json({
+                    status:'Success',
+                    message:'Users details',
+                    data:{
+                        users
+                    }
+                });
             }
         }
         else{
-            res.json({message:`Admin is note logging to the system`});
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }
         
     } catch (error) {
-        res.status(500).json(error.message);
+       return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
 }
 
@@ -92,7 +131,7 @@ export const getUsersByRole = async(req,res)=>{
 export const updateUserByEmail = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Admin"){
+        if(user.Role === "Admin" || user.Role === "Manager"){
             const {Email} = req.params;
             const findUser = await User.findOne({Email:Email});
             const {Name,ContactNumber,Role} = req.body;
@@ -107,10 +146,16 @@ export const updateUserByEmail = async (req,res)=>{
             }   
         }
         else{
-            res.json({message:`Admin is note logging to the system`});
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
 }
 
@@ -121,7 +166,7 @@ export const updateUserByEmail = async (req,res)=>{
 export const deleteUser = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Admin"){
+        if(user.Role === "Admin" || user.Role === "Manager"){
             const {Email} = req.params;
             const findUser = await User.findOne({Email:Email});
             const findCustomer = await Customer.findOne({Email:Email});
@@ -134,19 +179,34 @@ export const deleteUser = async (req,res)=>{
                     await Customer.findByIdAndRemove(findCustomer._id);
                 }
                 else if(findServiceProvider !== null){
-                    await ServiceProviders.findByIdAndRemove(findServiceProvider._id);
+                    const user = await ServiceProviders.findByIdAndRemove(findServiceProvider._id);
                 }
-                res.json({message : `User is deleted`});
+                res.status(201).json({
+                    status:'Success',
+                    message:'Deleted User',
+                    data:{
+                        user
+                    }
+                });
             }
             else{
-                res.json({message:`There is no any user with ${Email} email`});
+                res.status(404).json({
+                    status:'Error',
+                    message:`There is no any user with ${Email} email`
+                });
             }   
         }
         else{
-            res.json({message:`Admin is note logging to the system`});
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }   
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
 }
 
@@ -157,7 +217,7 @@ export const deleteUser = async (req,res)=>{
 export const deleteUsers = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Admin"){
+        if(user.Role === "Admin" || user.Role === "Manager"){
             const users = await User.find();
             const findCustomers = await Customer.find();
             const findServiceProviders = await ServiceProviders.find();
@@ -176,10 +236,16 @@ export const deleteUsers = async (req,res)=>{
             }   
         }
         else{
-            res.json({message:`Admin is note logging to the system`});
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
 }
 
@@ -270,8 +336,10 @@ export const RegisterServiceProviders = async (req,res)=>{
             }
         }
     } catch (error) {
-        console.log(error.message);
-        res.status(500).json(error.message);
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
     }
     
 }

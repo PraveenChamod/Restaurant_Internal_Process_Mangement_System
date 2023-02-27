@@ -6,11 +6,19 @@ import {
     AUTH_ERROR,
     SET_LOADING,
     LOGOUT,
-    USER_LOADED
+    USER_LOADED,
+    GOOGLE_OAUTH
 } from '../type';
 
 export default (state,action) => {
     switch(action.type){
+        case GOOGLE_OAUTH:
+            return{
+                ...state,
+                ...action.payload,
+                isAuthenticated: true,
+                loading:false
+            }
         case REGISTER_SUCCESS:
             return{
                 ...state,

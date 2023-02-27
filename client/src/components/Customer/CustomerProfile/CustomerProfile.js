@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
 import {
@@ -11,12 +11,51 @@ import {
   Div4,
   H2,
   Input,
-  RemoveButton
+  RemoveButton,
+  Label
 } from "./CustomerProfileElement";
-import { RegularButton } from "../../shared/SharedElements/Buttons";
+import { RegularButton, UploadButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
+import axios from "axios";
+import useAuth from "../../../Hooks/useAuth";
 
-const CustomerProfile = () => {
+const CustomerProfile = (props) => {
+  const[image,setImage] = useState();
+
+  const{loadUser}=useAuth();
+
+  const[Name,setName] = useState(props.user.Name);
+  const[ContactNumber,setContactNumber] = useState(props.user.ContactNumber);
+  const[Email,setEmail] = useState(props.user.Email);
+  const[Address,setAddress] = useState(props.user.Address);
+
+  const formData = {Name,ContactNumber,Email,Address};
+
+  const updateProfile = async (e)=>{
+    e.preventDefault();
+    try {
+      const res = await axios.post(`api/v1/customer/UpdateProfile/${Email}`);
+      if(res.status == 200 || res.status == 201){
+        console.log(res);
+      }
+    } catch (error) {
+      
+    }
+  }
+
+
+  const handleUpload = (e)=>{
+    setImage(e.target.files[0]);
+    console.log(e.target.files
+      )
+  }
+
+  const uploadImage = async ()=>{
+    const formData = new FormData();
+    formData.append('image',image);
+    const res = await axios.post('api/v1/Auth/uploadProfilePicture',formData);
+    console.log(res)
+  }
   return (
     <Page>
       <Page1>
@@ -32,11 +71,10 @@ const CustomerProfile = () => {
                 />
               </Div4>
               <Div4>
-                <RegularButton>
-                  <Link to="./login" className="btn">
-                    UPLOAD
-                  </Link>
-                </RegularButton>
+                <Label for='file'>
+                  Upload
+                  <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
+                </Label>
                 <br/>
                 <RemoveButton>
                   <Link to="./login" className="btn">
@@ -53,6 +91,8 @@ const CustomerProfile = () => {
                   id="name"
                   name="name"
                   placeholder="JOHNNY ANN"
+                  value={Name}
+                  onChange={e=>setName(e.target.value)}
                 ></Input>
                 <H2>CONTACT NUMBER</H2>
                 <Input
@@ -60,12 +100,12 @@ const CustomerProfile = () => {
                   id="phonenumber"
                   name="phonenumber"
                   placeholder="0774134764"
+                  value={ContactNumber}
+                  onChange={e=>setContactNumber(e.target.value)}
                 ></Input>
               </FormControl>
-              <RegularButton>
-                <Link to="./login" className="btn">
+              <RegularButton onClick={uploadImage}>
                   UPDATE PROFILE
-                </Link>
               </RegularButton>
             </Div3>
           </Div1>
@@ -77,38 +117,18 @@ const CustomerProfile = () => {
                 id="email"
                 name="email"
                 placeholder="JHNNANN123@GMAIL.COM"
+                value={Email}
+                onChange={e=>setEmail(e.target.value)}
               ></Input>
               <br />
               <H2>ADDRESS</H2>
               <Input
                 type="text"
-                id="addressline1"
-                name="addressline1"
-                placeholder="ADDRESS LINE 1"
-              ></Input>
-              <Input
-                type="text"
-                id="addressline2"
-                name="addressline2"
-                placeholder="ADDRESS LINE 2"
-              ></Input>
-              <Input
-                type="text"
-                id="city"
-                name="city"
-                placeholder="CITY"
-              ></Input>
-              <Input
-                type="text"
-                id="province"
-                name="province"
-                placeholder="PROVINCE"
-              ></Input>
-              <Input
-                type="number"
-                id="zipcode"
-                name="zipcode"
-                placeholder="ZIP CODE"
+                id="address"
+                name="address"
+                placeholder="ADDRESS"
+                value={Address}
+                onChange={e=>setAddress(e.target.value)}
               ></Input>
             </FormControl>
           </Div1>
