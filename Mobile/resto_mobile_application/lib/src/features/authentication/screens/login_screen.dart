@@ -7,15 +7,22 @@ import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_home.dart';
+import 'Products/Products_Menu_Titles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
+
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var salt;
+
+  var email;
+  var password;
+  bool _obscureText = true;
   //int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -62,9 +69,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
-                            child: const TextField(
+                            child: TextField(
                               keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Email',
                                 labelStyle: TextStyle(color: Colors.white70),
                                 suffixIcon: Icon(CupertinoIcons.envelope_fill, color: Colors.white70, size: 18,),
@@ -75,30 +82,49 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderSide: BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
+                              onChanged: (value) {
+                                email = value;
+                              },
                             ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
-                            child: const TextField(
-                              obscureText: true,
+                            child: TextField(
+                              //obscureText: true,
+                              obscureText: _obscureText,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                labelStyle: TextStyle(color: Colors.white70),
-                                suffixIcon: Icon(CupertinoIcons.eye_slash_fill, color: Colors.white70, size: 18,),
-                                enabledBorder: UnderlineInputBorder(
+                                labelStyle: const TextStyle(color: Colors.white70),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureText = !_obscureText;
+                                    });
+                                  },
+                                  child:
+                                  Icon(
+                                    _obscureText ? Icons.visibility : Icons.visibility_off,
+                                    color: Colors.white70,
+                                    size: 18,
+                                  ),
+                                ),
+                                enabledBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
+                                focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
+                              onChanged: (value) {
+                                password = value;
+                              },
                             ),
                           ),
                           Container(
@@ -123,6 +149,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Center(
                             child: ElevatedButton(
+                              // onPressed: () {
+                              //   print(email);
+                              //   print(password);
+                              // },
+
                               onPressed: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
@@ -228,3 +259,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
