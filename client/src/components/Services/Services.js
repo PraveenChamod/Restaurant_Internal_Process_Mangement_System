@@ -9,6 +9,7 @@ const Services = () => {
         justify-content: center;
         align-items: center;
         height: 100%;
+        width: 100%;
         @media screen and (max-width:800px){
             margin: 0;
         }
@@ -19,7 +20,7 @@ const Services = () => {
         font-size: 2em;
         position: relative;
         text-align: center;
-        margin: 1rem auto;
+        margin: 1rem 0;
         @media screen and (max-width:800px){
             font-size: 20px;
         }
@@ -42,7 +43,7 @@ const Services = () => {
     `
     const Sec1 = styled.div`
         flex-basis: 100%;
-        margin: 10px 10px;
+        margin: 10px 0;
         width: 100%;
         
     `
@@ -57,7 +58,7 @@ const Services = () => {
 
     
     const H2 = styled.h2`
-        margin: 10px 10px 10px 10px;
+        margin: 10px;
         color: #fff;
         @media screen and (max-width:800px){
             font-size: 15px;

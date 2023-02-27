@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
 import {
@@ -11,12 +11,37 @@ import {
   Div4,
   H2,
   Input,
-  RemoveButton
+  RemoveButton,
+  Label
 } from "./CustomerProfileElement";
-import { RegularButton } from "../../shared/SharedElements/Buttons";
+import { RegularButton, UploadButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
+import axios from "axios";
+import useAuth from "../../../Hooks/useAuth";
 
-const CustomerProfile = () => {
+const CustomerProfile = (props) => {
+  const[image,setImage] = useState();
+
+  const{loadUser}=useAuth();
+
+  const[Name,setName] = useState(props.user.Name);
+  const[ContactNumber,setContactNumber] = useState(props.user.ContactNumber);
+  const[Email,setEmail] = useState(props.user.Email);
+  const[Address,setAddress] = useState(props.user.Address);
+
+
+
+  const handleUpload = (e)=>{
+    setImage(e.target.files[0]);
+    console.log(e.target.files
+      )
+  }
+  const uploadImage = async ()=>{
+    const formData = new FormData();
+    formData.append('image',image);
+    const res = await axios.post('api/v1/Auth/uploadProfilePicture',formData);
+    console.log(res)
+  }
   return (
     <Page>
       <Page1>
@@ -32,11 +57,10 @@ const CustomerProfile = () => {
                 />
               </Div4>
               <Div4>
-                <RegularButton>
-                  <Link to="./login" className="btn">
-                    UPLOAD
-                  </Link>
-                </RegularButton>
+                <Label for='file'>
+                  Upload
+                  <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
+                </Label>
                 <br/>
                 <RemoveButton>
                   <Link to="./login" className="btn">
@@ -62,10 +86,8 @@ const CustomerProfile = () => {
                   placeholder="0774134764"
                 ></Input>
               </FormControl>
-              <RegularButton>
-                <Link to="./login" className="btn">
+              <RegularButton onClick={uploadImage}>
                   UPDATE PROFILE
-                </Link>
               </RegularButton>
             </Div3>
           </Div1>

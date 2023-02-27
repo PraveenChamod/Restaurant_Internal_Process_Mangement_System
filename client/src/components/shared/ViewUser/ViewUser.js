@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
@@ -14,12 +14,27 @@ import {
 } from './ViewUserElements';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container } from "../SharedElements/SharedElements";
+import useAuth from "../../../Hooks/useAuth";
 
-const ViewUserComponent = () => {
+const ViewUserComponent = (props) => {
 
-  
+  const [users, setUsers] = useState(props.users);
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleSearch = (event) => {
+    
+    const searchValue = event.target.value.toLowerCase();
+    const filteredUsers = props.users.filter((user) =>
+      user.email.toLowerCase().includes(searchValue)
+    );
+    setUsers(filteredUsers);
+  };
 
   return (
+
+    
+
     <Container>
       <H1>USER DETAILS</H1>
       <Div>
@@ -32,6 +47,8 @@ const ViewUserComponent = () => {
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
+            value={selectedUser?.email || ""}
+            disabled={!selectedUser}
           />
           <TextField 
             id="standard-basic" 
@@ -39,12 +56,16 @@ const ViewUserComponent = () => {
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}/>
+            value={selectedUser?.username || ""}
+            disabled={!selectedUser}
           <TextField
             id="standard-basic"
             label="Contact Number"
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
+            value={selectedUser?.contactNumber || ""}
+            disabled={!selectedUser}
           />
           <TextField 
             id="standard-basic" 
@@ -52,12 +73,16 @@ const ViewUserComponent = () => {
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}/>
+            value={selectedUser?.role || ""}
+            disabled={!selectedUser}
           <TextField 
             id="standard-basic" 
             label="Gender" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}/>
+            value={selectedUser?.role || ""}
+            disabled={!selectedUser}
         </FormControl>
         <Div1>
           <Div2>
