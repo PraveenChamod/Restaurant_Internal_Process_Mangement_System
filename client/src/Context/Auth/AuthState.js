@@ -9,7 +9,8 @@ import {
     CLEAR_ERRORS,
     SET_LOADING,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    GOOGLE_OAUTH
 } from '../type';
 import axios from 'axios';
 import AuthReducer from "./AuthReducer";
@@ -22,7 +23,7 @@ const AuthState = (props) => {
     }
 
     const[state,dispatch] = useReducer(AuthReducer,initialState);
-
+    console.log(state);
     //user logout
     const logout = async () =>{
         dispatch({type:SET_LOADING});
@@ -41,11 +42,11 @@ const AuthState = (props) => {
         dispatch({type:SET_LOADING});
         try {
             const res = await axios.get('api/v1/Auth/getProfile')
-            console.log(res.data);
+            console.log(res.data.user);
             dispatch(
                 {
                     type:USER_LOADED,
-                    payload:res.data
+                    payload:res.data.user
                 });
         } catch (error) {
             console.log(error);
@@ -53,13 +54,23 @@ const AuthState = (props) => {
         }
     }
 
+    // const googleAuth = () => {
+	// 	window.open(
+	// 		`api/v1/Auth/google/callback`,
+	// 		"_self"
+	// 	);
+    //     dispatch({
+    //         type:GOOGLE_OAUTH
+    //     })
+	// };
+
     const logingUser = async (formData)=>{
         dispatch({type:SET_LOADING});
         const res = await axios.post('api/v1/Auth/LoginUser',formData);
             console.log(res.data);
             dispatch({
                 type:LOGIN_SUCCESS,
-                payload:res.data.user
+                payload:res
             })
             loadUser();
     }
@@ -72,7 +83,6 @@ const AuthState = (props) => {
                 type:REGISTER_SUCCESS,
                 payload:res.data
             })
-            loadUser();
         } catch (error) {
             console.log(error.response.data);
             dispatch({
@@ -80,7 +90,7 @@ const AuthState = (props) => {
             })
         }
     }
-
+    console.log(state.user);
 
     return ( 
         <AuthContext.Provider
@@ -92,7 +102,8 @@ const AuthState = (props) => {
                 logingUser,
                 logout,
                 loadUser,
-                RegisterUser
+                RegisterUser,
+                // googleAuth
             }}
         >
             {props.children}

@@ -3,7 +3,6 @@ import { FormButton, RegularButton, UploadButton } from '../SharedElements/Butto
 import { Container, Header } from '../SharedElements/SharedElements';
 import * as l from './AddFoodsElements';
 const AddFoodsComponent = () => {
-       
     return ( 
         <Container>
             <l.SubSection>

@@ -79,3 +79,6 @@ code {
 .MuiFormLabel-root{
   color: #fff;
 } 
+#file{
+  display: none;
+}

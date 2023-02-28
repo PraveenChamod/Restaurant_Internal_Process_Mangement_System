@@ -3,6 +3,11 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/homeScreen_indicator.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/main_features.dart';
+import '../Drawer_Items/favourites_screen.dart';
+import '../Drawer_Items/help_center_screen.dart';
+import '../Drawer_Items/my_account_screen.dart';
+import '../Drawer_Items/orders_screen.dart';
+import '../Drawer_Items/settings_screen.dart';
 import 'customer_search.dart';
 
 class CustomerHome extends StatefulWidget {
@@ -89,15 +94,7 @@ class _CustomerHomeState extends State<CustomerHome> {
       false,
     ],
     [
-      'Rice',
-      false,
-    ],
-    [
-      'Koththu',
-      false,
-    ],
-    [
-      'Rice',
+      'Appetizer',
       false,
     ],
   ];
@@ -111,247 +108,121 @@ class _CustomerHomeState extends State<CustomerHome> {
       foodTypes[index][1] = true;
     });
   }
-
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-          //drawer: NavigationBar(),
-          drawer: Drawer(
-            child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: [
-                const DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text('Drawer Header'),
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.home,
-                  ),
-                  title: const Text('Page 1'),
-                  onTap: () {
-                    Navigator.pop(context);
+    return Stack(
+      children: <Widget>[
+        const BackgroundImage(),
+        SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Divider(),
+              SizedBox(
+                height: 215,
+                child: PageView.builder(
+                  onPageChanged: (index) {
+                    setState(() {
+                      _selectedIndex = index;
+                    });
                   },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.train,
+                  itemCount: splashData.length,
+                  itemBuilder: (context, index) => MainFeatures(
+                    image: splashData[index]["image"] ?? '',
+                    title: splashData[index]["title"] ?? '',
+                    text: splashData[index]["text"] ?? '',
                   ),
-                  title: const Text('Page 2'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
                 ),
-              ],
-            ),
-          ),
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            foregroundColor: const Color(0xFFfebf10),
-            elevation: 0,
-            title: const Text('Wellcome To Resto'),
-            actions:  <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const CustomerSearch();
-                        },
-                      ),
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...List.generate(splashData.length, (index) =>
+                      Indicator(isActive: _selectedIndex == index ? true : false),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10.0,),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Popular Categories",
+                  style: TextStyle(
+                    fontSize: 20,
+                    //fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              //Horizontal Listview of food types
+              SizedBox(
+                height: 30,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodTypes.length,
+                  itemBuilder: (context, index) {
+                    return FoodTypes(
+                      foodType: foodTypes[index][0],
+                      isSelected: foodTypes[index][1],
+                      onTap: () {
+                        foodTypeSelected(index);
+                      },
                     );
                   },
-                    icon: const Icon(Icons.search),
                 ),
-                //child: Icon(Icons.search),
               ),
+              const SizedBox(height: 10,),
+              //Horizontal Listview of food tiles
+              SizedBox(
+                height: 230,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodItems.length,
+                  itemBuilder: (context, index) {
+                    return FoodTile(
+                      foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                      foodName: foodItems[index]["foodName"] ?? '',
+                      foodPrice: foodItems[index]["foodPrice"] ?? '',
+                      foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                    );
+                  },
+                ),
+              ),
+              const Divider(),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "Today's Special",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const Divider(),
+              SizedBox(
+                height: 225,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: foodItems.length,
+                  itemBuilder: (context, index) {
+                    return FoodTile(
+                      foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                      foodName: foodItems[index]["foodName"] ?? '',
+                      foodPrice: foodItems[index]["foodPrice"] ?? '',
+                      foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                    );
+                  },
+                ),
+              ),
+              const Divider(),
             ],
-            backgroundColor: const Color(0xFF030b0b),
-            centerTitle: true,
-          ),
-          body: Stack(
-            children: <Widget>[
-              const BackgroundImage(),
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Find The Best Meal For You",
-                        style: TextStyle(
-                          fontSize: 32,
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    //const SizedBox(height: 10,),
-                    const Divider(),
-                    SizedBox(
-                      //height: 335,
-                      height: 195,
-                      child: PageView.builder(
-                        onPageChanged: (index) {
-                          setState(() {
-                            _selectedIndex = index;
-                          });
-                        },
-                        itemCount: splashData.length,
-                        itemBuilder: (context, index) => MainFeatures(
-                          image: splashData[index]["image"] ?? '',
-                          title: splashData[index]["title"] ?? '',
-                          text: splashData[index]["text"] ?? '',
-                        ),
-                      ),
-                    ),
-                    const Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ...List.generate(splashData.length, (index) =>
-                            Indicator(isActive: _selectedIndex == index ? true : false),
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        "Categories",
-                        style: TextStyle(
-                          fontSize: 20,
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    //Horizontal Listview of food types
-                    SizedBox(
-                      height: 30,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodTypes.length,
-                        itemBuilder: (context, index) {
-                          return FoodTypes(
-                            foodType: foodTypes[index][0],
-                            isSelected: foodTypes[index][1],
-                            onTap: () {
-                              foodTypeSelected(index);
-                            },
-                          );
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 10,),
-                    //Horizontal Listview of food tiles
-                    SizedBox(
-                      height: 255,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodItems.length,
-                        itemBuilder: (context, index) {
-                          return FoodTile(
-                            foodImagePath: foodItems[index]["foodImagePath"] ?? '',
-                            foodName: foodItems[index]["foodName"] ?? '',
-                            foodPrice: foodItems[index]["foodPrice"] ?? '',
-                            foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
-                          );
-                        },
-                      ),
-                    ),
-                    //const SizedBox(height: 10,),
-                    const Divider(),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Text(
-                        "Today's Special",
-                        style: TextStyle(
-                          fontSize: 20,
-                          //fontWeight: FontWeight.bold,
-                          color: Colors.white70,
-                        ),
-                      ),
-                    ),
-                    const Divider(),
-                    SizedBox(
-                      height: 255,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: foodItems.length,
-                        itemBuilder: (context, index) {
-                          return FoodTile(
-                            foodImagePath: foodItems[index]["foodImagePath"] ?? '',
-                            foodName: foodItems[index]["foodName"] ?? '',
-                            foodPrice: foodItems[index]["foodPrice"] ?? '',
-                            foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
-                          );
-                        },
-                      ),
-                    ),
-                    const Divider(),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            iconSize: 25.0,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Home',
-                backgroundColor: Color(0xFF030b0b),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.support_agent,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Support',
-                backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.notifications,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Notification',
-                backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.shopping_cart,
-                  color: Color(0xFFfebf10),
-                ),
-                label: 'Cart',
-                backgroundColor: Color.fromRGBO(22, 26, 29, 100),
-              ),
-            ],
-            onTap: (index) {
-              setState((){
-                _currentIndex = index;
-              });
-            },
-            selectedItemColor: const Color(0xFFfebf10),
           ),
         ),
+      ],
     );
   }
 }
@@ -377,7 +248,8 @@ class FoodTile extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20.0),
       child: Container(
         padding: const EdgeInsets.all(12),
-        width: 200,
+        //width: 200,
+        width: 130,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.black54,
@@ -391,11 +263,12 @@ class FoodTile extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: Image.asset(
                   foodImagePath,
-                  width: 125,
+                  //width: 125,
+                  width: 80,
                 ),
               ),
             ),
-            
+            const Spacer(),
             //Food Name & Special Ingredient
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
@@ -420,7 +293,7 @@ class FoodTile extends StatelessWidget {
                 ],
               ),
             ),
-
+            const Spacer(),
             //Price
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -466,7 +339,6 @@ class FoodTypes extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
   });
-  //const FoodTypes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -477,12 +349,10 @@ class FoodTypes extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          //margin: EdgeInsets.only(left: 10),
           height: 20,
           width: 100,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            //color: isSelected ? const Color(0xFFfebf10) : const Color(0xFF1A1E21),
             color: isSelected ? const Color(0xFFfebf10) : Colors.black54,
           ),
           child: Center(

@@ -26,6 +26,7 @@ const AddUserComponent = () => {
     e.preventDefault();
     try {
       const formData = {Email,Role};
+      console.log(formData);
       const res = await axios.post('api/v1/admin/RegisterServiceProvider',formData);
       console.log(res);
     } catch (error) {
@@ -36,35 +37,29 @@ const AddUserComponent = () => {
   return (
     <Container>
       <Header>ADD USER</Header>
-      <Div onSubmit={onSubmit}>
+      <Div  onSubmit={onSubmit}>
         <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
           <TextField id="standard-basic" label="Email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={Email} onChange={e=>setEmail(e.target.value)}/>
           <>
             <Select
-              defaultValue={30}
-              inputProps={{
-                name: "role",
-                id: "uncontrolled-native",
-              }}
               sx={{
                 color: "white",
                 '.MuiSvgIcon-root ': {
                   fill: "white !important",
                 }
               }}
-              
+              value={Role}
+              onChange={e=>setRole(e.target.value)}
             >
-              <MenuItem value={1} onChange={e=>setRole(e.target.value)}>Deliverer</MenuItem>
-              <MenuItem value={2} onChange={e=>setRole(e.target.value)}>Supplier</MenuItem>
-              <MenuItem value={3} onChange={e=>setRole(e.target.value)}>Staff-Member</MenuItem>
+              <MenuItem value={'Deliverer'} >Deliverer</MenuItem>
+              <MenuItem value={'Supplier'}>Supplier</MenuItem>
+              <MenuItem value={'Staff-Member'}>Staff-Member</MenuItem>
             </Select>
           </>
           <Div1>
             <div style={{margin:'3%'}}>
             <FormButton>
-              <Link onSubmit={onSubmit} className="btn">
                 Add
-              </Link>
             </FormButton>
             </div>
             <div style={{margin:'3%'}}>
@@ -75,7 +70,7 @@ const AddUserComponent = () => {
             </FormButton>
             </div>
         </Div1>
-        </FormControl>
+          </FormControl>
       </Div>
       <Div3>
         <RegularButton>

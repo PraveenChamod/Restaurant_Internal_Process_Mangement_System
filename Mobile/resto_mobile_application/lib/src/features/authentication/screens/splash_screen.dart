@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../../common_widgets/application_logo.dart';
-import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
+import 'Customer/customer_home.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
