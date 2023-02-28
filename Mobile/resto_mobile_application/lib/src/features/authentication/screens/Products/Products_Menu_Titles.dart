@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/common_widgets/Menu_Container.dart';
 import '../../../../common_widgets/background_image.dart';
+import '../../../../common_widgets/menu_appbar.dart';
+import '../Customer/customer_home.dart';
+import '../Customer/customer_search.dart';
 
 class ProductMenuTitles extends StatefulWidget {
 
@@ -55,41 +57,28 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xFF161b1d),
+        appBar: const MenuAppBar(),
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  const Center(
-                    child: Text(
-                      "Menu",
-                      style: TextStyle(
-                        fontSize: 32,
-                        //fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+              padding: const EdgeInsets.all(10.0),
+              child: Expanded(
+                child: GridView.builder(
+                  itemCount: foodMenuItems.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0
                   ),
-                  const SizedBox(height: 10.0,),
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: foodMenuItems.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10.0,
-                          mainAxisSpacing: 10.0
-                      ),
-                      itemBuilder: (BuildContext context, int index){
-                        return MenuContainer(
-                          ItemImagePath: foodMenuItems[index]["ItemImagePath"] ?? '',
-                          ItemName: foodMenuItems[index]["ItemName"] ?? '',
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                  itemBuilder: (BuildContext context, int index){
+                    return MenuContainer(
+                      ItemImagePath: foodMenuItems[index]["ItemImagePath"] ?? '',
+                      ItemName: foodMenuItems[index]["ItemName"] ?? '',
+                    );
+                  },
+                ),
               ),
             ),
           ],

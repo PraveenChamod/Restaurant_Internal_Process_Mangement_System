@@ -4,6 +4,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_home.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_main_page.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_search.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/Products_Menu_Titles.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/getphonenumber.dart';
@@ -44,9 +45,11 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
       //home: const HomeScreen(),
+      //home: const CustomerMainPage(),
       //home: const CustomerHome(),
       //home: const CustomerSearch(),
       //home: const ProductMenuTitles(),
+      //home: const LoginScreen(),
     );
   }
 }
