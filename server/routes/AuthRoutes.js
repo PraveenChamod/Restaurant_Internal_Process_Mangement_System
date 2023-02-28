@@ -11,7 +11,7 @@ AuthRoutes.route('/LoginUser').post(LogInUser);
 
 AuthRoutes.route('/getProfile').get(requireAuth,getUserProfile);
 
-AuthRoutes.route('/uploadProfilePicture').post(UploadProfileImage);
+AuthRoutes.route('/uploadProfilePicture').patch(requireAuth,UploadProfileImage);
 
 AuthRoutes.route('/logout').get(LogoutUser);
 
