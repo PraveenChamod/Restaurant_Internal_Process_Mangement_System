@@ -17,7 +17,6 @@ export const Page1 = styled.div`
     width: 100%;
     align-items: center;
     flex-direction: column;
-    background:url(${Img1}) left top no-repeat;
     background-size: 10rem;
 `
 
@@ -25,7 +24,7 @@ export const Page1 = styled.div`
 export const Div = styled.div`
   width: 65%;
   height: 65%;
-  background: rgba(26, 30, 33, 0.6);
+  background: #1A1E21;
   border-radius: 25px;
   display: flex;
   justify-content: center;

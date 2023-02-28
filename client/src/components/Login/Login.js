@@ -78,7 +78,7 @@ const Login = () => {
 
     useEffect(()=>{
         if (!loading && user && isAuthenticated) {
-            console.log(user);
+            console.log(user.Role);
             switch (user.Role) {
                 case 'Admin':
                     navigate('/AdminDashBoard');
