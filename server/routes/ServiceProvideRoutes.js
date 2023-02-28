@@ -39,4 +39,8 @@ ServiceProviderrouter.route('/Reservations/ConfirmReservation/:_id').post(l.Send
 
 //Deliverer Order Handling
 ServiceProviderrouter.route('/Deliverer/ViewOrderDetails').get(l.CheckOrderDetails);
+
+//Supplier Order Handling
+ServiceProviderrouter.route('/Items/ReceivedOrders').get(l.ViewReceivedOrders);
+
 export default ServiceProviderrouter;

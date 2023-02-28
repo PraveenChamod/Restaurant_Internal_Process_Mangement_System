@@ -29,6 +29,19 @@ const CustomerProfile = (props) => {
   const[Email,setEmail] = useState(props.user.Email);
   const[Address,setAddress] = useState(props.user.Address);
 
+  const formData = {Name,ContactNumber,Email,Address};
+
+  const updateProfile = async (e)=>{
+    e.preventDefault();
+    try {
+      const res = await axios.post(`api/v1/customer/UpdateProfile/${Email}`);
+      if(res.status == 200 || res.status == 201){
+        console.log(res);
+      }
+    } catch (error) {
+      
+    }
+  }
 
 
   const handleUpload = (e)=>{
@@ -36,6 +49,7 @@ const CustomerProfile = (props) => {
     console.log(e.target.files
       )
   }
+
   const uploadImage = async ()=>{
     const formData = new FormData();
     formData.append('image',image);
@@ -77,6 +91,8 @@ const CustomerProfile = (props) => {
                   id="name"
                   name="name"
                   placeholder="JOHNNY ANN"
+                  value={Name}
+                  onChange={e=>setName(e.target.value)}
                 ></Input>
                 <H2>CONTACT NUMBER</H2>
                 <Input
@@ -84,6 +100,8 @@ const CustomerProfile = (props) => {
                   id="phonenumber"
                   name="phonenumber"
                   placeholder="0774134764"
+                  value={ContactNumber}
+                  onChange={e=>setContactNumber(e.target.value)}
                 ></Input>
               </FormControl>
               <RegularButton onClick={uploadImage}>
@@ -99,38 +117,18 @@ const CustomerProfile = (props) => {
                 id="email"
                 name="email"
                 placeholder="JHNNANN123@GMAIL.COM"
+                value={Email}
+                onChange={e=>setEmail(e.target.value)}
               ></Input>
               <br />
               <H2>ADDRESS</H2>
               <Input
                 type="text"
-                id="addressline1"
-                name="addressline1"
-                placeholder="ADDRESS LINE 1"
-              ></Input>
-              <Input
-                type="text"
-                id="addressline2"
-                name="addressline2"
-                placeholder="ADDRESS LINE 2"
-              ></Input>
-              <Input
-                type="text"
-                id="city"
-                name="city"
-                placeholder="CITY"
-              ></Input>
-              <Input
-                type="text"
-                id="province"
-                name="province"
-                placeholder="PROVINCE"
-              ></Input>
-              <Input
-                type="number"
-                id="zipcode"
-                name="zipcode"
-                placeholder="ZIP CODE"
+                id="address"
+                name="address"
+                placeholder="ADDRESS"
+                value={Address}
+                onChange={e=>setAddress(e.target.value)}
               ></Input>
             </FormControl>
           </Div1>
