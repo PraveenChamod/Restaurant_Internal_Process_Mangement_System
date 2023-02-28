@@ -786,7 +786,7 @@ export const CheckOrderDetails = async(req, res)=>{
             findOrder.map(order=>{
                 if(order.ServiceProvider === deliverer.id){
                     pendingOrders.push(order);
-                }
+                } 
             })
             res.status(201).json({
                 status: 'success',
