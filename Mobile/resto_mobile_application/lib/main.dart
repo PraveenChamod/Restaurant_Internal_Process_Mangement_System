@@ -15,16 +15,16 @@ import 'package:resto_mobile_application/src/features/authentication/screens/log
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 
-// void main() => runApp(
-//   DevicePreview(
-//     enabled: !kReleaseMode,
-//     builder: (context) => const MyApp(), // Wrap your app
-//   ),
-// );
+void main() => runApp(
+  DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => const MyApp(), // Wrap your app
+  ),
+);
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

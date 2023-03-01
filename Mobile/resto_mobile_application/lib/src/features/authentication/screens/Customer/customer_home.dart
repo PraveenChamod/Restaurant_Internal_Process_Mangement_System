@@ -21,7 +21,7 @@ class _CustomerHomeState extends State<CustomerHome> {
   var _selectedIndex = 0;
   //Main Features List
   List<Map<String, String>> splashData = [
-    {"title": "Restaurant Menus",
+    {"title": "Explore Menu",
       "text": "Create and display your menu online",
       "image": chooseOnline,
     },

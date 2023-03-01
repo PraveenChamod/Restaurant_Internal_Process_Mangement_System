@@ -27,6 +27,9 @@ ServiceProviderrouter.route('/offer/deleteOffer').post(l.deleteOffers);
 
 //Tables CRUD
 ServiceProviderrouter.route('/Tables/AddTable').post(l.AddTable);
+ServiceProviderrouter.route('/AdminView-Tables').get(l.ViewTables);
+
+
 //Order Handling
 ServiceProviderrouter.route('/Orders/PendingOrders').get(l.ViewPendingOrders);
 ServiceProviderrouter.route('/Orders/ViewOrder/:_id').get(l.ViewOrder);

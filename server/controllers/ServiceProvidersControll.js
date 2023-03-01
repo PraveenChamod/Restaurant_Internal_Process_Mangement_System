@@ -11,6 +11,7 @@ import Order from "../models/Order.js";
 import mongoose from "mongoose";
 import Table from "../models/Tables.js";
 import TableReservation from "../models/TableReservation.js";
+import SupplierItem from "../models/SupplierItem.js";
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Manager++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -123,6 +124,45 @@ export const addItems = async(req,res)=>{
         res.status(501).json(error.message);
     }
 }
+
+
+// Method : POST
+// End Point : "api/v1/serviceProvider/__________";
+// Description : Add Supplier Order Item
+
+export const addSupplierOrder = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager"){
+            const {Item,Quantity,Date} = req.body;
+            const session = await mongoose.startSession();
+            try {
+                session.startTransaction();
+                const neworder = await SupplierItem.create({
+                    SupplierItem:Item,
+                    SupplierItem:Quantity,
+                    SupplierItem:Date
+                })
+                res.json(neworder);               
+                session.endSession();
+            
+                res.status(201).json({
+                    status: 'success',
+                    message: 'successfully'
+                })
+            } catch (error) {
+                res.status(500).json(error.message);
+            }
+        }
+        else{
+            res.status(401).json('Only Manager has access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
+
 // Method : GET
 // End Point : "api/v1/serviceProvider/getFoods";
 // Description : Get Items
@@ -505,6 +545,31 @@ export const AddTable = async(req,res)=>{
             status:'Server Error',
             message:error.message
         })
+    }
+}
+
+
+// Method : Get
+// End Point : "api/v1/serviceProvider/getTables";
+// Description : Get Tables
+
+export const ViewTables = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role === "Staff-Member" || user.Role === "Admin"){
+            const tables = await Table.find();
+            if(tables !== null){
+                res.json(tables);
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes please add tables"});
+            }
+        }
+        else{
+            res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
     }
 }
 
