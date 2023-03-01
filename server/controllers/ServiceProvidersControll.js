@@ -786,7 +786,7 @@ export const CheckOrderDetails = async(req, res)=>{
             findOrder.map(order=>{
                 if(order.ServiceProvider === deliverer.id){
                     pendingOrders.push(order);
-                }
+                } 
             })
             res.status(201).json({
                 status: 'success',
@@ -822,7 +822,6 @@ export const ViewReceivedOrders = async(req,res)=>{
         if(user.Role === "Supplier"){
             const findItems = await Item.find(); //model eka change karaganna
             console.log(findItems);
-            // let receivedOrders = [];
             res.status(201).json({
                 status: 'success',
                 message: 'Received Orders',

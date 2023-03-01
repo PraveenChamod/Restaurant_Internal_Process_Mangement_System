@@ -9,7 +9,11 @@ import cookieSession from "cookie-session";
 import cors from 'cors';
 import dotenv from 'dotenv';
 import passport from "passport";
+import path from "path";
 const app = express();
+
+const __dirname = new URL('.', import.meta.url).pathname;
+console.log(path.join(__dirname, 'images/Users'));
 dotenv.config();
 app.use(
 	cookieSession({
@@ -35,7 +39,7 @@ app.use(function(req, res, next) {
 app.use(express.json({extended:true}));
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
-
+app.use('/images', express.static('images/Users'));
 
 
 app.use('/api/v1/customer',Customerrouter);

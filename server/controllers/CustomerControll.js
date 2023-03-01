@@ -109,27 +109,32 @@ export const UpdateProfile = async(req,res)=>{
                 const logedCustomer = await Customer.findOne({Email:Email}).populate('Email');
                 const logedUser = await User.findOne({Email:Email}).populate('Email');
                 if(logedCustomer !== null){
-                        image(req,res,(err)=>{
-                            if(err){
-                                console.log(err)
-                            }
-                            else{
-                                logedUser.ProfileImage = req.file.filename;
-                                logedCustomer.ProfileImage = req.file.filename
-                            }
-                        })
+                        // image(req,res,(err)=>{
+                        //     if(err){
+                        //         console.log(err)
+                        //     }
+                        //     else{
+                        //         logedUser.ProfileImage = req.file.filename;
+                        //         logedCustomer.ProfileImage = req.file.filename
+                        //     }
+                        // })
                     const {Name,ContactNumber,Address,Email1} = req.body;
                     const locationAddress = JSON.stringify({Address});
-                    const uploadImage = await logedCustomer.save();
-                    const uploadImage1 = await logedUser.save();
+                    // const uploadImage = await logedCustomer.save();
+                    // const uploadImage1 = await logedUser.save();
                     // getLocation(locationAddress);
-                    const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address,uploadImage}
+                    const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address}
                     const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
                     console.log(updateCustomer);
                     const updateUser = await User.findByIdAndUpdate(logedUser._id,userDetails,{new:true});
                     console.log(updateUser);
                     createToken(updateCustomer._id,updateCustomer.Email);
-                    res.status(201).json({message:'Update User Successfully'});
+                    res.status(201).json({
+                        message:'Update User Successfully',
+                        data:{
+                            updateUser
+                        }
+                    });
                 }
                 else{
                     res.json("error");

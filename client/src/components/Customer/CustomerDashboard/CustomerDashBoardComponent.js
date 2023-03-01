@@ -7,23 +7,23 @@ import useAuth from '../../../Hooks/useAuth';
 const CustomerDashboardComponent = (props) => {
     const data1 = Array.from(props.Navs1.Navs);
 
-    const { logout,user } = useAuth();
+    const { logout,user,loadUser,loading } = useAuth();
 
     const onclick = (link)=>{
         if(link === '/login'){
           logout();
         }
       }
-
+      console.log(user);
     return ( 
         <l.Container>
             <l.Section>
                 <l.Profile>
                     <l.Picture>
-                        <l.Image src={profileImage}/>
+                        <l.Image src={`http://localhost:5000/images/${user?.ProfileImage}`}/>
                     </l.Picture>
                     <l.Name>
-                        Jenny
+                        {user?.Name}
                     </l.Name>
                 </l.Profile>
                 <l.Options>

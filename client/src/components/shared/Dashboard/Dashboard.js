@@ -35,7 +35,7 @@ const Dashboard = (props) => {
   const data1 = Array.from(props.Navs1.Navs);
 
   const cardData = Array.from(props.cards1.CardContent);
-  
+  console.log(user);
   const onclick = (link)=>{
     if(link === '/login'){
       logout();

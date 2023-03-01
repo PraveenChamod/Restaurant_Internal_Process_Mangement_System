@@ -10,7 +10,6 @@ import {
   Div3,
   H1,
   Searchbar
-
 } from './ViewUserElements';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container } from "../SharedElements/SharedElements";
@@ -18,28 +17,32 @@ import useAuth from "../../../Hooks/useAuth";
 
 const ViewUserComponent = (props) => {
 
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+    console.log(email);
+  }
+
+
+  
+
   const [users, setUsers] = useState(props.users);
+  const user = users.map(user=>{
 
-  const [selectedUser, setSelectedUser] = useState(null);
-
-  const handleSearch = (event) => {
-    
-    const searchValue = event.target.value.toLowerCase();
-    const filteredUsers = props.users.filter((user) =>
-      user.email.toLowerCase().includes(searchValue)
-    );
-    setUsers(filteredUsers);
-  };
-
+  })
+  //onsubmit function ekak liyanna
   return (
-
-    
-
     <Container>
       <H1>USER DETAILS</H1>
       <Div>
         <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
-          <Searchbar type="search" placeholder="Enter the User email" />
+          <Searchbar type="search" placeholder="Enter the User email" value={email} onChange={e=>setEmail(e.target.value)}/>
           <TextField
             id="standard-basic"
             label="Email"
@@ -47,8 +50,8 @@ const ViewUserComponent = (props) => {
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
-            value={selectedUser?.email || ""}
-            disabled={!selectedUser}
+            value={email}
+            onChange={handleEmailChange}
           />
           <TextField 
             id="standard-basic" 
@@ -56,16 +59,12 @@ const ViewUserComponent = (props) => {
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}/>
-            value={selectedUser?.username || ""}
-            disabled={!selectedUser}
           <TextField
             id="standard-basic"
             label="Contact Number"
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
-            value={selectedUser?.contactNumber || ""}
-            disabled={!selectedUser}
           />
           <TextField 
             id="standard-basic" 
@@ -73,20 +72,16 @@ const ViewUserComponent = (props) => {
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}/>
-            value={selectedUser?.role || ""}
-            disabled={!selectedUser}
           <TextField 
             id="standard-basic" 
             label="Gender" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}/>
-            value={selectedUser?.role || ""}
-            disabled={!selectedUser}
         </FormControl>
         <Div1>
           <Div2>
-            <FormButton>
+            <FormButton> // ONCLICK EKAK DALA LIYANN
               <Link to="./login" className="btn">
                 <b>DELETE</b>
               </Link>
