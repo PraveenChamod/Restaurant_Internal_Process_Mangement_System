@@ -12,10 +12,10 @@ import Foods from "../models/Foods.js";
 import Stripe from 'stripe';
 import Table from "../models/Tables.js";
 import TableReservation from "../models/TableReservation.js";
-import Review from "../models/Reviews.js";
 import globalArray from "../Data/GlobalArray.js";
 import dotenv from 'dotenv';
 import multer from "multer";
+import Reviews from "../models/Reviews.js";
 
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
@@ -118,12 +118,12 @@ export const UpdateProfile = async(req,res)=>{
                         //         logedCustomer.ProfileImage = req.file.filename
                         //     }
                         // })
-                    const {Name,ContactNumber,Address,Email1} = req.body;
+                    const {Name,ContactNumber,Address,Email} = req.body;
                     const locationAddress = JSON.stringify({Address});
                     // const uploadImage = await logedCustomer.save();
                     // const uploadImage1 = await logedUser.save();
                     // getLocation(locationAddress);
-                    const userDetails = {Name:Name,Email:Email1,ContactNumber:ContactNumber,Address:Address}
+                    const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address}
                     const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
                     console.log(updateCustomer);
                     const updateUser = await User.findByIdAndUpdate(logedUser._id,userDetails,{new:true});
@@ -355,21 +355,23 @@ export const AddReview = async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Customer"){
-            const {review,rate} = req.body;
+            const {Review,Rate} = req.body;
                 const session = await mongoose.startSession();
+                const customer = await Customer.findOne({Email:user.Email});
                 // console.log(session);
                 try {
                     session.startTransaction();
-                    const ReviewData = {
-                        Review:review,
-                        Rate:rate}
-                    const newreview = await Review.create([ReviewData],{session});
+                    const ReviewData = {Customer:customer.id,Review:Review,Rate:Rate}
+                    const newreview = await Reviews.create([ReviewData],{session});
                     const commit = await session.commitTransaction();
                     session.endSession();
                 
                     res.status(201).json({
                         status: 'success',
-                        message: 'Submitted Review successfully'
+                        message: 'Submitted Review successfully',
+                        data:{
+                            newreview
+                        }
                     })
                 } catch (error) {
                     res.status(500).json(error.message);

@@ -37,7 +37,6 @@ const customerSchema = mongoose.Schema({
             },
             message:"Please enter the valid email"
         },
-        immutable:true
     },
     Role:{
         type:String,
@@ -49,6 +48,9 @@ const customerSchema = mongoose.Schema({
         immutable:true
     },
     ProfileImage:{
+        type:String,
+    },
+    Address:{
         type:String,
     },
     OTP:{

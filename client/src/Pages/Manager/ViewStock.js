@@ -1,11 +1,11 @@
-import ViewAllComponent from "../../components/shared/ViewAll/ViewAll";
+import ViewStocksComponent from "../../components/Manager_Components/ViewStocks/ViewStocks";
 
-const ViewStock = (props) => {
+const ViewStocks = (props) => {
     return ( 
         <>
-            <ViewAllComponent Tables1={props.Tables}/>
+            <ViewStocksComponent/>
         </>
      );
 }
  
-export default ViewStock;
+export default ViewStocks;

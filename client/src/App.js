@@ -46,14 +46,12 @@ import AdminAddUser from './Pages/Admin/AddUser';
 import AdminViewUser from './Pages/Admin/AdminViewUser';
 import AdminAddTables from './Pages/Admin/AdminAddTable';
 import AdminViewTables from './Pages/Admin/AdminViewTables';
-import AdminViewTable from './Pages/Admin/AdminViewTable';
 import AdminAddFoods from './Pages/Admin/AddFoods';
 import AdminViewFoods from './Pages/Admin/AdimnViewFoods';
 import AdminViewFood from './Pages/Admin/AdminViewFood';
 import ManagerViewUser from './Pages/Manager/ManagerViewUser';
 import ManagerAddTables from './Pages/Manager/ManagerAddTable';
 import ManagerViewTables from './Pages/Manager/ManagerViewTables';
-import ManagerViewTable from './Pages/Manager/ManagerViewTable';
 import ManagerAddFoods from './Pages/Manager/AddFoods';
 import ManagerViewFoods from './Pages/Manager/ManagerViewFoods';
 import ManagerViewFood from './Pages/Manager/ManagerViewFood';
@@ -73,6 +71,11 @@ import CustomerProfile from './components/Customer/CustomerProfile/CustomerProfi
 import UserProfileComponent from './components/shared/UserProfile/UserProfile';
 import EditProfileComponent from './components/shared/EditProfile/Editprofile';
 import CartData from './Data/CartData';
+import AdminEditProfile from './Pages/Admin/AdminEditProfile';
+import ManagerEditProfile from './Pages/Manager/ManagerEditProfile';
+import StaffMemberEditProfile from './Pages/Staff-Member/StaffMemberEditProfile';
+import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
+import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 
 function App() {
   useEffect(() => {
@@ -112,12 +115,12 @@ function App() {
                 <Route path="/AdminAdd-User" element={<AdminAddUser/>}/>
                 <Route path="/AdminView-User" element={<AdminViewUser/>}/>
                 <Route path="/AdminMy-Profile" element={<AdminUserProfile/>}/>
+                <Route path="/AdminEdit-Profile" element={<AdminEditProfile/>}/>
                 <Route path="/AdminAdd-Table" element={<AdminAddTables/>}/>
-                <Route path="/AdminView-Tables" element={<AdminViewTables Tables={TableColumns[1]}/>}/>
-                <Route path="/AdminView-Table" element={<AdminViewTable View = {ViewThings[2]}/>}/>
+                <Route path="/AdminView-Tables" element={<AdminViewTables/>}/>
                 <Route path="/AdminAdd-Foods" element={<AdminAddFoods/>}/>
-                <Route path="/AdminView-Foods" element={<AdminViewFoods Tables={TableColumns[0]}/>}/>
-                <Route path="/AdminView-Food" element={<AdminViewFood View = {ViewThings[0]}/>}/>
+                <Route path="/AdminView-Foods" element={<AdminViewFoods/>}/>
+                <Route path="/AdminView-Food" element={<AdminViewFood/>}/>
               {/* </Route> */}
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -125,32 +128,33 @@ function App() {
                 <Route path="/ManagerAdd-User" element={<AddOutletStaff/>}/>
                 <Route path="/ManagerView-User" element={<ManagerViewUser/>}/>
                 <Route path="/ManagerMy-Profile" element={<ManagerUserProfile/>}/>
+                <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile/>}/>
                 <Route path="/ManagerReport-Generation" element={<ReportGeneration/>}/>
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>
                 <Route path="/ManagerAddStock" element={<AddStockItem/>}/>
-                <Route path="/ManagerViewStock" element={<ViewStock Tables={TableColumns[2]}/>}/>
+                <Route path="/ManagerViewStock" element={<ViewStock/>}/>
                 <Route path="/ManagerViewItem" element={<ViewItem/>}/>
                 <Route path="/ManagerAdd-Table" element={<ManagerAddTables/>}/>
-                <Route path="/ManagerView-Tables" element={<ManagerViewTables Tables={TableColumns[1]}/>}/>
-                <Route path="/ManagerView-Table" element={<ManagerViewTable View = {ViewThings[2]}/>}/>
+                <Route path="/ManagerView-Tables" element={<ManagerViewTables />}/>
                 <Route path="/ManagerAdd-Foods" element={<ManagerAddFoods/>}/>
                 <Route path="/ManagerAdd-Offers" element={<AddOffers/>}/>
-                <Route path="/ManagerView-Foods" element={<ManagerViewFoods Tables={TableColumns[0]}/>}/>
-                <Route path="/ManagerView-Food" element={<ManagerViewFood View = {ViewThings[0]}/>}/>
-                <Route path="/ManagerView-Offers" element={<ManagerViewOffers Tables={TableColumns[5]}/>}/>
-                <Route path="/ManagerView-Offer" element={<ManagerViewOffer View = {ViewThings[1]}/>}/>
+                <Route path="/ManagerView-Foods" element={<ManagerViewFoods />}/>
+                <Route path="/ManagerView-Food" element={<ManagerViewFood/>}/>
+                <Route path="/ManagerView-Offers" element={<ManagerViewOffers/>}/>
+                <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
                 <Route path="/Staff-MemberDashBoard" element={<StaffMemberDashBoard Navs = {Roles[2]} Card = {Cards[2]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/Staff-MemberAdd-Offers" element={<StaffMemberAddOffers/>}/>
-                <Route path="/Staff-MemberView-Offers" element={<StaffMemberViewOffers Tables={TableColumns[5]}/>}/>
-                <Route path="/Staff-MemberView-Offer" element={<StaffMemberViewOffer View = {ViewThings[1]}/>}/>
-                <Route path="/Staff-MemberView-Foods" element={<StaffMemberViewFoods Tables={TableColumns[0]}/>}/>
-                <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables Tables={TableColumns[1]}/>}/>
+                <Route path="/Staff-MemberView-Offers" element={<StaffMemberViewOffers/>}/>
+                <Route path="/Staff-MemberView-Offer" element={<StaffMemberViewOffer/>}/>
+                <Route path="/Staff-MemberView-Foods" element={<StaffMemberViewFoods />}/>
+                <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables />}/>
                 <Route path="/Staff-MemberOrder-Details" element={<StaffMemberOrderDetails/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile/>}/>
+                <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
                 <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
 
                 
@@ -168,13 +172,15 @@ function App() {
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
-                <Route path="/DelivererMy-Profile" element={<DelivererUserProfile/>}/>     
+                <Route path="/DelivererMy-Profile" element={<DelivererUserProfile />}/>   
+                <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
                 <Route path="/DelivererOrderDetails" element={<DeliveryOrderDetails/>}/>   
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
-                <Route path="/SupplierMy-Profile" element={<SupplierUserProfile/>}/>     
+                <Route path="/SupplierMy-Profile" element={<SupplierUserProfile/>}/>    
+                <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile/>}/> 
                 <Route path="/SupplierMessages" element={<Messages/>}/> 
             </Routes>
             <Footer/>
