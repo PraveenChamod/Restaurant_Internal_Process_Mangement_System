@@ -5,15 +5,11 @@ const ReviewSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Customer',
     },
-    
     Rate:{
         type:Number,
-       
-        required:[true,"Please Select the rate"]
     },
     Review:{
         type:String,
-        default:null,
     },
 },
 {
@@ -28,6 +24,6 @@ const ReviewSchema = mongoose.Schema({
     timestamps: true
 });
 
-const Review = mongoose.model('Revieww',ReviewSchema);
+const Reviews = mongoose.model('Review',ReviewSchema);
 
-export default Review;
+export default Reviews;

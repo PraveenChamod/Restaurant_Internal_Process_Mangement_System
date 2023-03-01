@@ -1,8 +1,9 @@
-import ItemViewComponent from "../../components/shared/ItemView/ItemView";
+import OfferDetails from "../../components/shared/OfferDetails/OfferDetails";
+
 const StaffMemberViewOffer = (props) => {
     return ( 
         <>
-            <ItemViewComponent View1 = {props.View}/>
+            <OfferDetails/>
         </>
      );
 }

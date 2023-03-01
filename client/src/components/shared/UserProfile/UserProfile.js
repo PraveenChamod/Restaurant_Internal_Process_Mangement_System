@@ -16,7 +16,7 @@ const UserProfileComponent = () => {
                     </Header>
                         <P>Hi Praveen!</P>
                     <FormButton>
-                        <Link to="./login" className="btn">
+                        <Link to="./EditProfile" className="btn">
                             Edit
                         </Link>
                     </FormButton>

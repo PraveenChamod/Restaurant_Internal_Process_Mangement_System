@@ -5,10 +5,6 @@ const FoodsSchema = mongoose.Schema({
         type:String,
         required:[true,"Please Select the Item"]
     },
-    Quantity:{
-        type:String,
-        required:[true,"Must Provide the available no of item"]
-    },
     Price:{
         type:Number,
         required:[true,"Must Add the Unit Price"]
@@ -21,9 +17,9 @@ const FoodsSchema = mongoose.Schema({
         type:String,
         required:[true,"Must Upload Image"]
     },
-    Category:{
+    Status:{
         type:String,
-        required:[true,"Please Select the category"]
+        default:'Available'
     },
     OrderItems:{
         type:Boolean,

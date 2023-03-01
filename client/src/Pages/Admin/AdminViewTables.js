@@ -1,9 +1,9 @@
-import ViewAllComponent from "../../components/shared/ViewAll/ViewAll";
+import TableDetails from "../../components/shared/TableDetails/TableDetails";
 
 const AdminViewTables = (props) => {
     return ( 
         <>
-            <ViewAllComponent Tables1 = {props.Tables}/>
+            <TableDetails/>
         </>
      );
 }

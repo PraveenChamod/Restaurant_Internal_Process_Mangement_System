@@ -39,7 +39,7 @@ const CustomerProfile = (props) => {
     e.preventDefault();
     try {
       const Data = {Name,Email,ContactNumber,Address}
-      const res = await axios.patch(`api/v1/Customer/UpdateProfile/${Email}`,Data);
+      const res = await axios.patch(`api/v1/Customer/UpdateProfile/${user?.Email}`,Data);
       if(res.status == 200 || res.status == 201){
         console.log(res);
         loadUser();

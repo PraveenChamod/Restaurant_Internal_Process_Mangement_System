@@ -1,8 +1,28 @@
 import { FormControl, MenuItem, Select, TextField } from '@mui/material';
+import axios from 'axios';
+import { useState } from 'react';
 import { FormButton, RegularButton, UploadButton } from '../SharedElements/Buttons';
 import { Container, Header } from '../SharedElements/SharedElements';
 import * as l from './AddFoodsElements';
 const AddFoodsComponent = () => {
+    const[FoodName,setFoodName] = useState('');
+    const[Price,setPrice] = useState('');
+    const[Category,setCategory] = useState('');
+    const[Quantity,setQuantity] = useState('');
+    const[image,setImage] = useState('');
+
+    const addFood = async (e)=>{
+        e.preventDefault();
+        try {
+            const Data = new FormData();
+            Data.append('image',image);
+            console.log(Data);
+            const formData = {FoodName,Price,Category,Quantity,Data};
+            const res = await axios.post('api/v1/serviceProvider/food/AddFoods')
+        } catch (error) {
+            
+        }
+    }
     return ( 
         <Container>
             <l.SubSection>
