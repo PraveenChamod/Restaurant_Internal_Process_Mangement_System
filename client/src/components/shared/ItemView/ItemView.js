@@ -25,14 +25,7 @@ const ItemViewComponent = (props) => {
             {
                 Labels.map(Label=>{
                     return(
-                        <TextField
-                            id="standard-basic"
-                            label={Label.text}
-                            type="email"
-                            variant="standard"
-                            InputLabelProps={{className:'textFeild_Label'}} 
-                            sx={{marginBottom:'5%'}}
-                        />
+                        <TextField id="standard-basic" label={Label.text} type="email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} />
                     )
                 })
             }
@@ -51,7 +44,7 @@ const ItemViewComponent = (props) => {
                 UPDATE
               </Link>
             </FormButton>
-          
+
         </Div1>
       </Div>
       <Div3>

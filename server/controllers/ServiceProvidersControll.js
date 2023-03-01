@@ -547,6 +547,31 @@ export const AddTable = async(req,res)=>{
 }
 
 
+// Method : Get
+// End Point : "api/v1/serviceProvider/getTables";
+// Description : Get Tables
+
+export const ViewTables = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role === "Staff-Member" || user.Role === "Admin"){
+            const tables = await Table.find();
+            if(tables !== null){
+                res.json(tables);
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes please add tables"});
+            }
+        }
+        else{
+            res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++staff-member+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
