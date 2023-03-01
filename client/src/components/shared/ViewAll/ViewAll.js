@@ -7,7 +7,7 @@ import {
 import { RegularButton } from "../SharedElements/Buttons";
 const ViewAllComponent = (props) => {
     const TableHeaders = Array.from(props.Tables1.Headers);
-    console.log(TableHeaders);
+    
     const columns = TableHeaders.map(header=>{
         return (
             {field:`${header.text}`,headerName:`${header.text}`,headerClassName: 'super-app-theme--header',width:180}
