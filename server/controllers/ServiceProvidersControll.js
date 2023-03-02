@@ -246,7 +246,7 @@ export const deleteItemBySerialNo = async (req,res)=>{
 }
 
 // Method : POST
-// End Point : "api/v1/serviceProvider/Manager/AddFoods";
+// End Point : "api/v1/serviceProvider/food/AddFoods";
 // Description : Get Foods By Category
 const imageStorage = multer.diskStorage({
     destination:"images/Foods",
@@ -255,31 +255,34 @@ const imageStorage = multer.diskStorage({
     }
 })
 const image = multer({storage:imageStorage}).single('image');
-
+var FoodImage = "";
+export const uploadImage = async(req,res)=>{
+    
+        image(req,res,(err)=>{
+            if(err){
+                console.log(err)
+            }
+            else{
+                FoodImage = req.file.filename;
+                res.json(FoodImage);
+            }
+    })
+}
 export const addFoods = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === 'Manager' || user.Role === 'Admin'){
-            const {FoodName,Price,Category,Quantity} = req.body;
-            console.log(Category);
+            const {FoodName,Price,Category} = req.body;
+            console.log(FoodName);
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             console.log(SerialNumber);
             const existingFood = await Foods.findOne({SerialNo:SerialNumber});
             if(existingFood !== null){
                 res.status(501).json({message:`This item is already added`});
             }else{
-                const FoodImage = "";
-                image(req,res,(err)=>{
-                    if(err){
-                        console.log(err)
-                    }
-                    else{
-                        FoodImage = req.file.filename;
-                    }
-                })
+                
                 const AddFoods = await Foods.create({
                     FoodName:FoodName,
-                    Quantity:Quantity,
                     Price:Price,
                     SerialNo:SerialNumber,
                     Category:Category,
@@ -479,7 +482,6 @@ export const  deleteOffers =async (req,res)=>{
          if(user.Role==="Staff-Member"){
             const {SerialNo} = req.params;
             const offer = await Offers.findOne({SerialNo:SerialNo});
-            console.log(Food);
             if(offer !== null){
                 await Offer.findByIdAndRemove(offer._id);
                 res.json({message:`${SerialNo} Offer Removed`});
@@ -543,6 +545,31 @@ export const AddTable = async(req,res)=>{
             status:'Server Error',
             message:error.message
         })
+    }
+}
+
+
+// Method : Get
+// End Point : "api/v1/serviceProvider/getTables";
+// Description : Get Tables
+
+export const ViewTables = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role === "Staff-Member" || user.Role === "Admin"){
+            const tables = await Table.find();
+            if(tables !== null){
+                res.json(tables);
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes please add tables"});
+            }
+        }
+        else{
+            res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
     }
 }
 

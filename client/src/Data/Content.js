@@ -40,169 +40,25 @@ export const responsive = {
         items: 3,
     },
 };
-export const TableColumns = [
+export const EditProfileLinks = [
     {
-        TableName:"Food Details",
-        Headers:[
-            {
-                text:'Name'
-            },
-            {
-                text:'Category'
-            },
-            {
-                text:'Qty'
-            },
-            {
-                text:'Price'
-            },
-            {
-                text:'Status'
-            },
-        ]
+        Role:'Admin',
+        Route:'/AdminEdit-Profile'
     },
     {
-        TableName:"Details Of All Tables",
-        Headers:[
-            {
-                text:'Table No'
-            },
-            {
-                text:'Maximum No of Persons'
-            },
-            {
-                text:'Reservation Fee'
-            },
-            {
-                text:'Status'
-            }
-        ]
+        Role:'Manager',
+        Route:'/ManagerEdit-Profile'
     },
     {
-        TableName:"Stock Details",
-        Headers:[
-            {
-                text:'Item Name'
-            },
-            {
-                text:'Category'
-            },
-            {
-                text:'Qty'
-            },
-            {
-                text:'Price'
-            },
-            {
-                text:'Supplier ID'
-            },
-        ]
+        Role:'Staff-Member',
+        Route:'/Staff-MemberEdit-Profile'
     },
     {
-        TableName:"Pending Orders",
-        Headers:[
-            {
-                text:'Customer Name'
-            },
-            {
-                text:'Email'
-            },
-            {
-                text:'Contact No'
-            },
-            {
-                text:'Time'
-            },
-            {
-                text:'Order Id'
-            },
-        ]
+        Role:'Deliverer',
+        Route:'/DelivererEdit-Profile'
     },
     {
-        TableName:"Pending Reservation",
-        Headers:[
-            {
-                text:'Customer Name'
-            },
-            {
-                text:'Table No'
-            },
-            {
-                text:'Contact No'
-            },
-            {
-                text:'Date & Time'
-            },
-        ]
-    },
-    {
-        TableName:"All Offers",
-        Headers:[
-            {
-                text:'Meal Name'
-            },
-            {
-                text:'Special Price'
-            },
-            {
-                text:'Validity'
-            },
-            {
-                text:'Status'
-            },
-        ]
-    }
-]
-export const ViewThings = [
-    {
-        Title:'Food Details',
-        TextFeilds:[
-            {
-                text:'Name'
-            },
-            {
-                text:'Category'
-            },
-            {
-                text:'Price'
-            },
-            {
-                text:'Status(Available/Not)'
-            },
-        ]
-    },
-    {
-        Title:'Offer Details',
-        TextFeilds:[
-            {
-                text:'Meal Name'
-            },
-            {
-                text:'Special Price'
-            },
-            {
-                text:'Validity'
-            },
-            {
-                text:'Status(Available/Not)'
-            },
-        ]
-    },
-    {
-        Title:'Table Details',
-        TextFeilds:[
-            {
-                text:'Table No'
-            },
-            {
-                text:'Maximum No of Persons'
-            },
-            {
-                text:'Reservation Fee'
-            },
-            {
-                text:'Status(Available/Not)'
-            }
-        ]
+        Role:'Supplier',
+        Route:'/SupplierEdit-Profile'
     }
 ]

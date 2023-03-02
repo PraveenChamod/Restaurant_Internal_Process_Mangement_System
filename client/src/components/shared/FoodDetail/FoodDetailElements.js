@@ -38,10 +38,24 @@ export const Div1 = styled.div`
   align-items: center;
   flex-direction: row;
   margin-top: 10px;
+  flex-direction: column;
+  height: 80%;
+  width: 60%;
 `;
 export const Div2 = styled.div`
-  margin-right: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2% 0;
+  width: 60%;
 `;
+
+export const Sec = styled.div`
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
 export const Div3 = styled.div`
   margin-top: 15px;
   width: 50%;
@@ -60,3 +74,11 @@ export const Searchbar = styled.input`
   font-size: 12px;
   box-shadow: 3px 3px 3px #000;
 `;
+
+export const TextFeild = styled.input`
+    margin: 2%;
+    width: 100%;
+    height: 30px;
+    border-radius: 30px;
+    padding: 1% 5%;
+`

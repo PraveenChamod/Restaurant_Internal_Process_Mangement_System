@@ -21,14 +21,15 @@ export const Page1 = styled.div`
 `
 
 
-export const Div = styled.div`
+export const Div = styled.form`
   width: 65%;
-  height: 65%;
+  height: fit-content;
   background: #1A1E21;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 1%;
   flex-direction: column;
   box-shadow: 3px 3px 3px #000;
   @media screen and (max-width: 769px) {
