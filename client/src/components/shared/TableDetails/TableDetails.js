@@ -3,7 +3,7 @@ import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './TableDetailsElements'
-const TableDetails = () => {
+const TableDetails = (props) => {
     return ( 
         <Container>
             <Header>
@@ -17,7 +17,19 @@ const TableDetails = () => {
                         <l.Th>Reservation Fee</l.Th>
                         <l.Th>Status</l.Th>
                     </l.Tr>
-                    {/* When connect to fronend to backend use map function in hear */}
+                    {/* When connect to fronend to backend use map function in hear */
+                        props.data2.map(row=>{
+                            return(
+                                <l.Tr>
+                                    <l.Td>{row.TableNo}</l.Td>
+                                    <l.Td>{row.NoOfPersons}</l.Td>
+                                    <l.Td>{row.price}</l.Td>
+                                    <l.Td>{row.Status}</l.Td>
+                                    <l.Icon><AiFillEye/></l.Icon>
+                                </l.Tr>
+                            )
+                        })
+                    }
                     <l.Tr>
                         <l.Td></l.Td>
                         <l.Td></l.Td>
