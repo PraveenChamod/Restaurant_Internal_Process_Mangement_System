@@ -4,13 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/make_selction.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_home.dart';
 import 'Customer/customer_main_page.dart';
-import 'Products/Products_Menu_Titles.dart';
+import 'Products/products_menu_titles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,8 +21,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  var email;
-  var password;
+  var Email;
+  var Password;
   bool _obscureText = true;
   //int _currentIndex = 0;
   @override
@@ -99,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (value) {
-                                email = value;
+                                Email = value;
                               },
                             ),
                           ),
@@ -140,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (value) {
-                                password = value;
+                                Password = value;
                               },
                             ),
                           ),
@@ -171,9 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
-                                print(email);
-                                print(password);
-                                login(email, password);
+                                //print(Email);
+                                //print(Password);
+                                login(Email, Password);
                               },
 
                               // onPressed: () {
@@ -294,21 +295,20 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-login(email, password) async {
-  var url = "http://localhost:5000/signup";
+login(Email, Password) async {
+  var url = "http://localhost:5000/api/v1/Auth/LoginUser";
+  print(url);
   final http.Response response = await http.post(
     Uri.parse(url),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'email': email,
-      'password': password,
+      'Email': Email,
+      'Password': Password,
     }),
   );
-
   print(response.body);
-
   // if (response.statusCode == 201) {
   //   // If the server did return a 201 CREATED response,
   //   // then parse the JSON.
