@@ -43,13 +43,13 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const SplashScreen(),
+      //home: const SplashScreen(),
       //home: const HomeScreen(),
       //home: const CustomerMainPage(),
       //home: const CustomerHome(),
       //home: const CustomerSearch(),
       //home: const ProductMenuTitles(),
-      //home: const LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }
