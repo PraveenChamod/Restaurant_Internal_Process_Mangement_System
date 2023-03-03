@@ -54,15 +54,15 @@ export const RegisterOutletStaff = async (req,res)=>{
                             subject : 'Registration Confrimation',
                             attachments:[{
                                 filename : 'logo.png',
-                                path:'E:/WEB/Restaurant_Management_System/server/Template/logo.png',
+                                path:'D:/Group Project/New folder/restaurant_management_system/server/Template/logo.png',
                                 cid:'logo'
                             },
                             {
                                 filename : 'welcome_vector.png',
-                                path:'E:/WEB/Restaurant_Management_System/server/Template/welcome_vector.png',
+                                path:'D:/Group Project/New folder/restaurant_management_system/server/Template/welcome_vector.png',
                                 cid:'welcome'
                             }],
-                            html: { path:'E:/WEB/Restaurant_Management_System/server/Template/Email.html' }
+                            html: { path:'D:/Group Project/New folder/restaurant_management_system/server/Template/Email.html' }
                         }
     
                         transporter.sendMail(mailOption,(err,info)=>{

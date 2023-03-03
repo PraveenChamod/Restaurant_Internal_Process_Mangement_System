@@ -2,74 +2,62 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
-import { InputLabel, MenuItem, NativeSelect, Select } from "@mui/material";
 
 import { 
-  Page,
   Div,
   Div1,
   Div2,
   Div3,
-  H1
+
 } from'./AddSupplierOrderElement.js';
-import { createTheme } from '@mui/material/styles';
 import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
+import { useState } from "react";
+import axios from 'axios';
 
 const AddSupplierOrder = () => {
-  
+    const[Item,setItem] = useState('');
+    const[Quantity,setQuantity] = useState('');
+    const[Date,setDate] = useState('');
+
+
+    const onSubmit = async (e)=>{
+        e.preventDefault();
+        try {
+            const formData = {Item, Quantity, Date}
+            const res = await axios.post('api/v1/serviceProvider/AddSupplierOrder',formData)
+            console.log(res);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
   return (
     <Container>
-      <Header>ADD STOCK</Header>
-      <Div>
-        <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-          <TextField id="standard-basic" label="Email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} />
-          <>
-            <Select
-              defaultValue={30}
-              inputProps={{
-                name: "role",
-                id: "uncontrolled-native",
-              }}
-              sx={{
-                color: "white",
-                '.MuiSvgIcon-root ': {
-                  fill: "white !important",
-                },
-                marginBottom:'5%'
-              }}
-
-            >
-              <MenuItem value={1}>Vegitable</MenuItem>
-              <MenuItem value={2}>Meats</MenuItem>
-              <MenuItem value={3}>fruits</MenuItem>
-            </Select>
-          </>
-          <TextField id="standard-basic" label="Quantity" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} />
-          <TextField id="standard-basic" label="Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} />
-          <TextField id="standard-basic" label="Supplier ID" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'0'}} />
+      <Header>ADD SUPPLIER ORDER</Header>
+      <Div onSubmit={onSubmit}>
+        <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard" >
+          <TextField id="standard-basic" label="Item" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={Item} onChange={e=>setItem(e.target.value)}/>
+          <TextField id="standard-basic" label="Quantity" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={Quantity} onChange={e=>setQuantity(e.target.value)} />
+          <TextField id="standard-basic" label="Date" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'0'}} value={Date} onChange={e=>setDate(e.target.value)}/>
+          <FormButton>
+                Add
+            </FormButton>
         </FormControl>
         <Div1>
           <Div2>
-            <FormButton>
-              <Link to="./login" className="btn">
-                Add
-              </Link>
-            </FormButton>
+            
           </Div2>
           
             <FormButton>
-              <Link to="./login" className="btn">
                 Reset
-              </Link>
             </FormButton>
           
         </Div1>
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to="#" className="btn">
             Back
           </Link>
         </RegularButton>

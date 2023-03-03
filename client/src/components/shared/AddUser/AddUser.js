@@ -52,6 +52,7 @@ const AddUserComponent = () => {
               onChange={e=>setRole(e.target.value)}
             >
               <MenuItem value={'Deliverer'} >Deliverer</MenuItem>
+              <MenuItem value={'Manager'} >Manager</MenuItem>
               <MenuItem value={'Supplier'}>Supplier</MenuItem>
               <MenuItem value={'Staff-Member'}>Staff-Member</MenuItem>
             </Select>
