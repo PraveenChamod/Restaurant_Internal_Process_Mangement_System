@@ -10,6 +10,7 @@ ServiceProviderrouter.route('/AddItems').post(l.addItems);
 ServiceProviderrouter.route('/getItems').get(l.getItems);
 ServiceProviderrouter.route('/getItemsByCategory').get(l.getItemByCategory);
 ServiceProviderrouter.route('/deleteItemBySerialNo/:SerialNo').delete(l.deleteItemBySerialNo);
+ServiceProviderrouter.route('/Orders/AllOrders').get(l.ViewAllOrders);
 
 //Food routes
 ServiceProviderrouter.route('/uploadImage').post(l.uploadImage);

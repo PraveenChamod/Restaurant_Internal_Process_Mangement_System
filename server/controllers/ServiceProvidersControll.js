@@ -500,6 +500,37 @@ export const  deleteOffers =async (req,res)=>{
    
 }
 
+// Method : GET
+// End Point : "api/v1/serviceProvider/Orders/AllOrders";
+// Description : Get All Orders
+export const ViewAllOrders = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member"){
+            const allorders = await Order.find();
+            console.log(allorders);            
+            res.status(201).json({
+                status: 'success',
+                message: 'All Orders',
+                data: {
+                    allorders
+                }
+            })
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
+
 //+++++++++++++++++++++++++++++++++++++++++++++++Tables CRUD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
