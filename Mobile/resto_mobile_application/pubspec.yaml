@@ -41,6 +41,7 @@ dependencies:
   shared_preferences: ^2.0.18
   snippet_coder_utils: ^1.0.13
   api_cache_manager: ^1.0.2
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:

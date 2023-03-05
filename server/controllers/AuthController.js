@@ -142,7 +142,7 @@ export const getUserProfile = async(req,res)=>{
 
 // Method : GET
 // End Point : "api/v1/Auth/logout";
-// Description : Logging Our User
+// Description : Logging Out User
 export const LogoutUser = async (req,res)=>{
   res.cookie('jwt','',{maxAge:1});
   res.json('User Logging Out');

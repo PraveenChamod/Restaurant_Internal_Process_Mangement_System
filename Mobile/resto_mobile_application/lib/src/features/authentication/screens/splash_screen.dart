@@ -4,7 +4,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_home.dart';
+import 'Customer/customer_main_page.dart';
 import 'home_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -59,12 +61,13 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_){
-                        return const HomeScreen();
-                        },
-                      ),
-                    );
+                    checkLogin();
+                    // Navigator.of(context).push(
+                    //   MaterialPageRoute(builder: (_){
+                    //     return const HomeScreen();
+                    //     },
+                    //   ),
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(10.0),
@@ -90,5 +93,25 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
+  }
+  void checkLogin() async {
+    //In this checkLogin function check if user already login or credential already available or not
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("LoginId");
+    if(val != null){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const CustomerMainPage(),
+        ),
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
+    }
   }
 }
