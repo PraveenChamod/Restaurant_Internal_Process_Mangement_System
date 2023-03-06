@@ -90,7 +90,7 @@ export const Nav = styled.div`
     align-items: left;
     width: 100%;
     height: 40px;
-    margin: 2% 0;
+    margin-top: 2%;
     letter-spacing: 0.15rem;
     }
     &:hover{
@@ -108,6 +108,7 @@ export const NavText = styled.div`
 `
 export const Footer = styled.div`
     color: #fff;
+    margin-top:5%;
     
 `
 export const Card = styled.div`

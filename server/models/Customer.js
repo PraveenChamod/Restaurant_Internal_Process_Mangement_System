@@ -23,7 +23,7 @@ const customerSchema = mongoose.Schema({
         }
     },
     ContactNumber:{
-        type:Number,
+        type:String,
         required:[true,"User must provide his/her contact number"],
         maxlength:10,
     },
@@ -49,6 +49,12 @@ const customerSchema = mongoose.Schema({
     },
     ProfileImage:{
         type:String,
+    },
+    verified:{
+        type:Boolean
+    },
+    provider:{
+        type:String
     },
     Address:{
         type:String,

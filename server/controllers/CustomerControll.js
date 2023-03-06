@@ -16,6 +16,9 @@ import globalArray from "../Data/GlobalArray.js";
 import dotenv from 'dotenv';
 import multer from "multer";
 import Reviews from "../models/Reviews.js";
+import Cart from "../models/Cart.js";
+import { getFoods } from "./ServiceProvidersControll.js";
+import ShoutoutClient from 'shoutout-sdk';
 
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
@@ -23,6 +26,12 @@ const imageStorage = multer.diskStorage({
         cb(null,Date.now()+'_'+file.originalname)
     }
 })
+
+var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM';
+
+var debug = true, verifySSL = false;
+
+var client = new ShoutoutClient(apiKey, debug, verifySSL);
 const image = multer({storage:imageStorage}).single('image');
 dotenv.config();
 const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
@@ -60,7 +69,23 @@ export const RegisterCustomer = async (req,res)=>{
                 Role:Role
             })
             //send sms
-            
+            const contactNumber = "94"+ContactNumber.slice(1);
+            console.log(contactNumber);
+            var message = {
+                source: 'ShoutDEMO',
+                destinations: [contactNumber],
+                 content: {
+                     sms: `Welcome ${Name} to Resto. You successfully registerd to our system.`
+                },
+                 transports: ['sms']
+              };
+              client.sendMessage(message, (error, result) => {
+                if (error) {
+                    console.error('error ', error);
+                } else {
+                    console.log('result ', result);
+                }
+              });
             // await sendRegistrationSms(to,from,ConfirmationMessage);
 
             //send Email
@@ -171,11 +196,8 @@ export const selectItems = async(req,res)=>{
 export const OrderItem = async(req,res,next)=>{
     try {
         const user = req.user;
-        // console.log(user);
         if(user.Role === 'Customer'){
             const {SerialNo,Quantity,paymentMethod} = req.body;
-            let OrderFoods = [];
-            OrderFoods = globalArray.Get();
             const findFood = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
             if(findFood){
@@ -388,21 +410,116 @@ export const AddReview = async (req,res)=>{
     }
 }
 
-
-
 // Method : POST
-// End Point : "api/v1/customer/Reveiw";
+// End Point : "api/v1/customer/Addtocart";
 // Description : Add to cart
 
 export const AddToCart = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Customer"){
-            const existingUser = await Customer.findById(user.id);
-            const food = req.body;
+            const {foodId,quantity} = req.body;
+            const existingUser = await Customer.findOne({Email:user.Email});
+            let cart = await Cart.findOne({Customer:existingUser.id});
+            const session = await mongoose.startSession();
+            try {
+                if(cart){
+                    let ItemIndex = cart.Foods.findIndex(key=>key.food == foodId);
+                    console.log(ItemIndex);
+                    if(ItemIndex > -1){
+                        let foodItem = cart.Foods[ItemIndex]
+                        foodItem.Quantity = quantity;
+                        cart.Foods[ItemIndex] = foodItem;
+                    }
+                    else{
+                        cart.Foods.push({food:foodId,Quantity:quantity});
+                        console.log(cart.Foods);
+                    }
+                    cart = await cart.save();
+                    res.status(201).json({
+                        status:'Success',
+                        message:'Add Item into Cart',
+                        data:{
+                            cart
+                        }
+                    })
+                }else{
+                    session.startTransaction();
+                    const newCart = await Cart.create([
+                        {
+                            Customer:existingUser.id,
+                            Foods:[{
+                                food:foodId,
+                                Quantity:quantity
+                            }]
+                        }],
+                        {session}
+                    )
+                    const commit = await session.commitTransaction();
+                    session.endSession();
+                    res.status(201).json({
+                        status:'Success',
+                        message:'Add Item into Cart',
+                        data:{
+                            newCart
+                        }
+                    })
+                }
+            } catch (error) {
+                res.status(500).json({
+                    status:'Error',
+                    message:error.message
+                })
+            }
             
         }
     } catch (error) {
-        
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
     }
 } 
+
+
+// Method : POST
+// End Point : "api/v1/customer/MyCart";
+// Description : View Cart
+
+export const viewCart = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Customer"){
+            const customer = await Customer.findOne({Email:user.Email});
+            
+            Cart.findOne({ Customer: customer.id })
+            .populate({
+                path: 'Foods.food',
+                model: 'Foods'
+            })
+            .exec((err, cart) => {
+                if (err) {
+                console.error(err);
+                return res.status(500).send('Server Error');
+                }
+                if (!cart) {
+                return res.status(404).send('Cart not found');
+                }
+                // Access the populated food details
+                const foods = cart.Foods.map((item) => ({
+                name: item.food.FoodName,
+                image:item.food.FoodImage,
+                price: item.food.Price,
+                category:item.food.Category,
+                quantity: item.Quantity
+                }));
+                res.json(foods);
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+}

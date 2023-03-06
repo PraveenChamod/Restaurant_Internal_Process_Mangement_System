@@ -4,24 +4,30 @@ import { useState } from 'react';
 import { FormButton, RegularButton, UploadButton } from '../SharedElements/Buttons';
 import { Container, Header } from '../SharedElements/SharedElements';
 import * as l from './AddFoodsElements';
+import { FaCamera } from 'react-icons/fa';
 const AddFoodsComponent = () => {
     const[FoodName,setFoodName] = useState('');
     const[Price,setPrice] = useState('');
     const[Category,setCategory] = useState('');
-    const[Quantity,setQuantity] = useState('');
-    const[image,setImage] = useState('');
+    const[image,setImage] = useState(null);
 
     const addFood = async (e)=>{
         e.preventDefault();
         try {
             const Data = new FormData();
             Data.append('image',image);
+            Data.append('FoodName',FoodName);
+            Data.append('Price',Price);
+            Data.append('Category',Category);
             console.log(Data);
-            const formData = {FoodName,Price,Category,Quantity,Data};
-            const res = await axios.post('api/v1/serviceProvider/food/AddFoods')
+            const res = await axios.post('api/v1/serviceProvider/food/AddFoods',Data);
+            console.log(res);
         } catch (error) {
-            
+            console.log(error.message);
         }
+    }
+    const handleUpload = (e)=>{
+        setImage(e.target.files[0]);
     }
     return ( 
         <Container>
@@ -29,10 +35,17 @@ const AddFoodsComponent = () => {
             <Header>
                     Add Foods
                 </Header>
-                <l.FormSection>
+                <l.FormSection onSubmit={addFood}>
                     <l.LeftSide>
                     <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-                        <TextField id="standard-basic" label="Item" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Item" 
+                            variant="standard" 
+                            InputLabelProps={{className:'textFeild_Label'}} 
+                            sx={{marginBottom:'10%'}} 
+                            value={FoodName} 
+                            onChange={e=>setFoodName(e.target.value)}/>
                         <>
                             <Select
                             defaultValue={30}
@@ -46,26 +59,41 @@ const AddFoodsComponent = () => {
                                 fill: "white !important",
                                 }
                             }}
-                            
+                            onChange={e=>setCategory(e.target.value)}
                             >
-                            <MenuItem value={1}>Burgers</MenuItem>
-                            <MenuItem value={2}>Pizza</MenuItem>
-                            <MenuItem value={3}>Rice</MenuItem>
-                            <MenuItem value={3}>Soup</MenuItem>
-                            <MenuItem value={3}>Noodles</MenuItem>
-                            <MenuItem value={3}>Beverages</MenuItem>
+                                <MenuItem value='Burgers'>Burgers</MenuItem>
+                                <MenuItem value='Pizza'>Pizza</MenuItem>
+                                <MenuItem value='Rice'>Rice</MenuItem>
+                                <MenuItem value='Soup'>Soup</MenuItem>
+                                <MenuItem value='Noodles'>Noodles</MenuItem>
+                                <MenuItem value='Beverages'>Beverages</MenuItem>
                             </Select>
                         </>
-                        <TextField id="standard-basic" label="Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginTop:'10%'}} />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Price" 
+                            variant="standard" 
+                            InputLabelProps={{className:'textFeild_Label'}} 
+                            sx={{marginTop:'10%'}} 
+                            value={Price} 
+                            onChange={e=>setPrice(e.target.value)}
+                            />
                         </FormControl>
                     </l.LeftSide>
                     <l.RightSide>
                         <l.ImageSection>
-                            
+                            <l.ImageSubSec>
+                            {image ? (
+                                <l.Image src={URL.createObjectURL(image)} />
+                                ) : (
+                                <p></p>
+                            )}
+                            </l.ImageSubSec>
+                            <l.Icon>
+                                <FaCamera/>
+                                    <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
+                            </l.Icon>
                         </l.ImageSection>
-                        <l.UploadButtonSection>
-                            <UploadButton>Upload</UploadButton>
-                        </l.UploadButtonSection>
                         <l.ButtonSection>
                             <FormButton>Add</FormButton>
                         </l.ButtonSection>

@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
-
+import passport from "passport";
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -45,6 +45,13 @@ export const LogInUser = async (req,res)=>{
     
 }
 
+export const passportSAuth = passport.authenticate('google', {
+    scope: ['profile', 'email']
+})
+
+export const redirect = async (req, res) => {
+    res.redirect('/login'); // Redirect the user to the home page after authentication
+  }
 // Method : POST
 // End Point : "api/v1/Auth/uploadProfilePicture";
 // Description : Upload Profile Image

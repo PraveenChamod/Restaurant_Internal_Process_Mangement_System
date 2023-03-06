@@ -14,7 +14,7 @@ const TableReservationComponent = () => {
                     <Div1>
                         <FormControl>
                             <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
-                            <TextField id="standard-basic" label="No of tables" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
+                            <TextField id="standard-basic" label="Table No" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
                             <TextField id="standard-basic" label="No of persons" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
                                                  
                         </FormControl>

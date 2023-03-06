@@ -39,7 +39,7 @@ import { Cards, Roles } from './Data/DashBoardLinks';
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import { MenuItems } from './Data/Menu';
-import { TableColumns, ViewThings } from './Data/Content';
+import { EditProfileLinks, TableColumns, ViewThings } from './Data/Content';
 import AuthState from './Context/Auth/AuthState';
 // import RequireAuth from './components/Routing/RequireAuth';
 import AdminAddUser from './Pages/Admin/AddUser';
@@ -78,6 +78,7 @@ import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 
 function App() {
+  
   useEffect(() => {
     Aos.init({duration:1000});
   }, [])
@@ -114,8 +115,8 @@ function App() {
                 <Route path="/AdminDashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]} ScrollToTop={scrollToTop}/>} />
                 <Route path="/AdminAdd-User" element={<AdminAddUser/>}/>
                 <Route path="/AdminView-User" element={<AdminViewUser/>}/>
-                <Route path="/AdminMy-Profile" element={<AdminUserProfile/>}/>
-                <Route path="/AdminEdit-Profile" element={<AdminEditProfile/>}/>
+                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0]}/>}/>
+                <Route path="/AdminEdit-Profile" element={<AdminEditProfile />}/>
                 <Route path="/AdminAdd-Table" element={<AdminAddTables/>}/>
                 <Route path="/AdminView-Tables" element={<AdminViewTables/>}/>
                 <Route path="/AdminAdd-Foods" element={<AdminAddFoods/>}/>
@@ -127,7 +128,7 @@ function App() {
                 <Route path="/ManagerDashBoard" element={<ManagerDashBoard Navs = {Roles[1]} Card = {Cards[1]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/ManagerAdd-User" element={<AddOutletStaff/>}/>
                 <Route path="/ManagerView-User" element={<ManagerViewUser/>}/>
-                <Route path="/ManagerMy-Profile" element={<ManagerUserProfile/>}/>
+                <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1]}/>}/>
                 <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile/>}/>
                 <Route path="/ManagerReport-Generation" element={<ReportGeneration/>}/>
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>
@@ -153,7 +154,7 @@ function App() {
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables />}/>
                 <Route path="/Staff-MemberOrder-Details" element={<StaffMemberOrderDetails/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
-                <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile/>}/>
+                <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
                 <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
 
@@ -163,7 +164,7 @@ function App() {
                 <Route path="/CustomerDashBoard" element={<CustomerDashBoard Navs={Roles[5]}/>}/>
                 <Route path="/CustomerMy-Profile" element={<CustomerUserProfile/>}/>     
                 <Route path="/CustomerPlace-Order" element={<Order/>}/>     
-                <Route path="/CustomerMy-Cart" element={<Cart cartData = {CartData}/>}/>     
+                <Route path="/CustomerMyCart" element={<Cart cartData = {CartData}/>}/>     
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
                 <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview/>}/>     
@@ -172,14 +173,14 @@ function App() {
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
-                <Route path="/DelivererMy-Profile" element={<DelivererUserProfile />}/>   
+                <Route path="/DelivererMy-Profile" element={<DelivererUserProfile route={EditProfileLinks[3]}/>}/>   
                 <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
                 <Route path="/DelivererOrderDetails" element={<DeliveryOrderDetails/>}/>   
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
-                <Route path="/SupplierMy-Profile" element={<SupplierUserProfile/>}/>    
+                <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]}/>}/>    
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile/>}/> 
                 <Route path="/SupplierMessages" element={<Messages/>}/> 
             </Routes>

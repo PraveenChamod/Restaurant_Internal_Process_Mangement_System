@@ -12,8 +12,7 @@ ServiceProviderrouter.route('/getItemsByCategory').get(l.getItemByCategory);
 ServiceProviderrouter.route('/deleteItemBySerialNo/:SerialNo').delete(l.deleteItemBySerialNo);
 
 //Food routes
-ServiceProviderrouter.route('/uploadImage').post(l.uploadImage);
-ServiceProviderrouter.route('/food/AddFoods').post(l.addFoods);
+ServiceProviderrouter.route('/food/AddFoods').post(l.image,l.addFoods);
 ServiceProviderrouter.route('/food/getFoods').get(l.getFoods);
 ServiceProviderrouter.route('/food/getFoodsbyCategory').get(l.getFoodByCategory);
 ServiceProviderrouter.route('/food/updateFood/:SerialNo').post(l.updateFood);
