@@ -1,17 +1,25 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import 'login_screen.dart';
-
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
-
   @override
   State<SignupScreen> createState() => _LoginScreenState();
 }
-
 class _LoginScreenState extends State<SignupScreen> {
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passController = TextEditingController();
+  var confirmPassController = TextEditingController();
+  var contactController = TextEditingController();
+  bool _obscureText1 = true;
+  bool _obscureText2 = true;
   @override
   Widget build(BuildContext context) {
 
@@ -31,7 +39,7 @@ class _LoginScreenState extends State<SignupScreen> {
                   const SizedBox(height: 10,),
                   Center(
                     child: Container(
-                      height: 470,
+                      height: 490,
                       width: MediaQuery.of(context).size.width/1.25,
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
@@ -57,9 +65,31 @@ class _LoginScreenState extends State<SignupScreen> {
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
-                            child: const TextField(
+                            child: TextField(
+                              controller: nameController,
                               keyboardType: TextInputType.emailAddress,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
+                                labelText: 'Name',
+                                labelStyle: TextStyle(color: Colors.white70),
+                                suffixIcon: Icon(CupertinoIcons.person, color: Colors.white70, size: 18,),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Color(0xFFFFFF33)),
+                                ),
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width/1.25 - 40,
+                            child: TextField(
+                              controller: emailController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(
                                 labelText: 'Email',
                                 labelStyle: TextStyle(color: Colors.white70),
                                 suffixIcon: Icon(CupertinoIcons.envelope_fill, color: Colors.white70, size: 18,),
@@ -70,58 +100,89 @@ class _LoginScreenState extends State<SignupScreen> {
                                   borderSide: BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
-                            child: const TextField(
-                              obscureText: true,
+                            child: TextField(
+                              controller: passController,
+                              obscureText: _obscureText1,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 labelText: 'Password',
-                                labelStyle: TextStyle(color: Colors.white70),
-                                suffixIcon: Icon(CupertinoIcons.eye_slash_fill, color: Colors.white70, size: 18,),
-                                enabledBorder: UnderlineInputBorder(
+                                labelStyle: const TextStyle(color: Colors.white70),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureText1 = !_obscureText1;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _obscureText1
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.white70,
+                                    size: 18,
+                                  ),
+                                ),
+                                //suffixIcon: Icon(CupertinoIcons.eye_slash_fill, color: Colors.white70, size: 18,),
+                                enabledBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
+                                focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
-                            child: const TextField(
-                              obscureText: true,
+                            child: TextField(
+                              controller: confirmPassController,
+                              obscureText: _obscureText2,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
                                 labelText: 'Confirm Password',
-                                labelStyle: TextStyle(color: Colors.white70),
-                                suffixIcon: Icon(CupertinoIcons.eye_slash_fill, color: Colors.white70, size: 18,),
-                                enabledBorder: UnderlineInputBorder(
+                                labelStyle: const TextStyle(color: Colors.white70),
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _obscureText2 = !_obscureText2;
+                                    });
+                                  },
+                                  child: Icon(
+                                    _obscureText2
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Colors.white70,
+                                    size: 18,
+                                  ),
+                                ),
+                                //suffixIcon: Icon(CupertinoIcons.eye_slash_fill, color: Colors.white70, size: 18,),
+                                enabledBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Colors.white),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
+                                focusedBorder: const UnderlineInputBorder(
                                   borderSide: BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
-                            child: const TextField(
+                            child: TextField(
+                              controller: contactController,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Contact No.',
                                 labelStyle: TextStyle(color: Colors.white70),
                                 suffixIcon: Icon(CupertinoIcons.phone_badge_plus, color: Colors.white70, size: 18,),
@@ -132,7 +193,7 @@ class _LoginScreenState extends State<SignupScreen> {
                                   borderSide: BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
@@ -208,4 +269,47 @@ class _LoginScreenState extends State<SignupScreen> {
       ),
     );
   }
+//   void signup() async {
+//     if (nameController.text.isNotEmpty &&
+//         emailController.text.isNotEmpty &&
+//         passController.text.isNotEmpty &&
+//         confirmPassController.text.isNotEmpty &&
+//         contactController.text.toString().isNotEmpty)
+//     {
+//       var response = await http.post(
+//         //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
+//         Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
+//         headers: <String, String>{
+//           'Content-Type': 'application/json; charset=UTF-8',
+//         },
+//         body: jsonEncode(<String, dynamic>{
+//           "Name": nameController.text,
+//           "Email": emailController.text,
+//           "Password": passController.text,
+//           "ConfirmPassword": confirmPassController.text,
+//           "ContactNumber": contactController.text
+//         }),
+//       );
+//       if(response.statusCode == 200) {
+//
+//
+//         // String jwtToken = response.body;
+//         // print("Login Token: $jwtToken");
+//         // Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
+//         // String email = decodedToken['Email'];
+//         // print("Email : $email");
+//         // String id = decodedToken['id'];
+//         // print("Id : $id");
+//         // pageRoute(id, email);
+//       } else {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//             const SnackBar(content: Text("Invalid Credentials"))
+//         );
+//       }
+//     }else {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//           const SnackBar(content: Text("Blank Value Found"))
+//       );
+//     }
+//   }
 }

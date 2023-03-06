@@ -54,7 +54,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               children:  [
                 const CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage('assets/Food Types/Burger/Chicken_Burger.jpg'),
+                  backgroundImage: AssetImage('assets/images/Default_User.png'),
                 ),
                 const SizedBox(height: 10.0,),
                 const Text('Praveen Chamod',
@@ -65,7 +65,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                 ),
                 const SizedBox(height: 10.0,),
                 Text(
-                  userEmail!,
+                  userEmail,
                   //'praveenchamod23@gmail.com',
                   style: const TextStyle(
                     fontSize: 12,

@@ -22,6 +22,7 @@ version: 1.0.0+1
 environment:
   sdk: '>=2.18.6 <3.0.0'
 
+
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
@@ -42,6 +43,8 @@ dependencies:
   snippet_coder_utils: ^1.0.13
   api_cache_manager: ^1.0.2
   jwt_decoder: ^2.0.1
+  mongo_dart: ^0.9.0
+
 
 dev_dependencies:
   flutter_test:
@@ -80,6 +83,8 @@ flutter:
     - assets/Food Types/Koththu/Chicken_Koththu.jpg
     - assets/Food Types/Pizza/Cheese_Pizza.jpg
     - assets/Food Types/Rice/Veg_Rice.jpg
+  #Default User
+    - assets/images/Default_User.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

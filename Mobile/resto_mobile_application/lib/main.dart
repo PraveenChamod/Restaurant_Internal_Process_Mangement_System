@@ -17,16 +17,17 @@ import 'package:resto_mobile_application/src/features/authentication/screens/sig
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// void main() => runApp(
-//   DevicePreview(
-//     enabled: !kReleaseMode,
-//     builder: (context) => const MyApp(), // Wrap your app
-//   ),
-// );
+void main() => runApp(
+  DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => const MyApp(), // Wrap your app
+  ),
 
-void main() {
-  runApp(const MyApp());
-}
+);
+
+// void main() {
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const SplashScreen(),
+      //home: const SplashScreen(),
       //home: const HomeScreen(),
       //home: const CustomerMainPage(),
       //home: const ProductItems(),
@@ -60,6 +61,7 @@ class _MyAppState extends State<MyApp> {
       //home: const LoginScreen(),
       //home: const ProductItems(),
       //home: const LoginScreen(),
+      home: const SignupScreen(),
     );
 
   }
