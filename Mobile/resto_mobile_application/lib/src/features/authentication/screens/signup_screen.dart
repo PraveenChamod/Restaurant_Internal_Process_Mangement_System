@@ -1,11 +1,14 @@
 import 'dart:convert';
-
+import 'dart:io';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
+import 'forget_password/make_selction.dart';
 import 'login_screen.dart';
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -18,6 +21,8 @@ class _LoginScreenState extends State<SignupScreen> {
   var passController = TextEditingController();
   var confirmPassController = TextEditingController();
   var contactController = TextEditingController();
+  String errorText = "";
+  int output = 0;
   bool _obscureText1 = true;
   bool _obscureText2 = true;
   @override
@@ -200,36 +205,25 @@ class _LoginScreenState extends State<SignupScreen> {
                           ),
                           const SizedBox(height: 20,),
                           Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //       builder: (_){
-                                //         return const LoginScreen();
-                                //       },
-                                //   ),
-                                // );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.all(10.0),
-                                fixedSize: const Size(150, 30),
-                                backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
-                                elevation: 15,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                              ),
-                              child: const Text(
-                                'SIGN UP',
-                                style: TextStyle(
+                            child: Container(
+                              width: 150,
+                              height: 35,
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: AnimatedButton(
+                                text: "Sign Up",
+                                buttonTextStyle: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                color: const Color(0xFFfebf10),
+                                pressEvent: () {
+                                  signup();
+                                },
                               ),
                             ),
                           ),
-                          const SizedBox(height: 10,),
+                          //const SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -269,47 +263,71 @@ class _LoginScreenState extends State<SignupScreen> {
       ),
     );
   }
-//   void signup() async {
-//     if (nameController.text.isNotEmpty &&
-//         emailController.text.isNotEmpty &&
-//         passController.text.isNotEmpty &&
-//         confirmPassController.text.isNotEmpty &&
-//         contactController.text.toString().isNotEmpty)
-//     {
-//       var response = await http.post(
-//         //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
-//         Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
-//         headers: <String, String>{
-//           'Content-Type': 'application/json; charset=UTF-8',
-//         },
-//         body: jsonEncode(<String, dynamic>{
-//           "Name": nameController.text,
-//           "Email": emailController.text,
-//           "Password": passController.text,
-//           "ConfirmPassword": confirmPassController.text,
-//           "ContactNumber": contactController.text
-//         }),
-//       );
-//       if(response.statusCode == 200) {
-//
-//
-//         // String jwtToken = response.body;
-//         // print("Login Token: $jwtToken");
-//         // Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
-//         // String email = decodedToken['Email'];
-//         // print("Email : $email");
-//         // String id = decodedToken['id'];
-//         // print("Id : $id");
-//         // pageRoute(id, email);
-//       } else {
-//         ScaffoldMessenger.of(context).showSnackBar(
-//             const SnackBar(content: Text("Invalid Credentials"))
-//         );
-//       }
-//     }else {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//           const SnackBar(content: Text("Blank Value Found"))
-//       );
-//     }
-//   }
+  void signup() async {
+    if (nameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passController.text.isNotEmpty &&
+        confirmPassController.text.isNotEmpty &&
+        contactController.text.isNotEmpty)
+    {
+      final http.Response response = await http.post(
+        //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
+        Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          "Name": nameController.text,
+          "Email": emailController.text,
+          "Password": passController.text,
+          "ConfirmPassword": confirmPassController.text,
+          "ContactNumber": int.parse(contactController.text)
+        }),
+      );
+      if(response.statusCode == 200) {
+        String jwtToken = response.body;
+        final json = jsonDecode(response.body);
+        final msg = json["message"];
+        final status = json["status"];
+        print(msg);
+        print(status);
+        if(status == "success"){
+          print("Your Token is: $jwtToken");
+          awesomeDialog(DialogType.success, "You successfully registered to the system.", "Success");
+        }else{
+          print(msg);
+          awesomeDialog(DialogType.warning, "A Customer is already exist", "Warning");
+        }
+      }
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      final status = json["status"];
+      print(msg);
+      print(status);
+      awesomeDialog(DialogType.warning, msg, "Warning");
+    }else {
+      awesomeDialog(DialogType.warning, "Fields cannot be empty, Blank Value Found.", "Warning");
+      //4 mean: Fields cannot be empty, Blank Value Found.
+    }
+  }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        title == "Success" ?
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const LoginScreen();
+            },
+          ),
+        ) : null;
+      },
+    ).show();
+  }
 }

@@ -51,7 +51,7 @@ class _MyAppState extends State<MyApp> {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      //home: const SplashScreen(),
+      home: const SplashScreen(),
       //home: const HomeScreen(),
       //home: const CustomerMainPage(),
       //home: const ProductItems(),
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
       //home: const LoginScreen(),
       //home: const ProductItems(),
       //home: const LoginScreen(),
-      home: const SignupScreen(),
+      //home: const SignupScreen(),
     );
 
   }
