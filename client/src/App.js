@@ -73,6 +73,7 @@ import CustomerProfile from './components/Customer/CustomerProfile/CustomerProfi
 import UserProfileComponent from './components/shared/UserProfile/UserProfile';
 import EditProfileComponent from './components/shared/EditProfile/Editprofile';
 import CartData from './Data/CartData';
+import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 
 function App() {
   useEffect(() => {
@@ -169,6 +170,7 @@ function App() {
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/DelivererMy-Profile" element={<DelivererUserProfile/>}/>     
                 <Route path="/DelivererOrderDetails" element={<DeliveryOrderDetails/>}/>   
+                <Route path="/DelivereAllOrderDetails" element={<AllOrderDetails Tables={TableColumns[3]}/>}/>   
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   

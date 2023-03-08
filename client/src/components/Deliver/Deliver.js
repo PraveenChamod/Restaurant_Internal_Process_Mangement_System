@@ -27,15 +27,23 @@ import{
 from "./DeliverElement";
 import { Container } from "../shared/SharedElements/SharedElements";
 import { Header } from "../shared/SharedElements/SharedElements";
+import useAuth from "../../Hooks/useAuth";
 const DeliverComponent = () =>{
     const [customerName,setCustomerName] = useState('');
     const [address,setAddress]= useState('')
     const [contactNo,setContactNo] = useState(0)
     const [totalPrice,setTotalPrice] = useState(0)
     const [paymentMethod,setPaymentMethod] = useState('')
-
+    const [error,setError] = useState('')
+    const {user} = useAuth()
 const handleSubmit =  async(e)=>{
-
+    e.preventDefaults();
+    if(!user){
+        setError("you must be loged in")
+        return
+    }else{
+        
+    }
 }
         return ( 
             <Container>
