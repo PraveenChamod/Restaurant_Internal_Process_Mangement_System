@@ -35,7 +35,8 @@ app.use(function(req, res, next) {
     credentials: true
   };
   app.use(cors(corsOptions));
-
+  app.use(express.static('public'));
+  
   passport.use(new GoogleStrategy({
     clientID: '833391486306-n7554irik6mh166s3b235okmp2ougmrv.apps.googleusercontent.com',
     clientSecret: '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',

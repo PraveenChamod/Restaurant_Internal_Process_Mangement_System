@@ -10,15 +10,21 @@ import styled from "styled-components";
 import { MdCheckBox } from 'react-icons/md';
 import { MdCheckBoxOutlineBlank } from 'react-icons/md';
 import { AiFillPlusCircle } from 'react-icons/ai';
-const CartComponent = (props) => {
-    const {data,isPending} = useFetch('api/v1/Customer/MyCart');
-    const{loadUser,loading,user}=useAuth();
-    const[change,setChange] = useState(false);
+import { MdDelete } from 'react-icons/md';
+import axios from "axios";
+import { Link } from "@mui/material";
+const CartComponent = ({data}) => {
+    const{user}=useAuth();
+    console.log(data);
     const[Items,setItem] = useState(data);
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
     const[OrderItem,setOrderItem] = useState({});
-    console.log(Items);
+    const[quantity,setQuantity] = useState(1);
+    const[price,setPrice] = useState();
+    console.log(quantity);
+
+    
     //Select Item Independelntly
     const handleClick = async (index) =>{
         setClickedIndex(state => ({
@@ -29,36 +35,50 @@ const CartComponent = (props) => {
         setOrderItem(Items[index]);
     };
 
-    const handleChange = ()=>{
-        if(!change){
-            setChange(true);
-        }else{
-            setChange(false);
+    //Delete Cart Item
+    const deleteCartItem = async ({cartId,foodId})=>{
+        try {
+            const formData = {cartId,foodId} 
+            const res = await axios.patch('api/v1/Customer/RemoveCartItem',formData);
+            console.log(res);
+        } catch (error) {
+            console.log(error.message);
         }
     }
-    const selectOne = (index)=>{
-        handleChange();
+    const selectOne = async (index)=>{
+        const item = Items[index];
+        const cartId = item.cartId;
+        const foodId = item.id;
+        console.log(item);
+        await deleteCartItem({cartId,foodId});
         handleClick(index);
     }
     
-    const Label = [
-        {
-            label:'Item'
-        },
-        {
-            label:'Category'
-        },
-        {
-            label:'Quantity'
-        },
-        {
-            label:'Total Price'
+    //Increase Quantity
+    const AddQuantity = async ({foodId,quantity})=>{
+        try {
+            const formData = {foodId,quantity}
+          const res = await axios.post('api/v1/Customer/Addtocart',formData);
+          if(res.status == 201 || res.status == 200){
+            console.log(res);
+          }
+        } catch (error) {
+          console.log(error.message);
         }
-    ]
+      }
+
+    const increaseQTY = async(index)=>{
+        const item = Items[index];
+        const foodId = item.id;
+        handleClick(index);
+        setQuantity(quantity+1);
+        console.log(quantity);
+        await AddQuantity({foodId,quantity});
+        
+    }
     return ( 
         <>
-            {isPending && <Spinner/>}
-            {data && <l.Container>
+             <l.Container>
             <l.SubContainer>
             <l.SubSection1>
                 <l.ProfileImage>
@@ -77,9 +97,9 @@ const CartComponent = (props) => {
                         data.map((cart,index)=>{
                             return(
                                 <l.CartSection>
-                                    <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
                                         {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                    </l.SelectIcon>
+                                    </l.SelectIcon> */}
                                     <l.ItemsCard>
                                         <l.FoodImage>
                                             <l.Food src={`http://localhost:5000/Foodimages/${cart.image}`}/>
@@ -95,16 +115,19 @@ const CartComponent = (props) => {
                                                     {cart.Size}
                                                 </l.Text> */}
                                                 <l.Text>
-                                                    Quantity : {cart.quantity}
+                                                    Quantity : {quantity}
                                                 </l.Text>
                                                 <l.Text>
                                                     Price : {cart.price}
                                                 </l.Text>
                                             </l.SubText>
                                         </l.Details>
-                                        <l.Plus>
+                                        <l.Icon onClick={()=>increaseQTY(index)}>
                                             <AiFillPlusCircle/>
-                                        </l.Plus>
+                                        </l.Icon>
+                                        <l.Icon>
+                                            <MdDelete onClick={()=>selectOne(index)}/>
+                                        </l.Icon>
                                     </l.ItemsCard>
                                 </l.CartSection>  
                             )
@@ -114,27 +137,41 @@ const CartComponent = (props) => {
                 <l.Right>
                     <l.Description>
                         <l.ItemTexts>
-                            {
-                                Label.map(e=>{
-                                    return(
-                                        <l.Label>
-                                            {e.label}
-                                        </l.Label>
-                                    )
-                                })
-                            }
+                            <l.Label>
+                                Item :
+                            </l.Label>
+                            <l.Data>
+                                
+                            </l.Data>
+                        </l.ItemTexts>
+                        <l.ItemTexts>
+                            <l.Label>
+                                Quantity : {quantity}
+                            </l.Label>
+                            <l.Data>
+                                
+                            </l.Data>
+                        </l.ItemTexts>
+                        <l.ItemTexts>
+                            <l.Label>
+                                Total Price : {quantity * price}
+                            </l.Label>
                             <l.Data>
                                 
                             </l.Data>
                         </l.ItemTexts>
                         <l.ButtonSection>
-                            <FormButton>Order</FormButton>
+                            <Link to='/CustomerPay'>
+                                <FormButton>
+                                    Order
+                                </FormButton>
+                            </Link>
                         </l.ButtonSection>
                     </l.Description>
                 </l.Right>
             </l.SubSection3>
         </l.SubContainer>
-        </l.Container>}
+        </l.Container>
         </>
      );
 }

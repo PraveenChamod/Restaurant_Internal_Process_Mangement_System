@@ -76,6 +76,7 @@ import ManagerEditProfile from './Pages/Manager/ManagerEditProfile';
 import StaffMemberEditProfile from './Pages/Staff-Member/StaffMemberEditProfile';
 import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
+import Pay from './components/Customer/Checkout/Pay';
 
 function App() {
   
@@ -163,7 +164,8 @@ function App() {
                   
                 <Route path="/CustomerDashBoard" element={<CustomerDashBoard Navs={Roles[5]}/>}/>
                 <Route path="/CustomerMy-Profile" element={<CustomerUserProfile/>}/>     
-                <Route path="/CustomerPlace-Order" element={<Order/>}/>     
+                <Route path="/CustomerPlace-Order" element={<Order/>}/> 
+                <Route path="/CustomerPay" element={<Pay/>}/>     
                 <Route path="/CustomerMyCart" element={<Cart cartData = {CartData}/>}/>     
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
                 <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
