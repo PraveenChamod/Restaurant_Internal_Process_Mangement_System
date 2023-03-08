@@ -1,12 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/homeScreen_indicator.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/main_features.dart';
-import 'Products/Products_Menu_Titles.dart';
+import 'Products/products_menu_titles.dart';
 import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {

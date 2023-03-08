@@ -77,6 +77,7 @@ import StaffMemberEditProfile from './Pages/Staff-Member/StaffMemberEditProfile'
 import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import Pay from './components/Customer/Checkout/Pay';
+import SupplierOrder from './Pages/Manager/SupplierOrder';
 
 function App() {
   
@@ -144,6 +145,7 @@ function App() {
                 <Route path="/ManagerView-Food" element={<ManagerViewFood/>}/>
                 <Route path="/ManagerView-Offers" element={<ManagerViewOffers/>}/>
                 <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
+                <Route path="/ManagerOrder-supllierorder" element={<SupplierOrder/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 

@@ -107,12 +107,21 @@ export const RegisterCustomer = async (req,res)=>{
 
             const token = createToken(createUser._id,createUser.Email);
             res.json(token);
+            res.status(200).json({
+                status: 'success',
+                token
+            });
         }
         else{
-            return res.json({"message":"A Customer is already exist"});
+            return res.json({message:"A Customer is already exist"});
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json({
+            status: 'Server error',
+            message: error.message
+        });
+       //res.status(500).json({error:error.message});
+       //return res.status(500).json({error:error.message});
     }
 }
 
