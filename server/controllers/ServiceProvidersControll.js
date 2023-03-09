@@ -220,7 +220,7 @@ export const ViewSupplierOrder = async (req,res)=>{
 
 
 // Method : GET
-// End Point : "api/v1/serviceProvider/getFoods";
+// End Point : "api/v1/serviceProvider/getItems";
 // Description : Get Items
 
 export const getItems = async (req,res)=>{
