@@ -627,7 +627,7 @@ export const AddTable = async(req,res)=>{
 
 
 // Method : Get
-// End Point : "api/v1/serviceProvider/getTables";
+// End Point : "api/v1/serviceProvider/AdminView-Tables";
 // Description : Get Tables
 
 export const ViewTables = async (req,res)=>{
