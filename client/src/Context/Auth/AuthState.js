@@ -23,7 +23,7 @@ const AuthState = (props) => {
     }
 
     const[state,dispatch] = useReducer(AuthReducer,initialState);
-
+    console.log(state);
     //user logout
     const logout = async () =>{
         dispatch({type:SET_LOADING});
@@ -42,11 +42,11 @@ const AuthState = (props) => {
         dispatch({type:SET_LOADING});
         try {
             const res = await axios.get('api/v1/Auth/getProfile')
-            console.log(res.data);
+            console.log(res.data.user);
             dispatch(
                 {
                     type:USER_LOADED,
-                    payload:res.data
+                    payload:res.data.user
                 });
         } catch (error) {
             console.log(error);
@@ -90,7 +90,7 @@ const AuthState = (props) => {
             })
         }
     }
-
+    console.log(state.user);
 
     return ( 
         <AuthContext.Provider

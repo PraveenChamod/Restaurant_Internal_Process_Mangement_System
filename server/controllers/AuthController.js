@@ -3,7 +3,9 @@ import { createToken, findUser, handleErrors } from "../util/AuthUtil.js";
 import { validatePassword } from "../util/PasswordUtility.js";
 import jwt from 'jsonwebtoken';
 import multer from "multer";
-
+import ServiceProviders from "../models/ServiceProviders.js";
+import Customer from "../models/Customer.js";
+import passport from "passport";
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -43,33 +45,69 @@ export const LogInUser = async (req,res)=>{
     
 }
 
+export const passportSAuth = passport.authenticate('google', {
+    scope: ['profile', 'email']
+})
+
+export const redirect = async (req, res) => {
+    res.redirect('/login'); // Redirect the user to the home page after authentication
+  }
 // Method : POST
 // End Point : "api/v1/Auth/uploadProfilePicture";
 // Description : Upload Profile Image
 
-export const UploadProfileImage =  (req,res,next)=>{
-    const token = req.cookies.jwt;
-    if(token){
-      jwt.verify(token,'resturent secret key',async (err,decodeToken)=>{
-          if(err){
-              res.locals.user = null;
-              console.log(err.message);
-          }
-          else{
-                const user = await User.findById(decodeToken.id);
-                image(req,res,(err)=>{
+export const UploadProfileImage = async (req,res)=>{
+    try {
+        const user = req.user;
+        console.log(user)
+        const findServiceProvider = await ServiceProviders.findOne({Email:user.Email});
+        console.log(findServiceProvider);
+        const findCustomer = await Customer.findOne({Email:user.Email}); 
+        console.log(findCustomer);
+        if(findCustomer){
+            image(req,res,(err)=>{
                     if(err){
                         console.log(err)
                     }
                     else{
-                        user.ProfileImage = req.file.filename;
-                        
+                        findCustomer.ProfileImage = req.file.filename;
                     }
                 })
-                const saveResult = await user.save();
-                await User.findByIdAndUpdate(decodeToken.id,saveResult,{new:true});
-                next();
-            }
+                const uploadCustomerImage = await findCustomer.save();
+                const updateCustomer = await Customer.findByIdAndUpdate(findCustomer.id,uploadCustomerImage,{new:true});
+                res.status(201).json({
+                    message:'Customer Profile Image Uploaded',
+                    data:{
+                        updateCustomer
+                    }
+                })
+        }
+        else if(findServiceProvider){
+            image(req,res,(err)=>{
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    findServiceProvider.ProfileImage = req.file.filename;
+                }
+            })
+            const uploadServiceProviderImage = await findServiceProvider.save();
+            const updateServiceProvider = await ServiceProviders.findByIdAndUpdate(findCustomer.id,uploadServiceProviderImage,{new:true});
+            res.status(201).json({
+                message:'Service Providers Profile Image Uploaded',
+                data:{
+                    updateServiceProvider
+                }
+            })
+        }
+        else{
+            res.status(404).json({
+                message:'No user exist',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message:error.message
         })
     }
 }
@@ -78,25 +116,40 @@ export const UploadProfileImage =  (req,res,next)=>{
 // End Point : "api/v1/Auth/getProfile";
 // Description : Get User Details
 export const getUserProfile = async(req,res)=>{
-    const token = req.cookies.jwt;
-    if(token){
-        jwt.verify(token,'resturent secret key',async(err,decodeToken)=>{
-            if(err){
-                res.locals.user = null;
-                console.log(err.message);
-            }
-            else{
-                  const user = await User.findById(decodeToken.id);
-                  res.status(200).json(user);
-              }
-          })
+    try {
+        const User = req.user;
+        const findServiceProvider = await ServiceProviders.findOne({Email:User.Email});
+        const findCustomer = await Customer.findOne({Email:User.Email});         
+        if(findCustomer){
+            const user = findCustomer
+                res.status(201).json({
+                    message:`Account Details of ${User.Name}`,
+                    user
+                })
+        }
+        else if(findServiceProvider){
+            const user = findServiceProvider
+            res.status(201).json({
+                message:`Account Details of ${user.Name}`,
+                user
+            })
+        }
+        else{
+            res.status(404).json({
+                message:'No user exist',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            message:error.message
+        })
     }
 }
 
 
 // Method : GET
 // End Point : "api/v1/Auth/logout";
-// Description : Logging Our User
+// Description : Logging Out User
 export const LogoutUser = async (req,res)=>{
   res.cookie('jwt','',{maxAge:1});
   res.json('User Logging Out');

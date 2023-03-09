@@ -1,9 +1,9 @@
-import ViewAllComponent from "../../components/shared/ViewAll/ViewAll";
+import AllOffersComponent from "../../components/shared/AllOffers/AllOffers";
 
 const StaffMemberViewOffers = (props) => {
     return ( 
         <>
-            <ViewAllComponent Tables1 = {props.Tables}/>
+            <AllOffersComponent/>
         </>
      );
 }

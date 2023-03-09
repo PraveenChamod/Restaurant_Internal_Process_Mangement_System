@@ -5,6 +5,7 @@ const customerSchema = mongoose.Schema({
         type:String,
         required:[true,"Customer must have a name"]
     },
+    //Please Correct the Password Error Handling Part
     Password:{
         type:String,
         required:[true,"Customer must have enter the password"],
@@ -22,10 +23,12 @@ const customerSchema = mongoose.Schema({
             message:"Password doesn't match"
         }
     },
+    //Please Correct the ContactNumber Error Handling Part
     ContactNumber:{
-        type:Number,
+        type:String,
         required:[true,"User must provide his/her contact number"],
         maxlength:10,
+        minlength:10
     },
     Email:{
         type:String,
@@ -37,7 +40,6 @@ const customerSchema = mongoose.Schema({
             },
             message:"Please enter the valid email"
         },
-        immutable:true
     },
     Role:{
         type:String,
@@ -49,6 +51,15 @@ const customerSchema = mongoose.Schema({
         immutable:true
     },
     ProfileImage:{
+        type:String,
+    },
+    verified:{
+        type:Boolean
+    },
+    provider:{
+        type:String
+    },
+    Address:{
         type:String,
     },
     OTP:{

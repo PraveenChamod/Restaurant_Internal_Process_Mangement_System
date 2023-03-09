@@ -11,6 +11,7 @@ import Order from "../models/Order.js";
 import mongoose from "mongoose";
 import Table from "../models/Tables.js";
 import TableReservation from "../models/TableReservation.js";
+import SupplierItem from "../models/SupplierItem.js";
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++Manager++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -53,15 +54,15 @@ export const RegisterOutletStaff = async (req,res)=>{
                             subject : 'Registration Confrimation',
                             attachments:[{
                                 filename : 'logo.png',
-                                path:'E:/WEB/Restaurant_Management_System/server/Template/logo.png',
+                                path:'D:/Group Project/New folder/restaurant_management_system/server/Template/logo.png',
                                 cid:'logo'
                             },
                             {
                                 filename : 'welcome_vector.png',
-                                path:'E:/WEB/Restaurant_Management_System/server/Template/welcome_vector.png',
+                                path:'D:/Group Project/New folder/restaurant_management_system/server/Template/welcome_vector.png',
                                 cid:'welcome'
                             }],
-                            html: { path:'E:/WEB/Restaurant_Management_System/server/Template/Email.html' }
+                            html: { path:'D:/Group Project/New folder/restaurant_management_system/server/Template/Email.html' }
                         }
     
                         transporter.sendMail(mailOption,(err,info)=>{
@@ -123,6 +124,45 @@ export const addItems = async(req,res)=>{
         res.status(501).json(error.message);
     }
 }
+
+
+// Method : POST
+// End Point : "api/v1/serviceProvider/__________";
+// Description : Add Supplier Order Item
+
+export const addSupplierOrder = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager"){
+            const {Item,Quantity,Date} = req.body;
+            const session = await mongoose.startSession();
+            try {
+                session.startTransaction();
+                const neworder = await SupplierItem.create({
+                    SupplierItem:Item,
+                    SupplierItem:Quantity,
+                    SupplierItem:Date
+                })
+                res.json(neworder);               
+                session.endSession();
+            
+                res.status(201).json({
+                    status: 'success',
+                    message: 'successfully'
+                })
+            } catch (error) {
+                res.status(500).json(error.message);
+            }
+        }
+        else{
+            res.status(401).json('Only Manager has access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
+
 // Method : GET
 // End Point : "api/v1/serviceProvider/getFoods";
 // Description : Get Items
@@ -206,44 +246,36 @@ export const deleteItemBySerialNo = async (req,res)=>{
 }
 
 // Method : POST
-// End Point : "api/v1/serviceProvider/Manager/AddFoods";
-// Description : Get Foods By Category
+// End Point : "api/v1/serviceProvider/food/UploadImage";
+// Description : Upload Image
 const imageStorage = multer.diskStorage({
     destination:"images/Foods",
     filename: (req,file,cb)=>{
         cb(null,Date.now()+'_'+file.originalname)
     }
 })
-const image = multer({storage:imageStorage}).single('image');
+export const image = multer({storage:imageStorage}).single('image');
 
+// Method : POST
+// End Point : "api/v1/serviceProvider/food/AddFoods";
+// Description : Add Foods
 export const addFoods = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === 'Manager' || user.Role === 'Admin'){
-            const {FoodName,Price,Category,Quantity} = req.body;
-            console.log(Category);
+            const {FoodName,Price,Category} = req.body;
+            console.log(Price);
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
-            console.log(SerialNumber);
             const existingFood = await Foods.findOne({SerialNo:SerialNumber});
             if(existingFood !== null){
                 res.status(501).json({message:`This item is already added`});
             }else{
-                const FoodImage = "";
-                image(req,res,(err)=>{
-                    if(err){
-                        console.log(err)
-                    }
-                    else{
-                        FoodImage = req.file.filename;
-                    }
-                })
                 const AddFoods = await Foods.create({
                     FoodName:FoodName,
-                    Quantity:Quantity,
                     Price:Price,
                     SerialNo:SerialNumber,
                     Category:Category,
-                    FoodImage:FoodImage
+                    FoodImage:req.file.filename
                 })
                 res.status(200).json({
                     status: 'success',
@@ -439,7 +471,6 @@ export const  deleteOffers =async (req,res)=>{
          if(user.Role==="Staff-Member"){
             const {SerialNo} = req.params;
             const offer = await Offers.findOne({SerialNo:SerialNo});
-            console.log(Food);
             if(offer !== null){
                 await Offer.findByIdAndRemove(offer._id);
                 res.json({message:`${SerialNo} Offer Removed`});
@@ -469,6 +500,7 @@ export const AddTable = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Manager" || user.Role === "Admin"){
             const {TableNo,NoOfPersons,price} = req.body;
+            console.log(TableNo);
             const existingTable = await Table.findOne({TableNo:TableNo}).populate('TableNo');
             if(existingTable){
                 res.status(400).json({
@@ -503,6 +535,31 @@ export const AddTable = async(req,res)=>{
             status:'Server Error',
             message:error.message
         })
+    }
+}
+
+
+// Method : Get
+// End Point : "api/v1/serviceProvider/getTables";
+// Description : Get Tables
+
+export const ViewTables = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role === "Staff-Member" || user.Role === "Admin"){
+            const tables = await Table.find();
+            if(tables !== null){
+                res.json(tables);
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes please add tables"});
+            }
+        }
+        else{
+            res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
     }
 }
 

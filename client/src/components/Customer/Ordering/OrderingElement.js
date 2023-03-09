@@ -3,11 +3,19 @@ import styled from "styled-components";
 export const Page = styled.div`
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: fit-content;
+    align-items: center;
+    margin-bottom:3%;
+    flex-direction: column;
+`
+export const Section = styled.div`
+  margin-top: 7%;
+  display: flex;
+    justify-content: center;
+    height: 100%;
     align-items: center;
     flex-direction: column;
 `
-
 
 export const Div = styled.div`
   /* background: red; */
@@ -15,7 +23,7 @@ export const Div = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: row;
+  flex-wrap: wrap;
   margin-top:40px;
   @media screen and (max-width: 769px) {
     width: 90%;
@@ -33,8 +41,7 @@ export const Div1 = styled.div`
   align-items: center;
   flex-direction: column;
   box-shadow: 3px 3px 3px #000;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin: 2%;
   padding-bottom:10px;
 `;
 
@@ -99,21 +106,16 @@ export const Button1 = styled.button`
 export const Button2 = styled.button`
     position: relative;
     background: #E6B522;
-    border-radius: 5px;
+    border-radius: 50px;
     border: none;
-    font-size: 16px;
+    font-size: 18px;
     color: white;
-    font-style: none;
     cursor: pointer;
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-right :5px;
-    margin-left : 5px;
 `;
 
 export const Img = styled.img`

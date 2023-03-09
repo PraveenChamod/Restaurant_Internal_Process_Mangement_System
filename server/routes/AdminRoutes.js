@@ -25,4 +25,5 @@ AdminRoutes.route('/getUsersByRole').get(getUsersByRole);
 //Register ServiceProviders
 AdminRoutes.route('/RegisterServiceProvider').post(RegisterServiceProviders);
 
+
 export default AdminRoutes;

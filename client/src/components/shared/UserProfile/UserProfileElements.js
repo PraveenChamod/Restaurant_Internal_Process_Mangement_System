@@ -7,7 +7,6 @@ justify-content: center;
 height: 100vh;
 align-items: center;
 flex-direction: column;
-background:url(${Img1}) left top no-repeat;
 background-size: 10rem;
 
 `

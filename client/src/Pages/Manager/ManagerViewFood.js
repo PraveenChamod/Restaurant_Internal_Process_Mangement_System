@@ -1,8 +1,8 @@
-import ItemViewComponent from "../../components/shared/ItemView/ItemView";
+import FoodDetail from "../../components/shared/FoodDetail/FoodDetail";
 const ManagerViewFood = (props) => {
     return ( 
         <>
-            <ItemViewComponent View1={props.View}/>
+            <FoodDetail/>
         </>
      );
 }

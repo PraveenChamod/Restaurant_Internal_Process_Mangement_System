@@ -3,32 +3,31 @@ import mongoose from "mongoose";
 const FoodsSchema = mongoose.Schema({
     FoodName:{
         type:String,
-        required:[true,"Please Select the Item"]
-    },
-    Quantity:{
-        type:String,
-        required:[true,"Must Provide the available no of item"]
     },
     Price:{
         type:Number,
-        required:[true,"Must Add the Unit Price"]
     },
     SerialNo:{
         type:String,
-        required:[true,"Serial No Must Be Add"]
     },
     FoodImage:{
         type:String,
-        required:[true,"Must Upload Image"]
+    },
+    Status:{
+        type:String,
+        default:'Available'
     },
     Category:{
-        type:String,
-        required:[true,"Please Select the category"]
+        type:String
     },
     OrderItems:{
         type:Boolean,
         default:false
+    },
+    Qty:{
+        type:Number
     }
+
 },
 {
     toJSON: { virtuals: true },

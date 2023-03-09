@@ -12,7 +12,7 @@ ServiceProviderrouter.route('/getItemsByCategory').get(l.getItemByCategory);
 ServiceProviderrouter.route('/deleteItemBySerialNo/:SerialNo').delete(l.deleteItemBySerialNo);
 
 //Food routes
-ServiceProviderrouter.route('/food/AddFoods').post(l.addFoods);
+ServiceProviderrouter.route('/food/AddFoods').post(l.image,l.addFoods);
 ServiceProviderrouter.route('/food/getFoods').get(l.getFoods);
 ServiceProviderrouter.route('/food/getFoodsbyCategory').get(l.getFoodByCategory);
 ServiceProviderrouter.route('/food/updateFood/:SerialNo').post(l.updateFood);
@@ -26,6 +26,9 @@ ServiceProviderrouter.route('/offer/deleteOffer').post(l.deleteOffers);
 
 //Tables CRUD
 ServiceProviderrouter.route('/Tables/AddTable').post(l.AddTable);
+ServiceProviderrouter.route('/AdminView-Tables').get(l.ViewTables);
+
+
 //Order Handling
 ServiceProviderrouter.route('/Orders/PendingOrders').get(l.ViewPendingOrders);
 ServiceProviderrouter.route('/Orders/ViewOrder/:_id').get(l.ViewOrder);
@@ -39,4 +42,7 @@ ServiceProviderrouter.route('/Reservations/ConfirmReservation/:_id').post(l.Send
 
 //Deliverer Order Handling
 ServiceProviderrouter.route('/Deliverer/ViewOrderDetails').get(l.CheckOrderDetails);
+
+//Supplier Order
+ServiceProviderrouter.route('/AddSupplierOrder').get(l.addSupplierOrder);
 export default ServiceProviderrouter;

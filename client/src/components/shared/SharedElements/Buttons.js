@@ -25,6 +25,7 @@ export const FormButton = styled.button`
     font-style: none;
     cursor: pointer;
     width: 100px;
+    margin: 0 2%;
     height: 30px;
     display: flex;
     justify-content: center;
