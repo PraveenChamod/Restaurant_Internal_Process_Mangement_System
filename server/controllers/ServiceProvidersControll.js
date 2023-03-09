@@ -446,10 +446,12 @@ export const  deleteFoods =async (req,res)=>{
 // offers #########3
 
 //Add offer
+// End Point : /api/v1/serviceProvider/offer/addOffer
+
 export const addOffer  = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
+        if(user.Role === "Staff-Member" || user.Role === "Manager"){
             const {Foods,SpecialPrice} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             const existingOffer = await Offers.findOne({SerialNo:SerialNumber});
@@ -482,7 +484,7 @@ export const getOffers = async (req,res)=>{
 
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Customer"){
+        if(user.Role === "Staff-Member" || user.Role === "Customer" || user.Role === "Manager"){
             const offers = await Offers.find();
             if(offers !== null){
                 res.json(offers);
