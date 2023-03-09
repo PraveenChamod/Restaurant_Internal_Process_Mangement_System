@@ -78,6 +78,7 @@ import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import Pay from './components/Customer/Checkout/Pay';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
+import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 
 function App() {
   

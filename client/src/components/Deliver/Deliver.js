@@ -28,21 +28,26 @@ from "./DeliverElement";
 import { Container } from "../shared/SharedElements/SharedElements";
 import { Header } from "../shared/SharedElements/SharedElements";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
 const DeliverComponent = () =>{
     const [customerName,setCustomerName] = useState('');
     const [address,setAddress]= useState('')
     const [contactNo,setContactNo] = useState(0)
     const [totalPrice,setTotalPrice] = useState(0)
     const [paymentMethod,setPaymentMethod] = useState('')
-    const [error,setError] = useState('')
-    const {user} = useAuth()
+
+    
 const handleSubmit =  async(e)=>{
     e.preventDefaults();
-    if(!user){
-        setError("you must be loged in")
-        return
-    }else{
-        
+    try{
+        const data = new FormData();
+        data.append('customername',customerName)
+        data.append('adddress',address)
+        data.append('contactNo',contactNo)
+        data.append('totalPrice',totalPrice)
+        data.append('paymentMethod',paymentMethod)
+        console.log(data);
+        const res =  await axios.post('api/v1/serviceProvider/')
     }
 }
         return ( 
