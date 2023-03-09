@@ -34,10 +34,10 @@ export const LogInUser = async (req,res)=>{
                 res.json(token);
             }
             else{
-                res.status(400).json('Invallid Password');
+                return res.status(400).json({message:"Invallid Password"});
             }
         }else{
-            res.status(400).json('Invallid Email');
+            return res.status(400).json({message:"Invallid Email"});
         }
     } catch (err) {
         res.status(400).json({ err:message });

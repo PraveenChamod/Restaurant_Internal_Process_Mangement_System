@@ -127,35 +127,91 @@ export const addItems = async(req,res)=>{
 
 
 // Method : POST
-// End Point : "api/v1/serviceProvider/__________";
+// End Point : "api/v1/serviceProvider/AddSupplierOrder";
 // Description : Add Supplier Order Item
+
+// export const addSupplierOrder = async(req,res)=>{
+//     try {
+//         const user = req.user;
+//         if(user.Role === "Manager"){
+//             const {Item,Quantity,Date} = req.body;
+//             const session = await mongoose.startSession();
+//             try {
+//                 session.startTransaction();
+//                 const neworder = await SupplierItem.create({
+//                     SupplierItem:Item,
+//                     SupplierItem:Quantity,
+//                     SupplierItem:Date
+//                 })
+//                 res.json(neworder);               
+//                 session.endSession();
+            
+//                 res.status(201).json({
+//                     status: 'success',
+//                     message: 'successfully'
+//                 })
+//             } catch (error) {
+//                 res.status(500).json(error.message);
+//             }
+//         }
+//         else{
+//             res.status(401).json('Only Manager has access to do this operation');
+//         }
+//     } catch (error) {
+//         res.status(501).json(error.message);
+//     }
+// }
 
 export const addSupplierOrder = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Manager"){
             const {Item,Quantity,Date} = req.body;
-            const session = await mongoose.startSession();
-            try {
-                session.startTransaction();
-                const neworder = await SupplierItem.create({
-                    SupplierItem:Item,
-                    SupplierItem:Quantity,
-                    SupplierItem:Date
-                })
-                res.json(neworder);               
-                session.endSession();
-            
+            const neworder = await SupplierItem.create({
+                SupplierItem:Item,
+                SupplierItem:Quantity,
+                SupplierItem:Date
+            })
                 res.status(201).json({
-                    status: 'success',
-                    message: 'successfully'
+                    status:'Success',
+                    message:'A New supplier order is Added',
+                    data:{
+                        neworder
+                    }
                 })
-            } catch (error) {
-                res.status(500).json(error.message);
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+}
+
+// Method : Get
+// End Point : "api/v1/serviceProvider/ViewSupplierOrder";
+// Description : Get supplier order
+
+export const ViewSupplierOrder = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager"){
+            const tables = await SupplierItem.find();
+            if(tables !== null){
+                res.json(tables);
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes please add tables"});
             }
         }
         else{
-            res.status(401).json('Only Manager has access to do this operation');
+            res.status(401).json('Only Manager have access to do this operation');
         }
     } catch (error) {
         res.status(501).json(error.message);
@@ -488,6 +544,37 @@ export const  deleteOffers =async (req,res)=>{
     }
    
 }
+
+// Method : GET
+// End Point : "api/v1/serviceProvider/Orders/AllOrders";
+// Description : Get All Orders
+export const ViewAllOrders = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member" || user.Role === "Manager"){
+            const allorders = await Order.find();
+            console.log(allorders);            
+            res.status(201).json({
+                status: 'success',
+                message: 'All Orders',
+                data: {
+                    allorders
+                }
+            })
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
 
 //+++++++++++++++++++++++++++++++++++++++++++++++Tables CRUD++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -867,6 +954,37 @@ export const CheckOrderDetails = async(req, res)=>{
     }
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Method : GET
+// End Point : "api/v1/serviceProvider/Items/ReceivedOrders";
+// Description : Get Received Items
 
+export const ViewReceivedOrders = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Supplier"){
+            const findItems = await Item.find(); //model eka change karaganna
+            console.log(findItems);
+            res.status(201).json({
+                status: 'success',
+                message: 'Received Orders',
+                data: {
+                    findItems
+                }
+            })
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
 

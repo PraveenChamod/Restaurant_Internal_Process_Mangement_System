@@ -86,7 +86,7 @@ export const RegisterCustomer = async (req,res)=>{
                     console.log('result ', result);
                 }
               });
-            // await sendRegistrationSms(to,from,ConfirmationMessage);
+            // await sendRegistrationSms(to,from,ConfirmationMessage);//This one already commented
 
             //send Email
             const mailOption = {
@@ -104,24 +104,15 @@ export const RegisterCustomer = async (req,res)=>{
                     console.log(info.response);
                 }
             })
-
             const token = createToken(createUser._id,createUser.Email);
             res.json(token);
-            res.status(200).json({
-                status: 'success',
-                token
-            });
         }
         else{
             return res.json({message:"A Customer is already exist"});
         }
     } catch (error) {
-        res.status(500).json({
-            status: 'Server error',
-            message: error.message
-        });
-       //res.status(500).json({error:error.message});
-       //return res.status(500).json({error:error.message});
+        const { message } = error;
+        res.status(500).json({ message });
     }
 }
 
