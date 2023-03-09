@@ -77,6 +77,7 @@ import StaffMemberEditProfile from './Pages/Staff-Member/StaffMemberEditProfile'
 import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
+import ViewSupplierOrder from './Pages/Manager/ViewSupplierOrder';
 
 function App() {
   useEffect(() => {
@@ -143,7 +144,8 @@ function App() {
                 <Route path="/ManagerView-Food" element={<ManagerViewFood/>}/>
                 <Route path="/ManagerView-Offers" element={<ManagerViewOffers/>}/>
                 <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
-                <Route path="/ManagerOrder-supllierorder" element={<SupplierOrder/>}/>
+                <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder/>}/>
+                <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
