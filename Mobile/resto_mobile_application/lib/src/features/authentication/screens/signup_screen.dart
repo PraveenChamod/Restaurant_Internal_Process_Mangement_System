@@ -217,7 +217,7 @@ class _LoginScreenState extends State<SignupScreen> {
                                 text: "Sign Up",
                                 buttonTextStyle: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 color: const Color(0xFFfebf10),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,12 +114,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             width:
                                 MediaQuery.of(context).size.width / 1.25 - 40,
                             child: TextField(
-                              //obscureText: true,
                               controller: passController,
                               obscureText: _obscureText,
                               keyboardType: TextInputType.visiblePassword,
+                              maxLength: 8,
                               decoration: InputDecoration(
                                 labelText: 'Password',
+                                counterText: '',
                                 labelStyle:
                                     const TextStyle(color: Colors.white70),
                                 suffixIcon: GestureDetector(
@@ -176,29 +178,23 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                print(Email);
-                                print(Password);
-                                login();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.all(5.0),
-                                fixedSize: const Size(150, 30),
-                                backgroundColor:
-                                    const Color.fromRGBO(254, 191, 16, 10),
-                                elevation: 15,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                              ),
-                              child: const Text(
-                                'LOGIN',
-                                style: TextStyle(
+                            child: Container(
+                              width: 150,
+                              height: 35,
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: AnimatedButton(
+                                text: "Login",
+                                buttonTextStyle: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                color: const Color(0xFFfebf10),
+                                pressEvent: () {
+                                  print(Email);
+                                  print(Password);
+                                  login();
+                                },
                               ),
                             ),
                           ),
@@ -290,6 +286,8 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
   void login() async {
+    String id = '';
+    String email = '';
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
       var response = await http.post(
         //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
@@ -306,21 +304,32 @@ class _LoginScreenState extends State<LoginScreen> {
         String jwtToken = response.body;
         print("Login Token: $jwtToken");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
-        String email = decodedToken['Email'];
+        email = decodedToken['Email'];
         print("Email : $email");
-        String id = decodedToken['id'];
+        id = decodedToken['id'];
         print("Id : $id");
-        pageRoute(id, email);
+        awesomeDialog(DialogType.success, "Login Successful! Welcome to Resto", "Success", id, email);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Invalid Credentials"))
-        );
+        final json = jsonDecode(response.body);
+        final msg = json["message"];
+        awesomeDialog(DialogType.warning, msg, "Warning", id, email);
       }
     }else {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Blank Value Found"))
-      );
+      awesomeDialog(DialogType.warning, "Fields Cannot Be Empty!", "Warning", id, email);
     }
+  }
+  awesomeDialog(DialogType type, String desc, String title, String id, String email) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        title == "Success" ? pageRoute(id, email): null;
+      },
+    ).show();
   }
   void pageRoute(String id, String email) async {
     //const This is the part of store value or token shared preference
