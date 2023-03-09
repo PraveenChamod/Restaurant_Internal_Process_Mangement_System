@@ -506,7 +506,7 @@ export const  deleteOffers =async (req,res)=>{
 export const ViewAllOrders = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
+        if(user.Role === "Staff-Member" || user.Role === "Manager"){
             const allorders = await Order.find();
             console.log(allorders);            
             res.status(201).json({

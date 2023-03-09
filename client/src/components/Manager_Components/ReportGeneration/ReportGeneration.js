@@ -7,6 +7,8 @@ import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Link } from "react-router-dom";
 import useFetch from "../../../Hooks/useFetch"
 import Monthly_Repo from "../ReportPreview/Reports/Monthly_Repo";
+import Daily_Repo from "../ReportPreview/Reports/Daily_Repo";
+
 
 const ReportGenerationComponent = () => {
     const {data,isPending}= useFetch('api/v1/serviceProvider/Orders/AllOrders');
@@ -31,7 +33,7 @@ const ReportGenerationComponent = () => {
     });
 
     const dailyRepoClick = () => {
-        <Monthly_Repo aailyOrders = {DailyOrders}/>
+        <Daily_Repo aailyOrders = {DailyOrders}/>
     }
     const monthlyRepoClick = () => {
         <Monthly_Repo monthlyOrders = {MonthlyOrders}/>

@@ -10,39 +10,46 @@ import {
   Div3,
   H1,
   Searchbar
+
 } from './ViewUserElements';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container } from "../SharedElements/SharedElements";
-import useAuth from "../../../Hooks/useAuth";
 
 const ViewUserComponent = (props) => {
 
-  const [email, setEmail] = useState('');
+  console.log(props);
+
+  const [email, setEmail] = useState("");
+
+  const [name, setName] = useState("");
+  const [contactno, setContactno] = useState("");
+  const [role, setRole] = useState("");
+  const [gender, setGender] = useState("");
+
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    console.log(email);
-  }
-
-
+    const userEmail = event.target.value;
+    setEmail(userEmail);
   
-
-  const [users, setUsers] = useState(props.users);
-  const user = users.map(user=>{
-
-  })
-  //onsubmit function ekak liyanna
+    props.users.data.users.map((user) => {
+      if (user.Email === userEmail) {
+        setName(user.Name);
+        setContactno(user.ContactNumber);
+        setRole(user.Role);
+        // setGender(user.Gender);
+      }
+        console.log("NO Such Kind Of User");
+    });
+  };
+  
   return (
     <Container>
       <H1>USER DETAILS</H1>
       <Div>
         <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
-          <Searchbar type="search" placeholder="Enter the User email" value={email} onChange={e=>setEmail(e.target.value)}/>
+
+          <Searchbar type="search" placeholder="Enter the User email" onChange={handleEmailChange}/>
+          
           <TextField
             id="standard-basic"
             label="Email"
@@ -50,38 +57,44 @@ const ViewUserComponent = (props) => {
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
-            value={email}
-            onChange={handleEmailChange}
+            value={email}            
           />
           <TextField 
             id="standard-basic" 
             label="User Name" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}/>
+            sx={{marginBottom:'5%'}}
+            value={name}  
+          />
           <TextField
             id="standard-basic"
             label="Contact Number"
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
+            value={contactno}
           />
           <TextField 
             id="standard-basic" 
             label="Role" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}/>
+            sx={{marginBottom:'5%'}}
+            value={role}
+          />
           <TextField 
             id="standard-basic" 
             label="Gender" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}/>
+            sx={{marginBottom:'5%'}}
+            value={gender}
+          />  
         </FormControl>
         <Div1>
           <Div2>
-            <FormButton> // ONCLICK EKAK DALA LIYANN
+            <FormButton>
               <Link to="./login" className="btn">
                 <b>DELETE</b>
               </Link>
