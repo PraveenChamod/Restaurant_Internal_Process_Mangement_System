@@ -6,7 +6,7 @@ import LoginImage from "../../../Images/Services/person.jpg";
 import { Link } from "react-router-dom";
 
 
-const UserProfileComponent = () => {
+const UserProfileComponent = (props) => {
     return ( 
         <UserProfileContainer>
             <Div>
@@ -16,7 +16,7 @@ const UserProfileComponent = () => {
                     </Header>
                         <P>Hi Praveen!</P>
                     <FormButton>
-                        <Link to="./EditProfile" className="btn">
+                        <Link to={props.route1.Route} className="btn">
                             Edit
                         </Link>
                     </FormButton>

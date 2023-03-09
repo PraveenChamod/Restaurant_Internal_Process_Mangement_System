@@ -1,25 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from "react-router-dom";
-import {
-  Page,
-  Div,
-  Div1,
-  Div2,
-  Div3,
-  Div4,
-  Div5,
-  P,
-  P1,
-  Button1,
-  Button2,
-  RegularButton,
-  Img,
-  Img1
-} from "./OrderingElement";
+import * as l from "./OrderingElement";
 import { Header } from "../../shared/SharedElements/SharedElements";
 
 import icon1 from '../../../Images/OrderIcon/OrderIcon1.png';
@@ -31,75 +16,126 @@ import icon6 from '../../../Images/OrderIcon/OrderIcon6.png';
 import icon7 from '../../../Images/OrderIcon/OrderIcon7.png';
 import icon8 from '../../../Images/OrderIcon/OrderIcon8.png';
 import icon9 from '../../../Images/OrderIcon/noodles.png';
+import { FaShoppingCart } from 'react-icons/fa';
+import axios from "axios";
+import useFetch from "../../../Hooks/useFetch";
+import { RegularButton } from "../../shared/SharedElements/Buttons";
+const Ordering = (props) => {
 
-const Ordering = () => {
+
+  const[count,setCount] = useState(0);
+  const[search,setSerach] = useState('');
+  const[Items,setItems] = useState(props.data1);
+  const [clickedIndex, setClickedIndex] = useState({});
+  const[selectItem,setSelectItem] = useState({});
+  console.log(Items);
+  //Select Item Independelntly
+  const handleClick = async (index) =>{
+    setClickedIndex(state => ({
+      ...state, //copy previous state
+      [index]: !state[index] //update value by index key
+    }));
+    setSelectItem(Items[index]);
+  };
+
+  //Add items into the cart
+  const AddToCart = async (foodId)=>{
+    try {
+      const res = await axios.post('api/v1/Customer/Addtocart',{foodId:foodId})
+      if(res.status == 201 || res.status == 200){
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  //Add To Cart Option Manage
+  const handleAddToCart = async (index) => {
+    const item = Items[index];
+    await AddToCart(item.id);
+    handleClick(index);
+  }
+
+  //Search Items
+  const handleSearch = (e)=>{
+    const keyword = e.target.value;
+    if (keyword !== '') {
+      const results = props.data1.filter((user) => {
+        return user.FoodName.toLowerCase().startsWith(keyword.toLowerCase()) || user.Category.toLowerCase().startsWith(keyword.toLowerCase());
+      });
+      setItems(results);
+    } else {
+      setItems(props.data1);
+    }
+
+    setSerach(keyword);
+  }
 
   return (
-    <Page>
+    <l.Page>
+      <l.Section>
         <Header>SELECT ITEMS</Header>
 
-          <Paper
-      component="form"
-      sx={{ p: '2px 2px', display: 'flex', alignItems: 'center', width: 500 , borderRadius: 20 , height : 35}}
-    >
-      <InputBase
+        <Paper
+        component="form"
+        sx={{ p: '2px 2px', display: 'flex', alignItems: 'center', width: 500 , borderRadius: 20 , height : 35}}
+        >
+        <InputBase
         sx={{ ml: 1, flex: 1 }}
-        // placeholder="Search Google Maps"
-        // inputProps={{ 'aria-label': 'search google maps' }}
-      />
-      <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-        <SearchIcon />
-      </IconButton>
-    </Paper>
-          <Div>
-          <Button1 ><Img src={icon1} alt="buttonpng" /></Button1>
-          <Button1 ><Img src={icon2} alt="buttonpng" /></Button1>
-          <Button1><Img src={icon3} alt="buttonpng" /></Button1>
-          <Button1><Img src={icon4} alt="buttonpng" /></Button1>
-          <Button1><Img src={icon5} alt="buttonpng" /></Button1>
-          <Button1><Img src={icon6} alt="buttonpng" /></Button1>
-          <Button1><Img src={icon7} alt="buttonpng" /></Button1>
-          <Button1><Img src={icon8} alt="buttonpng" /></Button1>
-          </Div>
-          <Div>
-            <Div1>
-              <Div2>
-                <Img1 src={icon9} alt="buttonpng"></Img1>
-                <P>Chicken Noodles</P>
-              </Div2>
-              <Div3>
-                <Div4>
-                    <P1>Reguler</P1>
-                    <P1>Rs.1000</P1>
-                </Div4>
-                <Div5>
-                  <Button2><P>-</P></Button2>
-                  <P>0</P>
-                  <Button2><P>+</P></Button2>
-                </Div5>
-              </Div3>
-              
-
-            </Div1>
-
-            <Div1></Div1>
-            <Div1></Div1>
-            <Div1></Div1>
-
-          </Div>
-          <Div>
-          <RegularButton>
-            <Link to="#" className="btn">
-              ORDER
-            </Link>
-          </RegularButton>
-          <RegularButton>
-            <Link to="#" className="btn">
-              ADD TO CART
-            </Link>
-          </RegularButton>
-          </Div>
-    </Page>
+        value={search}
+        onChange={handleSearch}
+        />
+        <IconButton type="button" sx={{ p: '10px' }} aria-label="search" disabled>
+          <SearchIcon />
+        </IconButton>
+        </Paper>
+        <l.Div>
+        <l.Button1 ><l.Img src={icon1} alt="buttonpng" /></l.Button1>
+        <l.Button1 ><l.Img src={icon2} alt="buttonpng" /></l.Button1>
+        <l.Button1><l.Img src={icon3} alt="buttonpng" /></l.Button1>
+        <l.Button1><l.Img src={icon4} alt="buttonpng" /></l.Button1>
+        <l.Button1><l.Img src={icon5} alt="buttonpng" /></l.Button1>
+        <l.Button1><l.Img src={icon6} alt="buttonpng" /></l.Button1>
+        <l.Button1><l.Img src={icon7} alt="buttonpng" /></l.Button1>
+        <l.Button1><l.Img src={icon8} alt="buttonpng" /></l.Button1>
+        </l.Div>
+        <l.Div>
+          {
+            Items && Items.length > 0 ? (
+              Items.map((data,index)=>{
+                return(
+                  <l.Div1 key={data.id} >
+                    <l.Div2>
+                      <l.Img1 src={`http://localhost:5000/Foodimages/${data.FoodImage}`} alt="buttonpng"></l.Img1>
+                      <l.P>{data.FoodName}</l.P>
+                    </l.Div2>
+                    <l.Div3>
+                      <l.Div4>
+                          <l.P1>Reguler</l.P1>
+                          <l.P1>{'Rs.'+ data.Price}</l.P1>
+                      </l.Div4>
+                      <l.Div5 onClick={()=>{handleAddToCart(index)}}>
+                        <l.Button2>
+                          <FaShoppingCart/>
+                        </l.Button2>
+                      </l.Div5>
+                    </l.Div3>
+                  </l.Div1>
+                )
+              })
+            ) : (<h1>No Result Found</h1>)
+          }
+        </l.Div>
+        <l.Div>
+        <Link to="/CustomerMyCart" className="btn">
+        <RegularButton>
+            ORDER
+        </RegularButton>
+        </Link>
+        </l.Div>
+      </l.Section>
+    </l.Page>
   );
 };
 

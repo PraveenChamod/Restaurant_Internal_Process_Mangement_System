@@ -302,47 +302,36 @@ export const deleteItemBySerialNo = async (req,res)=>{
 }
 
 // Method : POST
-// End Point : "api/v1/serviceProvider/food/AddFoods";
-// Description : Get Foods By Category
+// End Point : "api/v1/serviceProvider/food/UploadImage";
+// Description : Upload Image
 const imageStorage = multer.diskStorage({
     destination:"images/Foods",
     filename: (req,file,cb)=>{
         cb(null,Date.now()+'_'+file.originalname)
     }
 })
-const image = multer({storage:imageStorage}).single('image');
-var FoodImage = "";
-export const uploadImage = async(req,res)=>{
-    
-        image(req,res,(err)=>{
-            if(err){
-                console.log(err)
-            }
-            else{
-                FoodImage = req.file.filename;
-                res.json(FoodImage);
-            }
-    })
-}
+export const image = multer({storage:imageStorage}).single('image');
+
+// Method : POST
+// End Point : "api/v1/serviceProvider/food/AddFoods";
+// Description : Add Foods
 export const addFoods = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === 'Manager' || user.Role === 'Admin'){
             const {FoodName,Price,Category} = req.body;
-            console.log(FoodName);
+            console.log(Price);
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
-            console.log(SerialNumber);
             const existingFood = await Foods.findOne({SerialNo:SerialNumber});
             if(existingFood !== null){
                 res.status(501).json({message:`This item is already added`});
             }else{
-                
                 const AddFoods = await Foods.create({
                     FoodName:FoodName,
                     Price:Price,
                     SerialNo:SerialNumber,
                     Category:Category,
-                    FoodImage:FoodImage
+                    FoodImage:req.file.filename
                 })
                 res.status(200).json({
                     status: 'success',
@@ -567,6 +556,7 @@ export const AddTable = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Manager" || user.Role === "Admin"){
             const {TableNo,NoOfPersons,price} = req.body;
+            console.log(TableNo);
             const existingTable = await Table.findOne({TableNo:TableNo}).populate('TableNo');
             if(existingTable){
                 res.status(400).json({

@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { getUserProfile, LogInUser, LogoutUser, PasswordReset, UploadProfileImage } from '../controllers/AuthController.js';
+import { getUserProfile, LogInUser, LogoutUser, passportSAuth, PasswordReset, redirect, UploadProfileImage } from '../controllers/AuthController.js';
 import { requireAuth } from '../middleware/Authmiddleware.js';
 
 
@@ -12,6 +12,10 @@ AuthRoutes.route('/LoginUser').post(LogInUser);
 AuthRoutes.route('/getProfile').get(requireAuth,getUserProfile);
 
 AuthRoutes.route('/uploadProfilePicture').patch(requireAuth,UploadProfileImage);
+
+AuthRoutes.route('/auth/google').get(passportSAuth);
+
+AuthRoutes.route('sessions/oauth/google').get(passportSAuth,redirect)
 
 AuthRoutes.route('/logout').get(LogoutUser);
 

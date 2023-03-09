@@ -5,14 +5,18 @@ const CartSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Customer',
     },
-    Foods:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Foods'
-    },
-    Qty:{
-        type:Number,
-        required:true
-    }
+    Foods:[
+        {
+            food:{
+                type:mongoose.Schema.ObjectId,
+                ref:'Foods'
+            },
+            Quantity:{
+                type:Number,
+                default:1
+            }
+        }
+    ],
 },
 {
     toJSON: { 

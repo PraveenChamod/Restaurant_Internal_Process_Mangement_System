@@ -51,7 +51,7 @@ export const ItemsCard = styled.button`
     &{
         display: flex;
         margin: 3%;
-        width: 70%;
+        width: 100%;
         align-items:center;
         background-color: #1A1E21;
         box-shadow: 3px 3px 3px #000;
@@ -65,13 +65,14 @@ export const ItemsCard = styled.button`
 `
 export const Details = styled.div`
     display: flex;
+    width: 60%;
     flex-direction: column;
     line-height: 0.1rem;
     text-align: left;
 `
 export const FoodImage = styled.div`
-    width: 90px;
     height: 90px;
+    width: 30%;
     margin: 3%;
 `
 export const Food = styled.img`
@@ -103,7 +104,7 @@ export const Right = styled.div`
 export const Description = styled.div`
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 60%;
     border-radius: 20px;
     background-color: #1A1E21;
     box-shadow: 3px 3px 3px #000;
@@ -135,4 +136,24 @@ export const Data = styled.div`
 `
 export const ButtonSection = styled.div`
 
+`
+export const CartSection = styled.div`
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+export const SelectIcon = styled.div`
+    &{
+        color: #fff;
+        font-size: 32px;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+`
+export const Icon = styled.div`
+    font-size: 32px;
+    color:#FFBF00;
+    width: 20%;
 `

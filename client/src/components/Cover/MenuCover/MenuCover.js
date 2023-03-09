@@ -27,7 +27,7 @@ const MenuCover = () => {
                     <H2>Find Your Favourites</H2>
                 </SubHeading>
                 <ButtonSection>
-                    <Link to="./login" className='btn'><Button data-aos={"zoom-in-up"} >Order Now</Button></Link>
+                    <Link to="login" className='btn'><Button data-aos={"zoom-in-up"} >Order Now</Button></Link>
                 </ButtonSection>
             </CoverContent>
         </Container>

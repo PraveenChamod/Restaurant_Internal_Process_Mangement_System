@@ -1,16 +1,19 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/make_selction.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_home.dart';
 import 'Customer/customer_main_page.dart';
-import 'Products/Products_Menu_Titles.dart';
+import 'Products/products_menu_titles.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,10 +23,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  var email;
-  var password;
+
+  var emailController = TextEditingController();
+  var passController =  TextEditingController();
+  var Email;
+  var Password;
   bool _obscureText = true;
-  //int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             width:
                                 MediaQuery.of(context).size.width / 1.25 - 40,
                             child: TextField(
+                              controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: const InputDecoration(
                                 labelText: 'Email',
@@ -99,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (value) {
-                                email = value;
+                                Email = value;
                               },
                             ),
                           ),
@@ -108,6 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 MediaQuery.of(context).size.width / 1.25 - 40,
                             child: TextField(
                               //obscureText: true,
+                              controller: passController,
                               obscureText: _obscureText,
                               keyboardType: TextInputType.visiblePassword,
                               decoration: InputDecoration(
@@ -140,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (value) {
-                                password = value;
+                                Password = value;
                               },
                             ),
                           ),
@@ -171,20 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
-                                print(email);
-                                print(password);
-                                login(email, password);
+                                print(Email);
+                                print(Password);
+                                login();
                               },
-
-                              // onPressed: () {
-                              //   Navigator.of(context).push(
-                              //     MaterialPageRoute(
-                              //         builder: (_){
-                              //           return const CustomerMainPage();
-                              //         },
-                              //     ),
-                              //   );
-                              // },
                               style: ElevatedButton.styleFrom(
                                 padding: const EdgeInsets.all(5.0),
                                 fixedSize: const Size(150, 30),
@@ -292,30 +289,54 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+  void login() async {
+    if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
+      var response = await http.post(
+        //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
+        Uri.parse("http://192.168.8.181:5000/api/v1/Auth/LoginUser"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          "Email": emailController.text,
+          "Password": passController.text
+        }),
+      );
+      if(response.statusCode == 200) {
+        String jwtToken = response.body;
+        print("Login Token: $jwtToken");
+        Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
+        String email = decodedToken['Email'];
+        print("Email : $email");
+        String id = decodedToken['id'];
+        print("Id : $id");
+        pageRoute(id, email);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Invalid Credentials"))
+        );
+      }
+    }else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Blank Value Found"))
+      );
+    }
+  }
+  void pageRoute(String id, String email) async {
+    //const This is the part of store value or token shared preference
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("LoginId", id);
+    await pref.setString("LoginEmail", email);
+    String? ID = pref.getString("LoginId");
+    print("Shared Id: ${ID!}");
+    String? UserEmail = pref.getString("LoginEmail");
+    print("Shared Email: $UserEmail");
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CustomerMainPage())
+    );
+  }
 }
 
-login(email, password) async {
-  var url = "http://localhost:5000/signup";
-  final http.Response response = await http.post(
-    Uri.parse(url),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'email': email,
-      'password': password,
-    }),
-  );
 
-  print(response.body);
 
-  // if (response.statusCode == 201) {
-  //   // If the server did return a 201 CREATED response,
-  //   // then parse the JSON.
-  //   //return Album.fromJson(jsonDecode(response.body));
-  // } else {
-  //   // If the server did not return a 201 CREATED response,
-  //   // then throw an exception.
-  //   throw Exception('Failed to create album.');
-  // }
-}
