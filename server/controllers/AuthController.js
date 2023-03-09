@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
-
+import passport from "passport";
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -34,10 +34,10 @@ export const LogInUser = async (req,res)=>{
                 res.json(token);
             }
             else{
-                res.status(400).json('Invallid Password');
+                return res.status(400).json({message:"Invallid Password"});
             }
         }else{
-            res.status(400).json('Invallid Email');
+            return res.status(400).json({message:"Invallid Email"});
         }
     } catch (err) {
         res.status(400).json({ err:message });
@@ -45,6 +45,13 @@ export const LogInUser = async (req,res)=>{
     
 }
 
+export const passportSAuth = passport.authenticate('google', {
+    scope: ['profile', 'email']
+})
+
+export const redirect = async (req, res) => {
+    res.redirect('/login'); // Redirect the user to the home page after authentication
+  }
 // Method : POST
 // End Point : "api/v1/Auth/uploadProfilePicture";
 // Description : Upload Profile Image
@@ -142,7 +149,7 @@ export const getUserProfile = async(req,res)=>{
 
 // Method : GET
 // End Point : "api/v1/Auth/logout";
-// Description : Logging Our User
+// Description : Logging Out User
 export const LogoutUser = async (req,res)=>{
   res.cookie('jwt','',{maxAge:1});
   res.json('User Logging Out');

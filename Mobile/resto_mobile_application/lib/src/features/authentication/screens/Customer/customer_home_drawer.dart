@@ -1,15 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Drawer_Items/favourites_screen.dart';
 import '../Drawer_Items/help_center_screen.dart';
 import '../Drawer_Items/my_account_screen.dart';
 import '../Drawer_Items/orders_screen.dart';
 import '../Drawer_Items/settings_screen.dart';
+import '../home_screen.dart';
 
-class CustomerHomeDrawer extends StatelessWidget {
+class CustomerHomeDrawer extends StatefulWidget {
   const CustomerHomeDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<CustomerHomeDrawer> createState() => _CustomerHomeDrawerState();
+}
+
+class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
+  String userEmail = "";
+  @override
+  void initState() {
+    super.initState();
+    getCred();
+  }
+  void getCred() async {
+    //This getCred function is use to fetch credentials from SharerdPreferences
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      userEmail = pref.getString("LoginEmail")!;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,21 +51,23 @@ class CustomerHomeDrawer extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                CircleAvatar(
+              children:  [
+                const CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage('assets/Food Types/Burger/Chicken_Burger.jpg'),
+                  backgroundImage: AssetImage('assets/images/Default_User.png'),
                 ),
-                SizedBox(height: 10.0,),
-                Text('Praveen Chamod',
+                const SizedBox(height: 10.0,),
+                const Text('Praveen Chamod',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.white70,
                   ),
                 ),
-                SizedBox(height: 10.0,),
-                Text('praveenchamod23@gmail.com',
-                  style: TextStyle(
+                const SizedBox(height: 10.0,),
+                Text(
+                  userEmail,
+                  //'praveenchamod23@gmail.com',
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Colors.white70,
                   ),
@@ -133,10 +156,22 @@ class CustomerHomeDrawer extends StatelessWidget {
             ),
             title: const Text('Log Out'),
             onTap: () {
-              Navigator.pop(context);
+              logout();
             },
           ),
         ],
+      ),
+    );
+  }
+
+  void logout() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.remove("LoginId");
+    await pref.remove("LoginEmail");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
       ),
     );
   }

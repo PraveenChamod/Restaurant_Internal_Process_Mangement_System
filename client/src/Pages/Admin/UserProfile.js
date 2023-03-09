@@ -2,9 +2,9 @@
 import UserProfileComponent from "../../components/shared/UserProfile/UserProfile";
 
 
-const AdminUserProfile = () => {
+const AdminUserProfile = (props) => {
     return ( 
-        <UserProfileComponent/>
+        <UserProfileComponent route1 = {props.route}/>
      );
 }
  

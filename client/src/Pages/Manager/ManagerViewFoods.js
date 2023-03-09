@@ -6,8 +6,8 @@ const ManagerViewFoods = (props) => {
     const {data,isPending}= useFetch('api/v1/serviceProvider/food/getFoods');
     return (  
         <>
-             {isPending && <Spinner/>}
-        {data && <FoodDetails data1={data}/>}
+            {isPending && <Spinner/>}
+            {data && <FoodDetails data1={data}/>}
         </>
     );
 }

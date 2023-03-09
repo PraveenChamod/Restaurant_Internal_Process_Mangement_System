@@ -64,7 +64,7 @@ const CustomerProfile = (props) => {
   const handleUpload = (e)=>{
     setImage(e.target.files[0]);
   }
-  console.log(user);
+  console.log(Imagename);
   return (
     <Page>
       <Page1>
@@ -98,7 +98,7 @@ const CustomerProfile = (props) => {
                     <FaCamera/>
                       <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
                   </Icon>
-              </ImageSection>
+                </ImageSection>
               <Div4>
                 <RegularButton onClick={uploadImage}>Upload</RegularButton>
                 <br/>

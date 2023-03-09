@@ -1,8 +1,8 @@
 import UserProfileComponent from "../../components/shared/UserProfile/UserProfile";
 
-const DelivererUserProfile = () => {
+const DelivererUserProfile = (props) => {
     return ( 
-        <UserProfileComponent />
+        <UserProfileComponent route1 = {props.route}/>
      );
 }
  

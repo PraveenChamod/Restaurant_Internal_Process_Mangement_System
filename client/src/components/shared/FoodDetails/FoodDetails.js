@@ -5,7 +5,9 @@ import Spinner from "../Spinner/Spinner";
 import * as l from './FoodDetailsElements'
 import { AiFillEye } from 'react-icons/ai';
 import useAuth from "../../../Hooks/useAuth";
+import { Link } from "react-router-dom";
 const FoodDetails = (props) => {
+    
     return ( 
         <Container>
             <Header>
@@ -28,6 +30,7 @@ const FoodDetails = (props) => {
                                         <l.Td>{row.Category}</l.Td>
                                         <l.Td>{row.Price}</l.Td>
                                         <l.Td>{row.Status}</l.Td>
+                                        <Link to=''></Link>
                                         <l.Icon><AiFillEye/></l.Icon>
                                     </l.Tr>
                                 )

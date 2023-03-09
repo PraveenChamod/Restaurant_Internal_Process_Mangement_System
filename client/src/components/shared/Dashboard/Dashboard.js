@@ -31,7 +31,7 @@ import {
 
 const Dashboard = (props) => {
 
-  const { logout,user } = useAuth();
+  const { logout,user,loadUser } = useAuth();
   const data1 = Array.from(props.Navs1.Navs);
 
   const cardData = Array.from(props.cards1.CardContent);
@@ -47,7 +47,7 @@ const Dashboard = (props) => {
       <SideNavBar>
         <UserHeader>
           <Title>{props.Navs1.Role}</Title>
-          <Name>Mr.Admin</Name>
+          <Name>{user.Name}</Name>
         </UserHeader>
         <Navs>
           {

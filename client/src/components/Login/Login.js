@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../Hooks/useAuth";
 import LoginImage from "../../Images/foods/pancake.jpg";
@@ -36,7 +36,12 @@ import {
     SocialMedia,
     Icon
 } from './LoginElements'
+
 const Login = () => {
+
+   
+
+      
     const[change,setChange] = useState(false);
     const handleChange = ()=>{
         if(!change){
@@ -169,8 +174,8 @@ const Login = () => {
                                 <InputSignUp type ="password" name="ConfPassword" placeholder="Re-enter the password" value={ConfirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                             </Column>
                             <SocialMedia>
-                                <Icon><FcGoogle/></Icon>
                                 <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
+                                <Icon><FcGoogle/></Icon>
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia>
                         <Bottom>
