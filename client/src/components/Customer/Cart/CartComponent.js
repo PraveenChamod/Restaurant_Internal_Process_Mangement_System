@@ -4,7 +4,7 @@ import * as l from './CartElements';
 import profilepic from '../../../Images/person2.jpg';
 import Spinner from "../../shared/Spinner/Spinner";
 import useFetch from "../../../Hooks/useFetch";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import styled from "styled-components";
 import { MdCheckBox } from 'react-icons/md';
@@ -20,9 +20,10 @@ const CartComponent = ({data}) => {
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
     const[OrderItem,setOrderItem] = useState({});
-    const[quantity,setQuantity] = useState(1);
+    
+    const[Quantity,setQuantity] = useState(1);
+    const quantityRef = useRef(Quantity);
     const[price,setPrice] = useState();
-    console.log(quantity);
 
     
     //Select Item Independelntly
@@ -57,11 +58,9 @@ const CartComponent = ({data}) => {
     //Increase Quantity
     const AddQuantity = async ({foodId,quantity})=>{
         try {
-            const formData = {foodId,quantity}
+        const formData = {foodId,quantity}
           const res = await axios.post('api/v1/Customer/Addtocart',formData);
-          if(res.status == 201 || res.status == 200){
-            console.log(res);
-          }
+          console.log(res);
         } catch (error) {
           console.log(error.message);
         }
@@ -71,11 +70,13 @@ const CartComponent = ({data}) => {
         const item = Items[index];
         const foodId = item.id;
         handleClick(index);
-        setQuantity(quantity+1);
+        setQuantity(Quantity+1);
+        quantityRef.current = Quantity+1;
+        const quantity = quantityRef.current;
         console.log(quantity);
         await AddQuantity({foodId,quantity});
-        
     }
+    // console.log(quantity);
     return ( 
         <>
              <l.Container>
@@ -95,6 +96,7 @@ const CartComponent = ({data}) => {
                 <l.Left>
                     {
                         data.map((cart,index)=>{
+                            
                             return(
                                 <l.CartSection>
                                     {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
@@ -115,10 +117,10 @@ const CartComponent = ({data}) => {
                                                     {cart.Size}
                                                 </l.Text> */}
                                                 <l.Text>
-                                                    Quantity : {quantity}
+                                                    Quantity : {Quantity || cart.quantity}
                                                 </l.Text>
                                                 <l.Text>
-                                                    Price : {cart.price}
+                                                    Price : {Quantity * cart.price}
                                                 </l.Text>
                                             </l.SubText>
                                         </l.Details>
@@ -146,7 +148,7 @@ const CartComponent = ({data}) => {
                         </l.ItemTexts>
                         <l.ItemTexts>
                             <l.Label>
-                                Quantity : {quantity}
+                                Quantity : {Quantity}
                             </l.Label>
                             <l.Data>
                                 
@@ -154,7 +156,7 @@ const CartComponent = ({data}) => {
                         </l.ItemTexts>
                         <l.ItemTexts>
                             <l.Label>
-                                Total Price : {quantity * price}
+                                Total Price : {Quantity * price}
                             </l.Label>
                             <l.Data>
                                 

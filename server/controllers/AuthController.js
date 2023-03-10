@@ -34,13 +34,22 @@ export const LogInUser = async (req,res)=>{
                 res.json(token);
             }
             else{
-                res.status(400).json('Invallid Password');
+                res.status(400).json({
+                    status:'Error',
+                    message:'Invalid Password'
+                });
             }
         }else{
-            res.status(400).json('Invallid Email');
+            res.status(400).json({
+                status:'Error',
+                message:'Invalid Email'
+            });
         }
     } catch (err) {
-        res.status(400).json({ err:message });
+        res.status(500).json({ 
+            status:'Server Error',
+            message: err.message 
+        });
     }
     
 }

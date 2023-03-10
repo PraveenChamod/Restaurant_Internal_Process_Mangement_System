@@ -11,6 +11,14 @@ import dotenv from 'dotenv';
 import passport from "passport";
 import session from 'express-session';
 import Strategy from 'passport-google-oauth20';
+import ItemsRoutes from "./routes/ItemsRoutes.js";
+import FoodRoutes from "./routes/FoodsRoutes.js";
+import BlogRoutes from "./routes/BlogRoutes.js";
+import TableRoutes from "./routes/TableRoutes.js";
+import OfferRoutes from "./routes/OfferRoutes.js";
+import OrderRoutes from "./routes/OrderRoutes.js";
+import CartRoutes from "./routes/CartRoutes.js";
+import TableReservationRoutes from "./routes/TableReservationRoutes.js";
 const app = express();
 
 dotenv.config();
@@ -75,6 +83,22 @@ app.use('/api/v1/admin',requireAuth,AdminRoutes);
 app.use('/api/v1/Auth', AuthRoutes);
 
 app.use('/api/v1/serviceProvider',requireAuth,ServiceProviderrouter);
+
+app.use('/api/v1/',requireAuth,ItemsRoutes);
+
+app.use('/api/v1/',requireAuth,FoodRoutes);
+
+app.use('/api/v1/',requireAuth,BlogRoutes);
+
+app.use('/api/v1/',requireAuth,TableRoutes);
+
+app.use('/api/v1',requireAuth,OfferRoutes);
+
+app.use('/api/v1',requireAuth,OrderRoutes);
+
+app.use('/api/v1',requireAuth,CartRoutes);
+
+app.use('/api/v1/',requireAuth,TableReservationRoutes);
 
 export default app;
 

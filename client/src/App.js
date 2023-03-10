@@ -38,6 +38,7 @@ import PasswordReset from './Pages/PasswordReset';
 import { Cards, Roles } from './Data/DashBoardLinks';
 import "aos/dist/aos.css";
 import Aos from 'aos';
+import { Toaster } from 'react-hot-toast';
 import { MenuItems } from './Data/Menu';
 import { EditProfileLinks, TableColumns, ViewThings } from './Data/Content';
 import AuthState from './Context/Auth/AuthState';
@@ -103,6 +104,9 @@ function App() {
       <AuthState>
           <Fragment>
           <div className="App">
+          <Toaster
+              position="top-center"
+              reverseOrder={false}/>
             <ScrollToTop/> 
             <Navbar ScrollToTop={scrollToTop}/>
             <Routes>
