@@ -34,13 +34,22 @@ export const LogInUser = async (req,res)=>{
                 res.json(token);
             }
             else{
-                return res.status(400).json({message:"Invallid Password"});
+                res.status(400).json({
+                    status:'Error',
+                    message:'Invalid Password'
+                });
             }
         }else{
-            return res.status(400).json({message:"Invallid Email"});
+            res.status(400).json({
+                status:'Error',
+                message:'Invalid Email'
+            });
         }
     } catch (err) {
-        res.status(400).json({ err:message });
+        res.status(500).json({ 
+            status:'Server Error',
+            message: err.message 
+        });
     }
     
 }
@@ -123,7 +132,7 @@ export const getUserProfile = async(req,res)=>{
         if(findCustomer){
             const user = findCustomer
                 res.status(201).json({
-                    message:`Account Details of ${User.Name}`,
+                    message:`Account Details of ${user.Name}`,
                     user
                 })
         }

@@ -36,6 +36,7 @@ import {
     SocialMedia,
     Icon
 } from './LoginElements'
+import { toast } from "react-hot-toast";
 
 const Login = () => {
 
@@ -64,7 +65,28 @@ const Login = () => {
     const SignupSubmit = async(e)=>{
         e.preventDefault();
         try {
-            RegisterUser(formData);  
+            toast.promise(
+                RegisterUser(formData),
+                {
+                    loading:'Registering.....',
+                    success: (data)=>`User Registered Successfully`,
+                    error:(err)=>{
+                        console.log(err.response);
+                        if(!err?.response?.data?.message){
+                            return 'Something went wrong! Try again'
+                        }
+                        return `${err.response.data.message}`
+                    }
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem'
+                    }
+                }
+            )
         } catch (error) {
             console.log(error);
         }
@@ -73,8 +95,28 @@ const Login = () => {
     const loginSubmit = (e)=>{
         e.preventDefault();
         try {
-            const loginData = {Email,Password};
-            logingUser(loginData);
+            toast.promise(
+                logingUser({Email,Password}),
+                {
+                    loading:'Logging in .....',
+                    success: (data)=>`Logged in successfully`,
+                    error:(err)=>{
+                        if(!err?.response?.data?.message){
+                            return 'Something went wrong! Try again'
+                        }
+                        return `${err?.response?.data?.message}`
+                    }
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem'
+                    }
+                }
+
+            )
         } catch (error) {
             console.log(error);
         }

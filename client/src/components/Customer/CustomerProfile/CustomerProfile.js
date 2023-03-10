@@ -39,7 +39,7 @@ const CustomerProfile = (props) => {
     e.preventDefault();
     try {
       const Data = {Name,Email,ContactNumber,Address}
-      const res = await axios.patch(`api/v1/Customer/UpdateProfile/${user?.Email}`,Data);
+      const res = await axios.patch(`api/v1/User/Profile/${user?.Email}`,Data);
       if(res.status == 200 || res.status == 201){
         console.log(res);
         loadUser();
@@ -54,7 +54,7 @@ const CustomerProfile = (props) => {
     try {
       const formdata = new FormData();
       formdata.append('image',Imagename);
-      const res = await axios.patch('api/v1/Auth/uploadProfilePicture',formdata);
+      const res = await axios.patch('api/v1/Auth/ProfilePicture',formdata);
       console.log(res)
       loadUser();
     } catch (error) {

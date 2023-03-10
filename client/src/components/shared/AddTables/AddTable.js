@@ -15,7 +15,7 @@ const AddTableComponent = () => {
         e.preventDefault();
         try {
             const formData = {TableNo, NoOfPersons, price}
-            const res = await axios.post('api/v1/serviceProvider/Tables/AddTable',formData)
+            const res = await axios.post('api/v1/Table',formData)
             console.log(res);
         } catch (error) {
             

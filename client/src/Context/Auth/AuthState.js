@@ -41,7 +41,7 @@ const AuthState = (props) => {
     const loadUser = async()=>{
         dispatch({type:SET_LOADING});
         try {
-            const res = await axios.get('api/v1/Auth/getProfile')
+            const res = await axios.get('api/v1/Auth/Profile')
             console.log(res.data.user);
             dispatch(
                 {
@@ -77,7 +77,7 @@ const AuthState = (props) => {
     const RegisterUser = async(formData) => {
         dispatch({type:SET_LOADING});
         try {
-            const res = await axios.post('api/v1/customer/AddCustomer',formData);
+            const res = await axios.post('api/v1/User/CustomerRegister',formData);
             console.log(res);
             dispatch({
                 type:REGISTER_SUCCESS,

@@ -51,6 +51,9 @@ const handleSubmit =  async(e)=>{
     }catch(error){
         
     }
+    catch(err){
+        
+    }
 }
         return ( 
             <Container>

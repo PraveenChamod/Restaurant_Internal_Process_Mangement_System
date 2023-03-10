@@ -29,7 +29,7 @@ const Blog = () => {
     e.preventDefault();
     try {
       const formData = {Review,Rate}
-      const res = await axios.post('api/v1/customer/Review',formData)
+      const res = await axios.post('api/v1/Blogs',formData)
       console.log(res);
     } catch (error) {
       console.log(error.message);
