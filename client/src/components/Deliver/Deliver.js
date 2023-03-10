@@ -27,6 +27,8 @@ import{
 from "./DeliverElement";
 import { Container } from "../shared/SharedElements/SharedElements";
 import { Header } from "../shared/SharedElements/SharedElements";
+import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
 const DeliverComponent = () =>{
     const [customerName,setCustomerName] = useState('');
     const [address,setAddress]= useState('')
@@ -34,8 +36,22 @@ const DeliverComponent = () =>{
     const [totalPrice,setTotalPrice] = useState(0)
     const [paymentMethod,setPaymentMethod] = useState('')
 
+    
 const handleSubmit =  async(e)=>{
-
+    e.preventDefaults();
+    try{
+        const data = new FormData();
+        data.append('customername',customerName)
+        data.append('adddress',address)
+        data.append('contactNo',contactNo)
+        data.append('totalPrice',totalPrice)
+        data.append('paymentMethod',paymentMethod)
+        console.log(data);
+        const res =  await axios.post('api/v1/serviceProvider/')
+    }
+    catch(err){
+        
+    }
 }
         return ( 
             <Container>

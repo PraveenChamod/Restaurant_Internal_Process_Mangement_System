@@ -79,6 +79,7 @@ import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import Pay from './components/Customer/Checkout/Pay';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
+import ViewSupplierOrder from './Pages/Manager/ViewSupplierOrder';
 
 function App() {
   
@@ -149,7 +150,8 @@ function App() {
                 <Route path="/ManagerView-Food" element={<ManagerViewFood/>}/>
                 <Route path="/ManagerView-Offers" element={<ManagerViewOffers/>}/>
                 <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
-                <Route path="/ManagerOrder-supllierorder" element={<SupplierOrder/>}/>
+                <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder/>}/>
+                <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -184,6 +186,7 @@ function App() {
                 <Route path="/DelivererMy-Profile" element={<DelivererUserProfile route={EditProfileLinks[3]}/>}/>   
                 <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
                 <Route path="/DelivererOrderDetails" element={<DeliveryOrderDetails/>}/>   
+                {/* <Route path="/DelivereAllOrderDetails" element={<AllOrderDetails Tables={TableColumns[3]}/>}/>    */}
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   

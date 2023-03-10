@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Chef from '../../../Images/Chef.png';
 
-export const Div = styled.div`
+export const Div = styled.form`
   width: 50%;
-  height: 50%;
+  height: 60%;
   background-color: #1a1e21;
   border-radius: 25px;
   display: flex;

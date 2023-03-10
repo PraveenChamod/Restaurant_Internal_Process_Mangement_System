@@ -90,6 +90,37 @@
 //     }
 // }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+// Method : GET
+// End Point : "api/v1/serviceProvider/Items/ReceivedOrders";
+// Description : Get Received Items
 
+export const ViewReceivedOrders = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Supplier"){
+            const findItems = await Item.find(); //model eka change karaganna
+            console.log(findItems);
+            res.status(201).json({
+                status: 'success',
+                message: 'Received Orders',
+                data: {
+                    findItems
+                }
+            })
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+ }
 

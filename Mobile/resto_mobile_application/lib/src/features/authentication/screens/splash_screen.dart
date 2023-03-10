@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,35 +60,48 @@ class _SplashScreenState extends State<SplashScreen> {
               right: 0,
               left: 0,
               child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    checkLogin();
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(builder: (_){
-                    //     return const HomeScreen();
-                    //     },
-                    //   ),
-                    // );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10.0),
-                    fixedSize: const Size(200, 50),
-                    backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
-                    elevation: 15,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                  child: const Text(
-                      'GET STARTED',
-                    style: TextStyle(
+                child: Container(
+                  width: 200,
+                  height: 65,
+                  padding: const EdgeInsets.all(10.0),
+                  child: AnimatedButton(
+                    text: "GET STARTED",
+                    buttonTextStyle: const TextStyle(
                       color: Colors.black,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
+                    color: const Color(0xFFfebf10),
+                    pressEvent: () {
+                      checkLogin();
+                    },
                   ),
                 ),
               ),
+              // child: Center(
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       checkLogin();
+              //     },
+              //     style: ElevatedButton.styleFrom(
+              //       padding: const EdgeInsets.all(10.0),
+              //       fixedSize: const Size(200, 50),
+              //       backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
+              //       elevation: 15,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(20.0),
+              //       ),
+              //     ),
+              //     child: const Text(
+              //         'GET STARTED',
+              //       style: TextStyle(
+              //         color: Colors.black,
+              //         fontSize: 18,
+              //         fontWeight: FontWeight.bold,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ),
           ],
         ),
@@ -109,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => const HomeScreen(),
         ),
       );
     }

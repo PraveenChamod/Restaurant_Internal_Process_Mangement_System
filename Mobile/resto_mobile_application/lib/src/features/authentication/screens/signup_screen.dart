@@ -116,8 +116,10 @@ class _LoginScreenState extends State<SignupScreen> {
                               controller: passController,
                               obscureText: _obscureText1,
                               keyboardType: TextInputType.visiblePassword,
+                              maxLength: 8,
                               decoration: InputDecoration(
                                 labelText: 'Password',
+                                counterText: '',
                                 labelStyle: const TextStyle(color: Colors.white70),
                                 suffixIcon: GestureDetector(
                                   onTap: () {
@@ -152,8 +154,10 @@ class _LoginScreenState extends State<SignupScreen> {
                               controller: confirmPassController,
                               obscureText: _obscureText2,
                               keyboardType: TextInputType.visiblePassword,
+                              maxLength: 8,
                               decoration: InputDecoration(
                                 labelText: 'Confirm Password',
+                                counterText: '',
                                 labelStyle: const TextStyle(color: Colors.white70),
                                 suffixIcon: GestureDetector(
                                   onTap: () {
@@ -213,7 +217,7 @@ class _LoginScreenState extends State<SignupScreen> {
                                 text: "Sign Up",
                                 buttonTextStyle: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                                 color: const Color(0xFFfebf10),
@@ -264,50 +268,26 @@ class _LoginScreenState extends State<SignupScreen> {
     );
   }
   void signup() async {
-    if (nameController.text.isNotEmpty &&
-        emailController.text.isNotEmpty &&
-        passController.text.isNotEmpty &&
-        confirmPassController.text.isNotEmpty &&
-        contactController.text.isNotEmpty)
-    {
-      final http.Response response = await http.post(
-        //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
-        Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          "Name": nameController.text,
-          "Email": emailController.text,
-          "Password": passController.text,
-          "ConfirmPassword": confirmPassController.text,
-          "ContactNumber": int.parse(contactController.text)
-        }),
-      );
-      if(response.statusCode == 200) {
-        String jwtToken = response.body;
-        final json = jsonDecode(response.body);
-        final msg = json["message"];
-        final status = json["status"];
-        print(msg);
-        print(status);
-        if(status == "success"){
-          print("Your Token is: $jwtToken");
-          awesomeDialog(DialogType.success, "You successfully registered to the system.", "Success");
-        }else{
-          print(msg);
-          awesomeDialog(DialogType.warning, "A Customer is already exist", "Warning");
-        }
-      }
+    final http.Response response = await http.post(
+      //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
+      Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        "Name": nameController.text,
+        "Email": emailController.text,
+        "Password": passController.text,
+        "ConfirmPassword": confirmPassController.text,
+        "ContactNumber": contactController.text
+      }),
+    );
+    if(response.statusCode == 200) {
+      awesomeDialog(DialogType.success, "You successfully registered to the system. Now you can Login", "Success");//Successfully User registered.
+    }else{
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      final status = json["status"];
-      print(msg);
-      print(status);
-      awesomeDialog(DialogType.warning, msg, "Warning");
-    }else {
-      awesomeDialog(DialogType.warning, "Fields cannot be empty, Blank Value Found.", "Warning");
-      //4 mean: Fields cannot be empty, Blank Value Found.
+      awesomeDialog(DialogType.warning, msg, "Warning");//Unsuccessfully User registered.
     }
   }
   awesomeDialog(DialogType type, String desc, String title) {
