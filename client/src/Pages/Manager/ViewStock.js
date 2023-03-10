@@ -1,16 +1,19 @@
 import ViewStocksComponent from "../../components/Manager_Components/ViewStocks/ViewStocks";
+import Spinner from "../../components/shared/Spinner/Spinner";
 import useFetch from "../../Hooks/useFetch";
 
 const ViewStocks = (props) => {
 
-    const data = useFetch('/api/v1/serviceProvider/getItems');
-    const i = data?.data
+    const {data,isPending} = useFetch('api/v1/Items');
+
     
-    
-    console.log(i);
+
+    console.log(data);
     return ( 
         <>
-            <ViewStocksComponent items = {i} />
+            {isPending && <Spinner/>}
+            {data && <ViewStocksComponent items = {data} />}
+            
         </>
      );
 }

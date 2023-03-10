@@ -2,17 +2,13 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
-import { InputLabel, MenuItem, NativeSelect, Select } from "@mui/material";
+import { MenuItem, Select } from "@mui/material";
 import "./AddUser.css";
 import { 
-  Page,
   Div,
   Div1,
-  Div2,
   Div3,
-  H1
 } from'./AddUserElements';
-import { createTheme } from '@mui/material/styles';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import axios from "axios";

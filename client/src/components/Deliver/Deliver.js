@@ -49,11 +49,9 @@ const handleSubmit =  async(e)=>{
         console.log(data);
         const res =  await axios.post('api/v1/serviceProvider/')
     }catch(error){
-        
+
     }
-    catch(err){
-        
-    }
+    
 }
         return ( 
             <Container>
