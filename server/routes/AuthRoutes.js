@@ -9,9 +9,9 @@ const AuthRoutes = express.Router();
 
 AuthRoutes.route('/LoginUser').post(LogInUser);
 
-AuthRoutes.route('/getProfile').get(requireAuth,getUserProfile);
+AuthRoutes.route('/Profile').get(requireAuth,getUserProfile);
 
-AuthRoutes.route('/uploadProfilePicture').patch(requireAuth,UploadProfileImage);
+AuthRoutes.route('/ProfilePicture').patch(requireAuth,UploadProfileImage);
 
 AuthRoutes.route('/auth/google').get(passportSAuth);
 

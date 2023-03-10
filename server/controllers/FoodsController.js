@@ -116,13 +116,15 @@ export const updateFood = async(req,res)=>{
             if(!Food){
                 res.status(404).json("No such food item to update")
             }
-            res.status(200).json({
-                status:"Success",
-                message:`${Food.FoodName} is updated `,
-                data:{
-                    Food
-                }
-            });
+            else{
+                res.status(200).json({
+                    status:"Success",
+                    message:`${Food.FoodName} is updated `,
+                    data:{
+                        Food
+                    }
+                });
+            }
         }
         else{
             res.status(501).json("This user not authorized for this operation")

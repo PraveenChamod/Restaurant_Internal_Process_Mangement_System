@@ -132,7 +132,7 @@ export const getUserProfile = async(req,res)=>{
         if(findCustomer){
             const user = findCustomer
                 res.status(201).json({
-                    message:`Account Details of ${User.Name}`,
+                    message:`Account Details of ${user.Name}`,
                     user
                 })
         }

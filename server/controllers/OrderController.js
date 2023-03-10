@@ -60,6 +60,37 @@ export const OrderItem = async(req,res,next)=>{
 }
 
 // Method : GET
+// End Point : "api/v1/Orders";
+// Description : Get All Orders
+export const ViewAllOrders = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role === "Admin"){
+            const Orders  = await Order.find();
+            if(Orders){
+                res.status(200).json({
+                    status:'Success',
+                    message:'Details of All Orders',
+                    data:{
+                        Orders
+                    }
+                })
+            }
+            else{
+                res.status(404).json({
+                    status:'Error',
+                    message:'There are no any orders exist'
+                })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:'Server Error',
+            message:error.message
+        })
+    }
+}
+// Method : GET
 // End Point : "api/v1/PendingOrders";
 // Description : Get Pending Orders
 export const ViewPendingOrders = async(req,res,next)=>{

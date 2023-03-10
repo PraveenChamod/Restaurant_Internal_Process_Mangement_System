@@ -27,7 +27,7 @@ const AddUserComponent = () => {
     try {
       const formData = {Email,Role};
       console.log(formData);
-      const res = await axios.post('api/v1/admin/RegisterServiceProvider',formData);
+      const res = await axios.post('api/v1/User/ServiceProviderRegister',formData);
       console.log(res);
     } catch (error) {
       console.log(error.message);

@@ -17,7 +17,7 @@ const serviceProvidersSchema = mongoose.Schema({
         unique:true,
     },
     ContactNumber:{
-        type:Number,
+        type:String,
         maxlength:10,
     },
     ConfirmPassword:{

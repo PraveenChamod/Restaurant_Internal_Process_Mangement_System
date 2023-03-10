@@ -58,7 +58,7 @@ export const getItems = async (req,res)=>{
 }
 
 // Method : GET
-// End Point : "api/v1/Items/:category";
+// End Point : "api/v1/Items/:Category";
 // Description : Get Items By Category
 
 export const getItemByCategory = async (req,res)=>{
@@ -89,8 +89,87 @@ export const getItemByCategory = async (req,res)=>{
 }
 
 // Method : DELETE
+// End Point : "api/v1/Item/:SerialNo;
+// Description : Get Item By Serial No
+export const getItemBySerialNo = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager"){
+            const {SerialNo} = req.params;
+            const existingItem = await Item.findOne({SerialNo:SerialNo});
+            if(Item !== null){
+                res.json({
+                    status:'Success',
+                    message:`Details of ${existingItem.ItemName}`,
+                    data:{
+                        existingItem
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:'Error',
+                    message:"Item doesn't found, Please enter valid serail no"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:'Error',
+                message:'Only Manager has access to do this operation'
+            });
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:'Server Error',
+            message:error.message
+        });
+    }
+}
+
+// Method : PATCH
+// End Point : "api/v1/Item/:SerialNo";
+// Description : update Item
+export const updateItem = async(req,res)=>{
+    try{
+        const user = req.user;
+        if(user.Role === 'Manager'){
+            const {SerialNo} = req.params;
+            const findItem = await Item.findOneAndUpdate({SerialNo:SerialNo},{
+                ...req.body
+            },{new:true}).populate('SerialNo');
+            if(!findItem){
+                res.status(404).json("No such food item to update")
+            }
+            else{
+                res.status(200).json({
+                    status:"Success",
+                    message:`${findItem.ItemName} is updated `,
+                    data:{
+                        findItem
+                    }
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:'Error',
+                message:'Only Manager has access to do this operation'
+            });
+        }
+       
+    }
+    catch(error){
+        res.status(501).json({
+            status:'Server Error',
+            message:error.message
+        });
+    }
+}
+
+// Method : DELETE
 // End Point : "api/v1/Items/:id;
-// Description : Get Foods By Category
+// Description : Delete Item By Serial No
 
 export const deleteItemBySerialNo = async (req,res)=>{
     try {
@@ -100,17 +179,32 @@ export const deleteItemBySerialNo = async (req,res)=>{
             const existItem = await Item.findOne({SerialNo:SerialNo});
             console.log(existItem);
             if(Item !== null){
-                await Item.findByIdAndRemove(existItem._id);
-                res.json({message:`${SerialNo} item Removed`});
+                const removedItem = await Item.findByIdAndRemove(existItem._id);
+                res.json({
+                    status:'Success',
+                    message:`${SerialNo} item Removed`,
+                    data:{
+                        removedItem
+                    }
+                });
             }
             else{
-                res.status(404).json({message:"Food doesn't found, Please enter valid serail no"});
+                res.status(404).json({
+                    status:'Error',
+                    message:"Item doesn't found, Please enter valid serail no"
+                });
             }
         }
         else{
-            res.status(401).json('Only Manager has access to do this operation');
+            res.status(401).json({
+                status:'Error',
+                message:'Only Manager has access to do this operation'
+            });
         }
     } catch (error) {
-        res.status(501).json(error.message);
+        res.status(501).json({
+            status:'Server Error',
+            message:error.message
+        });
     }
 }

@@ -1,11 +1,13 @@
 import express from 'express';
-import { addItems, deleteItemBySerialNo, getItemByCategory, getItems } from '../controllers/ItemsControll.js';
+import { addItems, deleteItemBySerialNo, getItemByCategory, getItemBySerialNo, getItems, updateItem } from '../controllers/ItemsControll.js';
 
 const ItemsRoutes = express.Router();
 
 ItemsRoutes.route('/Item').post(addItems);
 ItemsRoutes.route('/Items').get(getItems);
-ItemsRoutes.route('/Items/:category').get(getItemByCategory);
-ItemsRoutes.route('/Items/:serialNo').delete(deleteItemBySerialNo);
+ItemsRoutes.route('/Item/:SerialNo').get(getItemBySerialNo);
+ItemsRoutes.route('/Item/:SerialNo').patch(updateItem);
+ItemsRoutes.route('/Items/:Category').get(getItemByCategory);
+ItemsRoutes.route('/Item/:SerialNo').delete(deleteItemBySerialNo);
 
 export default ItemsRoutes;

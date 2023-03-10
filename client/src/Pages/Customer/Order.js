@@ -4,7 +4,7 @@ import Spinner from "../../components/shared/Spinner/Spinner";
 import useFetch from "../../Hooks/useFetch";
 
 const Order = () => {
-    const {data,isPending} = useFetch('api/v1/serviceProvider/food/getFoods');
+    const {data,isPending} = useFetch('api/v1/Foods');
     return ( 
         <div>
             {isPending && <Spinner/>}

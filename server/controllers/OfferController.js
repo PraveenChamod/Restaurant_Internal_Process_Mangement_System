@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
 import multer from "multer";
 import Offers from "../models/Offers.js";
+
 
 const imageStorage = multer.diskStorage({
     destination:"images/Offers",
@@ -12,20 +14,29 @@ export const addOffer  = async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member"){
-            const {Foods,SpecialPrice} = req.body;
+            const {Category,SpecialPrice} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             const existingOffer = await Offers.findOne({SerialNo:SerialNumber});
-            
             if(existingOffer !== null){
-                res.status(501).json({message:`This offer is already added`});
+                res.status(401).json({message:`This offer is already added`});
             }else{
-                const AddOffer = await Offers.create({
-                    Foods:Foods,
-                    SpecialPrice:SpecialPrice,                   
-                    SerialNo:SerialNumber,
-                    
-                })
-                res.json(AddOffer);
+                const session = await mongoose.startSession();
+                try {
+                    session.startTransaction();
+                    const OfferData = {SpecialPrice:SpecialPrice,SerialNo:SerialNumber,Category:Category,OfferImage:req.file.filename}
+                    const NewOffer = await Offers.create([OfferData],{session});
+                    const commit = await session.commitTransaction();
+                    session.endSession();
+                    res.status(201).json({
+                        status: 'success',
+                        message: 'Offer Added successfully',
+                        data: {
+                            NewOffer
+                        }
+                    })
+                } catch (error) {
+                    res.status(500).json(error.message);
+                }
             }
         }
         else{
@@ -36,10 +47,7 @@ export const addOffer  = async (req,res)=>{
     }
 }
 
-
-
 //View Offers
-
 export const getOffers = async (req,res)=>{
 
     try {
@@ -64,15 +72,23 @@ export const getOffers = async (req,res)=>{
 //Update offers
 export const updateOffer = async(req,res)=>{
     try{
-        const {SerialNo} = req.params;
-        const offer = await Offers.findOneAndUpdate({SerialNo:SerialNo},{
-            ...req.body
-        })
-        if(!offer){
-            res.status(404).json("No such offer to update")
-        }
-        res.status(200).json(offer);
-       
+        const user = req.user;
+        if(user.Role === 'Staff-Member' || user.Role === "Manager"){
+            const {SerialNo} = req.params;
+            const offer = await Offers.findOneAndUpdate({SerialNo:SerialNo},{
+                ...req.body
+            },{new:true}).populate('SerialNo');
+            if(!offer){
+                res.status(404).json("No such offer to update")
+            }
+            res.status(200).json({
+                status:"Success",
+                message:`${offer.SerialNo} is updated `,
+                data:{
+                    offer
+                }
+            });
+        }       
     }
     catch(error){
         res.status(error.message);
@@ -86,7 +102,7 @@ export const  deleteOffers =async (req,res)=>{
 
     try{
          const user = req.user;
-         if(user.Role==="Staff-Member"){
+         if(user.Role==="Staff-Member" || user.Role === "Manager"){
             const {SerialNo} = req.params;
             const offer = await Offers.findOne({SerialNo:SerialNo});
             if(offer !== null){

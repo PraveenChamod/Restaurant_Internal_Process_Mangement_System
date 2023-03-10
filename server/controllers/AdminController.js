@@ -270,24 +270,10 @@ export const RegisterServiceProviders = async (req,res)=>{
                 const encryptedPassword = await GeneratePassword(Password,salt);
 
                 if(Role === "Admin"){
-                    const user = await User.findOne({Role:Role}).populate('Role');
+                    const user = await ServiceProviders.findOne({Role:Role}).populate('Role');
                     console.log(user);
                     if(user !== null){
                         res.json('Admin is already exist');
-                    }
-                    else{
-                        const createServiceProvider = await ServiceProviders.create({
-                            Password:encryptedPassword,
-                            Email:Email,
-                            Role:Role
-                        });
-                        const createUser = await User.create({
-                            Password:encryptedPassword,
-                            Email:Email,
-                            Role:Role
-                        })
-                        const token = createToken(createUser._id,createUser.Email);
-                        res.json(token);
                     }
                 }
                 else{
@@ -296,11 +282,6 @@ export const RegisterServiceProviders = async (req,res)=>{
                         Email:Email,
                         Role:Role
                     });
-                    const createUser = await User.create({
-                        Password:encryptedPassword,
-                        Email:Email,
-                        Role:Role
-                    })
                     //send Email
                     if(createUser.Role !== "Customer"){
                         const mailOption = {
@@ -329,8 +310,14 @@ export const RegisterServiceProviders = async (req,res)=>{
                             }
                         })
                     }
-                    const token = createToken(createUser._id,createUser.Email);
-                    res.json(token);
+                    const token = createToken(createServiceProvider._id,createServiceProvider.Email);
+                    res.status(201).json({
+                        status:'Success',
+                        message:'User added to the system successfully',
+                        data:{
+                            token
+                        }
+                    });
                 }
                 
             }

@@ -20,7 +20,7 @@ const AddFoodsComponent = () => {
             Data.append('Price',Price);
             Data.append('Category',Category);
             console.log(Data);
-            const res = await axios.post('api/v1/serviceProvider/food/AddFoods',Data);
+            const res = await axios.post('api/v1/Food',Data);
             console.log(res);
         } catch (error) {
             console.log(error.message);

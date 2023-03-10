@@ -1,10 +1,7 @@
 import express from "express";
 import cookieParser from 'cookie-parser';
-import AdminRoutes from "./routes/AdminRoutes.js";
-import Customerrouter from './routes/CustomerRoutes.js';
 import AuthRoutes from "./routes/AuthRoutes.js";
 import { requireAuth } from "./middleware/Authmiddleware.js";
-import ServiceProviderrouter from "./routes/ServiceProvideRoutes.js";
 import cookieSession from "cookie-session";
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -19,6 +16,7 @@ import OfferRoutes from "./routes/OfferRoutes.js";
 import OrderRoutes from "./routes/OrderRoutes.js";
 import CartRoutes from "./routes/CartRoutes.js";
 import TableReservationRoutes from "./routes/TableReservationRoutes.js";
+import UserRoutes from "./routes/UserRoutes.js";
 const app = express();
 
 dotenv.config();
@@ -76,13 +74,14 @@ app.use(cookieParser());
 app.use('/images', express.static('images/Users'));
 app.use('/Foodimages', express.static('images/Foods'));
 
-app.use('/api/v1/customer',Customerrouter);
+// app.use('/api/v1/customer',Customerrouter);
 
-app.use('/api/v1/admin',requireAuth,AdminRoutes);
+// app.use('/api/v1/admin',requireAuth,AdminRoutes);
 
+// app.use('/api/v1/serviceProvider',requireAuth,ServiceProviderrouter);
 app.use('/api/v1/Auth', AuthRoutes);
 
-app.use('/api/v1/serviceProvider',requireAuth,ServiceProviderrouter);
+app.use('/api/v1/', UserRoutes);
 
 app.use('/api/v1/',requireAuth,ItemsRoutes);
 
