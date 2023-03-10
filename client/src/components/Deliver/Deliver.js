@@ -48,6 +48,8 @@ const handleSubmit =  async(e)=>{
         data.append('paymentMethod',paymentMethod)
         console.log(data);
         const res =  await axios.post('api/v1/serviceProvider/')
+    }catch(error){
+        
     }
 }
         return ( 
