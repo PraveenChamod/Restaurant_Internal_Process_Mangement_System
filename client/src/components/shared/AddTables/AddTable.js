@@ -1,4 +1,4 @@
-import { FormControl, Table, TextField } from "@mui/material";
+import { FormControl, TextField } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
@@ -18,7 +18,7 @@ const AddTableComponent = () => {
             const res = await axios.post('api/v1/Table',formData)
             console.log(res);
         } catch (error) {
-            
+            console.log(error.message);
         }
     }
     return ( 
