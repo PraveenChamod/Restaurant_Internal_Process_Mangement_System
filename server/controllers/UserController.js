@@ -134,6 +134,7 @@ export const RegisterServiceProviders = async (req,res)=>{
                         Email:Email,
                         Role:Role
                     });
+                    console.log(createServiceProvider);
                     //send Email
                     if(createServiceProvider.Role !== "Customer"){
                         const mailOption = {

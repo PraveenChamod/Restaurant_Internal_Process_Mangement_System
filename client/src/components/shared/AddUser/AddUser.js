@@ -16,6 +16,7 @@ import { createTheme } from '@mui/material/styles';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const AddUserComponent = () => {
   
@@ -25,10 +26,30 @@ const AddUserComponent = () => {
   const onSubmit = async (e)=>{
     e.preventDefault();
     try {
-      const formData = {Email,Role};
-      console.log(formData);
-      const res = await axios.post('api/v1/User/ServiceProviderRegister',formData);
-      console.log(res);
+      const formData = {Email,Role}
+      let res;
+      toast.promise(
+        res = await axios.post('api/v1/User/ServiceProviderRegister',formData),
+        {
+          loading:'Adding User......',
+          success:(res)=>`User Registered Successfully`,
+          error:(err)=>{
+            console.log(err.response);
+            if(!err?.response?.data?.message){
+                return 'Something went wrong! Try again'
+            }
+            return `${err.response.data.message}`
+          }
+        },
+        {
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            fontSize:'1rem'
+          }
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }
