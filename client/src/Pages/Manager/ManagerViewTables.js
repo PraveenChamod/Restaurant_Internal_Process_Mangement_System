@@ -1,13 +1,16 @@
+import Spinner from "../../components/shared/Spinner/Spinner";
 import TableDetails from "../../components/shared/TableDetails/TableDetails";
 import useFetch from "../../Hooks/useFetch";
 
 const ManagerViewTables = (props) => {
-    const data = useFetch('api/v1/serviceProvider/AdminView-Tables');
-    const tables = data?.data
-    console.log(tables);
+    const {data,isPending} = useFetch('api/v1/Tables');
+
+    console.log(data);
     return ( 
         <>
-            <TableDetails tables = {tables}/>
+            {isPending && <Spinner/>}
+            {data && <TableDetails tables = {data}/>}
+            
         </>
      );
 }

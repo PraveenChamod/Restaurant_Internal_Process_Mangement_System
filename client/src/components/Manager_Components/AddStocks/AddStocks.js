@@ -19,19 +19,20 @@ import axios from "axios";
 
 const AddStocks = () => {
 
-  const [Email,setEmail] = useState('');
-  const [StockCategory,setStockCategory] = useState('');
-  const [Qty,setQty] = useState('');
-  const [Price,setPrice] = useState('');
-  const [SupplierID,setSupplierID] = useState('');
+  const [ItemName,setItemName] = useState('');
+  const [Category,setCategory] = useState('');
+  const [Quantity,setQuantity] = useState('');
+  const [UnitPrice,setUnitPrice] = useState('');
+  const [WholeSalePrice,setWholeSalePrice] = useState('');
+
 
   const onSubmit = async (e)=>{
     e.preventDefault();
     try {
-      const formData = {Email,StockCategory,Qty,Price,SupplierID};
+      const formData = {ItemName,Category,Quantity,UnitPrice,WholeSalePrice};
       console.log(formData);
-      // const res = await axios.post('api/v1/admin/RegisterServiceProvider',formData);
-      // console.log(res);
+      const res = await axios.post('api/v1/Item',formData);
+      console.log(res);
     } catch (error) {
       console.log(error.message);
     }
@@ -42,7 +43,7 @@ const AddStocks = () => {
       <Header>ADD STOCK</Header>
       <Div onSubmit={onSubmit}>
         <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-          <TextField id="standard-basic" label="Email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={Email} onChange={e=>setEmail(e.target.value)} />
+          <TextField id="standard-basic" label="Item Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={ItemName} onChange={e=>setItemName(e.target.value)} />
           <>
             <Select
               defaultValue={30}
@@ -57,24 +58,23 @@ const AddStocks = () => {
                 },
                 marginBottom:'5%'
               }}
-              value={StockCategory}
-              onChange={e=>setStockCategory(e.target.value)}
+              value={Category}
+              onChange={e=>setCategory(e.target.value)}
             >
-              <MenuItem value={1}>Vegitable</MenuItem>
-              <MenuItem value={2}>Meats</MenuItem>
-              <MenuItem value={3}>fruits</MenuItem>
+              <MenuItem value={'Vegitable'}>Vegitable</MenuItem>
+              <MenuItem value={'Meat'}>Meat</MenuItem>
+              <MenuItem value={'Fruits'}>Fruits</MenuItem>
+              <MenuItem value={'Other'}>Other</MenuItem>
             </Select>
           </>
-          <TextField id="standard-basic" label="Quantity" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={Qty} onChange={e=>setQty(e.target.value)} />
-          <TextField id="standard-basic" label="Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={Price} onChange={e=>setPrice(e.target.value)}/>
-          <TextField id="standard-basic" label="Supplier ID" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'0'}} value={SupplierID} onChange={e=>setSupplierID(e.target.value)} />
+          <TextField id="standard-basic" label="Quantity" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={Quantity} onChange={e=>setQuantity(e.target.value)} />
+          <TextField id="standard-basic" label="Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'5%'}} value={UnitPrice} onChange={e=>setUnitPrice(e.target.value)}/>
+          <TextField id="standard-basic" label="Whole Sale Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'0'}} value={WholeSalePrice} onChange={e=>setWholeSalePrice(e.target.value)} />
         </FormControl>
         <Div1>
           <Div2>
             <FormButton>
-              <Link to="./login" className="btn">
                 Add
-              </Link>
             </FormButton>
           </Div2>
           

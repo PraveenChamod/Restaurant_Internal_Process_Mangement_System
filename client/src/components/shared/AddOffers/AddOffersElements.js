@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export const FormSection= styled.div`
+export const FormSection= styled.form`
     display: flex;
     justify-content: space-between;
     align-items: center;

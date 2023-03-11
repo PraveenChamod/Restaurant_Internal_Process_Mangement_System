@@ -17,6 +17,7 @@ import OrderRoutes from "./routes/OrderRoutes.js";
 import CartRoutes from "./routes/CartRoutes.js";
 import TableReservationRoutes from "./routes/TableReservationRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
+import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
 const app = express();
 
 dotenv.config();
@@ -98,6 +99,8 @@ app.use('/api/v1',requireAuth,OrderRoutes);
 app.use('/api/v1',requireAuth,CartRoutes);
 
 app.use('/api/v1/',requireAuth,TableReservationRoutes);
+
+app.use('/api/v1/',requireAuth,SupplierItemsRoutes);
 
 export default app;
 
