@@ -1,7 +1,7 @@
 import SupplierItem from "../models/SupplierItem.js";
 
 // Method : POST
-// End Point : "api/v1/serviceProvider/AddSupplierOrder";
+// End Point : "api/v1/AddSupplierOrder";
 // Description : Add Supplier Order Item
 
 export const addSupplierOrder = async(req,res)=>{
@@ -10,9 +10,9 @@ export const addSupplierOrder = async(req,res)=>{
         if(user.Role === "Manager"){
             const {Item,Quantity,Date} = req.body;
             const neworder = await SupplierItem.create({
-                SupplierItem:Item,
-                SupplierItem:Quantity,
-                SupplierItem:Date
+                Item:Item,
+                Quantity:Quantity,
+                Date:Date
             })
                 res.status(201).json({
                     status:'Success',
@@ -37,7 +37,7 @@ export const addSupplierOrder = async(req,res)=>{
     }
 
 // Method : Get
-// End Point : "api/v1/serviceProvider/ViewSupplierOrder";
+// End Point : "api/v1/ViewSupplierOrder";
 // Description : Get supplier order
 
 export const ViewSupplierOrder = async (req,res)=>{
