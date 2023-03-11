@@ -3,7 +3,7 @@ import { addSupplierOrder , ViewSupplierOrder } from '../controllers/OrderStocks
 
 const SupplierItemsRoutes = express.Router();
 
-SupplierItemsRoutes.route('/AddSupplierOrder').post(addSupplierOrder);
-SupplierItemsRoutes.route('/ViewSupplierOrder').get(ViewSupplierOrder);
+SupplierItemsRoutes.route('/SupplierOrder').post(addSupplierOrder);
+SupplierItemsRoutes.route('/SupplierOrder').get(ViewSupplierOrder);
 
 export default SupplierItemsRoutes;
