@@ -1,4 +1,6 @@
+
 const ProductDisplay = () => (
+  
   <section>
     <div className="product">
       <img
