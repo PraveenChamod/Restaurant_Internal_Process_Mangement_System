@@ -3,7 +3,7 @@ import { FormButton, RegularButton, UploadButton } from '../SharedElements/Butto
 import { Container, Header } from '../SharedElements/SharedElements';
 import * as l from './AddOffersElements';
 const AddOffersComponent = () => {
-       
+        
     return ( 
         <Container>
             <l.SubSection>

@@ -11,4 +11,4 @@ OrderRoutes.route('/Order/:_id').get(ViewOrder);
 OrderRoutes.route('/OrderConfirmation/:_id').post(SendOrderConfrimation);
 OrderRoutes.route('/Deliverer/OrderDetails').get(CheckOrderDetails);
 
-export default OrderRoutes;
+export default OrderRoutes; 
