@@ -22,13 +22,13 @@ export const LogInUser = async (req,res)=>{
     
     const {Email,Password} = req.body;
     try {
-        const existingUser = await User.findOne({Email:Email});
-        console.log(existingUser);
-        if(existingUser !== null){
-            const result = await validatePassword(Password,existingUser.Password);
+        const existingCustomer = await Customer.findOne({Email:Email});
+        const existingServiceProvider = await ServiceProviders.findOne({Email:Email});
+        if(existingCustomer !== null){
+            const result = await validatePassword(Password,existingCustomer.Password);
             
             if(result){
-                const token = createToken(existingUser._id,existingUser.Email,existingUser.Role);
+                const token = createToken(existingCustomer._id,existingCustomer.Email,existingCustomer.Role);
                 console.log(token);
                 res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
                 res.json(token);
@@ -39,7 +39,24 @@ export const LogInUser = async (req,res)=>{
                     message:'Invalid Password'
                 });
             }
-        }else{
+        }
+        else if(existingServiceProvider !== null){
+            const result = await validatePassword(Password,existingServiceProvider.Password);
+            
+            if(result){
+                const token = createToken(existingServiceProvider._id,existingServiceProvider.Email,existingServiceProvider.Role);
+                console.log(token);
+                res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
+                res.json(token);
+            }
+            else{
+                res.status(400).json({
+                    status:'Error',
+                    message:'Invalid Password'
+                });
+            }
+        }
+        else{
             res.status(400).json({
                 status:'Error',
                 message:'Invalid Email'
@@ -127,6 +144,7 @@ export const UploadProfileImage = async (req,res)=>{
 export const getUserProfile = async(req,res)=>{
     try {
         const User = req.user;
+        console.log(User);
         const findServiceProvider = await ServiceProviders.findOne({Email:User.Email});
         const findCustomer = await Customer.findOne({Email:User.Email});         
         if(findCustomer){
