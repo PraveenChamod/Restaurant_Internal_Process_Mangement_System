@@ -1,8 +1,8 @@
-import { FaHouseUser, FaUser, FaUserMinus, FaUserPlus, FaUsers } from "react-icons/fa";
+import { FaHouseUser, FaUser, FaUserMinus, FaUserPlus, FaUsers  , FaBookOpen} from "react-icons/fa";
 import { GiMeal, GiTabletopPlayers, GiHotMeal, GiRoundTable } from 'react-icons/gi';
 import { BiLogOut } from 'react-icons/bi';
 import { IoFastFoodSharp } from 'react-icons/io5';
-import { GoSearch } from 'react-icons/go';
+import { GoSearch ,GoDiffAdded } from 'react-icons/go';
 import { AiOutlineStock } from 'react-icons/ai';
 import { BsGraphUp } from 'react-icons/bs';
 let iconStyle = {fontWeight:"600",color:"#fff",fontSize:"1.8rem"};
@@ -111,6 +111,16 @@ export const Roles = [
                 text:'View Offers',
                 icon:<GiHotMeal style={iconStyle}/>,
                 link:"/ManagerView-Offers"
+            },
+            {
+                text:'Add Order',
+                icon:<GoDiffAdded style={iconStyle}/>,
+                link:"/ManagerAdd-supllierorder"
+            },
+            {
+                text:'View Order',
+                icon:<FaBookOpen style={iconStyle}/>,    
+                link:"/ManagerView-supllierorder"
             },
             {
                 text:'Log Out',
