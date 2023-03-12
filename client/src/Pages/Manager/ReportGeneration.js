@@ -1,9 +1,16 @@
 import ReportGenerationComponent from "../../components/Manager_Components/ReportGeneration/ReportGeneration";
+import Spinner from "../../components/shared/Spinner/Spinner";
+import useFetch from "../../Hooks/useFetch";
+
 
 const ReportGeneration = () => {
+
+    const {data,isPending} = useFetch ('api/v1/Orders');
+    console.log(data);
     return ( 
         <>
-            <ReportGenerationComponent/>
+            {isPending && <Spinner/>}
+            {data && <ReportGenerationComponent data1 = {data} />}
         </>
      );
 }

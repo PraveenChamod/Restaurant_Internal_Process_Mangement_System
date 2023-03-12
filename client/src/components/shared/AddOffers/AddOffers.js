@@ -5,13 +5,15 @@ import { useState } from "react";
 import axios from 'axios';
 import * as l from './AddOffersElements';
 const AddOffersComponent = () => {
-    const[SpecialPrice,setSpecialPrice] = useState('');
-    const[Category,setCategory] = useState('');
+    const [SpecialPrice,setSpecialPrice] = useState('');
+    const [Category,setCategory] = useState('');
+    const [OfferImage, setOfferImage] = useState('');
+    console.log(OfferImage,12);
 
     const onSubmit = async (e)=>{
         e.preventDefault();
         try {
-            const formData = {SpecialPrice, Category}
+            const formData = {SpecialPrice, Category, OfferImage}
             const res = await axios.post('api/v1/Offer',formData)
             console.log(res);
         } catch (error) {
@@ -35,8 +37,8 @@ const AddOffersComponent = () => {
                         <l.ImageSection>
                             
                         </l.ImageSection>
-                        <l.UploadButtonSection>
-                            <UploadButton>Upload</UploadButton>
+                        <l.UploadButtonSection >
+                            <UploadButton ><input onChange={e=>setOfferImage(e.target.files[0])} type="file"/></UploadButton>
                         </l.UploadButtonSection>
                         <l.ButtonSection>
                             <FormButton>Add</FormButton>
