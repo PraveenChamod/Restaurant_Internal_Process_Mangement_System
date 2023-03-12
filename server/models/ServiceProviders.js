@@ -13,7 +13,6 @@ const serviceProvidersSchema = mongoose.Schema({
         type:String,
         required:[true,"User must have to enter the password"],
         minlength: 8,
-        select: false,
         unique:true,
     },
     ContactNumber:{

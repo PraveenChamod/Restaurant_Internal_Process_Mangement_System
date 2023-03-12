@@ -6,7 +6,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 import * as l from './CheckoutElements'
-export default function CheckoutForm() {
+const CheckoutForm = ()=> {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -100,3 +100,4 @@ export default function CheckoutForm() {
     </l.Form>
   );
 }
+export default CheckoutForm;

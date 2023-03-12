@@ -1,10 +1,12 @@
 
 import mongoose from "mongoose";
+import Stripe from "stripe";
 import Customer from "../models/Customer.js";
 import Foods from "../models/Foods.js";
 import Order from "../models/Order.js";
 import ServiceProviders from "../models/ServiceProviders.js";
 
+const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 // Method : POST
 // End Point : "api/v1/OrderItem";
 // Description : Ordering Item
@@ -12,43 +14,39 @@ export const OrderItem = async(req,res,next)=>{
     try {
         const user = req.user;
         if(user.Role === 'Customer'){
-            const {SerialNo,Quantity,paymentMethod} = req.body;
-            const findFood = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
+            console.log( req.body);
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
-            if(findFood){
-                const ItemPrice = findFood.Price * Quantity;
-                const TotalPrice = 0;
+            const session = await mongoose.startSession();
+            try {
                 if(user.Address !== null){
-                    const OrderData = {Customer:logedCustomer.id,Quantity:Quantity,TotalPrice:TotalPrice,paymentMethod:paymentMethod,Foods:findFood.id}
-                
-                    const session = await mongoose.startSession();
-                    // console.log(session);
-                    try {
                         session.startTransaction();
-                        const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer,{OrderFoods:true},{new:true,runValidators:true}).session(session);
-                        const updateFood = await Foods.findByIdAndUpdate(findFood._id,{OrderItems:true},{new:true,runValidators:true}).session(session);
-                        const newOrder = await Order.create([OrderData],{session});
+                        const newOrder = await Order.create([
+                                req.body
+                            ],
+                            {session}
+                        )
+                        console.log(newOrder);
                         const commit = await session.commitTransaction();
                         session.endSession();
-                    
                         res.status(201).json({
-                            status: 'success',
-                            message: 'Order created successfully',
-                            data: {
+                            status:'Success',
+                            message:'Your order is successed',
+                            data:{
                                 newOrder
                             }
                         })
-                    } catch (error) {
-                        res.status(500).json(error.message);
-                    }
-                    next();
                 }
                 else{
-                    res.status(400).json({message:'Add Delivery Address First'});
+                    res.status(400).json({
+                        status:'Error',
+                        message:'Set Your Address First'
+                    })
                 }
-            }
-            else{
-                res.status(404).json({message:'This Food is not available'});
+            } catch (error) {
+                res.status(500).json({
+                    status:'Error',
+                    message:error.message
+                })
             }
         }
     } catch (error) {
@@ -59,6 +57,21 @@ export const OrderItem = async(req,res,next)=>{
     }
 }
 
+
+export const payToOrder = async (req, res) => {
+    const TotalPrice = req.body.TotalPrice;
+    console.log("Payment Request recieved for this ruppess", TotalPrice);
+  
+    const payment = await stripe.paymentIntents.create({
+      amount: TotalPrice,
+      currency: "lkr",
+    });
+  
+    res.status(201).send({
+      clientSecret: payment.client_secret,
+    });
+  }
+  
 // Method : GET
 // End Point : "api/v1/Orders";
 // Description : Get All Orders

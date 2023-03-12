@@ -6,9 +6,15 @@ const OrderSchema = mongoose.Schema({
         ref:'Customer',
     },
     Foods:[{
-        type:mongoose.Schema.ObjectId,
-        ref:'Foods'
-    }],
+            food:{
+                type:mongoose.Schema.ObjectId,
+                ref:'Foods'
+            },
+            Quantity:{
+                type:Number,
+                default:1
+            }
+        }],
     ServiceProvider:{
         type:mongoose.Schema.ObjectId,
         ref:'ServiceProviders'
@@ -25,14 +31,10 @@ const OrderSchema = mongoose.Schema({
     paymentMethod:{
         type:String,
         enum:{
-            values:['Cash on Delivery','Card Payments'],
+            values:['Cash On Delivery','Card Payments'],
             message:"Select One Payment Method"
         },
         required:[true,"Please Select the Payment Method"]
-    },
-    Quantity:{
-        type:Number,
-        required:true
     },
     Status:{
         type:String,

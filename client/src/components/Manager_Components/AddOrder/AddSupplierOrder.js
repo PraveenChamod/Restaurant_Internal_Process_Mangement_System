@@ -18,7 +18,7 @@ const AddSupplierOrder = () => {
     e.preventDefault();
     try {
       const formData = { Item, Quantity, Date };
-      const res = await axios.post("api/v1/serviceProvider/AddSupplierOrder",formData);
+      const res = await axios.post("api/v1/AddSupplierOrder",formData);
       console.log(res);
     } catch (error) {
       

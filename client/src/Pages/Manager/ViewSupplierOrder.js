@@ -3,7 +3,7 @@ import Spinner from "../../components/shared/Spinner/Spinner";
 import useFetch from "../../Hooks/useFetch";
 
 const ViewSupplierOrder = (props) => {
-    const {data,isPending}= useFetch('api/v1/serviceProvider/ViewSupplierOrder');
+    const {data,isPending}= useFetch('api/v1/SupplierItem');
     return ( 
         <>
         {isPending && <Spinner/>}
@@ -11,5 +11,5 @@ const ViewSupplierOrder = (props) => {
         </>
      );
 }
- 
+
 export default ViewSupplierOrder;

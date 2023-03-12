@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import Customer from '../models/Customer.js';
+import ServiceProviders from '../models/ServiceProviders.js';
 import User from '../models/User.js';
 
 export const requireAuth = (req,res,next)=>{
@@ -10,7 +12,7 @@ export const requireAuth = (req,res,next)=>{
             }
             else{
                 console.log(decodeToken);
-                req.user = await User.findById(decodeToken.id);
+                req.user = await ServiceProviders.findById(decodeToken.id) || await Customer.findById(decodeToken.id);
                 next();
             }
         })

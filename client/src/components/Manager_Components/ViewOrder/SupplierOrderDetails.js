@@ -17,7 +17,7 @@ const SupplierOrderDetails = (props) => {
                             <l.Th></l.Th>
                         </l.Tr>
                         {
-                            props.data1.map(row=>{
+                            props.data3.map(row=>{
                                 return(
                                     <l.Tr>
                                         <l.Td>{row.Item}</l.Td>
