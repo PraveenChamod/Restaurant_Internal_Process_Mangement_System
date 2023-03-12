@@ -108,9 +108,15 @@ export const Description = styled.div`
     border-radius: 20px;
     background-color: #1A1E21;
     box-shadow: 3px 3px 3px #000;
-    height: 40vh;
+    height: fit-content;
+    padding: 5%;
     align-items: center;
     justify-content: center;
+`
+export const TextSection = styled.div`
+    display: flex;
+    width: 100%;
+    margin: 3% 0;
 `
 export const ItemTexts = styled.table`
     display: flex;
@@ -120,7 +126,7 @@ export const ItemTexts = styled.table`
     font-size: 18px;
     color: #fff;
     flex-direction: column;
-    margin-bottom: 3%;
+    margin: 3% 5%;
 ` 
 export const Label = styled.div`
     width: 50%;

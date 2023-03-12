@@ -55,7 +55,7 @@ const CustomerProfile = (props) => {
       const formdata = new FormData();
       formdata.append('image',Imagename);
       const res = await axios.patch('api/v1/Auth/ProfilePicture',formdata);
-      console.log(res)
+      console.log(res);
       loadUser();
     } catch (error) {
       console.log(error.message);      

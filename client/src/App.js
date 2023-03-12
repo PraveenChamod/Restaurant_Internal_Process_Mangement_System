@@ -77,12 +77,17 @@ import ManagerEditProfile from './Pages/Manager/ManagerEditProfile';
 import StaffMemberEditProfile from './Pages/Staff-Member/StaffMemberEditProfile';
 import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
-import Pay from './components/Customer/Checkout/Pay';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
 import ViewSupplierOrder from './Pages/Manager/ViewSupplierOrder';
+import ProductDisplay from './components/Customer/Checkout/Pay';
+import OrderItems from './Pages/Customer/OrderItems';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 function App() {
   
+  const stripePromise = loadStripe('pk_test_51MbCY3GuiFrtKvgKd8w5qdphJciL87lB1ITs2nFL1FUNQnfIqxPA4hX2A3qrhDd7Gfcsab01gcVNpXlTJs6ArcyF00t5WxYsrg');
+
   useEffect(() => {
     Aos.init({duration:1000});
   }, [])
@@ -173,11 +178,16 @@ function App() {
                 <Route path="/CustomerDashBoard" element={<CustomerDashBoard Navs={Roles[5]}/>}/>
                 <Route path="/CustomerMy-Profile" element={<CustomerUserProfile/>}/>     
                 <Route path="/CustomerPlace-Order" element={<Order/>}/> 
-                <Route path="/CustomerPay" element={<Pay/>}/>     
+                <Route path="/CustomerPay" element={<ProductDisplay/>}/>     
                 <Route path="/CustomerMyCart" element={<Cart cartData = {CartData}/>}/>     
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
                 <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview/>}/>     
+                <Route path="/CustomerOrdering" element={
+                  <Elements stripe={stripePromise}>
+                    <OrderItems/>       
+                  </Elements>
+                }/>
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/>     
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
