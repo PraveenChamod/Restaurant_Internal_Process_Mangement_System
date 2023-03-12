@@ -3,14 +3,12 @@ import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
 import {
-  Page,
   Div,
   Div1,
   Div2,
   Div3,
   H1,
   Searchbar
-
 } from './ViewUserElements';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container } from "../SharedElements/SharedElements";
@@ -24,21 +22,20 @@ const ViewUserComponent = (props) => {
   const [name, setName] = useState("");
   const [contactno, setContactno] = useState("");
   const [role, setRole] = useState("");
-  const [gender, setGender] = useState("");
 
 
   const handleEmailChange = (event) => {
     const userEmail = event.target.value;
     setEmail(userEmail);
   
-    props.users.data.users.map((user) => {
+    props.users.data.Users[0].map(user => {
       if (user.Email === userEmail) {
         setName(user.Name);
         setContactno(user.ContactNumber);
         setRole(user.Role);
-        // setGender(user.Gender);
-      }
+      }else{
         console.log("NO Such Kind Of User");
+      }
     });
   };
   
@@ -82,15 +79,7 @@ const ViewUserComponent = (props) => {
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
             value={role}
-          />
-          <TextField 
-            id="standard-basic" 
-            label="Gender" 
-            variant="standard" 
-            InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}
-            value={gender}
-          />  
+          /> 
         </FormControl>
         <Div1>
           <Div2>

@@ -13,7 +13,7 @@ export const image = multer({storage:imageStorage}).single('image');
 export const addOffer  = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member"){
+        if(user.Role === "Staff-Member" || user.Role === "Manager"){
             const {Category,SpecialPrice} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             const existingOffer = await Offers.findOne({SerialNo:SerialNumber});
@@ -52,7 +52,7 @@ export const getOffers = async (req,res)=>{
 
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Customer"){
+        if(user.Role === "Staff-Member" || user.Role === "Customer" || user.Role === "Manager"){
             const offers = await Offers.find();
             if(offers !== null){
                 res.json(offers);
