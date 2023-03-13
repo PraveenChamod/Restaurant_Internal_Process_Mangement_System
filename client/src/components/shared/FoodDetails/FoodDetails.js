@@ -30,8 +30,9 @@ const FoodDetails = (props) => {
                                         <l.Td>{row.Category}</l.Td>
                                         <l.Td>{row.Price}</l.Td>
                                         <l.Td>{row.Status}</l.Td>
-                                        <Link to=''></Link>
-                                        <l.Icon><AiFillEye/></l.Icon>
+                                        <Link to={`/AdminView-Food/${row.id}` || `/ManagerView-Food/${row.id}` } className="btn">
+                                            <l.Icon><AiFillEye/></l.Icon>
+                                        </Link>
                                     </l.Tr>
                                 )
                             })

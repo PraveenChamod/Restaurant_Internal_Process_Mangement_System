@@ -15,7 +15,10 @@ const FoodsSchema = mongoose.Schema({
     },
     Status:{
         type:String,
-        default:'Available'
+        default:'Available',
+        enum:{
+            values:['Available','Not Available']
+        }
     },
     Category:{
         type:String

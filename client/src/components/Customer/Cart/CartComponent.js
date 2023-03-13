@@ -1,21 +1,16 @@
 import { FormButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './CartElements';
-import profilepic from '../../../Images/person2.jpg';
-import Spinner from "../../shared/Spinner/Spinner";
-import useFetch from "../../../Hooks/useFetch";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
-import styled from "styled-components";
-import { MdCheckBox } from 'react-icons/md';
-import { MdCheckBoxOutlineBlank } from 'react-icons/md';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import axios from "axios";
-import { Link } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 const CartComponent = ({data}) => {
     const{user}=useAuth();
-    console.log(data);
     const[Items,setItem] = useState(data);
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
@@ -24,7 +19,8 @@ const CartComponent = ({data}) => {
     const[Quantity,setQuantity] = useState(1);
     const quantityRef = useRef(Quantity);
     const[price,setPrice] = useState();
-
+    
+//   const navigate = useNavigate();
     
     //Select Item Independelntly
     const handleClick = async (index) =>{
@@ -35,13 +31,14 @@ const CartComponent = ({data}) => {
         setSelectItem(index);
         setOrderItem(Items[index]);
     };
-
+    
     //Delete Cart Item
     const deleteCartItem = async ({cartId,foodId})=>{
         try {
             const formData = {cartId,foodId} 
-            const res = await axios.patch('api/v1/Customer/RemoveCartItem',formData);
-            console.log(res);
+            const res = await axios.patch('api/v1/FoodItem',formData);
+            console.log(res.data.message);
+            toast.success(res.data.message);
         } catch (error) {
             console.log(error.message);
         }
@@ -59,7 +56,7 @@ const CartComponent = ({data}) => {
     const AddQuantity = async ({foodId,quantity})=>{
         try {
         const formData = {foodId,quantity}
-          const res = await axios.post('api/v1/Customer/Addtocart',formData);
+          const res = await axios.post('api/v1/CartItem',formData);
           console.log(res);
         } catch (error) {
           console.log(error.message);
@@ -70,13 +67,19 @@ const CartComponent = ({data}) => {
         const item = Items[index];
         const foodId = item.id;
         handleClick(index);
-        setQuantity(Quantity+1);
-        quantityRef.current = Quantity+1;
-        const quantity = quantityRef.current;
-        console.log(quantity);
-        await AddQuantity({foodId,quantity});
+        const newQuantity = item.quantity + 1;
+        setQuantity(newQuantity);
+        item.quantity = newQuantity;
+        setItem([...data]); // update the state of the data array
+        await AddQuantity({foodId, quantity: newQuantity});
     }
     // console.log(quantity);
+    let Price = 0;
+    data.forEach(element => {
+        Price += (element.quantity * element.price);
+        console.log(Price);
+    });
+    
     return ( 
         <>
              <l.Container>
@@ -117,10 +120,10 @@ const CartComponent = ({data}) => {
                                                     {cart.Size}
                                                 </l.Text> */}
                                                 <l.Text>
-                                                    Quantity : {Quantity || cart.quantity}
+                                                    Quantity : {clickedIndex[index] ? Quantity : cart.quantity}
                                                 </l.Text>
                                                 <l.Text>
-                                                    Price : {Quantity * cart.price}
+                                                    Price : {clickedIndex[index] ? Quantity * cart.price : cart.quantity * cart.price}
                                                 </l.Text>
                                             </l.SubText>
                                         </l.Details>
@@ -138,32 +141,13 @@ const CartComponent = ({data}) => {
                 </l.Left>
                 <l.Right>
                     <l.Description>
-                        <l.ItemTexts>
-                            <l.Label>
-                                Item :
-                            </l.Label>
-                            <l.Data>
-                                
-                            </l.Data>
-                        </l.ItemTexts>
-                        <l.ItemTexts>
-                            <l.Label>
-                                Quantity : {Quantity}
-                            </l.Label>
-                            <l.Data>
-                                
-                            </l.Data>
-                        </l.ItemTexts>
-                        <l.ItemTexts>
-                            <l.Label>
-                                Total Price : {Quantity * price}
-                            </l.Label>
-                            <l.Data>
-                                
-                            </l.Data>
-                        </l.ItemTexts>
+                        <Header style={{fontSize:'18px'}}> Order Summery </Header>
+                        <l.TextSection>
+                            <l.ItemTexts> Sub Total : </l.ItemTexts>
+                            <l.ItemTexts> {'Rs.' + Price} </l.ItemTexts>
+                        </l.TextSection>
                         <l.ButtonSection>
-                            <Link to='/CustomerPay'>
+                            <Link to="/CustomerOrdering" className="btn">
                                 <FormButton>
                                     Order
                                 </FormButton>

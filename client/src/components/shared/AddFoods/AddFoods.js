@@ -45,7 +45,11 @@ const AddFoodsComponent = () => {
                             InputLabelProps={{className:'textFeild_Label'}} 
                             sx={{marginBottom:'10%'}} 
                             value={FoodName} 
-                            onChange={e=>setFoodName(e.target.value)}/>
+                            onChange={e=>setFoodName(e.target.value)}
+                            InputProps={{
+                                style: { color: '#fff' },
+                                }}  
+                        />    
                         <>
                             <Select
                             defaultValue={30}
@@ -77,6 +81,9 @@ const AddFoodsComponent = () => {
                             sx={{marginTop:'10%'}} 
                             value={Price} 
                             onChange={e=>setPrice(e.target.value)}
+                            InputProps={{
+                                style: { color: '#fff' },
+                                }}
                             />
                         </FormControl>
                     </l.LeftSide>

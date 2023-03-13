@@ -5,13 +5,15 @@ import { useState } from "react";
 import axios from 'axios';
 import * as l from './AddOffersElements';
 const AddOffersComponent = () => {
-    const[SpecialPrice,setSpecialPrice] = useState('');
-    const[Category,setCategory] = useState('');
+    const [SpecialPrice,setSpecialPrice] = useState('');
+    const [Category,setCategory] = useState('');
+    const [OfferImage, setOfferImage] = useState('');
+    console.log(OfferImage,12);
 
     const onSubmit = async (e)=>{
         e.preventDefault();
         try {
-            const formData = {SpecialPrice, Category}
+            const formData = {SpecialPrice, Category, OfferImage}
             const res = await axios.post('api/v1/Offer',formData)
             console.log(res);
         } catch (error) {
@@ -27,16 +29,38 @@ const AddOffersComponent = () => {
                 <l.FormSection onSubmit={onSubmit}>
                     <l.LeftSide>
                     <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-                        <TextField id="standard-basic" label="Meal Category" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={Category} onChange={e=>setCategory(e.target.value)} />
-                        <TextField id="standard-basic" label="Special Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={SpecialPrice} onChange={e=>setSpecialPrice(e.target.value)} />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Meal Category" 
+                            variant="standard" 
+                            InputLabelProps={{className:'textFeild_Label'}} 
+                            sx={{marginBottom:'10%'}} 
+                            value={Category} 
+                            onChange={e=>setCategory(e.target.value)} 
+                            InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                        />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Special Price" 
+                            variant="standard" 
+                            InputLabelProps={{className:'textFeild_Label'}} 
+                            sx={{marginBottom:'10%'}} 
+                            value={SpecialPrice} 
+                            onChange={e=>setSpecialPrice(e.target.value)} 
+                            InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                        />
                         </FormControl>
                     </l.LeftSide>
                     <l.RightSide>
                         <l.ImageSection>
                             
                         </l.ImageSection>
-                        <l.UploadButtonSection>
-                            <UploadButton>Upload</UploadButton>
+                        <l.UploadButtonSection >
+                            <UploadButton ><input onChange={e=>setOfferImage(e.target.files[0])} type="file"/></UploadButton>
                         </l.UploadButtonSection>
                         <l.ButtonSection>
                             <FormButton>Add</FormButton>
