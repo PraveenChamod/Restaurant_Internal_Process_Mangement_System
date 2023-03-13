@@ -10,7 +10,7 @@ const OrderDetailsComponent = () => {
         <Container>
             <Header>Order Details</Header>
             <Div>
-                <Div2>
+                <Div2> 
                     <Div1>
                         <FormControl>
                             <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
