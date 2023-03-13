@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import ShoutoutClient from 'shoutout-sdk';
 import Stripe from "stripe";
 import ServiceProviders from "../models/ServiceProviders.js";
+import { __dirname } from "../app.js";
 
 var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM';
 
@@ -147,10 +148,10 @@ export const RegisterServiceProviders = async (req,res)=>{
                             },
                             {
                                 filename : 'welcome_vector.png',
-                                path:'E:/WEB/Restaurant_Management_System/server/Template/welcome_vector.png',
+                                path:`${__dirname}/Template/welcome_vector.png`,
                                 cid:'welcome'
                             }],
-                            html: { path:'E:/WEB/Restaurant_Management_System/server/Template/Email.html' }
+                            html: { path:`${__dirname}/Template/Email.html` }
                         }
                         transporter.sendMail(mailOption,(err,info)=>{
                             if(err){

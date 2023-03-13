@@ -133,7 +133,7 @@ function App() {
                 <Route path="/AdminView-Tables" element={<AdminViewTables/>}/>
                 <Route path="/AdminAdd-Foods" element={<AdminAddFoods/>}/>
                 <Route path="/AdminView-Foods" element={<AdminViewFoods/>}/>
-                <Route path="/AdminView-Food" element={<AdminViewFood/>}/>
+                <Route path="/AdminView-Food/:id" element={<AdminViewFood/>}/>
               {/* </Route> */}
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -152,7 +152,7 @@ function App() {
                 <Route path="/ManagerAdd-Foods" element={<ManagerAddFoods/>}/>
                 <Route path="/ManagerAdd-Offers" element={<AddOffers/>}/>
                 <Route path="/ManagerView-Foods" element={<ManagerViewFoods />}/>
-                <Route path="/ManagerView-Food" element={<ManagerViewFood/>}/>
+                <Route path="/ManagerView-Food/:id" element={<ManagerViewFood/>}/>
                 <Route path="/ManagerView-Offers" element={<ManagerViewOffers/>}/>
                 <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
                 <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder/>}/>

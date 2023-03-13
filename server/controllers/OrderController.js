@@ -59,12 +59,15 @@ export const OrderItem = async(req,res,next)=>{
 
 
 export const payToOrder = async (req, res) => {
-    const TotalPrice = req.body.TotalPrice;
+    const TotalPrice = req.body.amount * 100;
+    const Email = req.body.receipt_email;
+    console.log(Email);
     console.log("Payment Request recieved for this ruppess", TotalPrice);
   
     const payment = await stripe.paymentIntents.create({
       amount: TotalPrice,
       currency: "lkr",
+      receipt_email:Email
     });
   
     res.status(201).send({

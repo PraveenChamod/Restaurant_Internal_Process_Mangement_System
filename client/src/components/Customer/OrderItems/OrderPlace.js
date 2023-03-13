@@ -8,6 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../../Images/restoLogodark.png";
+import { toast } from "react-hot-toast";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 const OrderPlace = ({data}) => {
@@ -56,8 +57,10 @@ const OrderPlace = ({data}) => {
   const navigate = useNavigate();
   useEffect(() => {
     const fetchClientSecret = async () => {
+        console.log(TotalPrice);
       const data = await axios.post("api/v1/Payment", {
         amount: TotalPrice,
+        receipt_email:user.Email
       });
 
       setClientSecret(data.data.clientSecret);
@@ -85,8 +88,11 @@ const OrderPlace = ({data}) => {
         console.log(error);
         setErrorMessage('Error processing payment.');
       } else {
-        PlaceOrder(paymentIntent);
-        navigate('/CustomerPlace-Order');
+        PlaceOrder(event);
+        toast.success('Order Placed Successfully');
+        setTimeout(() => {
+            navigate('/CustomerPlace-Order');
+        }, 2000);
       }
     } catch (error) {
       console.error(error);

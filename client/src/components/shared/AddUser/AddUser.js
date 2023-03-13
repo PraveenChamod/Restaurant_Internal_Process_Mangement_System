@@ -35,7 +35,18 @@ const AddUserComponent = () => {
       <Header>ADD USER</Header>
       <Div  onSubmit={onSubmit}>
         <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-          <TextField id="standard-basic" label="Email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={Email} onChange={e=>setEmail(e.target.value)}/>
+          <TextField 
+            id="standard-basic" 
+            label="Email" 
+            variant="standard" 
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'10%'}} 
+            value={Email} 
+            onChange={e=>setEmail(e.target.value)}
+            InputProps={{
+              style: { color: '#fff' },
+              }}
+          />
           <>
             <Select
               sx={{

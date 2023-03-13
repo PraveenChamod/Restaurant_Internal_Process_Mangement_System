@@ -6,11 +6,11 @@ import useAuth from "../../../Hooks/useAuth";
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const CartComponent = ({data}) => {
     const{user}=useAuth();
-    console.log(data);
     const[Items,setItem] = useState(data);
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
@@ -19,7 +19,8 @@ const CartComponent = ({data}) => {
     const[Quantity,setQuantity] = useState(1);
     const quantityRef = useRef(Quantity);
     const[price,setPrice] = useState();
-
+    
+//   const navigate = useNavigate();
     
     //Select Item Independelntly
     const handleClick = async (index) =>{
@@ -36,7 +37,8 @@ const CartComponent = ({data}) => {
         try {
             const formData = {cartId,foodId} 
             const res = await axios.patch('api/v1/FoodItem',formData);
-            console.log(res);
+            console.log(res.data.message);
+            toast.success(res.data.message);
         } catch (error) {
             console.log(error.message);
         }
@@ -145,7 +147,7 @@ const CartComponent = ({data}) => {
                             <l.ItemTexts> {'Rs.' + Price} </l.ItemTexts>
                         </l.TextSection>
                         <l.ButtonSection>
-                            <Link to="/CustomerOrdering">
+                            <Link to="/CustomerOrdering" className="btn">
                                 <FormButton>
                                     Order
                                 </FormButton>

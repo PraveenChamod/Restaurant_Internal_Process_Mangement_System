@@ -27,8 +27,30 @@ const AddOffersComponent = () => {
                 <l.FormSection onSubmit={onSubmit}>
                     <l.LeftSide>
                     <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-                        <TextField id="standard-basic" label="Meal Category" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={Category} onChange={e=>setCategory(e.target.value)} />
-                        <TextField id="standard-basic" label="Special Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={SpecialPrice} onChange={e=>setSpecialPrice(e.target.value)} />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Meal Category" 
+                            variant="standard" 
+                            InputLabelProps={{className:'textFeild_Label'}} 
+                            sx={{marginBottom:'10%'}} 
+                            value={Category} 
+                            onChange={e=>setCategory(e.target.value)} 
+                            InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                        />
+                        <TextField 
+                            id="standard-basic" 
+                            label="Special Price" 
+                            variant="standard" 
+                            InputLabelProps={{className:'textFeild_Label'}} 
+                            sx={{marginBottom:'10%'}} 
+                            value={SpecialPrice} 
+                            onChange={e=>setSpecialPrice(e.target.value)} 
+                            InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                        />
                         </FormControl>
                     </l.LeftSide>
                     <l.RightSide>
