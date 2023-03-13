@@ -288,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() async {
     String id = '';
     String email = '';
-    String jwtToken = '';
+    String  jwtToken = '';
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
       var response = await http.post(
         //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
@@ -303,6 +303,8 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if(response.statusCode == 200) {
         jwtToken = response.body;
+        jwtToken = jwtToken.replaceAll('"', '');
+        print(jwtToken);
         print("Login Token: $jwtToken");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
         email = decodedToken['Email'];

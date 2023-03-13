@@ -20,6 +20,8 @@ class ProductMenuTitles extends StatefulWidget {
 
 class _ProductMenuTitlesState extends State<ProductMenuTitles> {
 
+  List<FoodMenuItems> data = [];
+
   List<Map<String, String>> foodMenuItems = [
     {
       "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
@@ -64,80 +66,84 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
         appBar: const MenuAppBar(),
-        // body: Stack(
-        //   children: [
-        //     const BackgroundImage(),
-        //     Expanded(
-        //       child: FutureBuilder(
-        //         future: fetchData(),
-        //         builder: (context, snapshot){
-        //           if (snapshot.hasData) {
-        //             return GridView.builder(
-        //               itemCount: snapshot.data!.length,
-        //               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //                 crossAxisCount: 2,
-        //                 crossAxisSpacing: 10,
-        //                 mainAxisSpacing: 10,
-        //               ),
-        //               itemBuilder: (BuildContext context, int index){
-        //                 return MenuContainer(
-        //                   ItemImagePath: snapshot.data![index].itemImagePath,
-        //                   ItemName: snapshot.data![index].itemName,
-        //                 );
-        //               },
-        //             );
-        //           }else if (snapshot.hasError) {
-        //             return Text('${snapshot.error}');
-        //           }
-        //           return const Center(
-        //             child: CircularProgressIndicator(),
-        //           );
-        //         },
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        body: FutureBuilder<List<String>>(
-          future: fetchData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index]),
+        body: Stack(
+          children: [
+            const BackgroundImage(),
+            Expanded(
+              child: FutureBuilder(
+                future: fetchData(),
+                builder: (context, snapshot){
+                  if (snapshot.hasData) {
+                    return GridView.builder(
+                      itemCount: snapshot.data!.length,
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemBuilder: (BuildContext context, int index){
+                        return MenuContainer(
+                          ItemImagePath: snapshot.data![index].category,
+                          ItemName: snapshot.data![index].itemName,
+                        );
+                      },
+                    );
+                  }else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 },
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            return const CircularProgressIndicator();
-          },
-        )
-        ,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-  Future<List<String>> fetchData() async {
+  Future<List<dynamic>> fetchData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    String? id = pref.getString("LoginId");
     print("In the fetchdata() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://192.168.8.181:5000/api/v1/Foods'),
-      headers: {'Authorization': 'Bearer $userToken'},
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
     );
     if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      final List<String> dataList = List<String>.from(data);
-      print('In 200 segment');
-      return dataList;
+      return FoodMenuItems.fromJsonList(json.decode(response.body));
     } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      return  msg;
-      //throw Exception('Failed to load data');
+      throw Exception('Failed to load data');
     }
+  }
+}
+
+//use the fromJson method of our model class to convert the JSON data to an object.
+class FoodMenuItems{
+  //final String itemImagePath;
+  final String category;
+  final String itemName;
+  FoodMenuItems({required this.category, required this.itemName,});
+  factory FoodMenuItems.fromJson(Map<String, dynamic> json){
+    return FoodMenuItems(
+      //itemImagePath: json['FoodImage'],
+      category: json['Category'],
+      itemName: json['FoodName'],
+    );
+  }
+  static List<FoodMenuItems> fromJsonList(dynamic jsonList){
+    final foodMenuItemsList = <FoodMenuItems>[];
+    if (jsonList == null) return foodMenuItemsList;
+    if (jsonList is List<dynamic>) {
+      for (final json in jsonList) {
+        foodMenuItemsList.add(
+          FoodMenuItems.fromJson(json),
+        );
+      }
+    }
+    return foodMenuItemsList;
   }
 }
