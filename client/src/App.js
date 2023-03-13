@@ -79,6 +79,7 @@ import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
 import ViewSupplierOrder from './Pages/Manager/ViewSupplierOrder';
+import TableReservation from './Pages/Customer/TableReservation';
 import ProductDisplay from './components/Customer/Checkout/Pay';
 import OrderItems from './Pages/Customer/OrderItems';
 import { loadStripe } from '@stripe/stripe-js';
@@ -186,6 +187,8 @@ function App() {
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
                 <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview/>}/>     
+                <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/> 
+                <Route path="/CustomerTable-Reservation1" element={<TableReservation/>}/>    
                 <Route path="/CustomerOrdering" element={
                   <Elements stripe={stripePromise}>
                     <OrderItems/>       

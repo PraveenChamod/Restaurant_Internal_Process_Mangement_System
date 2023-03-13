@@ -20,7 +20,7 @@ const SupplierOrderDetails = (props) => {
                             props.data3.map(row=>{
                                 return(
                                     <l.Tr>
-                                        <l.Td>{row.Item}</l.Td>
+                                        <l.Td>{row.Items}</l.Td>
                                         <l.Td>{row.Quantity}</l.Td>
                                         <l.Td>{row.Date}</l.Td>
                                         <l.Icon><AiFillEye/></l.Icon>

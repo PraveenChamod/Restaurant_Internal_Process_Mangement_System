@@ -10,7 +10,6 @@ export const FormSection= styled.div`
   border-radius: 25px;
   box-shadow: 3px 3px 3px #000;
   margin: 0 0 5% 0;
-  }
 `;
 export const SubSection= styled.div`
     display: flex;
