@@ -154,7 +154,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                     return res.status(500).send('Server Error');
                   }
                 }
-              }
+            }
               
               res.status(200).json({
                 status: "Success",
@@ -184,26 +184,56 @@ export const ViewPendingOrders = async(req,res,next)=>{
  export const ViewOrder = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" ){
-            const {_id} = req.params;
-            console.log(_id);
-            const findOrder = await Order.findById(_id);
-            console.log(findOrder);
-            if(findOrder !== null){
-                res.status(201).json({
-                    status: 'success',
-                    message: 'Order Details',
-                    data: {
-                        findOrder
+        if(user.Role === "Staff-Member" || user.Role === "Deliverer"){
+            const {id} = req.params;
+            let pendingOrders = [];
+            let OrderDetails;
+            try {
+                const populatedOrder = await Order.findById(id)
+                  .populate({
+                    path: 'Customer',
+                    model: 'Customer'
+                  })
+                  .populate({
+                    path: 'Foods.food',
+                    model: 'Foods'
+                  })
+                  .exec();
+                console.log(populatedOrder);
+                const Name = populatedOrder.Customer.Name;
+                const Email = populatedOrder.Customer.Email;
+                const ContactNumber = populatedOrder.Customer.ContactNumber;
+                const lat = populatedOrder.Customer.lat;
+                const lang = populatedOrder.Customer.lang
+                const food = populatedOrder.Foods.map((item) => ({
+                  FoodName: item.food.FoodName,
+                  Category: item.food.Category,
+                  image: item.food.FoodImage,
+                  quantity: item.Quantity,
+                  PaymentMethod: populatedOrder.paymentMethod
+                }));
+                OrderDetails = {
+                  OrderId:id,
+                  customerName: Name,
+                  customerEmail:Email,
+                  ContactNumber:ContactNumber,
+                  lat:lat,
+                  lang:lang,
+                  food,
+                  TotalPrice: populatedOrder.TotalPrice,
+                };
+                pendingOrders.push(OrderDetails);
+                res.status(200).json({
+                    status:'Success',
+                    message:`Details of Order ${id}`,
+                    data:{
+                        pendingOrders
                     }
-                })  
-            }
-            else{
-                res.status(404).json({
-                    status:'Not Found',
-                    message:'There are no any Order related to given id'
                 })
-            }
+              } catch (err) {
+                console.error(err);
+                return res.status(500).send('Server Error');
+              }  
         }
     } catch (error) {
         res.status(500).json({
@@ -265,14 +295,55 @@ export const SendOrderConfrimation = async(req,res)=>{
             const findOrder = await Order.find();
             const deliverer = await ServiceProviders.findById(user.id);
             let pendingOrders = [];
-            findOrder.map(order=>{
-                if(order.ServiceProvider === deliverer.id){
-                    pendingOrders.push(order);
-                } 
-            })
+            for (const order of findOrder) {
+                if (order.Status === "Confirm") {
+                    console.log(order);
+                  let OrderDetails;
+                  try {
+                    const populatedOrder = await Order.findById(order.id)
+                      .populate({
+                        path: 'Customer',
+                        model: 'Customer'
+                      })
+                      .populate({
+                        path: 'Foods.food',
+                        model: 'Foods'
+                      })
+                      .populate({
+                        path:'ServiceProvider',
+                        model:'ServiceProvider'
+                      })
+                      .exec();
+                    if(populatedOrder.ServiceProvider.id === deliverer.id){
+                        const Name = populatedOrder.Customer.Name;
+                        const Email = populatedOrder.Customer.Email;
+                        const ContactNumber = populatedOrder.Customer.ContactNumber;
+                        const food = populatedOrder.Foods.map((item) => ({
+                        FoodName: item.food.FoodName,
+                        Category: item.food.Category,
+                        image: item.food.FoodImage,
+                        quantity: item.Quantity,
+                        PaymentMethod: populatedOrder.paymentMethod
+                        }));
+                        OrderDetails = {
+                        OrderId:order.id,
+                        customerName: Name,
+                        customerEmail:Email,
+                        ContactNumber:ContactNumber,
+                        food,
+                        TotalPrice: populatedOrder.TotalPrice,
+                        };
+                        pendingOrders.push(OrderDetails);
+                    }
+                  } catch (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
+                  }
+                }
+            }
             res.status(201).json({
                 status: 'success',
-                message: 'Pending Orders',
+                message: 'Received Orders',
                 data: {
                     pendingOrders
                 }
@@ -291,3 +362,4 @@ export const SendOrderConfrimation = async(req,res)=>{
         });
     }
 }
+

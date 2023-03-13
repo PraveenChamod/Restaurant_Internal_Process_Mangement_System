@@ -12,6 +12,7 @@ import {
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const AddUserComponent = () => {
   
@@ -19,12 +20,28 @@ const AddUserComponent = () => {
   const[Role,setRole] = useState('');
 
   const onSubmit = async (e)=>{
-    e.preventDefault();
     try {
+      e.preventDefault();
       const formData = {Email,Role};
-      console.log(formData);
-      const res = await axios.post('api/v1/User/ServiceProviderRegister',formData);
-      console.log(res);
+      await toast.promise(
+        axios.post('api/v1/User/ServiceProviderRegister',formData),
+        {
+          loading:'Adding User.....',
+          success:(data)=>{
+            return `${data.data?.message}` || "success";
+          },
+          error: (err)=>`${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            fontSize:'1rem',
+            zIndex:'99999999'
+          }
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }

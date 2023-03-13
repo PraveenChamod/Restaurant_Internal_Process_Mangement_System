@@ -84,6 +84,7 @@ import OrderItems from './Pages/Customer/OrderItems';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
+import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 
 function App() {
   
@@ -197,7 +198,8 @@ function App() {
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/DelivererMy-Profile" element={<DelivererUserProfile route={EditProfileLinks[3]}/>}/>   
                 <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
-                <Route path="/DelivererOrderDetails" element={<DeliveryOrderDetails/>}/>   
+                <Route path="/DelivererAllOrderDetails" element={<AllOrderDetails/>}/>   
+                <Route path="/DelivererOrderDetails/:id" element={<DeliveryOrderDetails/>}/>   
                 {/* <Route path="/DelivereAllOrderDetails" element={<AllOrderDetails Tables={TableColumns[3]}/>}/>    */}
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}

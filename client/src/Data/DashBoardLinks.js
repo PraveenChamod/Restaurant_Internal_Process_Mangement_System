@@ -189,7 +189,7 @@ export const Roles = [
             {
                 text:'View Pending Orders',
                 icon:<FaUsers style={iconStyle}/>,
-                link:"/DelivererOrderDetails"
+                link:"/DelivererAllOrderDetails"
             },
             {
                 text:'Log Out',
