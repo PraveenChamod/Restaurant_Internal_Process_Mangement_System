@@ -80,6 +80,7 @@ import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import Pay from './components/Customer/Checkout/Pay';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
 import ViewSupplierOrder from './Pages/Manager/ViewSupplierOrder';
+import TableReservation from './Pages/Customer/TableReservation';
 
 function App() {
   
@@ -178,7 +179,8 @@ function App() {
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
                 <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview/>}/>     
-                <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/>     
+                <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/> 
+                <Route path="/CustomerTable-Reservation1" element={<TableReservation/>}/>    
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
