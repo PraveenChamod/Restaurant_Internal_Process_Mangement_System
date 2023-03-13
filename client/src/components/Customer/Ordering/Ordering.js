@@ -20,6 +20,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 import axios from "axios";
 import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
+import { toast } from "react-hot-toast";
 const Ordering = (props) => {
 
 
@@ -41,14 +42,31 @@ const Ordering = (props) => {
   //Add items into the cart
   const AddToCart = async (foodId)=>{
     try {
-      const res = await axios.post('api/v1/Customer/Addtocart',{foodId:foodId})
-      if(res.status == 201 || res.status == 200){
-        console.log(res);
-      }
+      await toast.promise(
+        axios.post('api/v1/CartItem',{foodId:foodId}),
+        {
+          loading:` Adding to the cart`,
+          success:(data)=>{
+            console.log({ data });
+            return ` ${data.data?.message} ` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
+              fontSize:'1rem',
+              zIndex:'99999999'
+          }
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }
   }
+
 
   //Add To Cart Option Manage
   const handleAddToCart = async (index) => {

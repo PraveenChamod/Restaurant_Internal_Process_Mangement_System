@@ -10,27 +10,24 @@ const TableDetails = (props) => {
             </Header>
             <l.SubContainer>
                 <l.Table>
-                    <thead>
                         <l.Tr>
                             <l.Th>Table No</l.Th>
                             <l.Th>Maximum No of Persons</l.Th>
                             <l.Th>Reservation Fee</l.Th>
                             <l.Th>Status</l.Th>
                         </l.Tr>
-                    </thead>
-                    <tbody>
                         {
-                            props.tables.map(table => (
-                                <l.Tr key={table._id}>
-                                    <l.Td>{table.TableNo}</l.Td>
-                                    <l.Td>{table.NoOfPersons}</l.Td>
-                                    <l.Td>{table.price}</l.Td>
-                                    <l.Td>{table.Status}</l.Td>
-                                </l.Tr>
-                            ))
-                        }
-                        
-                    </tbody>   
+                            props.data2.map(table => {
+                                return(
+                                    <l.Tr key={table._id}>
+                                        <l.Td>{table.TableNo}</l.Td>
+                                        <l.Td>{table.NoOfPersons}</l.Td>
+                                        <l.Td>{table.price}</l.Td>
+                                        <l.Td>{table.Status}</l.Td>
+                                    </l.Tr>
+                                )
+                                })
+                        }  
                 </l.Table>
             </l.SubContainer>
             <l.ButtonSection>

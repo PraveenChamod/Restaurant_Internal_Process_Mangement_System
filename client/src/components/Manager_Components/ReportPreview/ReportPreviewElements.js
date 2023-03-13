@@ -34,3 +34,20 @@ export const PrintButton = styled(RegularButton)`
 export const Icon = styled.div`
     margin: 5%;
 `
+export const Table = styled.table`
+    border: 2px solid #fff;
+    color: #fff;
+    margin: 3%;
+    border-radius: 10px;
+    width: 80%;
+`
+export const Tr = styled.tr`
+    border: 2px solid #fff;
+    text-align: center;
+`
+export const Th = styled.th`
+   border-bottom: 2px solid #fff;
+`
+export const Td = styled.td`
+   
+`
