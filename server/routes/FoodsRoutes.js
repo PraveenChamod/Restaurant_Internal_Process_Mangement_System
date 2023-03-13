@@ -5,8 +5,8 @@ const FoodRoutes = express.Router();
 
 FoodRoutes.route('/Food').post(image,addFoods);
 FoodRoutes.route('/Foods').get(getFoods);
-FoodRoutes.route('/Foods/:Category').get(getFoodByCategory);
 FoodRoutes.route('/Food/:id').get(getFoodById);
+FoodRoutes.route('/Foods/:Category').get(getFoodByCategory);
 FoodRoutes.route('/Food/:SerialNo').patch(updateFood);
 FoodRoutes.route('/Food/:SerialNo').delete(deleteFoods);
 

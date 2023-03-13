@@ -233,7 +233,6 @@ export const getUsers = async (req,res)=>{
 // Method : GET
 // End Point : "api/v1/User"
 // Description : Get User By Email
-
 export const getUserByEmail = async (req,res)=>{
     try {
         const user = req.user;
@@ -284,7 +283,6 @@ export const getUserByEmail = async (req,res)=>{
 // Method : GET
 // End Point : "api/v1/Users/:Role"
 // Description : Get Users By Role
-
 export const getUsersByRole = async(req,res)=>{
     try {
         const user = req.user;
@@ -316,6 +314,39 @@ export const getUsersByRole = async(req,res)=>{
         
     } catch (error) {
        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
+    }
+}
+
+// Method : GET
+// End Point : "api/v1/User/:id"
+// Description : Get Customer By Id
+export const getCustomerById = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member" || user.Role === "Manager"){
+            const {id} = req.params;
+            const findCustomer = await Customer.findById(id);
+            if(findUser){
+                res.status(200).json({
+                    status:"Success",
+                    message:`Details of ${findCustomer.name}`,
+                    data:{
+                        findCustomer
+                    } 
+                })
+            }
+            else{
+                res.status(404).json({
+                    status: 'Error',
+                    message: 'User is not found',
+                })
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({
             status:'Server Error',
             message:error.message,
         });

@@ -114,21 +114,55 @@ export const ViewPendingOrders = async(req,res,next)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const findOrders = await Order.find();
-            console.log(findOrders);
             let pendingOrders = [];
-            findOrders.map(order=>{
-                    if(order.Status === "Pending"){
-                        pendingOrders.push(order);
-                    }
-                })
-            res.status(201).json({
-                status: 'success',
-                message: 'Pending Orders',
-                data: {
-                    pendingOrders
+            for (const order of findOrders) {
+                if (order.Status === "Pending") {
+                  let OrderDetails;
+                  try {
+                    const populatedOrder = await Order.findById(order.id)
+                      .populate({
+                        path: 'Customer',
+                        model: 'Customer'
+                      })
+                      .populate({
+                        path: 'Foods.food',
+                        model: 'Foods'
+                      })
+                      .exec();
+                    
+                    const Name = populatedOrder.Customer.Name;
+                    const Email = populatedOrder.Customer.Email;
+                    const ContactNumber = populatedOrder.Customer.ContactNumber;
+                    const food = populatedOrder.Foods.map((item) => ({
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }));
+                    OrderDetails = {
+                      OrderId:order.id,
+                      customerName: Name,
+                      customerEmail:Email,
+                      ContactNumber:ContactNumber,
+                      food,
+                      TotalPrice: populatedOrder.TotalPrice,
+                    };
+                    pendingOrders.push(OrderDetails);
+                  } catch (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
+                  }
                 }
-            })
-            next();
+              }
+              
+              res.status(200).json({
+                status: "Success",
+                message: "Pending Order Details",
+                data: {
+                  pendingOrders
+                }
+              });
         }
         else{
             res.status(401).json({

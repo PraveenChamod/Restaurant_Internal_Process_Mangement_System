@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteUser, deleteUsers, getAvailableDeliverers, getUserByEmail, getUsers, getUsersByRole, RegisterCustomer, RegisterServiceProviders, UpdateProfile, updateUserProfile } from '../controllers/UserController.js';
+import { deleteUser, deleteUsers, getAvailableDeliverers, getCustomerById, getUserByEmail, getUsers, getUsersByRole, RegisterCustomer, RegisterServiceProviders, UpdateProfile, updateUserProfile } from '../controllers/UserController.js';
 import { requireAuth } from '../middleware/Authmiddleware.js';
 
 
@@ -7,6 +7,7 @@ const UserRoutes = express.Router();
 
 UserRoutes.route('/User/CustomerRegister').post(RegisterCustomer);
 UserRoutes.route('/User/ServiceProviderRegister').post(requireAuth,RegisterServiceProviders);
+UserRoutes.route('User/:id').get(requireAuth,getCustomerById);
 UserRoutes.route('/User/Users').get(requireAuth,getUsers);
 UserRoutes.route('/User').get(requireAuth,getUserByEmail);
 UserRoutes.route('/Users/:Role').get(requireAuth,getUsersByRole);

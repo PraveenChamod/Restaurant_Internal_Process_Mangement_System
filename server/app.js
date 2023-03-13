@@ -20,7 +20,7 @@ import UserRoutes from "./routes/UserRoutes.js";
 import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
 import path from 'path';
 import ejs from 'ejs';
-
+import morgan from "morgan";
 
 export const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
 
@@ -34,6 +34,8 @@ app.use(
 		maxAge: 24 * 60 * 60 * 100,
 	})
 );
+app.use(morgan('dev'));
+
 const GoogleStrategy = Strategy.Strategy;
 app.use(passport.initialize());
 app.use(passport.session());

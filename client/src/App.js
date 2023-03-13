@@ -83,6 +83,7 @@ import ProductDisplay from './components/Customer/Checkout/Pay';
 import OrderItems from './Pages/Customer/OrderItems';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
 
 function App() {
   
@@ -166,6 +167,7 @@ function App() {
                 <Route path="/Staff-MemberView-Offer" element={<StaffMemberViewOffer/>}/>
                 <Route path="/Staff-MemberView-Foods" element={<StaffMemberViewFoods />}/>
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables />}/>
+                <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders/>}/>
                 <Route path="/Staff-MemberOrder-Details" element={<StaffMemberOrderDetails/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]}/>}/>

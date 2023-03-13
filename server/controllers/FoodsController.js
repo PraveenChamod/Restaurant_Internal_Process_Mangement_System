@@ -77,6 +77,7 @@ export const getFoods = async (req,res)=>{
 export const getFoodById = async (req,res)=>{
     try {
         const user = req.user;
+        console.log({user});
         if(user.Role === "Manager" || user.Role=== "Admin"){
             const{id} = req.params;
             console.log(req.params);

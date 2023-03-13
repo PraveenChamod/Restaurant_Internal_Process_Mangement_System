@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const SubContainer = styled.div`
     display: flex;
-    width: 60%;
+    width: 68%;
     overflow-x: auto;
     background: #1a1e21;
     border-radius: 20px;
@@ -22,9 +22,9 @@ export const ButtonSection = styled.div`
 export const Table = styled.table`
     border: 2px solid #fff;
     color: #fff;
-    margin: 3%;
+    margin: 3% 2%;
     border-radius: 10px;
-    width: 80%;
+    width: 100%;
 `
 export const Tr = styled.tr`
     border: 2px solid #fff;
@@ -37,6 +37,9 @@ export const Td = styled.td`
    
 `
 export const Icon  =styled.div`
+    &{
+        color: #FFBF00;
+    }
     &:hover{
         cursor: pointer;
     }
