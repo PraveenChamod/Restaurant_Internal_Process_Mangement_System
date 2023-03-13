@@ -9,4 +9,4 @@ OfferRoutes.route('/Offer/:SerialNo').patch(updateOffer);
 OfferRoutes.route('/Offer/:SerialNo').delete(deleteOffers);
 
 
-export default OfferRoutes;
+export default OfferRoutes; 

@@ -12,4 +12,4 @@ OrderRoutes.route('/OrderConfirmation/:_id').post(SendOrderConfrimation);
 OrderRoutes.route('/Deliverer/OrderDetails').get(CheckOrderDetails);
 OrderRoutes.route('/Payment').post(payToOrder);
 
-export default OrderRoutes;
+export default OrderRoutes; 
