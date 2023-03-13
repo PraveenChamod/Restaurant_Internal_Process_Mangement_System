@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:resto_mobile_application/src/common_widgets/Menu_Container.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_appbar.dart';
 import '../Customer/customer_home.dart';
@@ -119,10 +120,18 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
     );
   }
   Future<List<String>> fetchData() async {
-    final response = await http.get(Uri.parse('http://192.168.8.181:5000/api/v1/Foods'));
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    String? id = pref.getString("LoginId");
+    print("In the fetchdata() ${userToken!}");
+    final response = await http.get(
+      Uri.parse('http://192.168.8.181:5000/api/v1/Foods'),
+      headers: {'Authorization': 'Bearer $userToken'},
+    );
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       final List<String> dataList = List<String>.from(data);
+      print('In 200 segment');
       return dataList;
     } else {
       final json = jsonDecode(response.body);

@@ -288,6 +288,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() async {
     String id = '';
     String email = '';
+    String jwtToken = '';
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
       var response = await http.post(
         //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
@@ -301,24 +302,24 @@ class _LoginScreenState extends State<LoginScreen> {
         }),
       );
       if(response.statusCode == 200) {
-        String jwtToken = response.body;
+        jwtToken = response.body;
         print("Login Token: $jwtToken");
         Map<String, dynamic> decodedToken = JwtDecoder.decode(jwtToken);
         email = decodedToken['Email'];
         print("Email : $email");
         id = decodedToken['id'];
         print("Id : $id");
-        awesomeDialog(DialogType.success, "Login Successful! Welcome to Resto", "Success", id, email);
+        awesomeDialog(DialogType.success, "Login Successful! Welcome to Resto", "Success", id, email, jwtToken);
       } else {
         final json = jsonDecode(response.body);
         final msg = json["message"];
-        awesomeDialog(DialogType.warning, msg, "Warning", id, email);
+        awesomeDialog(DialogType.warning, msg, "Warning", id, email, jwtToken);
       }
     }else {
-      awesomeDialog(DialogType.warning, "Fields Cannot Be Empty!", "Warning", id, email);
+      awesomeDialog(DialogType.warning, "Fields Cannot Be Empty!", "Warning", id, email, jwtToken);
     }
   }
-  awesomeDialog(DialogType type, String desc, String title, String id, String email) {
+  awesomeDialog(DialogType type, String desc, String title, String id, String email, String token) {
     AwesomeDialog(
       context: context,
       dialogType: type,
@@ -327,19 +328,22 @@ class _LoginScreenState extends State<LoginScreen> {
       title: title,
       desc: desc,
       btnOkOnPress: (){
-        title == "Success" ? pageRoute(id, email): null;
+        title == "Success" ? pageRoute(id, email, token): null;
       },
     ).show();
   }
-  void pageRoute(String id, String email) async {
+  void pageRoute(String id, String email, String token) async {
     //const This is the part of store value or token shared preference
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("LoginId", id);
     await pref.setString("LoginEmail", email);
-    String? ID = pref.getString("LoginId");
-    print("Shared Id: ${ID!}");
-    String? UserEmail = pref.getString("LoginEmail");
-    print("Shared Email: $UserEmail");
+    await pref.setString("JwtToken", token);
+    String? iD = pref.getString("LoginId");
+    print("Shared Id: ${iD!}");
+    String? userEmail = pref.getString("LoginEmail");
+    print("Shared Email: $userEmail");
+    String? userToken = pref.getString("JwtToken");
+    print("Shared Token: $userToken");
     Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const CustomerMainPage())

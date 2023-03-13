@@ -168,6 +168,8 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.remove("LoginId");
     await pref.remove("LoginEmail");
+    await pref.remove("JwtToken");
+    print("SharedPreferences Login Details Removed!");
     Navigator.push(
       context,
       MaterialPageRoute(
