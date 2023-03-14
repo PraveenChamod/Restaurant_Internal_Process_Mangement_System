@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { TimePicker } from "react-ios-time-picker";
-import "react-calendar/dist/Calendar.css";
+// import { TimePicker } from "react-ios-time-picker";
+import TimePicker from 'react-time-picker';
 import { Header } from "../../shared/SharedElements/SharedElements";
 import * as l from "./TableBookingElement.js";
-import "react-calendar/dist/Calendar.css";
+import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 import Box from "@mui/material/Box";
+import 'react-calendar/dist/Calendar.css';
 import Grid from "@mui/material/Grid";
 
 
@@ -43,9 +45,9 @@ const TableBooking = (props) => {
           </l.Div4>
           <l.Div5>
             <l.H1>PICK TIME</l.H1>
-            <TimePicker onChange={onChange} value={value} />
+            <TimePicker disableClock={true} clearIcon={null} onChange={onChange} value={value} />
             <l.H1>TO</l.H1>
-            <TimePicker onChange={onChange} value={value} />
+            <TimePicker disableClock={true} clearIcon={null} onChange={onChange} value={value} />
           </l.Div5>
         </l.Div3>
         <l.Div31>
