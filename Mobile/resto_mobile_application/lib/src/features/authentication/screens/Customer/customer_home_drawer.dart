@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:http/http.dart' as http;
 import '../Drawer_Items/favourites_screen.dart';
 import '../Drawer_Items/help_center_screen.dart';
 import '../Drawer_Items/my_account_screen.dart';
@@ -11,26 +11,16 @@ import '../home_screen.dart';
 
 class CustomerHomeDrawer extends StatefulWidget {
   const CustomerHomeDrawer({Key? key}) : super(key: key);
-
   @override
   State<CustomerHomeDrawer> createState() => _CustomerHomeDrawerState();
 }
-
 class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
-  String userEmail = "";
+  late Future<Map<String, dynamic>> _futureData;
   @override
   void initState() {
     super.initState();
-    getCred();
+    _futureData = getUserDetails();
   }
-  void getCred() async {
-    //This getCred function is use to fetch credentials from SharerdPreferences
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    setState(() {
-      userEmail = pref.getString("LoginEmail")!;
-    });
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -49,30 +39,47 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             decoration: const BoxDecoration(
               color: Color(0xFF161b1d),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children:  [
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage('assets/images/Default_User.png'),
-                ),
-                const SizedBox(height: 10.0,),
-                const Text('Praveen Chamod',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white70,
-                  ),
-                ),
-                const SizedBox(height: 10.0,),
-                Text(
-                  userEmail,
-                  //'praveenchamod23@gmail.com',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
+            
+            child: Center(
+              child: FutureBuilder<Map<String, dynamic>>(
+                future: _futureData,
+                builder: (context, snapshot){
+                  if(snapshot.hasData){
+                    final String userImagePath = snapshot.data!['user']['ProfileImage'];
+                    final String userName = snapshot.data!['user']['Name'];
+                    final String userEmail = snapshot.data!['user']['Email'];
+                    final String imageUrl = 'http://localhost:5000/images/$userImagePath';
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children:  [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: NetworkImage(imageUrl),
+                        ),
+                        const SizedBox(height: 10.0,),
+                        Text(
+                          userName,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0,),
+                        Text(
+                          userEmail,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white70,
+                          ),
+                        ),
+                      ],
+                    );
+                  }else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  return const CircularProgressIndicator();
+                },
+              ),
             ),
           ),
           ListTile(
@@ -163,7 +170,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
       ),
     );
   }
-
+  //Function for logout and Remove the SharedPreferences information about logged user.
   void logout() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.remove("LoginId");
@@ -176,5 +183,25 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
         builder: (context) => const HomeScreen(),
       ),
     );
+  }
+  //Function for get logged user Details
+  // Method : GET
+  // End Point : "api/v1/Auth/Profile";
+  Future<Map<String, dynamic>> getUserDetails() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    print("In the getUserDetails() ${userToken!}");
+    final response = await http.get(
+      Uri.parse('http://localhost:5000/api/v1/Auth/Profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    if (response.statusCode == 201) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
 }

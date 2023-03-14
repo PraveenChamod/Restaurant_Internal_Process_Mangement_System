@@ -101,21 +101,6 @@ class FoodMenuItems{
         );
       }
     }
-
-
-
-    foodMenuItemsList.sort((a, b) {
-      if (a.category == b.category) {
-        return 0; // return 0 to indicate that the objects are equal
-      } else {
-        return a.category.compareTo(b.category); // return the comparison result of their age
-      }
-    });
-    //foodMenuItemsList = foodMenuItemsList.where((FoodMenuItems, index) => index == 0 || FoodMenuItems.age != foodMenuItemsList[index - 1].category).toList();
-
-
-
-
     return foodMenuItemsList;
   }
 }
