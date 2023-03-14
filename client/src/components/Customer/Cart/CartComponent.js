@@ -96,7 +96,7 @@ const CartComponent = ({data}) => {
                 <Header>MY CART</Header>
             </l.SubSection2>
             <l.SubSection3>
-                <l.Left>
+                <l.Left> 
                     {
                         data.map((cart,index)=>{
                             

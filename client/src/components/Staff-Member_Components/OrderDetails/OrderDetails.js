@@ -15,7 +15,8 @@ const OrderDetailsComponent = () => {
                         <FormControl>
                             <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
                             <TextField id="standard-basic" label="Address" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
-                            <Select
+
+                            {/* <Select
                             defaultValue={30}
                             inputProps={{
                                 name: "role",
@@ -32,7 +33,13 @@ const OrderDetailsComponent = () => {
                                 <MenuItem value={1} >Deliverer</MenuItem>
                                 <MenuItem value={2} >Supplier</MenuItem>
                                 <MenuItem value={3} >Staff-Member</MenuItem>
-                            </Select>                       
+                            </Select>  
+                            
+                            */}
+                        {/**      */  }
+
+
+
                         </FormControl>
                     </Div1>
                     <Div1>
