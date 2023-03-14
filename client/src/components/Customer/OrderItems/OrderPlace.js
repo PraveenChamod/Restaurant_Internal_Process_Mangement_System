@@ -126,7 +126,7 @@ const OrderPlace = ({data}) => {
                 </l.LogoSection>
             </l.SubSection1>
             <l.SubSection3>
-                <l.Left>
+                <l.Left> 
                     {
                         data.map((cart)=>{
                             

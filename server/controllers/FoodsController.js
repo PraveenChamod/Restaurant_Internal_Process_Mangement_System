@@ -52,6 +52,7 @@ export const addFoods = async(req,res)=>{
 // End Point : "api/v1/Foods";
 // Description : get Foods
 export const getFoods = async (req,res)=>{
+
     try {
         const user = req.user;
         if(user.Role === "Staff-Member" || user.Role === "Manager" || user.Role=== "Admin" || user.Role === "Customer"){
@@ -77,6 +78,7 @@ export const getFoods = async (req,res)=>{
 export const getFoodById = async (req,res)=>{
     try {
         const user = req.user;
+        console.log({user});
         if(user.Role === "Manager" || user.Role=== "Admin"){
             const{id} = req.params;
             console.log(req.params);

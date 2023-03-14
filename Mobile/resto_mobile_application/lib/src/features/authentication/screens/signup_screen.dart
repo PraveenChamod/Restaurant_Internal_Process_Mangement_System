@@ -270,7 +270,7 @@ class _LoginScreenState extends State<SignupScreen> {
   void signup() async {
     final http.Response response = await http.post(
       //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
-      Uri.parse("http://192.168.8.181:5000/api/v1/User/CustomerRegister"),
+      Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -282,20 +282,11 @@ class _LoginScreenState extends State<SignupScreen> {
         "ContactNumber": contactController.text
       }),
     );
-    final json = jsonDecode(response.body);
-    final msg = json["message"];
-    final status = json["status"];
     if(response.statusCode == 200) {
-      print(response.statusCode);
-      print(status);
-      print(msg);
-      status == 'success' ?
-      awesomeDialog(DialogType.success, "You successfully registered to the system. Now you can Login", "Success") :
-      awesomeDialog(DialogType.warning, msg, "Warning");
+      awesomeDialog(DialogType.success, "You successfully registered to the system. Now you can Login", "Success");//Successfully User registered.
     }else{
-      print(response.statusCode);
-      print(status);
-      print(msg);
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
       awesomeDialog(DialogType.warning, msg, "Warning");//Unsuccessfully User registered.
     }
   }

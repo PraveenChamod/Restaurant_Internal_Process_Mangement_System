@@ -3,7 +3,7 @@ export const Container = styled.div`
     padding: 5%;
 `
 export const SubContainer = styled.div`
-    display: flex;
+    display: flex; 
     flex-direction: column;
     justify-content: center;
     height: fit-content;

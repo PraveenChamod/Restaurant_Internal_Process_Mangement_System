@@ -5,7 +5,8 @@ const OrderSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Customer',
     },
-    Foods:[{
+    Foods:[
+        {
             food:{
                 type:mongoose.Schema.ObjectId,
                 ref:'Foods'
@@ -14,7 +15,8 @@ const OrderSchema = mongoose.Schema({
                 type:Number,
                 default:1
             }
-        }],
+        }
+    ],
     ServiceProvider:{
         type:mongoose.Schema.ObjectId,
         ref:'ServiceProviders'

@@ -1,11 +1,11 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/common_widgets/Menu_Container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_appbar.dart';
+
 
 class ProductMenuTitles extends StatefulWidget {
 
@@ -26,35 +26,35 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
         backgroundColor: const Color(0xFF161b1d),
         appBar: const MenuAppBar(),
         body: Stack(
-          children: [
+          children: <Widget>[
             const BackgroundImage(),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: FutureBuilder(
-                future: fetchData(),
-                builder: (context, snapshot){
-                  if (snapshot.hasData) {
-                    return GridView.builder(
-                      itemCount: snapshot.data!.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemBuilder: (BuildContext context, int index){
-                        return MenuContainer(
-                          itemImagePath: 'http://192.168.8.181:5000/Foodimages/${snapshot.data![index].itemImagePath}',
-                          itemName: snapshot.data![index].category,
-                        );
-                      },
-                    );
-                  }else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: FutureBuilder(
+                  future: fetchData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return GridView.builder(
+                        itemCount: snapshot.data!.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return MenuContainer(
+                            itemImagePath: 'http://192.168.8.181:5000/Foodimages/${snapshot.data![index].itemImagePath}',
+                            itemName: snapshot.data![index].category,
+                          );
+                        },
+                      );
+                    }else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return const CircularProgressIndicator();
+                  },
+                ),
               ),
             ),
           ],
@@ -80,7 +80,6 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
     }
   }
 }
-
 //use the fromJson method of our model class to convert the JSON data to an object.
 class FoodMenuItems{
   final String itemImagePath;

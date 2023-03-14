@@ -302,7 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }),
       );
       if(response.statusCode == 200) {
-        jwtToken = response.body;
+        String jwtToken = response.body;
         jwtToken = jwtToken.replaceAll('"', '');
         print(jwtToken);
         print("Login Token: $jwtToken");
@@ -340,10 +340,10 @@ class _LoginScreenState extends State<LoginScreen> {
     await pref.setString("LoginId", id);
     await pref.setString("LoginEmail", email);
     await pref.setString("JwtToken", token);
-    String? iD = pref.getString("LoginId");
-    print("Shared Id: ${iD!}");
-    String? userEmail = pref.getString("LoginEmail");
-    print("Shared Email: $userEmail");
+    String? ID = pref.getString("LoginId");
+    print("Shared Id: ${ID!}");
+    String? UserEmail = pref.getString("LoginEmail");
+    print("Shared Email: $UserEmail");
     String? userToken = pref.getString("JwtToken");
     print("Shared Token: $userToken");
     Navigator.push(

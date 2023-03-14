@@ -79,10 +79,13 @@ import DelivererEditProfile from './Pages/Deliverer/DelivererEditProfile';
 import SupplierEditProfile from './Pages/Supplier/SupplierEditProfile';
 import SupplierOrder from './Pages/Manager/SupplierOrder';
 import ViewSupplierOrder from './Pages/Manager/ViewSupplierOrder';
+import TableReservation from './Pages/Customer/TableReservation';
 import ProductDisplay from './components/Customer/Checkout/Pay';
 import OrderItems from './Pages/Customer/OrderItems';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
+import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 
 function App() {
   
@@ -166,12 +169,13 @@ function App() {
                 <Route path="/Staff-MemberView-Offer" element={<StaffMemberViewOffer/>}/>
                 <Route path="/Staff-MemberView-Foods" element={<StaffMemberViewFoods />}/>
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables />}/>
-                <Route path="/Staff-MemberOrder-Details" element={<StaffMemberOrderDetails/>}/>
+                <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders/>}/>
+                <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
                 <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
-
+                
                 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
@@ -181,8 +185,10 @@ function App() {
                 <Route path="/CustomerPay" element={<ProductDisplay/>}/>     
                 <Route path="/CustomerMyCart" element={<Cart cartData = {CartData}/>}/>     
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
-                <Route path="/CustomerTable-Reservation" element={<TableReservationDetails/>}/>     
+                <Route path="/CustomerTable-Reservation" element={<TableReservation/>}/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview/>}/>     
+                <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/> 
+                <Route path="/CustomerTable-Reservation1" element={<TableReservation/>}/>    
                 <Route path="/CustomerOrdering" element={
                   <Elements stripe={stripePromise}>
                     <OrderItems/>       
@@ -195,7 +201,8 @@ function App() {
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/DelivererMy-Profile" element={<DelivererUserProfile route={EditProfileLinks[3]}/>}/>   
                 <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
-                <Route path="/DelivererOrderDetails" element={<DeliveryOrderDetails/>}/>   
+                <Route path="/DelivererAllOrderDetails" element={<AllOrderDetails/>}/>   
+                <Route path="/DelivererOrderDetails/:id" element={<DeliveryOrderDetails/>}/>   
                 {/* <Route path="/DelivereAllOrderDetails" element={<AllOrderDetails Tables={TableColumns[3]}/>}/>    */}
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}

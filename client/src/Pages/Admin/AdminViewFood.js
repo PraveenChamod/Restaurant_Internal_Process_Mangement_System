@@ -5,12 +5,12 @@ import useFetch from "../../Hooks/useFetch";
 const AdminViewFood = () => {
     const {id} = useParams();
     console.log(id);
-    const {data,isPending} = useFetch(`api/v1/Food/${id}`);
-    console.log(data); 
+    const {data,isPending} = useFetch(`/api/v1/Food/${id}`);
+    const food = data?.data?.food
     return ( 
         <>
             {isPending && <Spinner/>}
-            {data && <FoodDetail data1={data}/>}
+            {food && <FoodDetail food={food}/>}
         </>
      );
 }

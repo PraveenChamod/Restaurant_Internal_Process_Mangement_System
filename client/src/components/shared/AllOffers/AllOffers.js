@@ -3,7 +3,7 @@ import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './AllOffersElements'
 const AllOffersComponent = (props) => {
-    console.log(props)
+    console.log("props is" + props)
     return ( 
         <Container>
             <Header>
