@@ -4,8 +4,11 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_home.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_home_drawer.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_main_page.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Customer/customer_search.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Drawer_Items/my_account_screen.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Drawer_Items/settings_screen.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_items.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/products_menu_titles.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/getphonenumber.dart';
@@ -50,7 +53,7 @@ class _MyAppState extends State<MyApp> {
       builder: DevicePreview.appBuilder,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: const SplashScreen(),
+      //home: const SplashScreen(),
       //home: const HomeScreen(),
       //home: const CustomerMainPage(),
       //home: const ProductItems(),
@@ -61,6 +64,8 @@ class _MyAppState extends State<MyApp> {
       //home: const ProductItems(),
       //home: const LoginScreen(),
       //home: const SignupScreen(),
+      //home: const MyAccountScreen(),
+      home: const SettingsScreen(),
     );
 
   }
