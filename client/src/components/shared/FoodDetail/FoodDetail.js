@@ -3,10 +3,10 @@ import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from "./FoodDetailElements";
 const FoodDetail = (props) => {
-    const[FoodName,setName] = useState(props.data1.FoodName);
-    const[Category,setCategory] = useState(props.data1.Category);
-    const[Price,setPrice] = useState(props.data1.Price);
-    const[Status,setStatus] = useState(props.data1.Status);
+    const[FoodName,setName] = useState(props.food.FoodName);
+    const[Category,setCategory] = useState(props.food.Category);
+    const[Price,setPrice] = useState(props.food.Price);
+    const[Status,setStatus] = useState(props.food.Status);
     return ( 
     <Container>
       <Header>Food Details</Header>
@@ -27,17 +27,19 @@ const FoodDetail = (props) => {
             <l.TextFeild 
                 type="text" 
                 placeholder="Price"
-                value={Price}
+                value={'Rs.' + Price}
                 onChange={e=>setPrice(e.target.value)}
             />
-            <l.RadioButton>
-                <l.Radio type="radio" name="Availablility" value="Available" onChange={e=>setStatus(e.target.value)}/>
-                <l.Label>Available</l.Label>
-            </l.RadioButton>
-            <l.RadioButton>
-                <l.Radio type="radio" name="Availablility" value="Not Available" onChange={e=>setStatus(e.target.value)}/>
-                <l.Label>Not Available</l.Label>
-            </l.RadioButton>
+            <l.RadioButtonSection>
+                <l.RadioButton>
+                    <l.Radio type="radio" name="Availablility" value="Available" onChange={e=>setStatus(e.target.value)} checked = {Status === "Available" ? true : false}/>
+                    <l.Label>Available</l.Label>
+                </l.RadioButton>
+                <l.RadioButton>
+                    <l.Radio type="radio" name="Availablility" value="Not Available" onChange={e=>setStatus(e.target.value)} checked = {Status === "Not Available" ? true : false}/>
+                    <l.Label>Not Available</l.Label>
+                </l.RadioButton>
+            </l.RadioButtonSection>
         </l.Div1>
         <l.Div2>
             <l.Sec>

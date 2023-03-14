@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { FrogotPassword, getUserProfile, LogInUser, LogoutUser, passportSAuth, PasswordReset, redirect, sendOTP, UploadProfileImage } from '../controllers/AuthController.js';
+import { getUserProfile, LogInUser, LogoutUser, passportSAuth, PasswordReset, redirect, UploadProfileImage } from '../controllers/AuthController.js';
 import { requireAuth } from '../middleware/Authmiddleware.js';
 
 
@@ -12,10 +12,6 @@ AuthRoutes.route('/LoginUser').post(LogInUser);
 AuthRoutes.route('/Profile').get(requireAuth,getUserProfile);
 
 AuthRoutes.route('/ProfilePicture').patch(requireAuth,UploadProfileImage);
-
-AuthRoutes.route('/OTP').post(sendOTP);
-
-AuthRoutes.route('/Forgotpassword').patch(FrogotPassword);
 
 AuthRoutes.route('/auth/google').get(passportSAuth);
 

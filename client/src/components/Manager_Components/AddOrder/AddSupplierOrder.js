@@ -11,7 +11,7 @@ import axios from "axios";
 
 const AddSupplierOrder = () => {
   const [Item, setItem] = useState("");
-  const [Quantity, setQuantity] = useState("");
+  const [Quantity, setQuantity] = useState();
   const [Date, setDate] = useState("");
 
   const onSubmit = async (e) => {
@@ -21,7 +21,7 @@ const AddSupplierOrder = () => {
       const res = await axios.post("api/v1/AddSupplierOrder",formData);
       console.log(res);
     } catch (error) {
-      
+      console.log(error.message);
     }
   };
 

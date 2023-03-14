@@ -159,7 +159,7 @@ export const Roles = [
             },
             {                text:'Order Details',
                 icon:<FaUserMinus style={iconStyle}/>,
-                link:"/Staff-MemberOrder-Details"
+                link:"/Staff-MemberPendingOrder-Details"
             },
             {
                 text:'Table Reservation Details',
@@ -189,7 +189,7 @@ export const Roles = [
             {
                 text:'View Pending Orders',
                 icon:<FaUsers style={iconStyle}/>,
-                link:"/DelivererOrderDetails"
+                link:"/DelivererAllOrderDetails"
             },
             {
                 text:'Log Out',

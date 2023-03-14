@@ -9,6 +9,7 @@ import ShoutoutClient from 'shoutout-sdk';
 import Stripe from "stripe";
 import ServiceProviders from "../models/ServiceProviders.js";
 import { __dirname } from "../app.js";
+import axios from 'axios';
 
 var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM';
 
@@ -18,8 +19,8 @@ var client = new ShoutoutClient(apiKey, debug, verifySSL);
 dotenv.config();
 const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 const maxAge = 3 * 24 * 60 * 60;
-process.env.GEOCODER_PROVIDER = 'google';
-process.env.GEOCODER_API_KEY = 'AIzaSyCzww-sVilydidTfz54KfF50tWWIwgahC4';
+
+const geocodeApiKey = "AIzaSyByYCGjAorLa5_rHMyisPNnrSEWv1rhAcY"
 
 // Method : POST
 // End Point : "api/v1/User/CustomerRegister";
@@ -143,15 +144,15 @@ export const RegisterServiceProviders = async (req,res)=>{
                             subject : 'Registration Confrimation',
                             attachments:[{
                                 filename : 'logo.png',
-                                path:'E:/WEB/Restaurant_Management_System/server/Template/logo.png',
+                                path:`${__dirname}/server/Template/logo.png`,
                                 cid:'logo'
                             },
                             {
                                 filename : 'welcome_vector.png',
-                                path:`${__dirname}/Template/welcome_vector.png`,
+                                path:`${__dirname}/server/Template/welcome_vector.png`,
                                 cid:'welcome'
                             }],
-                            html: { path:`${__dirname}/Template/Email.html` }
+                            html: { path:`${__dirname}/server/Template/Email.ejs` }
                         }
                         transporter.sendMail(mailOption,(err,info)=>{
                             if(err){
@@ -233,7 +234,6 @@ export const getUsers = async (req,res)=>{
 // Method : GET
 // End Point : "api/v1/User"
 // Description : Get User By Email
-
 export const getUserByEmail = async (req,res)=>{
     try {
         const user = req.user;
@@ -284,7 +284,6 @@ export const getUserByEmail = async (req,res)=>{
 // Method : GET
 // End Point : "api/v1/Users/:Role"
 // Description : Get Users By Role
-
 export const getUsersByRole = async(req,res)=>{
     try {
         const user = req.user;
@@ -316,6 +315,39 @@ export const getUsersByRole = async(req,res)=>{
         
     } catch (error) {
        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
+    }
+}
+
+// Method : GET
+// End Point : "api/v1/User/:id"
+// Description : Get Customer By Id
+export const getCustomerById = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Staff-Member" || user.Role === "Manager"){
+            const {id} = req.params;
+            const findCustomer = await Customer.findById(id);
+            if(findUser){
+                res.status(200).json({
+                    status:"Success",
+                    message:`Details of ${findCustomer.name}`,
+                    data:{
+                        findCustomer
+                    } 
+                })
+            }
+            else{
+                res.status(404).json({
+                    status: 'Error',
+                    message: 'User is not found',
+                })
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({
             status:'Server Error',
             message:error.message,
         });
@@ -487,8 +519,10 @@ export const UpdateProfile = async(req,res)=>{
             const logedServiceProvider = await ServiceProviders.findOne({Email:Email}).populate('Email');
             if(logedCustomer !== null){
                 const {Name,ContactNumber,Address,Email} = req.body;
-                const locationAddress = JSON.stringify({Address});
-                const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address}
+                const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(Address)}&key=${geocodeApiKey}`;
+                const response = await axios.get(url);
+                const location = response.data.results[0].geometry.location;
+                const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address,lat:location.lat,lang:location.lng}
                 const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
                 console.log(updateCustomer);
                 createToken(updateCustomer._id,updateCustomer.Email);
@@ -529,3 +563,9 @@ export const UpdateProfile = async(req,res)=>{
         });
     }
 }
+
+export const getLocation = async (address) => {
+    
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`;
+    
+  }
