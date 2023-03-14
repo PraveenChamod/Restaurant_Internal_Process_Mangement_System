@@ -26,9 +26,42 @@ const AddTableComponent = () => {
             <Header>ADD TABLE</Header>
             <l.Div onSubmit={onSubmit}>
                 <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-                    <TextField id="standard-basic" label="Table No" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={TableNo} onChange={e=>setTableNo(e.target.value)}/>
-                    <TextField id="standard-basic" label="Maximum No of Peoples" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={NoOfPersons} onChange={e=>setNoOfPersons(e.target.value)} />
-                    <TextField id="standard-basic" label="Reservation Charge" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={price} onChange={e=>setprice(e.target.value)}/>
+                    <TextField 
+                        id="standard-basic" 
+                        label="Table No" 
+                        variant="standard" 
+                        InputLabelProps={{className:'textFeild_Label'}} 
+                        sx={{marginBottom:'10%'}} 
+                        value={TableNo} 
+                        onChange={e=>setTableNo(e.target.value)}
+                        InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                    />
+                    <TextField 
+                        id="standard-basic" 
+                        label="Maximum No of Peoples" 
+                        variant="standard" 
+                        InputLabelProps={{className:'textFeild_Label'}} 
+                        sx={{marginBottom:'10%'}} 
+                        value={NoOfPersons} 
+                        onChange={e=>setNoOfPersons(e.target.value)}
+                        InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                    />
+                    <TextField 
+                        id="standard-basic" 
+                        label="Reservation Charge" 
+                        variant="standard" 
+                        InputLabelProps={{className:'textFeild_Label'}} 
+                        sx={{marginBottom:'10%'}} 
+                        value={price} 
+                        onChange={e=>setprice(e.target.value)}
+                        InputProps={{
+                            style: { color: '#fff' },
+                            }}
+                    />
                 </FormControl>
                 <l.Div1>
                 <l.Div2>

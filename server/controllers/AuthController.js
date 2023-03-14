@@ -1,11 +1,19 @@
 import User from "../models/User.js";
 import { createToken, findUser, handleErrors } from "../util/AuthUtil.js";
-import { validatePassword } from "../util/PasswordUtility.js";
+import { GeneratePassword, GenerateSalt, validatePassword } from "../util/PasswordUtility.js";
 import jwt from 'jsonwebtoken';
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
 import passport from "passport";
+import { transporter } from "../util/NotificationUtil.js";
+import path from 'path';
+import ejs from 'ejs';
+
+
+const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
+
+console.log(__dirname);
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -133,6 +141,7 @@ export const UploadProfileImage = async (req,res)=>{
         }
     } catch (error) {
         res.status(500).json({
+            status:"Server ERROR",
             message:error.message
         })
     }
@@ -168,6 +177,7 @@ export const getUserProfile = async(req,res)=>{
         }
     } catch (error) {
         res.status(500).json({
+            status:"Server ERROR",
             message:error.message
         })
     }
@@ -200,50 +210,95 @@ export const PasswordReset = async (req,res)=>{
             res.status(402).json({message:`Initial Password is not matched`});
         }
     } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json({
+            status:"Server ERROR",
+            message:error.message
+        })
     }
 }
 const createOTP = ()=>{
     const otp = Math.floor(100000 + Math.random() * 900000);
     return otp;
 }
-const sendOTP = async (req,res)=>{
+let otp;
+export const sendOTP = async (req,res)=>{
     try {
-        const Email = req.body;
-        const user = await User.findOne({Email:Email}).populate('Email');
-        const otp= createOTP();
+        const {Email} = req.body;
+        console.log(req.body);
+        const user = await Customer.findOne({Email:Email}).populate('Email') || await ServiceProviders.findOne({Email:Email}).populate('Email');
+        otp = createOTP();
+        console.log(otp);
         if(user){
-            if(createUser.Role !== "Customer"){
-                const mailOption = {
-                    from : 'resto6430@gmail.com',
-                    to : Email,
-                    subject : 'Registration Confrimation',
-                    text:`Your OTP is ${otp}`
+            ejs.renderFile(`${__dirname}/Template/ForgotPassword.ejs`, { otp: otp }, (err, renderedHTML) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  const mailOption = {
+                    from: 'resto6430@gmail.com',
+                    to: Email,
+                    subject: 'Password Reset OTP',
+                    attachments: [{
+                      filename: 'logo.png',
+                      path: `${__dirname}/Template/logo.png`,
+                      cid: 'logo'
+                    }],
+                    html: renderedHTML
+                  };
+            
+                  transporter.sendMail(mailOption, (err, info) => {
+                    if (err) {
+                      console.log(err.message);
+                    } else {
+                      console.log(info.response);
+                    }
+                  });
+                  
+                  res.status(200).json({
+                    status: "Success",
+                    message: `OTP is sent to the ${user.Name}`
+                  });
                 }
-
-                transporter.sendMail(mailOption,(err,info)=>{
-                    if(err){
-                        console.log(err.message);
-                    }
-                    else{
-                        console.log(info.response);
-                    }
-                })
-            }
+              });
         }
         else{
             res.status(404).json({message:`Invalid Email`});
         }
     } catch (error) {
-        
+        res.status(500).json({
+            status:"Server ERROR",
+            message:error.message
+        })
     }
 }
 
 export const FrogotPassword = async (req,res)=>{
     try {
-        const {OTP,Password,ConfirmPassword} = req.body;
-        const otp = sendOTP();
+        const {OTP,Password,ConfirmPassword,Email} = req.body;
+        console.log(req.body);
+        if(parseInt(OTP) === otp){
+            const salt = await GenerateSalt();
+            const encryptedPassword = await GeneratePassword(Password,salt);
+            const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
+            const data = {Password:encryptedPassword,ConfirmPassword:confirmEncryptedPassword}
+            const passwordUpdate = await Customer.findOneAndUpdate({Email:Email},data,{new:true}).populate('Email') || await ServiceProviders.findOneAndUpdate({Email:Email},data,{new:true});
+            res.status(200).json({
+                status:"Success",
+                message:"Password Reset is Successfull",
+                data:{
+                    passwordUpdate
+                }
+            })
+        }
+        else{
+            res.status(400).json({
+                status:"Success",
+                message:"Invalid OTP",
+            })
+        }
     } catch (error) {
-        
+        res.status(500).json({
+            status:"Server ERROR",
+            message:error.message
+        })
     }
 }

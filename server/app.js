@@ -18,6 +18,12 @@ import CartRoutes from "./routes/CartRoutes.js";
 import TableReservationRoutes from "./routes/TableReservationRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
+import path from 'path';
+import ejs from 'ejs';
+
+
+export const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
+
 const app = express();
 
 dotenv.config();

@@ -14,6 +14,7 @@ export const Header = styled.h1`
     text-transform:uppercase;
   align-items: center;
   text-align: center;
+  margin-top: 2%;
   background: linear-gradient(
     60deg,
     rgb(178, 108, 41) 0%,

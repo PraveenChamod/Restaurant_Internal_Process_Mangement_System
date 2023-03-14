@@ -22,12 +22,11 @@ const ViewUserComponent = (props) => {
   const [name, setName] = useState("");
   const [contactno, setContactno] = useState("");
   const [role, setRole] = useState("");
-
+  
 
   const handleEmailChange = (event) => {
     const userEmail = event.target.value;
     setEmail(userEmail);
-  
     props.users.data.Users[0].map(user => {
       if (user.Email === userEmail) {
         setName(user.Name);
@@ -43,7 +42,7 @@ const ViewUserComponent = (props) => {
     <Container>
       <H1>USER DETAILS</H1>
       <Div>
-        <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
+        <FormControl sx={{ m: 1, width: "40ch" }} variant="standard" >
 
           <Searchbar type="search" placeholder="Enter the User email" onChange={handleEmailChange}/>
           
@@ -54,7 +53,10 @@ const ViewUserComponent = (props) => {
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
-            value={email}            
+            value={email}    
+            InputProps={{
+              style: { color: '#fff' },
+            }}     
           />
           <TextField 
             id="standard-basic" 
@@ -62,7 +64,10 @@ const ViewUserComponent = (props) => {
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
-            value={name}  
+            value={name}
+            InputProps={{
+              style: { color: '#fff' },
+            }}
           />
           <TextField
             id="standard-basic"
@@ -71,6 +76,9 @@ const ViewUserComponent = (props) => {
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
             value={contactno}
+            InputProps={{
+              style: { color: '#fff' },
+            }}
           />
           <TextField 
             id="standard-basic" 
@@ -79,6 +87,9 @@ const ViewUserComponent = (props) => {
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
             value={role}
+            InputProps={{
+              style: { color: '#fff' },
+            }}
           /> 
         </FormControl>
         <Div1>

@@ -70,6 +70,38 @@ export const getFoods = async (req,res)=>{
         res.status(501).json(error.message);
     }
 }
+
+// Method : GET
+// End Point : "api/v1/Food/:id";
+// Description : get Foods
+export const getFoodById = async (req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role=== "Admin"){
+            const{id} = req.params;
+            console.log(req.params);
+            const food = await Foods.findOne({_id:id});
+            if(food !== null){
+                res.status(200).json({
+                    status:"Success",
+                    message:"Food Item Deatils",
+                    data:{
+                        food
+                    }
+                });
+            }
+            else{
+                res.status(404).json({message:"There are no any recordes plase add foods"});
+            }
+        }
+        else{
+            res.status(401).json('Only Admin & Manager has access to do this operation');
+        }
+    } catch (error) {
+        res.status(501).json(error.message);
+    }
+}
+
 // Method : GET
 // End Point : "api/v1/Foods/:Category";
 // Description : get Foods by category
