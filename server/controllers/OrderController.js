@@ -328,6 +328,9 @@ export const SendOrderConfrimation = async(req,res)=>{
     }
  }
 
+// Method : GET
+// End Point : "api/v1/Deliverer/OrderDetails"; 
+// Description : Get Orders that deliverer have to deliver 
  export const CheckOrderDetails = async(req, res)=>{
     const user = req.user;
     try {
