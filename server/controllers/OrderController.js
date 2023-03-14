@@ -81,22 +81,63 @@ export const ViewAllOrders = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Manager" || user.Role === "Admin"){
-            const Orders  = await Order.find();
-            if(Orders){
-                res.status(200).json({
-                    status:'Success',
-                    message:'Details of All Orders',
-                    data:{
-                        Orders
-                    }
-                })
+            const findOrders = await Order.find();
+            let pendingOrders = [];
+            for (const order of findOrders) {
+                  let OrderDetails;
+                  console.log(order);
+                  try {
+                    const populatedOrder = await Order.findById(order.id)
+                      .populate({
+                        path: 'Customer',
+                        model: 'Customer'
+                      })
+                      .populate({
+                        path: 'Foods.food',
+                        model: 'Foods'
+                      })
+                      .exec();
+                    
+                    const Name = populatedOrder.Customer.Name;
+                    const Email = populatedOrder.Customer.Email;
+                    const ContactNumber = populatedOrder.Customer.ContactNumber;
+                    const CustomerAddress = populatedOrder.Customer.Address;
+                    const food = populatedOrder.Foods.map((item) => ({
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }));
+                    OrderDetails = {
+                      OrderId:order.id,
+                      customerName: Name,
+                      customerEmail:Email,
+                      ContactNumber:ContactNumber,
+                      CustomerAddress:CustomerAddress,
+                      food,
+                      TotalPrice: populatedOrder.TotalPrice,
+                    };
+                    pendingOrders.push(OrderDetails);
+                  } catch (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
+                  }
             }
-            else{
-                res.status(404).json({
-                    status:'Error',
-                    message:'There are no any orders exist'
-                })
-            }
+              
+              res.status(200).json({
+                status: "Success",
+                message: "Pending Order Details",
+                data: {
+                  pendingOrders
+                }
+              });
+        }
+        else{
+            res.status(401).json({
+                status: 'Error',
+                message: 'User Have No Authorization to do this action',
+            })
         }
     } catch (error) {
         res.status(500).json({
