@@ -14,18 +14,17 @@ export const OrderItem = async(req,res,next)=>{
     try {
         const user = req.user;
         if(user.Role === 'Customer'){
-            console.log( req.body);
+            console.log(req.body);
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
             const session = await mongoose.startSession();
             try {
-                if(user.Address !== null){
+                if(logedCustomer.Address !== null){
                         session.startTransaction();
                         const newOrder = await Order.create([
                                 req.body
                             ],
                             {session}
                         )
-                        console.log(newOrder);
                         const commit = await session.commitTransaction();
                         session.endSession();
                         res.status(201).json({
