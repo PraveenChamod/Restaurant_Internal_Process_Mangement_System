@@ -1,14 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:resto_mobile_application/src/common_widgets/Menu_Container.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_appbar.dart';
-import '../Customer/customer_home.dart';
-import '../Customer/customer_search.dart';
 
 class ProductMenuTitles extends StatefulWidget {
 
@@ -22,44 +19,6 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
 
   List<FoodMenuItems> data = [];
 
-  List<Map<String, String>> foodMenuItems = [
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Koththu",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Rice/Veg_Rice.jpg",
-      "ItemName": "Fried Rice",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Rice & Curry",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Burger/Chicken_Burger.jpg",
-      "ItemName": "Burger",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Appetizer",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Desert",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Beverages",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Salad",
-    },
-    {
-      "ItemImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "ItemName": "Other",
-    },
-  ];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -69,7 +28,8 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
         body: Stack(
           children: [
             const BackgroundImage(),
-            Expanded(
+            Padding(
+              padding: const EdgeInsets.all(10.0),
               child: FutureBuilder(
                 future: fetchData(),
                 builder: (context, snapshot){
@@ -83,8 +43,8 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
                       ),
                       itemBuilder: (BuildContext context, int index){
                         return MenuContainer(
-                          ItemImagePath: snapshot.data![index].category,
-                          ItemName: snapshot.data![index].itemName,
+                          itemImagePath: 'http://192.168.8.181:5000/Foodimages/${snapshot.data![index].itemImagePath}',
+                          itemName: snapshot.data![index].category,
                         );
                       },
                     );
@@ -123,20 +83,17 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
 
 //use the fromJson method of our model class to convert the JSON data to an object.
 class FoodMenuItems{
-  //final String itemImagePath;
+  final String itemImagePath;
   final String category;
-  final String itemName;
-  FoodMenuItems({required this.category, required this.itemName,});
+  FoodMenuItems({required this.itemImagePath, required this.category,});
   factory FoodMenuItems.fromJson(Map<String, dynamic> json){
     return FoodMenuItems(
-      //itemImagePath: json['FoodImage'],
+      itemImagePath: json['FoodImage'],
       category: json['Category'],
-      itemName: json['FoodName'],
     );
   }
   static List<FoodMenuItems> fromJsonList(dynamic jsonList){
     final foodMenuItemsList = <FoodMenuItems>[];
-    if (jsonList == null) return foodMenuItemsList;
     if (jsonList is List<dynamic>) {
       for (final json in jsonList) {
         foodMenuItemsList.add(
@@ -144,6 +101,21 @@ class FoodMenuItems{
         );
       }
     }
+
+
+
+    foodMenuItemsList.sort((a, b) {
+      if (a.category == b.category) {
+        return 0; // return 0 to indicate that the objects are equal
+      } else {
+        return a.category.compareTo(b.category); // return the comparison result of their age
+      }
+    });
+    //foodMenuItemsList = foodMenuItemsList.where((FoodMenuItems, index) => index == 0 || FoodMenuItems.age != foodMenuItemsList[index - 1].category).toList();
+
+
+
+
     return foodMenuItemsList;
   }
 }
