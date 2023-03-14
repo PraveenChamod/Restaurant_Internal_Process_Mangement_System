@@ -284,7 +284,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
  }
 
 // Method : POST
-// End Point : "api/v1/OrderConfirmation/:id";
+// End Point : "api/v1/OrderConfirmation/:id"; 
 // Description : Confirm Order
 export const SendOrderConfrimation = async(req,res)=>{
     try {

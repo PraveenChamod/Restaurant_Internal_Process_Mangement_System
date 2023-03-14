@@ -29,7 +29,7 @@ const PendingOrdersComponent = (props) => {
                                     <l.Td>{order.ContactNumber}</l.Td>
                                     <l.Td>{order.OrderId}</l.Td>
                                     <l.Td>
-                                        <Link to ="/Staff-MemberOrder-Details" className="btn">
+                                        <Link to ={`/Staff-MemberOrder-Details/${order.OrderId}`} className="btn">
                                             <l.Icon>
                                                 <AiFillEye/>
                                             </l.Icon>

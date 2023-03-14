@@ -170,12 +170,12 @@ function App() {
                 <Route path="/Staff-MemberView-Foods" element={<StaffMemberViewFoods />}/>
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables />}/>
                 <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders/>}/>
-                <Route path="/Staff-MemberOrder-Details" element={<StaffMemberOrderDetails/>}/>
+                <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
                 <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
-
+                
                 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
