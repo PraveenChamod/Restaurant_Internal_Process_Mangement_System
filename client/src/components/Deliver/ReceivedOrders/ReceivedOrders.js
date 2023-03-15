@@ -27,7 +27,7 @@ const DelivererReceivedOrders = (props) => {
                                         <l.Td>{order.ContactNumber}</l.Td>
                                         <l.Td>{order.TotalPrice}</l.Td>
                                         <l.Td>{order.OrderId}</l.Td>
-                                        <Link to={`/DelivererOrderDetails/${order.id}` } className="btn">
+                                        <Link to={`/DelivererOrderDetails/${order.OrderId}` } className="btn">
                                             <l.Icon><AiFillEye/></l.Icon>
                                         </Link>
                                     </l.Tr>

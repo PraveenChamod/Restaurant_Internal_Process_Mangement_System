@@ -16,7 +16,7 @@ export const Div = styled.div`
     height: 350px;
   }
 `;
-export const Div1 = styled.div`
+export const Div1 = styled.form`
   width: 45%;
   height: 100%;
   background-color: #1a1e21;
@@ -58,21 +58,14 @@ export const Div4 = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const Img = styled.img`
-  width: 200px;
-  height: 200px;
-  margin-top:10px;
-  border-top-right-radius: 50%;
-  border-top-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
-  @media screen and (max-width:200px){
-    border-bottom-right-radius: 50%;
-    border-top-left-radius: 50%;
-    border-bottom-left-radius: 50%;
-    border-top-right-radius: 50%;
-  }
-`;
+export const ImageSection = styled.div`
+  width: 160px;
+  height: 160px;
+  display: flex;
+  margin: 5%;
+  flex-direction: column;
+  align-items: flex-end;
+`
 export const UpdateButton = styled.button`
   position: relative;
   background: linear-gradient(to right, #FFBF00, #B26C29);
@@ -90,3 +83,41 @@ export const UpdateButton = styled.button`
   font-weight: 500;
 `;
 
+export const ImageSubSec = styled.div`
+  width: 160px;
+  height: 160px;
+  margin: 5%;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const Icon = styled.label`
+  &{
+    width: fit-content;
+  height: fit-content;
+  border-radius: 50px;
+  background-color:#FFBF00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 5%;
+  position: relative;
+  top:-25%;
+  left: -15%;
+  color: #fff;
+  }
+  &:hover{
+    cursor: pointer;
+  }
+`
+
+export const Image = styled.img`
+  width: 160px;
+  height: 160px;
+`

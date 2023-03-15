@@ -40,9 +40,40 @@ export const ImageSection= styled.div`
     background-color: #fff;
     margin-bottom: 5%;
 `
-export const UploadButtonSection= styled.div`
-    margin-bottom: 20%;
-    width: 250px;
+export const ImageSubSec = styled.div`
+  width: 250px;
+  height: 250px;
+  margin: 5%;
+  border-radius: 20px;
+  display: flex;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
+`
+export const Image = styled.img`
+  width: 250px;
+  height: 250px;
+`
+
+export const Icon = styled.label`
+  &{
+    width: fit-content;
+  height: fit-content;
+  border-radius: 50px;
+  background-color:#FFBF00;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  padding: 5%;
+  position: relative;
+  top:-25%;
+  left: 0%;
+  color: #fff;
+  }
+  &:hover{
+    cursor: pointer;
+  }
 `
 export const ButtonSection = styled.div`
     position: relative;

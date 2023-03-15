@@ -118,7 +118,7 @@ export const UploadProfileImage = async (req,res)=>{
                 }
             })
             const uploadServiceProviderImage = await findServiceProvider.save();
-            const updateServiceProvider = await ServiceProviders.findByIdAndUpdate(findCustomer.id,uploadServiceProviderImage,{new:true});
+            const updateServiceProvider = await ServiceProviders.findByIdAndUpdate(findServiceProvider.id,uploadServiceProviderImage,{new:true});
             res.status(201).json({
                 message:'Service Providers Profile Image Uploaded',
                 data:{

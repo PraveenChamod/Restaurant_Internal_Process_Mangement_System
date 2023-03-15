@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import styled from "styled-components";
 import {ChefImage }from "../../Images/InnerUi/chef.png";
@@ -10,44 +11,19 @@ import { FormButton, RegularButton } from "../shared/SharedElements/Buttons";
 import {img }from "../../Images/restoLogodark.png";
 import { GrMapLocation } from 'react-icons/gr';
 import {BsHourglassSplit} from 'react-icons/bs';
-import{
-    page,
-    SubSection,
-    Div1,
-    Div2,
-    FormSection,
-    h1,
-    ButtonSection,
-    ButtonSection1,
-    h3,
-    h4,
-    h5,
-
-} 
-from "./DeliverElement";
+import * as l from "./DeliverElement";
 import { Container } from "../shared/SharedElements/SharedElements";
 import { Header } from "../shared/SharedElements/SharedElements";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
-const DeliverComponent = () =>{
-    const [customerName,setCustomerName] = useState('');
-    const [address,setAddress]= useState('')
-    const [contactNo,setContactNo] = useState(0)
-    const [totalPrice,setTotalPrice] = useState(0)
-    const [paymentMethod,setPaymentMethod] = useState('')
+import { FaMapMarkedAlt } from "react-icons/fa";
+const DeliverComponent = (props) =>{
 
-    
+    console.log(props.data.OrderId);
 const handleSubmit =  async(e)=>{
     e.preventDefaults();
     try{
-        const data = new FormData();
-        data.append('customername',customerName)
-        data.append('adddress',address)
-        data.append('contactNo',contactNo)
-        data.append('totalPrice',totalPrice)
-        data.append('paymentMethod',paymentMethod)
-        console.log(data);
-        const res =  await axios.post('api/v1/serviceProvider/')
+        
     }catch(error){
 
     }
@@ -55,55 +31,130 @@ const handleSubmit =  async(e)=>{
 }
         return ( 
             <Container>
-                <SubSection>
+                <l.SubSection>
                 <Header>
                         ORDER DETAILS
                     </Header>
-                    <FormSection>
-                        <Div1>
+                    <l.FormSection>
+                        <l.Div1>
+                            <FormControl  sx={{ m: 1, width: "35ch" }} variant="standard">
+                                <TextField 
+                                    id="standard-basic" 
+                                    label="Customer Name" 
+                                    variant="standard" 
+                                    InputLabelProps={{className:'textFeild_Label'}} 
+                                    sx={{marginBottom:'10%'}} 
+                                    value={props.data.customerName}
+                                    InputProps={{
+                                        style: { color: '#fff' },
+                                        }}      
+                                />
+                                <TextField 
+                                    id="standard-basic" 
+                                    label="Address" 
+                                    variant="standard" 
+                                    InputLabelProps={{className:'textFeild_Label'}} 
+                                    sx={{marginBottom:'10%'}}
+                                    value={props.data.Address}
+                                    InputProps={{
+                                        style: { color: '#fff' },
+                                        }} 
+                                />
+                                
+                                </FormControl>
+                                <Link to={`/DelivererMap/${props.data.OrderId}` } className="btn">
+                                    <l.Icon> 
+                                        <FaMapMarkedAlt/>
+                                    </l.Icon>
+                                </Link>
+                            {
+                                props.data.food.map(food=>{
+                                    return(
+                                        <l.CartSection>
+                                            {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                                {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
+                                            </l.SelectIcon> */}
+                                            <l.ItemsCard>
+                                                <l.FoodImage>
+                                                    <l.Food src={`http://localhost:5000/Foodimages/${food.image}`}/>
+                                                </l.FoodImage>
+                                                <l.Details>
+                                                    <l.MainText>
+                                                        <l.FoodName>
+                                                            {food.FoodName}
+                                                        </l.FoodName>
+                                                    </l.MainText>
+                                                    <l.SubText>
+                                                        {/* <l.Text>
+                                                            {cart.Size}
+                                                        </l.Text> */}
+                                                        <l.Text>
+                                                            Quantity : {food.quantity}
+                                                        </l.Text>
+                                                        {/* <l.Text>
+                                                            Price : {food.quantity * cart.price}
+                                                        </l.Text> */}
+                                                    </l.SubText>
+                                                </l.Details>
+                                            </l.ItemsCard>
+                                        </l.CartSection> 
+                                    )
+                                })
+                            }
+                        </l.Div1>
+                        <l.Div2>
                         <FormControl  sx={{ m: 1, width: "35ch" }} variant="standard">
-                            <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} 
-                            onChange = {(e)=>{setCustomerName(e.target.value)}}
-                            value={customerName}
+                            <TextField 
+                                id="standard-basic" 
+                                label="Contact No" 
+                                variant="standard" 
+                                InputLabelProps={{className:'textFeild_Label'}} 
+                                sx={{marginBottom:'10%'}} 
+                                value={props.data.ContactNumber}
+                                InputProps={{
+                                    style: { color: '#fff' },
+                                    }} 
                             />
-                            <TextField id="standard-basic" label="Address" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}}
-                            onChange = {(e)=>{setAddress(e.target.value)}}
-                            value={address}
+                            <TextField 
+                                id="standard-basic" 
+                                label="Payment Method" 
+                                variant="standard" 
+                                InputLabelProps={{className:'textFeild_Label'}} 
+                                sx={{marginBottom:'10%'}}
+                                value={props.data.food.PaymentMethod}
+                                InputProps={{
+                                    style: { color: '#fff' },
+                                    }} 
                             />
-                           </FormControl>
-
-                           <h3> <GrMapLocation/></h3>
-                           
-
-                        </Div1>
-                        <Div2>
-                        <FormControl  sx={{ m: 1, width: "35ch" }} variant="standard">
-                            <TextField id="standard-basic" label="Contact No" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} 
-                            onChange = {(e)=>{setContactNo(e.target.value)}}
-                            value={contactNo}
-                            />
-                            <TextField id="standard-basic" label="Payment Method" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}}
-                            onChange = {(e)=>{setPaymentMethod(e.target.value)}}
-                            value={paymentMethod}
-                            />
-                            <TextField id="standard-basic" label="Total Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}}
-                            onChange = {(e)=>{setTotalPrice(e.target.value)}}
-                            value={totalPrice}
+                            <TextField 
+                                id="standard-basic" 
+                                label="Total Price" 
+                                variant="standard" 
+                                InputLabelProps={{className:'textFeild_Label'}} 
+                                sx={{marginBottom:'10%'}}
+                                value={props.data.TotalPrice} 
+                                InputProps={{
+                                    style: { color: '#fff' },
+                                    }} 
                             />
                          </FormControl>
-
-                            <h4> <BsHourglassSplit/>Pending</h4>
-
-                            <ButtonSection>
+                            <l.IconSection>
+                                <l.Icon1> 
+                                    <BsHourglassSplit/>
+                                </l.Icon1>
+                                <l.Text>
+                                    Pending
+                                </l.Text>
+                            </l.IconSection>
+                            <l.ButtonSection>
                                 <FormButton onClick={handleSubmit}>CONFIRM</FormButton>
-                            </ButtonSection>
-                        </Div2>
-                    </FormSection>
-                </SubSection>
-                <ButtonSection1>
+                            </l.ButtonSection>
+                        </l.Div2>
+                    </l.FormSection>
+                </l.SubSection>
+                <l.ButtonSection1>
                     <RegularButton>Back</RegularButton>
-                </ButtonSection1>
-
+                </l.ButtonSection1>
             </Container>
     );
 };
