@@ -127,6 +127,11 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               );
             },
           ),
+          const Divider(),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text('Configurations',),
+          ),
           ListTile(
             leading: const Icon(
               Icons.settings,

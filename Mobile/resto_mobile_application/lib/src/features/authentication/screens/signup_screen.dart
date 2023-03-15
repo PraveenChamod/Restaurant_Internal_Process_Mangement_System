@@ -92,6 +92,7 @@ class _LoginScreenState extends State<SignupScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width/1.25 - 40,
                             child: TextField(
+                              textCapitalization: TextCapitalization.none,
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               decoration: const InputDecoration(
