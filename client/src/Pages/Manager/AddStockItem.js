@@ -1,9 +1,9 @@
 import AddStockComponent from "../../components/Manager_Components/AddStocks/AddStocks";
 
-const AddStockItem = () => {
+const AddStockItem = (props) => {
     return ( 
         <>
-            <AddStockComponent/>
+            <AddStockComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

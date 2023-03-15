@@ -17,5 +17,6 @@ export const SubSection = styled.div`
 export const Icon = styled.div`
     width: 500px;
     height: 500px;
-    background-color: blue;
+    background-color: red;
+    z-index: 9999;
 `

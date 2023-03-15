@@ -3,7 +3,7 @@ import FoodDetails from "../../components/shared/FoodDetails/FoodDetails";
 const StaffMemberViewFoods = (props) => {
     return (  
         <>
-            <FoodDetails/>
+            <FoodDetails BackRoutes={props.BackRoutes}/>
         </>
     );
 }

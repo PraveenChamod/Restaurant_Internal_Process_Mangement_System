@@ -5,7 +5,8 @@ import { useState } from "react";
 import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
 import * as l from './AddOffersElements';
-const AddOffersComponent = () => {
+import { Link } from 'react-router-dom';
+const AddOffersComponent = (props) => {
     const[image,setImage] = useState(null);
     const [SpecialPrice,setSpecialPrice] = useState('');
     const [Category,setCategory] = useState('');
@@ -81,7 +82,9 @@ const AddOffersComponent = () => {
                 </l.FormSection>
             </l.SubSection>
             <l.ButtonSection1>
-                <RegularButton>Back</RegularButton>
+                <Link to={props.BackRoutes} className="btn">
+                    <RegularButton>Back</RegularButton>
+                </Link>
             </l.ButtonSection1>
         </Container>
      );

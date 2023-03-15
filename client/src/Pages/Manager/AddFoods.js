@@ -1,9 +1,9 @@
 import AddFoodsComponent from "../../components/shared/AddFoods/AddFoods";
 
-const ManagerAddFoods = () => {
+const ManagerAddFoods = (props) => {
     return ( 
         <>
-            <AddFoodsComponent/>
+            <AddFoodsComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

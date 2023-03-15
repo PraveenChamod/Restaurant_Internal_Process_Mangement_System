@@ -9,7 +9,7 @@ import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import { useState } from "react";
 import axios from "axios";
 
-const AddSupplierOrder = () => {
+const AddSupplierOrder = (props) => {
   const [Item, setItem] = useState("");
   const [Quantity, setQuantity] = useState();
   const [Date, setDate] = useState("");
@@ -67,7 +67,7 @@ const AddSupplierOrder = () => {
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="#" className="btn">
+          <Link to={props.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

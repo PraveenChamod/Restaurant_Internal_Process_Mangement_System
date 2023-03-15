@@ -82,7 +82,7 @@ export const ViewAllOrders = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Manager" || user.Role === "Admin"){
             const findOrders = await Order.find();
-            let pendingOrders = [];
+            let Orders = [];
             for (const order of findOrders) {
                   let OrderDetails;
                   console.log(order);
@@ -117,8 +117,9 @@ export const ViewAllOrders = async(req,res)=>{
                       CustomerAddress:CustomerAddress,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
+                      Status:populatedOrder.Status
                     };
-                    pendingOrders.push(OrderDetails);
+                    Orders.push(OrderDetails);
                   } catch (err) {
                     console.error(err);
                     return res.status(500).send('Server Error');
@@ -129,7 +130,7 @@ export const ViewAllOrders = async(req,res)=>{
                 status: "Success",
                 message: "Pending Order Details",
                 data: {
-                  pendingOrders
+                  Orders
                 }
               });
         }
@@ -146,6 +147,7 @@ export const ViewAllOrders = async(req,res)=>{
         })
     }
 }
+
 // Method : GET
 // End Point : "api/v1/PendingOrders";
 // Description : Get Pending Orders
