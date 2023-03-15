@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../constants/image_strings.dart';
-import '../Drawer_Items/favourites_screen.dart';
-import '../Drawer_Items/help_center_screen.dart';
-import '../Drawer_Items/my_account_screen.dart';
-import '../Drawer_Items/orders_screen.dart';
-import '../Drawer_Items/settings_screen.dart';
 import '../home_screen.dart';
+import 'deliverer_drawer_items/deliever_orders_summary.dart';
+import 'deliverer_drawer_items/deliverer_account.dart';
+import 'deliverer_drawer_items/deliverer_help_center.dart';
+import 'deliverer_drawer_items/deliverer_settings.dart';
 
-class CustomerHomeDrawer extends StatefulWidget {
-  const CustomerHomeDrawer({Key? key}) : super(key: key);
+class DelivererHomeDrawer extends StatefulWidget {
+  const DelivererHomeDrawer({Key? key}) : super(key: key);
+
   @override
-  State<CustomerHomeDrawer> createState() => _CustomerHomeDrawerState();
+  State<DelivererHomeDrawer> createState() => _DelivererHomeDrawerState();
 }
-class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
+
+class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
   late Future<Map<String, dynamic>> _futureData;
   @override
   void initState() {
@@ -39,6 +40,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             decoration: const BoxDecoration(
               color: Color(0xFF161b1d),
             ),
+
             child: Center(
               child: FutureBuilder<Map<String, dynamic>>(
                 future: _futureData,
@@ -47,11 +49,13 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                     final String userImagePath = snapshot.data!['user']['ProfileImage'];
                     final String userName = snapshot.data!['user']['Name'];
                     final String userEmail = snapshot.data!['user']['Email'];
-                    final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                    //Error in here because deliver has not profile image yet.....
+                    //final String imageUrl = 'http://localhost:5000/images/$userImagePath';
+                    const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:  [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 40,
                           backgroundImage: NetworkImage(imageUrl),
                         ),
@@ -90,7 +94,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const MyAccountScreen();
+                    return const DelivererAccount();
                   },
                 ),
               );
@@ -100,27 +104,12 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             leading: const Icon(
               Icons.delivery_dining,
             ),
-            title: const Text('Orders'),
+            title: const Text('Orders Summary'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const OrdersScreen();
-                  },
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.favorite,
-            ),
-            title: const Text('Favourites'),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_){
-                    return const FavouritesScreen();
+                    return const DelivererOrdersSum();
                   },
                 ),
               );
@@ -140,7 +129,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const SettingsScreen();
+                    return const DelivererSettings();
                   },
                 ),
               );
@@ -155,7 +144,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const HelpCenterScreen();
+                    return const DelivererHelpCenter();
                   },
                 ),
               );

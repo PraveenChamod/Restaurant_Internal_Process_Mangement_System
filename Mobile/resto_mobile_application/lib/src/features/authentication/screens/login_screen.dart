@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -12,9 +11,8 @@ import 'package:social_login_buttons/social_login_buttons.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
-import 'Customer/customer_home.dart';
 import 'Customer/customer_main_page.dart';
-import 'Products/products_menu_titles.dart';
+import 'deliverer/deliverer_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -291,8 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
     String  jwtToken = '';
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
       var response = await http.post(
-        //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
-        Uri.parse("http://192.168.8.181:5000/api/v1/Auth/LoginUser"),
+        Uri.parse("http://$hostName:5000/api/v1/Auth/LoginUser"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -346,12 +343,30 @@ class _LoginScreenState extends State<LoginScreen> {
     print("Shared Email: $UserEmail");
     String? userToken = pref.getString("JwtToken");
     print("Shared Token: $userToken");
-    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const CustomerMainPage())
+
+
+    //Check the logged User's Role By using GET Method
+    final response = await http.get(
+      Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
     );
+    if (response.statusCode == 201) {
+      final loggedUser =  jsonDecode(response.body);
+      print(loggedUser['user']['Name']);
+      print(loggedUser['user']['Role']);
+      String loggedUserRole = loggedUser['user']['Role'];
+      await pref.setString("LoginUserRole", loggedUserRole);
+      String? role = pref.getString("LoginUserRole");
+      print("Shared Role: ${role!}");
+    } else {
+      throw Exception('Failed to load data');
+    }
+    String? role = pref.getString("LoginUserRole");
+    role == 'Customer'
+      ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage()))
+      : Navigator.push(context, MaterialPageRoute(builder: (context) => const DelivererHome()));
   }
 }
-
-
-

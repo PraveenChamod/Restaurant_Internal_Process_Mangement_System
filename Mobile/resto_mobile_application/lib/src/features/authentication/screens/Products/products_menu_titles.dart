@@ -5,6 +5,7 @@ import 'package:resto_mobile_application/src/common_widgets/Menu_Container.dart'
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_appbar.dart';
+import '../../../../constants/image_strings.dart';
 
 
 class ProductMenuTitles extends StatefulWidget {
@@ -44,7 +45,7 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return MenuContainer(
-                            itemImagePath: 'http://192.168.8.181:5000/Foodimages/${snapshot.data![index].itemImagePath}',
+                            itemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].itemImagePath}',
                             itemName: snapshot.data![index].category,
                           );
                         },
@@ -67,7 +68,7 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
     String? userToken = pref.getString("JwtToken");
     print("In the fetchdata() ${userToken!}");
     final response = await http.get(
-      Uri.parse('http://192.168.8.181:5000/api/v1/Foods'),
+      Uri.parse('http://$hostName:5000/api/v1/Foods'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",

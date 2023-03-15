@@ -1,25 +1,24 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:http/http.dart' as http;
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:resto_mobile_application/src/common_widgets/drawer_item_appbar.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../common_widgets/background_image.dart';
-import '../../../../constants/image_strings.dart';
 
-class MyAccountScreen extends StatefulWidget {
-  const MyAccountScreen({Key? key}) : super(key: key);
+import '../../../../../common_widgets/background_image.dart';
+import '../../../../../common_widgets/deliverer_drawer_item_appbar.dart';
+import '../../../../../common_widgets/drawer_item_appbar.dart';
+class DelivererAccount extends StatefulWidget {
+  const DelivererAccount({Key? key}) : super(key: key);
 
   @override
-  State<MyAccountScreen> createState() => _MyAccountScreenState();
+  State<DelivererAccount> createState() => _DelivererAccountState();
 }
 
-class _MyAccountScreenState extends State<MyAccountScreen> {
-
-
+class _DelivererAccountState extends State<DelivererAccount> {
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
   Future getImage() async {
@@ -40,15 +39,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     super.initState();
     _futureData = getUserDetails();
   }
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
-        appBar: const DrawerItemAppbar(title: "My Account"),
+        appBar: const DelivererDrawerItemAppbar(title: "My Account"),
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
@@ -71,11 +67,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         final String userEmail = snapshot.data!['user']['Email'];
                         final String userContact = snapshot.data!['user']['ContactNumber'];
                         final String userAddress = snapshot.data!['user']['Address'];
-                        //const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
-                        final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                        final String imageUrl = 'http://localhost:5000/images/$userImagePath';
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            _image != null ?
+                            Image.file(_image!, width: 50, height: 50, fit: BoxFit.cover) :
                             CircleAvatar(
                               radius: 70,
                               backgroundImage: NetworkImage(imageUrl),
@@ -313,7 +310,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     String? userToken = pref.getString("JwtToken");
     print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
-      Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
+      Uri.parse('http://localhost:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
