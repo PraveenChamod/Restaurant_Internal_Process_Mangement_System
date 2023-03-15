@@ -243,8 +243,9 @@ export const ViewPendingOrders = async(req,res,next)=>{
                 const Name = populatedOrder.Customer.Name;
                 const Email = populatedOrder.Customer.Email;
                 const ContactNumber = populatedOrder.Customer.ContactNumber;
+                const Address = populatedOrder.Customer.Address;
                 const lat = populatedOrder.Customer.lat;
-                const lang = populatedOrder.Customer.lang
+                const lang = populatedOrder.Customer.lang;
                 const food = populatedOrder.Foods.map((item) => ({
                   FoodName: item.food.FoodName,
                   Category: item.food.Category,
@@ -257,6 +258,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                   customerName: Name,
                   customerEmail:Email,
                   ContactNumber:ContactNumber,
+                  Address:Address,
                   lat:lat,
                   lang:lang,
                   food,

@@ -86,6 +86,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
 import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
+import Map from './Pages/Deliverer/Map';
 
 function App() {
   
@@ -203,7 +204,7 @@ function App() {
                 <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
                 <Route path="/DelivererAllOrderDetails" element={<AllOrderDetails/>}/>   
                 <Route path="/DelivererOrderDetails/:id" element={<DeliveryOrderDetails/>}/>   
-                {/* <Route path="/DelivereAllOrderDetails" element={<AllOrderDetails Tables={TableColumns[3]}/>}/>    */}
+                <Route path="/DelivererMap/:id" element={<Map/>}/>   
               
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Supplier ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   

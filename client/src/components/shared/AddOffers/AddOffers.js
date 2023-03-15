@@ -3,8 +3,10 @@ import { FormButton, RegularButton, UploadButton } from '../SharedElements/Butto
 import { Container, Header } from '../SharedElements/SharedElements';
 import { useState } from "react";
 import axios from 'axios';
+import { FaCamera } from 'react-icons/fa';
 import * as l from './AddOffersElements';
 const AddOffersComponent = () => {
+    const[image,setImage] = useState(null);
     const [SpecialPrice,setSpecialPrice] = useState('');
     const [Category,setCategory] = useState('');
     const [OfferImage, setOfferImage] = useState('');
@@ -19,6 +21,9 @@ const AddOffersComponent = () => {
         } catch (error) {
             console.log(error.message);
         }
+    }
+    const handleUpload = (e)=>{
+        setImage(e.target.files[0]);
     }
     return ( 
         <Container>
@@ -56,12 +61,19 @@ const AddOffersComponent = () => {
                         </FormControl>
                     </l.LeftSide>
                     <l.RightSide>
-                        <l.ImageSection>
-                            
+                    <l.ImageSection>
+                            <l.ImageSubSec>
+                            {image ? (
+                                <l.Image src={URL.createObjectURL(image)} />
+                                ) : (
+                                <p></p>
+                            )}
+                            </l.ImageSubSec>
+                            <l.Icon>
+                                <FaCamera/>
+                                    <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
+                            </l.Icon>
                         </l.ImageSection>
-                        <l.UploadButtonSection >
-                            <UploadButton ><input onChange={e=>setOfferImage(e.target.files[0])} type="file"/></UploadButton>
-                        </l.UploadButtonSection>
                         <l.ButtonSection>
                             <FormButton>Add</FormButton>
                         </l.ButtonSection>
