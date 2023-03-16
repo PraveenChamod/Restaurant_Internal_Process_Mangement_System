@@ -1,9 +1,9 @@
 import TableReservationComponent from "../../components/Staff-Member_Components/TableReservationDetails/TableReservation";
 
-const StaffMemberTableReservationDetails = () => {
+const StaffMemberTableReservationDetails = (props) => {
     return ( 
         <>
-        <TableReservationComponent/>
+        <TableReservationComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

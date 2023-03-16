@@ -39,7 +39,7 @@ const CustomerProfile = (props) => {
     e.preventDefault();
     try {
       const Data = {Name,Email,ContactNumber,Address}
-      const res = await axios.patch(`api/v1/Customer/UpdateProfile/${user?.Email}`,Data);
+      const res = await axios.patch(`api/v1/User/Profile/${user?.Email}`,Data);
       if(res.status == 200 || res.status == 201){
         console.log(res);
         loadUser();
@@ -54,8 +54,8 @@ const CustomerProfile = (props) => {
     try {
       const formdata = new FormData();
       formdata.append('image',Imagename);
-      const res = await axios.patch('api/v1/Auth/uploadProfilePicture',formdata);
-      console.log(res)
+      const res = await axios.patch('api/v1/Auth/ProfilePicture',formdata);
+      console.log(res);
       loadUser();
     } catch (error) {
       console.log(error.message);      
@@ -64,7 +64,7 @@ const CustomerProfile = (props) => {
   const handleUpload = (e)=>{
     setImage(e.target.files[0]);
   }
-  console.log(user);
+  console.log(Imagename);
   return (
     <Page>
       <Page1>
@@ -98,7 +98,7 @@ const CustomerProfile = (props) => {
                     <FaCamera/>
                       <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
                   </Icon>
-              </ImageSection>
+                </ImageSection>
               <Div4>
                 <RegularButton onClick={uploadImage}>Upload</RegularButton>
                 <br/>

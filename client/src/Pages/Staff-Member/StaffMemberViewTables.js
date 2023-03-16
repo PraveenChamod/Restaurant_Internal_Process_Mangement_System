@@ -3,7 +3,7 @@ import TableDetails from "../../components/shared/TableDetails/TableDetails";
 const StaffMemberViewTables = (props) => {
     return ( 
         <>
-            <TableDetails/>
+            <TableDetails BackRoutes={props.BackRoutes}/>
         </>
      );
 }

@@ -16,7 +16,7 @@ const SupplierItemSchema = mongoose.Schema({
         required:true,
         default:Date.now()
     },
-
+    
 },
 {
     toJSON: { 

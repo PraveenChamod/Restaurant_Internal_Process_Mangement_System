@@ -1,21 +1,37 @@
 import { FormControl, MenuItem, Select, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3, Div4, Div5, Div6, Div7, Div8, Div9, FormButton, Hr, SubHeader } from "./OrderDetailsElements";
 const OrderDetailsComponent = () => {
+    const {id} = useParams()
 
-
+const [customerName,setCustomerName] = useState('')
+const [address,setAdress] = useState('')
+const [contactNo,setContactNo] = useState('')
+const [paymentMethod,setPaymentMethod] = useState('')
+const [totalPrice,setTotalPrice] = useState(0)
+const [Items,setItem] = useState([])
+const responce = axios.get("api/v1/Order/"+id)
+.then(responce=>{
+    console.log('order details is'+ responce.data)
+})
+.catch(err=>{
+    console.log(err.message);
+})
     return (
         <Container>
             <Header>Order Details</Header>
             <Div>
-                <Div2>
+                <Div2> 
                     <Div1>
                         <FormControl>
                             <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
                             <TextField id="standard-basic" label="Address" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
-                            <Select
+
+                            {/* <Select
                             defaultValue={30}
                             inputProps={{
                                 name: "role",
@@ -32,7 +48,13 @@ const OrderDetailsComponent = () => {
                                 <MenuItem value={1} >Deliverer</MenuItem>
                                 <MenuItem value={2} >Supplier</MenuItem>
                                 <MenuItem value={3} >Staff-Member</MenuItem>
-                            </Select>                       
+                            </Select>  
+                            
+                            */}
+                        {/**      */  }
+
+
+
                         </FormControl>
                     </Div1>
                     <Div1>

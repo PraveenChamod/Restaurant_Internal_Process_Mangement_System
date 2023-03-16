@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/authentication/screens/Products/Products_Menu_Titles.dart';
+import '../features/authentication/screens/Products/products_menu_titles.dart';
 import '../features/authentication/screens/forget_password/make_selction.dart';
 import '../features/authentication/screens/login_screen.dart';
 import '../features/authentication/screens/signup_screen.dart';
@@ -30,7 +30,7 @@ class _MainFeaturesState extends State<MainFeatures> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return widget.title == "Restaurant Menus"
+              return widget.title == "Explore Menu"
                   ? const ProductMenuTitles()
                   : widget.title == "Online Order"
                   ? const SignupScreen()

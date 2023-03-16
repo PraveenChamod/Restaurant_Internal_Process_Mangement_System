@@ -1,9 +1,9 @@
 import ViewUserComponent from "../../components/shared/ViewUser/ViewUser";
 
-const AdminViewUser = () => {
+const AdminViewUser = (props) => {
     return ( 
         <>
-            <ViewUserComponent/>
+            <ViewUserComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-export const Div = styled.div`
+export const Div = styled.form`
   width: 50%;
   height: fit-content;
   background-color: #1a1e21;

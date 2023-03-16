@@ -1,9 +1,9 @@
 import AddUserComponent from "../../components/shared/AddUser/AddUser";
 
-const AddOutletStaff = () => {
+const AddOutletStaff = (props) => {
     return ( 
         <>
-            <AddUserComponent/>
+            <AddUserComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

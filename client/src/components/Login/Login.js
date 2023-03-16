@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../../Hooks/useAuth";
 import LoginImage from "../../Images/foods/pancake.jpg";
@@ -36,7 +36,13 @@ import {
     SocialMedia,
     Icon
 } from './LoginElements'
+import { toast } from "react-hot-toast";
+
 const Login = () => {
+
+   
+
+      
     const[change,setChange] = useState(false);
     const handleChange = ()=>{
         if(!change){
@@ -59,7 +65,28 @@ const Login = () => {
     const SignupSubmit = async(e)=>{
         e.preventDefault();
         try {
-            RegisterUser(formData);  
+            toast.promise(
+                RegisterUser(formData),
+                {
+                    loading:'Registering.....',
+                    success: (data)=>`User Registered Successfully`,
+                    error:(err)=>{
+                        console.log(err.response);
+                        if(!err?.response?.data?.message){
+                            return 'Something went wrong! Try again'
+                        }
+                        return `${err.response.data.message}`
+                    }
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem'
+                    }
+                }
+            )
         } catch (error) {
             console.log(error);
         }
@@ -68,8 +95,28 @@ const Login = () => {
     const loginSubmit = (e)=>{
         e.preventDefault();
         try {
-            const loginData = {Email,Password};
-            logingUser(loginData);
+            toast.promise(
+                logingUser({Email,Password}),
+                {
+                    loading:'Logging in .....',
+                    success: (data)=>`Logged in successfully`,
+                    error:(err)=>{
+                        if(!err?.response?.data?.message){
+                            return 'Something went wrong! Try again'
+                        }
+                        return `${err?.response?.data?.message}`
+                    }
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem'
+                    }
+                }
+
+            )
         } catch (error) {
             console.log(error);
         }
@@ -90,7 +137,7 @@ const Login = () => {
                     navigate('/Staff-MemberDashBoard')
                     break;
                 case 'Supplier':
-                    navigate('/SuppliierDashBoard')
+                    navigate('/SupplierDashBoard')
                     break;
                 case 'Deliverer':
                     navigate('/DelivererDashBoard')
@@ -169,8 +216,8 @@ const Login = () => {
                                 <InputSignUp type ="password" name="ConfPassword" placeholder="Re-enter the password" value={ConfirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                             </Column>
                             <SocialMedia>
-                                <Icon><FcGoogle/></Icon>
                                 <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
+                                <Icon><FcGoogle/></Icon>
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia>
                         <Bottom>

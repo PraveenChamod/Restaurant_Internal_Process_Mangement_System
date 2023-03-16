@@ -1,30 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
 import {
-  Page,
   Div,
   Div1,
   Div2,
   Div3,
   H1,
   Searchbar
-
 } from './ViewUserElements';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container } from "../SharedElements/SharedElements";
+import useAuth from "../../../Hooks/useAuth";
 
-const ViewUserComponent = () => {
+const ViewUserComponent = (props) => {
 
+  const [email, setEmail] = useState("");
+
+  const [name, setName] = useState("");
+  const [contactno, setContactno] = useState("");
+  const [role, setRole] = useState("");
   
 
+  const handleEmailChange = (event) => {
+    const userEmail = event.target.value;
+    setEmail(userEmail);
+    props.users.data.Users[0].map(user => {
+      if (user.Email === userEmail) {
+        setName(user.Name);
+        setContactno(user.ContactNumber);
+        setRole(user.Role);
+      }else{
+        console.log("NO Such Kind Of User");
+      }
+    });
+  };
+  
   return (
     <Container>
       <H1>USER DETAILS</H1>
       <Div>
-        <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
-          <Searchbar type="search" placeholder="Enter the User email" />
+        <FormControl sx={{ m: 1, width: "40ch" }} variant="standard" >
+
+          <Searchbar type="search" placeholder="Enter the User email" onChange={handleEmailChange}/>
+          
           <TextField
             id="standard-basic"
             label="Email"
@@ -32,32 +52,44 @@ const ViewUserComponent = () => {
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
+            value={email}    
+            InputProps={{
+              style: { color: '#fff' },
+            }}     
           />
           <TextField 
             id="standard-basic" 
             label="User Name" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}/>
+            sx={{marginBottom:'5%'}}
+            value={name}
+            InputProps={{
+              style: { color: '#fff' },
+            }}
+          />
           <TextField
             id="standard-basic"
             label="Contact Number"
             variant="standard"
             InputLabelProps={{className:'textFeild_Label'}} 
             sx={{marginBottom:'5%'}}
+            value={contactno}
+            InputProps={{
+              style: { color: '#fff' },
+            }}
           />
           <TextField 
             id="standard-basic" 
             label="Role" 
             variant="standard" 
             InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}/>
-          <TextField 
-            id="standard-basic" 
-            label="Gender" 
-            variant="standard" 
-            InputLabelProps={{className:'textFeild_Label'}} 
-            sx={{marginBottom:'5%'}}/>
+            sx={{marginBottom:'5%'}}
+            value={role}
+            InputProps={{
+              style: { color: '#fff' },
+            }}
+          /> 
         </FormControl>
         <Div1>
           <Div2>
@@ -78,7 +110,7 @@ const ViewUserComponent = () => {
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to={props.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

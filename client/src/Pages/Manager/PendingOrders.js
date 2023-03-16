@@ -1,9 +1,9 @@
 import PendingOrdersComponent from "../../components/shared/PendingOrders/PendingOrders";
 
-const PendingOrders = () => {
+const PendingOrders = (props) => {
     return ( 
         <>
-            <PendingOrdersComponent/>
+            <PendingOrdersComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

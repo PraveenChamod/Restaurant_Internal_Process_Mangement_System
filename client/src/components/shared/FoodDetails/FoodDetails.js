@@ -5,7 +5,9 @@ import Spinner from "../Spinner/Spinner";
 import * as l from './FoodDetailsElements'
 import { AiFillEye } from 'react-icons/ai';
 import useAuth from "../../../Hooks/useAuth";
+import { Link } from "react-router-dom";
 const FoodDetails = (props) => {
+    
     return ( 
         <Container>
             <Header>
@@ -28,7 +30,9 @@ const FoodDetails = (props) => {
                                         <l.Td>{row.Category}</l.Td>
                                         <l.Td>{row.Price}</l.Td>
                                         <l.Td>{row.Status}</l.Td>
-                                        <l.Icon><AiFillEye/></l.Icon>
+                                        <Link to={`/AdminView-Food/${row.id}` || `/ManagerView-Food/${row.id}` } className="btn">
+                                            <l.Icon><AiFillEye/></l.Icon>
+                                        </Link>
                                     </l.Tr>
                                 )
                             })
@@ -36,9 +40,11 @@ const FoodDetails = (props) => {
                     </l.Table>
                 </l.SubContainer>
             <l.ButtonSection>
-                <RegularButton>
-                    Back
-                </RegularButton>
+                <Link to={props.BackRoutes} className="btn">
+                    <RegularButton>
+                        Back
+                    </RegularButton>
+                </Link>
             </l.ButtonSection>
         </Container>
      );

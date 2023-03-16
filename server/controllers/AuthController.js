@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
-
+import passport from "passport";
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -22,29 +22,62 @@ export const LogInUser = async (req,res)=>{
     
     const {Email,Password} = req.body;
     try {
-        const existingUser = await User.findOne({Email:Email});
-        console.log(existingUser);
-        if(existingUser !== null){
-            const result = await validatePassword(Password,existingUser.Password);
+        const existingCustomer = await Customer.findOne({Email:Email});
+        const existingServiceProvider = await ServiceProviders.findOne({Email:Email});
+        if(existingCustomer !== null){
+            const result = await validatePassword(Password,existingCustomer.Password);
             
             if(result){
-                const token = createToken(existingUser._id,existingUser.Email,existingUser.Role);
+                const token = createToken(existingCustomer._id,existingCustomer.Email,existingCustomer.Role);
                 console.log(token);
                 res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
                 res.json(token);
             }
             else{
-                res.status(400).json('Invallid Password');
+                res.status(400).json({
+                    status:'Error',
+                    message:'Invalid Password'
+                });
             }
-        }else{
-            res.status(400).json('Invallid Email');
+        }
+        else if(existingServiceProvider !== null){
+            const result = await validatePassword(Password,existingServiceProvider.Password);
+            
+            if(result){
+                const token = createToken(existingServiceProvider._id,existingServiceProvider.Email,existingServiceProvider.Role);
+                console.log(token);
+                res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge * 1000});
+                res.json(token);
+            }
+            else{
+                res.status(400).json({
+                    status:'Error',
+                    message:'Invalid Password'
+                });
+            }
+        }
+        else{
+            res.status(400).json({
+                status:'Error',
+                message:'Invalid Email'
+            });
         }
     } catch (err) {
-        res.status(400).json({ err:message });
+        res.status(500).json({ 
+            status:'Server Error',
+            message: err.message 
+        });
     }
     
 }
 
+export const passportSAuth = passport.authenticate('google', {
+    scope: ['profile', 'email']
+})
+
+export const redirect = async (req, res) => {
+    res.redirect('/login'); // Redirect the user to the home page after authentication
+  }
 // Method : POST
 // End Point : "api/v1/Auth/uploadProfilePicture";
 // Description : Upload Profile Image
@@ -85,7 +118,7 @@ export const UploadProfileImage = async (req,res)=>{
                 }
             })
             const uploadServiceProviderImage = await findServiceProvider.save();
-            const updateServiceProvider = await ServiceProviders.findByIdAndUpdate(findCustomer.id,uploadServiceProviderImage,{new:true});
+            const updateServiceProvider = await ServiceProviders.findByIdAndUpdate(findServiceProvider.id,uploadServiceProviderImage,{new:true});
             res.status(201).json({
                 message:'Service Providers Profile Image Uploaded',
                 data:{
@@ -111,12 +144,13 @@ export const UploadProfileImage = async (req,res)=>{
 export const getUserProfile = async(req,res)=>{
     try {
         const User = req.user;
+        console.log(User);
         const findServiceProvider = await ServiceProviders.findOne({Email:User.Email});
         const findCustomer = await Customer.findOne({Email:User.Email});         
         if(findCustomer){
             const user = findCustomer
                 res.status(201).json({
-                    message:`Account Details of ${User.Name}`,
+                    message:`Account Details of ${user.Name}`,
                     user
                 })
         }
@@ -142,7 +176,7 @@ export const getUserProfile = async(req,res)=>{
 
 // Method : GET
 // End Point : "api/v1/Auth/logout";
-// Description : Logging Our User
+// Description : Logging Out User
 export const LogoutUser = async (req,res)=>{
   res.cookie('jwt','',{maxAge:1});
   res.json('User Logging Out');

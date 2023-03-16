@@ -2,33 +2,49 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
-import { InputLabel, MenuItem, NativeSelect, Select } from "@mui/material";
+import { MenuItem, Select } from "@mui/material";
 import "./AddUser.css";
 import { 
-  Page,
   Div,
   Div1,
-  Div2,
   Div3,
-  H1
 } from'./AddUserElements';
-import { createTheme } from '@mui/material/styles';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import useAuth from "../../../Hooks/useAuth";
 
-const AddUserComponent = () => {
+const AddUserComponent = (props) => {
   
+  const{user} = useAuth();
+  console.log(props.BackRoutes);
   const [Email,setEmail] = useState('');
   const[Role,setRole] = useState('');
 
   const onSubmit = async (e)=>{
-    e.preventDefault();
     try {
+      e.preventDefault();
       const formData = {Email,Role};
-      console.log(formData);
-      const res = await axios.post('api/v1/admin/RegisterServiceProvider',formData);
-      console.log(res);
+      await toast.promise(
+        axios.post('api/v1/User/ServiceProviderRegister',formData),
+        {
+          loading:'Adding User.....',
+          success:(data)=>{
+            return `${data.data?.message}` || "success";
+          },
+          error: (err)=>`${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+            fontSize:'1rem',
+            zIndex:'99999999'
+          }
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }
@@ -39,7 +55,18 @@ const AddUserComponent = () => {
       <Header>ADD USER</Header>
       <Div  onSubmit={onSubmit}>
         <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
-          <TextField id="standard-basic" label="Email" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={Email} onChange={e=>setEmail(e.target.value)}/>
+          <TextField 
+            id="standard-basic" 
+            label="Email" 
+            variant="standard" 
+            InputLabelProps={{className:'textFeild_Label'}} 
+            sx={{marginBottom:'10%'}} 
+            value={Email} 
+            onChange={e=>setEmail(e.target.value)}
+            InputProps={{
+              style: { color: '#fff' },
+              }}
+          />
           <>
             <Select
               sx={{
@@ -52,6 +79,7 @@ const AddUserComponent = () => {
               onChange={e=>setRole(e.target.value)}
             >
               <MenuItem value={'Deliverer'} >Deliverer</MenuItem>
+              <MenuItem value={'Manager'} >Manager</MenuItem>
               <MenuItem value={'Supplier'}>Supplier</MenuItem>
               <MenuItem value={'Staff-Member'}>Staff-Member</MenuItem>
             </Select>
@@ -74,7 +102,7 @@ const AddUserComponent = () => {
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to={props?.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

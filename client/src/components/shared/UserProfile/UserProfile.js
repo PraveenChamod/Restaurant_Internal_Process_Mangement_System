@@ -4,19 +4,22 @@ import LoginImage from "../../../Images/Services/person.jpg";
 
 
 import { Link } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 
 
-const UserProfileComponent = () => {
+const UserProfileComponent = (props) => {
+    const { logout,user,loadUser,loading } = useAuth();
+
     return ( 
         <UserProfileContainer>
             <Div>
-                 <Img src={LoginImage}></Img>
+                 <Img src={`http://localhost:5000/images/${user?.ProfileImage}`}></Img>
                     <Header>
                         Welcome
                     </Header>
-                        <P>Hi Praveen!</P>
+                        <P>Hi {user?.Name}</P>
                     <FormButton>
-                        <Link to="./EditProfile" className="btn">
+                        <Link to={props.route1.Route} className="btn">
                             Edit
                         </Link>
                     </FormButton>

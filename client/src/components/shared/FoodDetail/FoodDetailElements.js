@@ -82,3 +82,26 @@ export const TextFeild = styled.input`
     border-radius: 30px;
     padding: 1% 5%;
 `
+export const RadioButtonSection = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+`
+export const RadioButton = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 2% 5%;
+`
+export const Label = styled.div`
+    width: 100%;
+    float: left;
+    text-align: left;
+    margin: 2% 0;
+    color: #fff;
+`
+export const Radio = styled.input`
+
+`
