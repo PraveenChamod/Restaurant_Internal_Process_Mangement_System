@@ -37,7 +37,6 @@ export const ImageSection= styled.div`
     width: 250px;
     height: 250px;
     border-radius: 20px;
-    background-color: #fff;
     margin-bottom: 5%;
 `
 export const ImageSubSec = styled.div`
@@ -77,6 +76,7 @@ export const Icon = styled.label`
 `
 export const ButtonSection = styled.div`
     position: relative;
+    margin-top: 5%;
 `
 export const ButtonSection1 = styled.div`
     position: relative;

@@ -6,7 +6,7 @@ const AdminViewTables = (props) => {
     return (  
         <>
         {isPending && <Spinner/>}
-        {data && <TableDetails data2={data}/>}
+        {data && <TableDetails data2={data} BackRoutes={props.BackRoutes}/>}
         </>
     );
 }

@@ -121,7 +121,7 @@ const handleSubmit =  async(e)=>{
                                 variant="standard" 
                                 InputLabelProps={{className:'textFeild_Label'}} 
                                 sx={{marginBottom:'10%'}}
-                                value={props.data.food.PaymentMethod}
+                                value={props.data.food[0].PaymentMethod}
                                 InputProps={{
                                     style: { color: '#fff' },
                                     }} 

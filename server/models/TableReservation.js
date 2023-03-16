@@ -5,10 +5,14 @@ const TableReservationSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'Customer',
     },
-    Table:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Table',
-    },
+    Tables:[
+        {
+            table:{
+                type:mongoose.Schema.ObjectId,
+                ref:'Table',
+            }
+        }
+    ],
     Date:{
         type:String,
         required:[true,"You must have provide the date"]

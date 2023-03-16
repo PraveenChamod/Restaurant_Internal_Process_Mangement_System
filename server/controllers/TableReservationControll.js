@@ -22,14 +22,12 @@ export const ReserveTable = async(req,res)=>{
                     });
                 }
                 else{
-                    const ReservationData = {Customer:logedCustomer.id,TableNo:TableNo,NoOfPersons:NoOfPersons,amount:amount,Table:findTable.id,Date:Date,Time:Time}
-                
                     const session = await mongoose.startSession();
                     // console.log(session);
                     try {
                         session.startTransaction();
-                        const updateFood = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
-                        const newReservation = await TableReservation.create([ReservationData],{session});
+                        const updateTable = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
+                        const newReservation = await TableReservation.create([req.body],{session});
                         const commit = await session.commitTransaction();
                         session.endSession();
                     

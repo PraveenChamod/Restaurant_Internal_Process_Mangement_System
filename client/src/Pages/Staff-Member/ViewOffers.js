@@ -3,7 +3,7 @@ import AllOffersComponent from "../../components/shared/AllOffers/AllOffers";
 const StaffMemberViewOffers = (props) => {
     return ( 
         <>
-            <AllOffersComponent/>
+            <AllOffersComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

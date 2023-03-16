@@ -2,7 +2,7 @@ import UserProfileComponent from "../../components/shared/UserProfile/UserProfil
 
 const StaffMemberUserProfile = (props) => {
     return ( 
-        <UserProfileComponent route1 = {props.route}/>
+        <UserProfileComponent route1 = {props.route} BackRoutes={props.BackRoutes}/>
      );
 }
  

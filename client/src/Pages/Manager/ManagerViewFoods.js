@@ -7,7 +7,7 @@ const ManagerViewFoods = (props) => {
     return (  
         <>
             {isPending && <Spinner/>}
-            {data && <FoodDetails data1={data}/>}
+            {data && <FoodDetails data1={data} BackRoutes={props.BackRoutes}/>}
         </>
     );
 }

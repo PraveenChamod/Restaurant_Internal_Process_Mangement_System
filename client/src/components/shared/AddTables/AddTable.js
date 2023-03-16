@@ -5,7 +5,8 @@ import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './AddTableElements';
 import axios from 'axios';
-const AddTableComponent = () => {
+import { toast } from "react-hot-toast";
+const AddTableComponent = (props) => {
     const[TableNo,setTableNo] = useState('');
     const[NoOfPersons,setNoOfPersons] = useState('');
     const[price,setprice] = useState('');
@@ -14,9 +15,26 @@ const AddTableComponent = () => {
     const onSubmit = async (e)=>{
         e.preventDefault();
         try {
-            const formData = {TableNo, NoOfPersons, price}
-            const res = await axios.post('api/v1/Table',formData)
-            console.log(res);
+            const formData = {TableNo, NoOfPersons, price};
+            await toast.promise(
+                axios.post('api/v1/Table',formData),
+                {
+                    loading:'Table is Adding....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999'
+                    }
+                }
+            )
         } catch (error) {
             console.log(error.message);
         }
@@ -73,7 +91,7 @@ const AddTableComponent = () => {
             </l.Div>
             <l.Div3>
                 <RegularButton>
-                <Link to="./login" className="btn">
+                <Link to={props.BackRoutes} className="btn">
                     Back
                 </Link>
                 </RegularButton>

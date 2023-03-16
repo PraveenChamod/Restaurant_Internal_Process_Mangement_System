@@ -1,9 +1,10 @@
 import AddUserComponent from "../../components/shared/AddUser/AddUser";
 
-const AdminAddUser = () => {
+
+const AdminAddUser = (props) => {
     return ( 
         <>
-            <AddUserComponent/>
+            <AddUserComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

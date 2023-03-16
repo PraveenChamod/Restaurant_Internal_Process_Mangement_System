@@ -41,10 +41,16 @@ export const addFoods = async(req,res)=>{
             }
         }
         else{
-            res.status(501).json("This user dosen't has authorization to do this operation");
+            res.status(401).json({
+                status:"Error",
+                message:"This user dosen't has authorization to do this operation"
+            });
         }
     } catch (error) {
-        res.status(501).json(error.message);
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
     }
 }
 
@@ -58,17 +64,32 @@ export const getFoods = async (req,res)=>{
         if(user.Role === "Staff-Member" || user.Role === "Manager" || user.Role=== "Admin" || user.Role === "Customer"){
             const foods = await Foods.find();
             if(foods !== null){
-                res.json(foods);
+                res.status(200).json({
+                    status:"Success",
+                    message:"Details of all foods",
+                    data:{
+                        foods
+                    }
+                });
             }
             else{
-                res.status(404).json({message:"There are no any recordes plase add foods"});
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes plase add foods"
+                });
             }
         }
         else{
-            res.status(401).json('Only Staff member has access to do this operation');
+            res.status(401).json({
+                status:"Error",
+                message:'Only Staff member has access to do this operation'
+            });
         }
     } catch (error) {
-        res.status(501).json(error.message);
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
     }
 }
 
@@ -93,14 +114,23 @@ export const getFoodById = async (req,res)=>{
                 });
             }
             else{
-                res.status(404).json({message:"There are no any recordes plase add foods"});
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes plase add foods"
+                });
             }
         }
         else{
-            res.status(401).json('Only Admin & Manager has access to do this operation');
+            res.status(401).json({
+                status:"Error",
+                message:'Only Admin & Manager has access to do this operation'
+            });
         }
     } catch (error) {
-        res.status(501).json(error.message);
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
     }
 }
 
@@ -124,27 +154,36 @@ export const getFoodByCategory = async (req,res)=>{
                 });
             }
             else{
-                res.json({message:"Category dosen't exist"});
+                res.status(400).json({
+                    status:"Error",
+                    message:"Category dosen't exist"
+                });
             }
         }
         else{
-            res.status(401).json('Only Staff-Member has access to do this operation');
+            res.status(401).json({
+                status:"Error",
+                message:'Only Staff-Member has access to do this operation'
+            });
         }
     } catch (error) {
-        res.status(501).json(error.message);
+        res.status(500).json({
+            status:"Server Error",
+            message:error.message
+        });
     }
 }
 // Method : PATCH
-// End Point : "api/v1/Food/:SerialNo";
+// End Point : "api/v1/Food/:id";
 // Description : update Food
 export const updateFood = async(req,res)=>{
     try{
         const user = req.user;
         if(user.Role === 'Manager' || user.Role === 'Staff-Member' || user.Role === 'Admin'){
-            const {SerialNo} = req.params;
-            const Food = await Foods.findOneAndUpdate({SerialNo:SerialNo},{
+            const {id} = req.params;
+            const Food = await Foods.findByIdAndUpdate(id,{
                 ...req.body
-            },{new:true}).populate('SerialNo');
+            },{new:true});
             if(!Food){
                 res.status(404).json("No such food item to update")
             }
@@ -159,39 +198,57 @@ export const updateFood = async(req,res)=>{
             }
         }
         else{
-            res.status(501).json("This user not authorized for this operation")
+            res.status(401).json({
+                staus:"Error",
+                message:"This user not authorized for this operation"
+            })
         }
        
     }
     catch(error){
-        res.status(error.message);
+        res.status(500).json({
+            status:"Server Error",
+            message:"This user not authorized for this operation"
+        });
     }
 }
 
 // Method : delete
-// End Point : "api/v1/Foods/:SerialNo";
+// End Point : "api/v1/Foods/:id";
 // Description : delete Foods
 export const  deleteFoods =async (req,res)=>{
 
     try{
          const user = req.user;
          if(user.Role === "Manager" || user.Role === "Admin"){
-            const {SerialNo} = req.params;
-            const Food = await Foods.findOne({SerialNo:SerialNo}).populate('SerialNo');
+            const {id} = req.params;
+            const Food = await Foods.findById(id);
             console.log(Food);
             if(Food !== null){
                 await Food.findByIdAndRemove(Food._id);
-                res.json({message:`${SerialNo} Food Removed`});
+                res.status(200).json({
+                    status:"Success",
+                    message:`${Food.FoodName} is Removed`,
+                });
             }
             else{
-                res.status(404).json({message:"Food doesn't found, Please enter valid serail no"});
+                res.status(404).json({
+                    status:"Error",
+                    message:"Food doesn't found, Please enter valid serail no"
+                });
             }
          }else{
-            res.status(501).json("This user not authorized for this operation");
+            res.status(401).json({
+                status:"Error",
+                message:"This user not authorized for this operation"
+            });
          }
 
     }catch(error){
-        res.status(501).json(error.message);
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
 
     }
    

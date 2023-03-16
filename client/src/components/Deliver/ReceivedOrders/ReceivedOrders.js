@@ -37,9 +37,11 @@ const DelivererReceivedOrders = (props) => {
                     </l.Table>
                 </l.SubContainer>
             <l.ButtonSection>
-                <RegularButton>
-                    Back
-                </RegularButton>
+                <Link to={props.BackRoutes} className="btn">
+                    <RegularButton>
+                        Back
+                    </RegularButton>
+                </Link>
             </l.ButtonSection>
         </Container>
      );

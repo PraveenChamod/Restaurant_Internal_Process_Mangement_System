@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './TableDetailsElements'
@@ -31,9 +32,11 @@ const TableDetails = (props) => {
                 </l.Table>
             </l.SubContainer>
             <l.ButtonSection>
-                <RegularButton>
-                    Back
-                </RegularButton>
+                <Link to={props.BackRoutes}>
+                    <RegularButton>
+                        Back
+                    </RegularButton>
+                </Link>
             </l.ButtonSection>
         </Container>
      );

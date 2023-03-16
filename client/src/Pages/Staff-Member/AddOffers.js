@@ -1,9 +1,9 @@
 import AddOffersComponent from "../../components/shared/AddOffers/AddOffers";
 
-const StaffMemberAddOffers = () => {
+const StaffMemberAddOffers = (props) => {
     return ( 
         <>
-            <AddOffersComponent/>
+            <AddOffersComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

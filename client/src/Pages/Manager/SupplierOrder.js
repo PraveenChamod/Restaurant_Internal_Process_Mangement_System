@@ -1,8 +1,8 @@
 import AddSupplierOrder from "../../components/Manager_Components/AddOrder/AddSupplierOrder";
 
-const SupplierOrder = () => {
+const SupplierOrder = (props) => {
     return ( 
-    <AddSupplierOrder/>
+    <AddSupplierOrder BackRoutes={props.BackRoutes}/>
 
      );
 }

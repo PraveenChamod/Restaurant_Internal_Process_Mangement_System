@@ -5,7 +5,8 @@ import { FormButton, RegularButton, UploadButton } from '../SharedElements/Butto
 import { Container, Header } from '../SharedElements/SharedElements';
 import * as l from './AddFoodsElements';
 import { FaCamera } from 'react-icons/fa';
-const AddFoodsComponent = () => {
+import { Link } from 'react-router-dom';
+const AddFoodsComponent = (props) => {
     const[FoodName,setFoodName] = useState('');
     const[Price,setPrice] = useState('');
     const[Category,setCategory] = useState('');
@@ -108,7 +109,9 @@ const AddFoodsComponent = () => {
                 </l.FormSection>
             </l.SubSection>
             <l.ButtonSection1>
-                <RegularButton>Back</RegularButton>
+                <Link to={props.BackRoutes} className="btn">
+                    <RegularButton>Back</RegularButton>
+                </Link>
             </l.ButtonSection1>
         </Container>
      );

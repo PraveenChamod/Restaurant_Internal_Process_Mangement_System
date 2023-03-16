@@ -13,9 +13,12 @@ import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import useAuth from "../../../Hooks/useAuth";
 
-const AddUserComponent = () => {
+const AddUserComponent = (props) => {
   
+  const{user} = useAuth();
+  console.log(props.BackRoutes);
   const [Email,setEmail] = useState('');
   const[Role,setRole] = useState('');
 
@@ -99,7 +102,7 @@ const AddUserComponent = () => {
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to={props?.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

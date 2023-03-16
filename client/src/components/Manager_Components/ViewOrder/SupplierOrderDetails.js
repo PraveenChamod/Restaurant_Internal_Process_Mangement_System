@@ -1,4 +1,5 @@
 import { AiFillEye } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './SupplierOrderDetailsElements';
@@ -31,9 +32,11 @@ const SupplierOrderDetails = (props) => {
                     </l.Table>
                 </l.SubContainer>
             <l.ButtonSection>
-                <RegularButton>
-                    Back
-                </RegularButton>
+                <Link to={props.BackRoutes} className="btn">
+                    <RegularButton>
+                        Back
+                    </RegularButton>
+                </Link>
             </l.ButtonSection>
         </Container>
      );

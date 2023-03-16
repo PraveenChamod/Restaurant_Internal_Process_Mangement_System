@@ -1,8 +1,8 @@
 import PendingReservationComponent from "../../components/shared/PendingReservations/PendingReservations";
 
-const PendingReservations = () => {
+const PendingReservations = (props) => {
     return ( 
-        <PendingReservationComponent/>
+        <PendingReservationComponent BackRoutes={props.BackRoutes}/>
      );
 }
  

@@ -1,4 +1,4 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker, MarkerF } from '@react-google-maps/api';
 import { useEffect, useState } from 'react';
 import * as l from "./MapElements"
 import { HiLocationMarker } from 'react-icons/hi';
@@ -14,21 +14,16 @@ const MapComponent = (props) => {
     return(
         <l.Div>
             <l.SubSection>
-            <LoadScript
-                googleMapsApiKey='AIzaSyByYCGjAorLa5_rHMyisPNnrSEWv1rhAcY'>
-            <GoogleMap
-                mapContainerStyle={{ height: '100%', width: '100%' }}
-                zoom={10}
-                center={center}
-                options={{
-                    disableDefaultUI: false, // hide default UI components
-                }}
+                <GoogleMap
+                    mapContainerStyle={{ height: '100%', width: '100%' }}
+                    zoom={10}
+                    center={center}
+                    options={{
+                        disableDefaultUI: false, // hide default UI components
+                    }}
                 >
-                <l.Icon>
-                    <Marker position={center} options={{ optimized: false }}/>
-                </l.Icon>
-            </GoogleMap>
-            </LoadScript>
+                    <MarkerF title={props.data.customerName} position={center} options={{ optimized: false }}/>
+                </GoogleMap>
             </l.SubSection>
         </l.Div>
     )
