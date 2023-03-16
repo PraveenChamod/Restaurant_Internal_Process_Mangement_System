@@ -7,17 +7,19 @@ import { FaCamera } from 'react-icons/fa';
 import * as l from './AddOffersElements';
 import { Link } from 'react-router-dom';
 const AddOffersComponent = (props) => {
+    const[Category,setCategory] = useState('');
+    const[SpecialPrice,setSpecialPrice] = useState('');
     const[image,setImage] = useState(null);
-    const [SpecialPrice,setSpecialPrice] = useState('');
-    const [Category,setCategory] = useState('');
-    const [OfferImage, setOfferImage] = useState('');
-    console.log(OfferImage,12);
 
-    const onSubmit = async (e)=>{
+    const addOffers = async (e)=>{
         e.preventDefault();
         try {
-            const formData = {SpecialPrice, Category, OfferImage}
-            const res = await axios.post('api/v1/Offer',formData)
+            const Data = new FormData();
+            Data.append('Category',Category);
+            Data.append('SpecialPrice',SpecialPrice);
+            Data.append('image',image);           
+            console.log(Data);
+            const res = await axios.post('api/v1/Offer',Data);
             console.log(res);
         } catch (error) {
             console.log(error.message);
@@ -32,7 +34,7 @@ const AddOffersComponent = (props) => {
             <Header>
                     Add Offers
                 </Header>
-                <l.FormSection onSubmit={onSubmit}>
+                <l.FormSection onSubmit={addOffers}>
                     <l.LeftSide>
                     <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
                         <TextField 
@@ -44,7 +46,7 @@ const AddOffersComponent = (props) => {
                             value={Category} 
                             onChange={e=>setCategory(e.target.value)} 
                             InputProps={{
-                            style: { color: '#fff' },
+                                style: { color: '#fff' },
                             }}
                         />
                         <TextField 
