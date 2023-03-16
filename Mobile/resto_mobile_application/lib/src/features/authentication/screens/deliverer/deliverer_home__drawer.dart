@@ -49,13 +49,11 @@ class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
                     final String userImagePath = snapshot.data!['user']['ProfileImage'];
                     final String userName = snapshot.data!['user']['Name'];
                     final String userEmail = snapshot.data!['user']['Email'];
-                    //Error in here because deliver has not profile image yet.....
-                    //final String imageUrl = 'http://localhost:5000/images/$userImagePath';
-                    const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
+                    final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:  [
-                        const CircleAvatar(
+                        CircleAvatar(
                           radius: 40,
                           backgroundImage: NetworkImage(imageUrl),
                         ),

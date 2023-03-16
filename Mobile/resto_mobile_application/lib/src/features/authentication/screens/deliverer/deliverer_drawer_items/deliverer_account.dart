@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +6,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../common_widgets/deliverer_drawer_item_appbar.dart';
-import '../../../../../common_widgets/drawer_item_appbar.dart';
+import '../../../../../constants/image_strings.dart';
+
 class DelivererAccount extends StatefulWidget {
   const DelivererAccount({Key? key}) : super(key: key);
 
@@ -19,6 +18,7 @@ class DelivererAccount extends StatefulWidget {
 }
 
 class _DelivererAccountState extends State<DelivererAccount> {
+
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
   Future getImage() async {
@@ -31,8 +31,6 @@ class _DelivererAccountState extends State<DelivererAccount> {
     });
   }
   ///----------------------------------------------------------------------------///
-
-
   late Future<Map<String, dynamic>> _futureData;
   @override
   void initState() {
@@ -66,13 +64,10 @@ class _DelivererAccountState extends State<DelivererAccount> {
                         final String userName = snapshot.data!['user']['Name'];
                         final String userEmail = snapshot.data!['user']['Email'];
                         final String userContact = snapshot.data!['user']['ContactNumber'];
-                        final String userAddress = snapshot.data!['user']['Address'];
-                        final String imageUrl = 'http://localhost:5000/images/$userImagePath';
+                        final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            _image != null ?
-                            Image.file(_image!, width: 50, height: 50, fit: BoxFit.cover) :
                             CircleAvatar(
                               radius: 70,
                               backgroundImage: NetworkImage(imageUrl),
@@ -95,7 +90,6 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      //color: const Color(0xFFfebf10),
                                       color: Colors.transparent,
                                       pressEvent: () {
                                         getImage();
@@ -238,38 +232,6 @@ class _DelivererAccountState extends State<DelivererAccount> {
                               ),
                             ),
                             const SizedBox(height: 10.0,),
-                            TextFormField(
-                              initialValue: userAddress,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFfebf10),
-                                fontWeight: FontWeight.bold,
-                              ),
-                              decoration: InputDecoration(
-                                labelText: 'Address',
-                                labelStyle: const TextStyle(
-                                  fontSize: 15,
-                                  color: Color(0xFFfebf10),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFFFFF33)),
-                                ),
-                                suffixIcon: const Icon(
-                                  Icons.location_on_outlined,
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10.0,),
                             Center(
                               child: Container(
                                 width: 150,
@@ -310,7 +272,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
     String? userToken = pref.getString("JwtToken");
     print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
-      Uri.parse('http://localhost:5000/api/v1/Auth/Profile'),
+      Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
