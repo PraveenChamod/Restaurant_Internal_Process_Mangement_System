@@ -5,6 +5,7 @@ import { IoFastFoodSharp } from 'react-icons/io5';
 import { GoSearch ,GoDiffAdded } from 'react-icons/go';
 import { AiOutlineStock } from 'react-icons/ai';
 import { BsGraphUp } from 'react-icons/bs';
+import { HiDocumentReport } from 'react-icons/hi';
 let iconStyle = {fontWeight:"600",color:"#fff",fontSize:"1.8rem"};
 
 
@@ -121,6 +122,11 @@ export const Roles = [
                 text:'View Order',
                 icon:<FaBookOpen style={iconStyle}/>,    
                 link:"/ManagerView-supllierorder"
+            },
+            {
+                text:'Report Generation',
+                icon:<HiDocumentReport style={iconStyle}/>,
+                link:"/ManagerReport-Generation"
             },
             {
                 text:'Log Out',

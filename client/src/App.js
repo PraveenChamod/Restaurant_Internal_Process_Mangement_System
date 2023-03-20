@@ -148,7 +148,7 @@ function App() {
                 <Route path="/AdminDashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]} ScrollToTop={scrollToTop}/>} />
                 <Route path="/AdminAdd-User" element={<AdminAddUser BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-User" element={<AdminViewUser BackRoutes={BackRoutes[0].nav}/>}/>
-                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0].nav} BackRoutes={BackRoutes[0]}/>}/>
+                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0]} BackRoutes={BackRoutes[0]}/>}/>
                 <Route path="/AdminEdit-Profile" element={<AdminEditProfile />}/>
                 <Route path="/AdminAdd-Table" element={<AdminAddTables BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Tables" element={<AdminViewTables BackRoutes={BackRoutes[0].nav}/>}/>
@@ -161,7 +161,7 @@ function App() {
                 <Route path="/ManagerDashBoard" element={<ManagerDashBoard Navs = {Roles[1]} Card = {Cards[1]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/ManagerAdd-User" element={<AddOutletStaff BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-User" element={<ManagerViewUser BackRoutes={BackRoutes[1].nav}/>}/>
-                <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1].nav} BackRoutes={BackRoutes[1]}/>}/>
+                <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1]} BackRoutes={BackRoutes[1]}/>}/>
                 <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile/>}/>
                 <Route path="/ManagerReport-Generation" element={<ReportGeneration/>}/>
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>

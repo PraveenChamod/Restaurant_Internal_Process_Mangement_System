@@ -117,7 +117,8 @@ export const ViewAllOrders = async(req,res)=>{
                       CustomerAddress:CustomerAddress,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
-                      Status:populatedOrder.Status
+                      Status:populatedOrder.Status,
+                      Date:order.Date
                     };
                     Orders.push(OrderDetails);
                   } catch (err) {
@@ -128,7 +129,7 @@ export const ViewAllOrders = async(req,res)=>{
               
               res.status(200).json({
                 status: "Success",
-                message: "Pending Order Details",
+                message: "All Order Details",
                 data: {
                   Orders
                 }
