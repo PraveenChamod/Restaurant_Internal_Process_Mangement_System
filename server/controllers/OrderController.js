@@ -336,78 +336,78 @@ export const SendOrderConfrimation = async(req,res)=>{
 // Method : GET
 // End Point : "api/v1/Deliverer/OrderDetails"; 
 // Description : Get Orders that deliverer have to deliver 
- export const CheckOrderDetails = async(req, res)=>{
-    const user = req.user;
-    try {
-        if(user.Role === "Deliverer"){
-            const findOrder = await Order.find();
-            const deliverer = await ServiceProviders.findById(user.id);
-            let pendingOrders = [];
-            for (const order of findOrder) {
-                if (order.Status === "Confirm") {
-                    console.log(order);
-                  let OrderDetails;
-                  try {
-                    const populatedOrder = await Order.findById(order.id)
-                      .populate({
-                        path: 'Customer',
-                        model: 'Customer'
-                      })
-                      .populate({
-                        path: 'Foods.food',
-                        model: 'Foods'
-                      })
-                      .populate({
-                        path:'ServiceProvider',
-                        model:'ServiceProvider'
-                      })
-                      .exec();
-                    if(populatedOrder.ServiceProvider.id === deliverer.id){
-                        const Name = populatedOrder.Customer.Name;
-                        const Email = populatedOrder.Customer.Email;
-                        const ContactNumber = populatedOrder.Customer.ContactNumber;
-                        const food = populatedOrder.Foods.map((item) => ({
-                        FoodName: item.food.FoodName,
-                        Category: item.food.Category,
-                        image: item.food.FoodImage,
-                        quantity: item.Quantity,
-                        PaymentMethod: populatedOrder.paymentMethod
-                        }));
-                        OrderDetails = {
-                        OrderId:order.id,
-                        customerName: Name,
-                        customerEmail:Email,
-                        ContactNumber:ContactNumber,
-                        food,
-                        TotalPrice: populatedOrder.TotalPrice,
-                        };
-                        pendingOrders.push(OrderDetails);
-                    }
-                  } catch (err) {
-                    console.error(err);
-                    return res.status(500).send('Server Error');
+export const CheckOrderDetails = async(req, res)=>{
+  const user = req.user;
+  try {
+      if(user.Role === "Deliverer"){
+          const findOrder = await Order.find();
+          const deliverer = await ServiceProviders.findById(user.id);
+          let pendingOrders = [];
+          for (const order of findOrder) {
+              if (order.Status === "Confirm") {
+                  console.log(order);
+                let OrderDetails;
+                try {
+                  const populatedOrder = await Order.findById(order.id)
+                    .populate({
+                      path: 'Customer',
+                      model: 'Customer'
+                    })
+                    .populate({
+                      path: 'Foods.food',
+                      model: 'Foods'
+                    })
+                    .populate({
+                      path:'ServiceProvider',
+                      model:'ServiceProvider'
+                    })
+                    .exec();
+                  if(populatedOrder.ServiceProvider.id === deliverer.id){
+                      const Name = populatedOrder.Customer.Name;
+                      const Email = populatedOrder.Customer.Email;
+                      const ContactNumber = populatedOrder.Customer.ContactNumber;
+                      const food = populatedOrder.Foods.map((item) => ({
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      PaymentMethod: populatedOrder.paymentMethod
+                      }));
+                      OrderDetails = {
+                      OrderId:order.id,
+                      customerName: Name,
+                      customerEmail:Email,
+                      ContactNumber:ContactNumber,
+                      food,
+                      TotalPrice: populatedOrder.TotalPrice,
+                      };
+                      pendingOrders.push(OrderDetails);
                   }
+                } catch (err) {
+                  console.error(err);
+                  return res.status(500).send('Server Error');
                 }
-            }
-            res.status(201).json({
-                status: 'success',
-                message: 'Received Orders',
-                data: {
-                    pendingOrders
-                }
-            })
-        }
-        else{
-            res.status(401).json({
-                status: 'Error',
-                message: 'User Have No Authorization to do this action',
-            })
-        }   
-    } catch (error) {
-        res.status(500).json({
-            status: 'Server Error',
-            message: error.message,
-        });
-    }
+              }
+          }
+          res.status(201).json({
+              status: 'success',
+              message: 'Received Orders',
+              data: {
+                  pendingOrders
+              }
+          })
+      }
+      else{
+          res.status(401).json({
+              status: 'Error',
+              message: 'User Have No Authorization to do this action',
+          })
+      }   
+  } catch (error) {
+      res.status(500).json({
+          status: 'Server Error',
+          message: error.message,
+      });
+  }
 }
 

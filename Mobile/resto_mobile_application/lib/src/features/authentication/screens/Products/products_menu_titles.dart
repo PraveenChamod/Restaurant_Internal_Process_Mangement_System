@@ -18,6 +18,47 @@ class ProductMenuTitles extends StatefulWidget {
 
 class _ProductMenuTitlesState extends State<ProductMenuTitles> {
 
+
+
+  List<Map<String, String>> foodItems = [
+    {
+      "foodImagePath": "assets/Food Types/Appetizer/FriedFish.png",
+      "foodCategory": "Appetizer",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Beverages/Beverages.png",
+      "foodCategory": "Beverages",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Burger/Chicken_Burger.jpg",
+      "foodCategory": "Burgers",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Chop-Suey/VegChopSuey.png",
+      "foodCategory": "Chop-Suey",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Desert/FruitSalad.png",
+      "foodCategory": "Desert",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
+      "foodCategory": "Koththu",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Noodles/Noodles.png",
+      "foodCategory": "Noodles",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Pizza/Cheese_Pizza.jpg",
+      "foodCategory": "Pizza",
+    },
+    {
+      "foodImagePath": "assets/Food Types/Rice/Veg_Rice.jpg",
+      "foodCategory": "Fried-Rice",
+    },
+  ];
+
   List<FoodMenuItems> data = [];
 
   @override
@@ -32,34 +73,58 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: FutureBuilder(
-                  future: fetchData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return GridView.builder(
-                        itemCount: snapshot.data!.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return MenuContainer(
-                            itemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].itemImagePath}',
-                            itemName: snapshot.data![index].category,
-                          );
-                        },
-                      );
-                    }else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                    return const CircularProgressIndicator();
+                child: GridView.builder(
+                  itemCount: foodItems.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return MenuContainer(
+                      itemImagePath: foodItems[index]["foodImagePath"] ?? '',
+                      itemName: foodItems[index]["foodCategory"] ?? '',
+                    );
                   },
                 ),
               ),
             ),
           ],
         ),
+        // body: Stack(
+        //   children: <Widget>[
+        //     const BackgroundImage(),
+        //     Center(
+        //       child: Padding(
+        //         padding: const EdgeInsets.all(10.0),
+        //         child: FutureBuilder(
+        //           future: fetchData(),
+        //           builder: (context, snapshot) {
+        //             if (snapshot.hasData) {
+        //               return GridView.builder(
+        //                 itemCount: snapshot.data!.length,
+        //                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //                   crossAxisCount: 2,
+        //                   crossAxisSpacing: 10,
+        //                   mainAxisSpacing: 10,
+        //                 ),
+        //                 itemBuilder: (BuildContext context, int index) {
+        //                   return MenuContainer(
+        //                     itemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].itemImagePath}',
+        //                     itemName: snapshot.data![index].category,
+        //                   );
+        //                 },
+        //               );
+        //             }else if (snapshot.hasError) {
+        //               return Text('${snapshot.error}');
+        //             }
+        //             return const CircularProgressIndicator();
+        //           },
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
@@ -75,7 +140,11 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
       },
     );
     if (response.statusCode == 200) {
-      return FoodMenuItems.fromJsonList(json.decode(response.body));
+      //print(json.decode(response.body));
+      final foood = json.decode(response.body);
+      //print(foood['data']['foods']);
+      return FoodMenuItems.fromJsonList(foood['data']['foods']);
+      //return FoodMenuItems.fromJsonList(json.decode(response.body));
     } else {
       throw Exception('Failed to load data');
     }

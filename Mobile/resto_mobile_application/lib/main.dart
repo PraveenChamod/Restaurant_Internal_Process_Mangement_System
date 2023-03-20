@@ -3,18 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Drawer_Items/my_account_screen.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_items.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Products/products_menu_titles.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 
-// void main() => runApp(
-//   DevicePreview(
-//     enabled: !kReleaseMode,
-//     builder: (context) => const MyApp(), // Wrap your app
-//   ),
-// );
+void main() => runApp(
+  DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => const MyApp(), // Wrap your app
+  ),
+);
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -40,6 +43,9 @@ class _MyAppState extends State<MyApp> {
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
       //home: const DelivererHome(),
+      //home: const MyAccountScreen(),
+      //home: const ProductItems(category: 'Burgers',),
+      //home: const ProductMenuTitles(),
     );
   }
 }

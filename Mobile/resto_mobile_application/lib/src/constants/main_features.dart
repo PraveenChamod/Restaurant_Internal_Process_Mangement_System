@@ -72,6 +72,11 @@ class _MainFeaturesState extends State<MainFeatures> {
                 color: Colors.white70,
               ),
             ),
+            const Icon(
+              Icons.add_circle,
+              color: Color(0xFFfebf10),
+              size: 24.0,
+            ),
             const Spacer(),
           ],
         ),
