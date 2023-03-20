@@ -19,7 +19,7 @@ const OrderSchema = mongoose.Schema({
     ],
     ServiceProvider:{
         type:mongoose.Schema.ObjectId,
-        ref:'ServiceProviders'
+        ref:'ServiceProvider'
     },
     Date:{
         type:Date,

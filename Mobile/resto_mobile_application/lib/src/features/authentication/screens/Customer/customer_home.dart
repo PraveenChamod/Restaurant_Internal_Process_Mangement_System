@@ -120,7 +120,7 @@ class _CustomerHomeState extends State<CustomerHome> {
             children: <Widget>[
               const Divider(),
               SizedBox(
-                height: 215,
+                height: 218,
                 child: PageView.builder(
                   onPageChanged: (index) {
                     setState(() {

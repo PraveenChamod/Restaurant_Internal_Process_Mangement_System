@@ -83,6 +83,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         final String userContact = snapshot.data!['user']['ContactNumber'];
                         final String userAddress = snapshot.data!['user']['Address'];
                         final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                        //const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
