@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Products/products_menu_titles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
@@ -18,8 +19,8 @@ class ProductItems extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
-        appBar: const MenuItemAppBar(
-          title: "Catalog",
+        appBar: MenuItemAppBar(
+          title: "Catalog of $category",  navigationScreen: () => const ProductMenuTitles(),
         ),
         body: Stack(
           children: <Widget>[

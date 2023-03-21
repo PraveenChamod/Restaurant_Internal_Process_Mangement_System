@@ -22,11 +22,11 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
 
   List<Map<String, String>> foodItems = [
     {
-      "foodImagePath": "assets/Food Types/Appetizer/FriedFish.png",
+      "foodImagePath": "assets/Food Types/Appetizer/FriedFish.jpg",
       "foodCategory": "Appetizer",
     },
     {
-      "foodImagePath": "assets/Food Types/Beverages/Beverages.png",
+      "foodImagePath": "assets/Food Types/Beverages/Beverages.jpg",
       "foodCategory": "Beverages",
     },
     {
@@ -34,11 +34,11 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
       "foodCategory": "Burgers",
     },
     {
-      "foodImagePath": "assets/Food Types/Chop-Suey/VegChopSuey.png",
+      "foodImagePath": "assets/Food Types/Chop-Suey/VegChopSuey.jpg",
       "foodCategory": "Chop-Suey",
     },
     {
-      "foodImagePath": "assets/Food Types/Desert/FruitSalad.png",
+      "foodImagePath": "assets/Food Types/Desert/FruitSalad.jpg",
       "foodCategory": "Desert",
     },
     {
@@ -46,7 +46,7 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
       "foodCategory": "Koththu",
     },
     {
-      "foodImagePath": "assets/Food Types/Noodles/Noodles.png",
+      "foodImagePath": "assets/Food Types/Noodles/Noodles.jpg",
       "foodCategory": "Noodles",
     },
     {

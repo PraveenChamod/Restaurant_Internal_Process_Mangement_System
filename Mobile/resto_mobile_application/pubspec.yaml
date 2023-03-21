@@ -87,11 +87,11 @@ flutter:
     - assets/Food Types/Koththu/Chicken_Koththu.jpg
     - assets/Food Types/Pizza/Cheese_Pizza.jpg
     - assets/Food Types/Rice/Veg_Rice.jpg
-    - assets/Food Types/Appetizer/FriedFish.png
-    - assets/Food Types/Beverages/Beverages.png
-    - assets/Food Types/Desert/FruitSalad.png
-    - assets/Food Types/Noodles/Noodles.png
-    - assets/Food Types/Chop-Suey/VegChopSuey.png
+    - assets/Food Types/Appetizer/FriedFish.jpg
+    - assets/Food Types/Beverages/Beverages.jpg
+    - assets/Food Types/Chop-Suey/VegChopSuey.jpg
+    - assets/Food Types/Desert/FruitSalad.jpg
+    - assets/Food Types/Noodles/Noodles.jpg
   #Default User
     - assets/images/Default_User.png
 
