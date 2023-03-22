@@ -1,12 +1,15 @@
 import { FormControl, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3, Div4, Div5, Div6, Div7, Div8, Div9, FormButton, Hr, SubHeader } from "./OrderDetailsElements";
-const OrderDetailsComponent = () => {
-    const {id} = useParams()
+import * as l from './OrderDetailsElements';
+
+const OrderDetailsComponent = (props) => {
+   
+    // const {id} = useParams()
 
 const [customerName,setCustomerName] = useState('')
 const [address,setAdress] = useState('')
@@ -14,13 +17,9 @@ const [contactNo,setContactNo] = useState('')
 const [paymentMethod,setPaymentMethod] = useState('')
 const [totalPrice,setTotalPrice] = useState(0)
 const [Items,setItem] = useState([])
-const responce = axios.get("api/v1/Order/"+id)
-.then(responce=>{
-    console.log('order details is'+ responce.data)
-})
-.catch(err=>{
-    console.log(err.message);
-})
+
+
+
     return (
         <Container>
             <Header>Order Details</Header>
@@ -28,8 +27,8 @@ const responce = axios.get("api/v1/Order/"+id)
                 <Div2> 
                     <Div1>
                         <FormControl>
-                            <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
-                            <TextField id="standard-basic" label="Address" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
+                            <TextField id="standard-basic" label="Customer Name" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={customerName}/>
+                            <TextField id="standard-basic" label="Address" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} value={address} />
 
                             {/* <Select
                             defaultValue={30}
@@ -52,15 +51,50 @@ const responce = axios.get("api/v1/Order/"+id)
                             
                             */}
                         {/**      */  }
-
-
-
+                        <l.Left>
+                            {
+                                // Items.map((food)=>{
+                                //     return(
+                                //     /** #### */
+                                //     <l.CartSection>
+                                //     {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                //         {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
+                                //     </l.SelectIcon> */}
+                                //     <l.ItemsCard>
+                                //         <l.FoodImage>
+                                //             <l.Food src={`http://localhost:5000/Foodimages/${food.image}`}/>
+                                //         </l.FoodImage>
+                                //         <l.Details>
+                                //             <l.MainText>
+                                //                 <l.FoodName>
+                                //                     {food.FoodName}
+                                //                 </l.FoodName>
+                                //             </l.MainText>
+                                //             <l.SubText>
+                                //                 {/* <l.Text>
+                                //                     {cart.Size}
+                                //                 </l.Text> */}
+                                //                 <l.Text>
+                                //                     Quantity : {food.quantity}
+                                //                 </l.Text>
+                                               
+                                //             </l.SubText>
+                                //         </l.Details>
+                                       
+                                //     </l.ItemsCard>
+                                // </l.CartSection>  
+                                //     /** #### */
+                                    
+                                //     )
+                                // })
+                            }
+                            </l.Left>
                         </FormControl>
                     </Div1>
                     <Div1>
-                        <TextField id="standard-basic" label="Contact No." variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
-                        <TextField id="standard-basic" label="Payment Method" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
-                        <TextField id="standard-basic" label="Total Price" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
+                        <TextField id="standard-basic" label="Contact No." value={contactNo} variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
+                        <TextField id="standard-basic" label="Payment Method" value={paymentMethod} variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
+                        <TextField id="standard-basic" label="Total Price" value={totalPrice} variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
                     </Div1>
                 </Div2>
                 <Div3>
