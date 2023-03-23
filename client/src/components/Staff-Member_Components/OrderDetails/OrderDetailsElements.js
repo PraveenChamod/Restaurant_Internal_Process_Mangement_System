@@ -1,11 +1,39 @@
 import styled from "styled-components";
+import Chef from '../../../Images/Chef.png';
 
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+   
+    align-items: center;
+    flex-direction: column;
+    background:url(${Chef}) left bottom no-repeat;
+    background-size: 21.5rem;
+`
+export const Header = styled.h1`
+    justify-content: center;
+    text-transform:uppercase;
+  align-items: center;
+  text-align: center;
+  margin-top: 10%;
+  background: linear-gradient(
+    60deg,
+    rgb(178, 108, 41) 0%,
+    rgb(253, 190, 16) 100%
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: 1rem;
+  margin-bottom: 15px;
+
+`
 export const Div = styled.div`
   width: 50%;
   height: 50%;
   background-color: #1a1e21;  
   border-radius: 25px;
-  display: flex;
+  display: flex; 
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -173,7 +201,69 @@ export const FormButton = styled.button`
     text-transform: uppercase;
     font-weight: 500;
 `;
+export const CartSection = styled.div`
+    /* width: 70%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+export const ItemsCard = styled.button`
+    &{
+        display: flex;
+        margin: 3%;
+        width: 100%;
+        align-items:center;
+        background-color: #1A1E21;
+        box-shadow: 3px 3px 3px #000;
+        border-radius: 20px;
+        padding: 0 3%;
+        border: none;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+`
+export const FoodImage = styled.div`
+    height: 90px;
+    /* width: 30%; */
+    margin: 3%;
+`
+export const Food = styled.img`
+     width: 60px;
+    height: 60px;
+`
+export const Details = styled.div`
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    /* line-height: 0.1rem; */
+    text-align: left;
+`
+export const MainText = styled.div`
+    color: #fff;
+`
+export const FoodName = styled.h2`
+    font-size: 1.2em;
+    font-weight: 600;
+`
+export const SubText = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+export const Text = styled.p`
+    color: #ffffff9d;
+    font-size: 1em;
+`
+
+
 export const Hr = styled.hr`
 width:100%;
 
+`
+export const Left = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    margin: 3%;
 `

@@ -174,6 +174,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                       .exec();
                     
                     const Name = populatedOrder.Customer.Name;
+                    const Customer_id = populatedOrder.Customer.id;
                     const Email = populatedOrder.Customer.Email;
                     const ContactNumber = populatedOrder.Customer.ContactNumber;
                     const food = populatedOrder.Foods.map((item) => ({
@@ -187,6 +188,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                       OrderId:order.id,
                       customerName: Name,
                       customerEmail:Email,
+                      customerId : Customer_id,
                       ContactNumber:ContactNumber,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
@@ -245,6 +247,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                 console.log(populatedOrder);
                 const Name = populatedOrder.Customer.Name;
                 const Email = populatedOrder.Customer.Email;
+                const CustomerAddress = populatedOrder.Customer.Address
                 const ContactNumber = populatedOrder.Customer.ContactNumber;
                 const Address = populatedOrder.Customer.Address;
                 const lat = populatedOrder.Customer.lat;
