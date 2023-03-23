@@ -7,6 +7,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 const PDFreport = (orders, reportType) => {
     const report = reportType;
     console.log(reportType);
+    console.log(orders);
+
     const today = new Date();
     const date = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     const time = today.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -36,10 +38,12 @@ const PDFreport = (orders, reportType) => {
           {
             table: {
               headerRows: 1,
-              widths: ['*', 'auto', '*', '*'],
+              widths: ['*', '*', '*', 'auto', 'auto', '*'],
               body: [
-                ['Customer', 'Qty', 'Price', 'Payment Method'],
-                ...orders.map(order => [order.Customer, order.Quantity, order.TotalPrice, order.paymentMethod])
+                ['Customer', 'Date','Food Name', 'Qty', 'Price', 'Payment Method'],
+                ...orders.map(order => (
+                  order.food.map(item => [order.customerName, order.Date.slice(0, 10), item.FoodName, item.quantity, order.TotalPrice, item.PaymentMethod])
+                )).flat()
               ]
             }
           },
