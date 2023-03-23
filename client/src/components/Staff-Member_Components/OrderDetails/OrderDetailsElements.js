@@ -1,5 +1,33 @@
 import styled from "styled-components";
+import Chef from '../../../Images/Chef.png';
 
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+   
+    align-items: center;
+    flex-direction: column;
+    background:url(${Chef}) left bottom no-repeat;
+    background-size: 21.5rem;
+`
+export const Header = styled.h1`
+    justify-content: center;
+    text-transform:uppercase;
+  align-items: center;
+  text-align: center;
+  margin-top: 10%;
+  background: linear-gradient(
+    60deg,
+    rgb(178, 108, 41) 0%,
+    rgb(253, 190, 16) 100%
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: 1rem;
+  margin-bottom: 15px;
+
+`
 export const Div = styled.div`
   width: 50%;
   height: 50%;
@@ -174,7 +202,7 @@ export const FormButton = styled.button`
     font-weight: 500;
 `;
 export const CartSection = styled.div`
-    width: 70%;
+    /* width: 70%; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -197,26 +225,26 @@ export const ItemsCard = styled.button`
 `
 export const FoodImage = styled.div`
     height: 90px;
-    width: 30%;
+    /* width: 30%; */
     margin: 3%;
 `
 export const Food = styled.img`
-     width: 90px;
-    height: 90px;
+     width: 60px;
+    height: 60px;
 `
 export const Details = styled.div`
     display: flex;
     width: 60%;
     flex-direction: column;
-    line-height: 0.1rem;
+    /* line-height: 0.1rem; */
     text-align: left;
 `
 export const MainText = styled.div`
     color: #fff;
 `
 export const FoodName = styled.h2`
-    font-size: 24px;
-    font-weight: 300;
+    font-size: 1.2em;
+    font-weight: 600;
 `
 export const SubText = styled.div`
     display: flex;
@@ -224,7 +252,7 @@ export const SubText = styled.div`
 `
 export const Text = styled.p`
     color: #ffffff9d;
-    font-size: 18px;
+    font-size: 1em;
 `
 
 
@@ -236,6 +264,6 @@ export const Left = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
+    
     margin: 3%;
 `
