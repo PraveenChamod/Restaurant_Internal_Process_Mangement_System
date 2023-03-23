@@ -14,18 +14,20 @@ const ReportGenerationComponent = (props) => {
     console.log(confirmOrders);
 
     const todayDate = new Date().toISOString().slice(0, 10);
-    // console.log(todayDate);
-    // confirmOrders.map(order => {
-    //     console.log(order.Date.slice(0, 10));
-    // })
+    console.log(todayDate);
+    confirmOrders.map(order => {
+        console.log(order.Date.slice(0, 10));
+    })
     const todayOrders = confirmOrders.filter(order => order.Date.slice(0, 10) === todayDate);
-    console.log(todayOrders);
+    //console.log(todayOrders);
 
-    const currentMonth = new Date().getMonth();
+    const currentMonth = new Date().getMonth() + 1;
+    console.log(currentMonth);
     const currentMonthOrders = confirmOrders.filter(order => {
         const orderMonth = new Date(order.Date).getMonth() + 1;
         return orderMonth === currentMonth;
     });
+
 
     const currentYear = new Date().getFullYear();
     const currentYearOrders = confirmOrders.filter(order => {
