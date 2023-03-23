@@ -1,21 +1,55 @@
+import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_cart.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_items.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_item_appbar.dart';
+import 'package:http/http.dart' as http;
 
-class ProductDetails extends StatelessWidget {
+import '../../../../constants/image_strings.dart';
+class ProductDetails extends StatefulWidget {
+  final String itemImagePath;
   final String category;
-  const ProductDetails({Key? key, required this.category}) : super(key: key);
+  final String itemName;
+  final String itemId;
+  final int price;
+  const ProductDetails({Key? key, required this.category, required this.itemName, required this.itemImagePath, required this.price, required this.itemId}) : super(key: key);
+
+  @override
+  State<ProductDetails> createState() => _ProductDetailsState();
+}
+
+class _ProductDetailsState extends State<ProductDetails> {
+
+  int totalPrice = 0;
+  int totalCount = 0;
+  void incrementCounter(int init) {
+    setState(() {
+      totalPrice+=init;
+      totalCount++;
+    });
+  }
+  void decrementCounter(int init) {
+    if(totalCount != 0 ){
+      setState(() {
+        totalPrice-=init;
+        totalCount--;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
         appBar: MenuItemAppBar(
-          title: '',  navigationScreen: () => ProductItems(category: category,),
+          title: '',  navigationScreen: () => ProductItems(category: widget.category,),
         ),
         body: Stack(
           children: [
@@ -25,19 +59,19 @@ class ProductDetails extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Container(
-
+                      width: MediaQuery.of(context).size.width,
                       decoration: const BoxDecoration(
-                        color: Colors.red,
+                        color: Colors.black38,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(80),
                           bottomLeft: Radius.circular(80),
                           bottomRight: Radius.circular(0),
                         ),
-                        image: DecorationImage(
-                          image: AssetImage('assets/Food Types/Desert/FruitSalad.jpg'),
-                          fit: BoxFit.cover,
-                        ),
+                      ),
+                      child: Image.network(
+                        widget.itemImagePath,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -57,24 +91,24 @@ class ProductDetails extends StatelessWidget {
                             ),
                             child: Center(
                               child: Column(
-                                children: const [
-                                  Spacer(),
-                                  Text('Fruit Salad',
-                                    style: TextStyle(
+                                children: [
+                                  const Spacer(),
+                                  Text(widget.itemName,
+                                    style: const TextStyle(
                                       fontSize: 23,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
-                                  Spacer(),
-                                  Text('Unit Price: Rs.500',
-                                    style: TextStyle(
+                                  const Spacer(),
+                                  Text('Unit Price: Rs.${widget.price}',
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                 ],
                               ),
                             ),
@@ -90,24 +124,24 @@ class ProductDetails extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Column(
-                                    children: const [
-                                      Spacer(),
-                                      Text('Total Price',
+                                    children: [
+                                      const Spacer(),
+                                      const Text('Total Price',
                                         style: TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFFfebf10),
                                         ),
                                       ),
-                                      Spacer(),
-                                      Text('Rs.500',
-                                        style: TextStyle(
+                                      const Spacer(),
+                                      Text('Rs.$totalPrice',
+                                        style: const TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xFFfebf10),
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                     ],
                                   ),
                                 ),
@@ -116,18 +150,20 @@ class ProductDetails extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.add_circle,
-                                            color: Color(0xFFfebf10),
-                                            size: 24.0,
-                                          )
+                                            onPressed: () {
+                                              incrementCounter(widget.price);
+                                            },
+                                            icon: const Icon(
+                                              Icons.add_circle,
+                                              color: Color(0xFFfebf10),
+                                              size: 24.0,
+                                            )
                                         ),
                                       ),
-                                      const Expanded(
+                                      Expanded(
                                         child: Center(
-                                          child: Text('1',
-                                            style: TextStyle(
+                                          child: Text('$totalCount',
+                                            style: const TextStyle(
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold,
                                               color: Color(0xFFfebf10),
@@ -137,7 +173,9 @@ class ProductDetails extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: IconButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              decrementCounter(widget.price);
+                                            },
                                             icon: const Icon(
                                               Icons.remove_circle,
                                               color: Color(0xFFfebf10),
@@ -174,7 +212,13 @@ class ProductDetails extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                         color: const Color(0xFFfebf10),
-                                        pressEvent: () {},
+                                        pressEvent: () {
+                                          if(totalCount != 0){
+                                            successAwesomeDialog(DialogType.info, '${widget.itemName} x $totalCount will add to the Cart.', "Inform", totalCount, widget.itemId);
+                                          }else{
+                                            unSuccessAwesomeDialog(DialogType.warning, 'Please add the item count', "Warning");
+                                          }
+                                        },
                                         borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(0),
                                           topRight: Radius.circular(80),
@@ -224,5 +268,71 @@ class ProductDetails extends StatelessWidget {
         ),
       ),
     );
+  }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        title == "Success" ?
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const ProductCart();
+            },
+          ),
+        ) : null;
+      },
+    ).show();
+  }
+  successAwesomeDialog(DialogType type, String desc, String title, int qty, String foodId) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        addToCart(totalCount, widget.itemId);
+      },
+    ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
+  }
+  void addToCart(int qty, String foodId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.post(
+      Uri.parse("http://$hostName:5000/api/v1/CartItem"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "foodId": foodId,
+        "quantity": qty
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      awesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+    }
   }
 }
