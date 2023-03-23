@@ -22,7 +22,7 @@ const Services = () => {
         text-align: center;
         margin: 1rem 0;
         @media screen and (max-width:800px){
-            font-size: 20px;
+            font-size: 1em;
         }
     `
     const H3 = styled.h1`
@@ -32,7 +32,7 @@ const Services = () => {
         color: #fff;
         text-align: center;
     @media screen and (max-width:800px){
-        font-size: 20px;
+        font-size: 1.2em;
     }
 `
     const Main = styled.div`

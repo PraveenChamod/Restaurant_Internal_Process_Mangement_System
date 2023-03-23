@@ -10,3 +10,17 @@
     height: 300px;
     object-fit: cover;
   }
+  @media screen and (max-width: 800px) {
+    .image {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+      margin: 0;
+    }
+  
+    .imag {
+      width: 150px;
+      height: 100px;
+      object-fit: cover;
+    }
+  }

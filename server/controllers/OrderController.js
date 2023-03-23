@@ -56,6 +56,55 @@ export const OrderItem = async(req,res,next)=>{
     }
 }
 
+// Method : POST
+// End Point : "api/v1/staffmemberorderItem";
+// Description : Place Order By StaffMember
+export const PlaceOrderByStaffMember = async(req,res,next)=>{
+  try {
+      const user = req.user;
+      if(user.Role === 'Staff-Member'){
+          console.log(req.body);
+          const {ContactNumber} = req.body;
+          const findCustomer = await Customer.findOne({ContactNumber:ContactNumber}).populate('ContactNumber');
+          const session = await mongoose.startSession();
+          try {
+              if(findCustomer !== null){
+                      session.startTransaction();
+                      const newOrder = await Order.create([
+                              req.body
+                          ],
+                          {session}
+                      )
+                      const commit = await session.commitTransaction();
+                      session.endSession();
+                      res.status(201).json({
+                          status:'Success',
+                          message:'Your order is successed',
+                          data:{
+                              newOrder
+                          }
+                      })
+              }
+              else{
+                  return res.status(400).json({
+                      status:'Error',
+                      message:'Customer is not found'
+                  })
+              }
+          } catch (error) {
+              res.status(500).json({
+                  status:'Error',
+                  message:error.message
+              })
+          }
+      }
+  } catch (error) {
+      res.status(500).json({
+          status:'Server Error',
+          message:error.message
+      })
+  }
+}
 
 export const payToOrder = async (req, res) => {
     const TotalPrice = req.body.amount * 100;
@@ -344,24 +393,25 @@ export const CheckOrderDetails = async(req, res)=>{
           const deliverer = await ServiceProviders.findById(user.id);
           let pendingOrders = [];
           for (const order of findOrder) {
+            if(order.Type !== "Outlet Order"){
               if (order.Status === "Confirm") {
-                  console.log(order);
-                let OrderDetails;
-                try {
-                  const populatedOrder = await Order.findById(order.id)
-                    .populate({
-                      path: 'Customer',
-                      model: 'Customer'
-                    })
-                    .populate({
-                      path: 'Foods.food',
-                      model: 'Foods'
-                    })
-                    .populate({
-                      path:'ServiceProvider',
-                      model:'ServiceProvider'
-                    })
-                    .exec();
+                console.log(order);
+              let OrderDetails;
+              try {
+                const populatedOrder = await Order.findById(order.id)
+                  .populate({
+                    path: 'Customer',
+                    model: 'Customer'
+                  })
+                  .populate({
+                    path: 'Foods.food',
+                    model: 'Foods'
+                  })
+                  .populate({
+                    path:'ServiceProvider',
+                    model:'ServiceProvider'
+                  })
+                  .exec();
                   if(populatedOrder.ServiceProvider.id === deliverer.id){
                       const Name = populatedOrder.Customer.Name;
                       const Email = populatedOrder.Customer.Email;
@@ -388,6 +438,7 @@ export const CheckOrderDetails = async(req, res)=>{
                   return res.status(500).send('Server Error');
                 }
               }
+            }
           }
           res.status(201).json({
               status: 'success',

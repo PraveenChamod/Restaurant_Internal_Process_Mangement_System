@@ -50,9 +50,6 @@ const OrderDetailsComponent = () => {
                             
                             */}
                         {/**      */  }
-
-
-
                         </FormControl>
                     </Div1>
                     <Div1>
@@ -76,7 +73,7 @@ const OrderDetailsComponent = () => {
                         <Select
                                             defaultValue={30}
                                             inputProps={{
-                                                name: "role",
+                                                name: "Email",
                                                 id: "uncontrolled-native",
                                             }}
                                             sx={{
@@ -105,7 +102,7 @@ const OrderDetailsComponent = () => {
                                             {
                                                 data?.data?.deliverers.map((deliverer,index)=>{
                                                     return(
-                                                        <MenuItem value={index} >{deliverer.Email}</MenuItem>
+                                                        <MenuItem value={deliverer.Email} >{deliverer.Email}</MenuItem>
                                                     )
                                                 })
                                             }

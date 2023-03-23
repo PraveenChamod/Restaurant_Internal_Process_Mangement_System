@@ -13,18 +13,31 @@ import {
   H2
 } from './DealsElements'
 import Slider from "react-slick";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { card } from "../../Data/Content";
 import { Link } from 'react-router-dom';
 import { RegularButton } from '../shared/SharedElements/Buttons';
 const Deals = (props) => {
   const [slideIndex,setSlideIndex] = useState(0);
+  const[view,setView] = useState(window.innerWidth >= 800 ? true : false);
+  useEffect(()=>{
+    const resize = ()=>{
+      if(window.innerWidth >= 800){
+          setView(true);
+      }else{
+          setView(false);
+      }
+    }
+    window.addEventListener('resize',resize);
+  })
+  const[num,setNum] = useState(view ? 3 : 1)
+  console.log(num);
   const settings = {
       className:"center",
       infinite: true,
       autoplay: true,
       speed: 500,
-      slidesToShow: 3,
+      slidesToShow: num,
       centerMode:true,
       beforeChange : (current,next) => setSlideIndex(next)
     };

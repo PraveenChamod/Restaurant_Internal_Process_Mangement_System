@@ -43,9 +43,10 @@ const OrderPlace = ({data}) => {
     const PlaceOrder = async(e)=>{
         e.preventDefault();
         try {
-            const formData = {Customer:Customer,Foods:Foods,paymentMethod:paymentMethod,TotalPrice:TotalPrice};
+            const formData = {Customer:Customer,Foods:Foods,paymentMethod:paymentMethod,TotalPrice:TotalPrice,Type:"Online Order"};
             console.log(formData);
             const res = await axios.post('api/v1/OrderItem',formData);
+            toast.success('Order Placed Successfully');
             console.log(res);
         } catch (error) {
             console.log(error.message);

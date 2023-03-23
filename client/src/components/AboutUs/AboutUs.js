@@ -36,6 +36,9 @@ const AboutUs = () => {
         text-transform: uppercase;
         letter-spacing: 0.1em;
         font-size: 2em;
+        @media screen and (max-width: 800px){
+            font-size: 1em;
+        }
     `
     const Content = styled.div`
         width: 100%;
@@ -92,8 +95,9 @@ const AboutUs = () => {
     const P = styled.p`
         font-size: 1.1em;
         @media screen and (max-width:900px){
-            font-size: 1em;
+            font-size: 12px;
             text-align: center;
+            margin: 0 2%;
         }
     `
     const H1 = styled.h1`
@@ -102,7 +106,7 @@ const AboutUs = () => {
         font-weight: 500;
         @media screen and (max-width: 900px){
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.2em;
             margin: 15px 0 5px 0;
         }
     `

@@ -5,7 +5,7 @@ import {Menu} from './Pages/Menu'
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import LoginPg from './Pages/Login';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import ScrollToTop from './Hooks/ScrollToTop';
 import AdminDashBoard from './Pages/Admin/AdminDashBoard';
 import AdminUserProfile from './Pages/Admin/UserProfile';
@@ -88,13 +88,17 @@ import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
 import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 import Map from './Pages/Deliverer/Map';
 import BackRoutes from './Data/BackRotes';
+import SideNavbar from './components/Navbar/SideNavBar';
 
 function App() {
   
   const stripePromise = loadStripe('pk_test_51MbCY3GuiFrtKvgKd8w5qdphJciL87lB1ITs2nFL1FUNQnfIqxPA4hX2A3qrhDd7Gfcsab01gcVNpXlTJs6ArcyF00t5WxYsrg');
 
   useEffect(() => {
-    Aos.init({duration:1000});
+    Aos.init({
+      disable: 'mobile',
+      duration:1000
+    });
   }, [])
 
   useEffect(() => {
@@ -124,6 +128,17 @@ function App() {
     }
   }
   
+  const[view,setView] = useState(window.innerWidth >= 800 ? true : false);
+  useEffect(()=>{
+    const resize = ()=>{
+      if(window.innerWidth >= 800){
+          setView(true);
+      }else{
+          setView(false);
+      }
+    }
+    window.addEventListener('resize',resize);
+  })
   
 
   return (
@@ -135,7 +150,9 @@ function App() {
               position="top-center"
               reverseOrder={false}/>
             <ScrollToTop/> 
-            <Navbar ScrollToTop={scrollToTop}/>
+            {
+              view ? <Navbar ScrollToTop={scrollToTop}/> : <SideNavbar/>
+            }
             <Routes>
                 <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
                 <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
