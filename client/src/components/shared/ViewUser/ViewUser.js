@@ -12,10 +12,9 @@ import {
 } from './ViewUserElements';
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container } from "../SharedElements/SharedElements";
+import useAuth from "../../../Hooks/useAuth";
 
 const ViewUserComponent = (props) => {
-
-  console.log(props);
 
   const [email, setEmail] = useState("");
 
@@ -111,7 +110,7 @@ const ViewUserComponent = (props) => {
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to={props.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

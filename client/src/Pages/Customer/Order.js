@@ -5,10 +5,11 @@ import useFetch from "../../Hooks/useFetch";
 
 const Order = () => {
     const {data,isPending} = useFetch('api/v1/Foods');
+    console.log(data);
     return ( 
         <div>
             {isPending && <Spinner/>}
-            {data && <Ordering data1={data}/>}
+            {data && <Ordering data1={data?.data?.foods}/>}
         </div>
      );
 }

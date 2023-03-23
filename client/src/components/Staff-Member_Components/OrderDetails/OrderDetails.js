@@ -1,25 +1,24 @@
 import { FormControl, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Oval } from "react-loader-spinner";
 import { Link, useParams } from "react-router-dom";
+import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3, Div4, Div5, Div6, Div7, Div8, Div9, FormButton, Hr, SubHeader } from "./OrderDetailsElements";
-import * as l from './OrderDetailsElements';
+const OrderDetailsComponent = () => {
 
-const OrderDetailsComponent = (props) => {
-   
-    // const {id} = useParams()
+    const [customerName,setCustomerName] = useState('')
+    const [address,setAdress] = useState('')
+    const [contactNo,setContactNo] = useState('')
+    const [paymentMethod,setPaymentMethod] = useState('')
+    const [totalPrice,setTotalPrice] = useState(0)
+    const [Items,setItem] = useState([]);
 
-const [customerName,setCustomerName] = useState('')
-const [address,setAdress] = useState('')
-const [contactNo,setContactNo] = useState('')
-const [paymentMethod,setPaymentMethod] = useState('')
-const [totalPrice,setTotalPrice] = useState(0)
-const [Items,setItem] = useState([])
-
-
-
+    const[deliverer,setDeliverer] = useState();
+    const{data,isPending} = useFetch('/api/v1/AvailableDeliverers');
+    console.log(data);
     return (
         <Container>
             <Header>Order Details</Header>
@@ -109,23 +108,45 @@ const [Items,setItem] = useState([])
                     <Div5>
                         <SubHeader>Select Deliverer</SubHeader>
                         <FormControl>
-                            <Select
-                                defaultValue={30}
-                                inputProps={{
-                                    name: "role",
-                                    id: "uncontrolled-native",
-                                }}
-                                sx={{
-                                    color: "white",
-                                    '.MuiSvgIcon-root ': {
-                                    fill: "white !important",
-                                    }
-                                }}
-                                >
-                                <MenuItem value={1} >Deliverer</MenuItem>
-                                <MenuItem value={2} >Supplier</MenuItem>
-                                <MenuItem value={3} >Staff-Member</MenuItem>
-                            </Select> 
+                        <Select
+                                            defaultValue={30}
+                                            inputProps={{
+                                                name: "role",
+                                                id: "uncontrolled-native",
+                                            }}
+                                            sx={{
+                                                color: "white",
+                                                '.MuiSvgIcon-root ': {
+                                                fill: "white !important",
+                                                }
+                                            }}
+                                            >
+                            {
+                                isPending && <Oval
+                                                height={150}
+                                                width={150}
+                                                color="#FFBF00"
+                                                wrapperStyle={{}}
+                                                wrapperClass=""
+                                                visible={true}
+                                                ariaLabel='oval-loading'
+                                                secondaryColor="#FFBF00ed"
+                                                strokeWidth={2}
+                                                strokeWidthSecondary={2}
+                                            />
+                            }
+                            {
+                                data && <>
+                                            {
+                                                data?.data?.deliverers.map((deliverer,index)=>{
+                                                    return(
+                                                        <MenuItem value={index} >{deliverer.Email}</MenuItem>
+                                                    )
+                                                })
+                                            }
+                                </>
+                            }
+                            </Select>
                         </FormControl>
                     </Div5>
                     <Div6>

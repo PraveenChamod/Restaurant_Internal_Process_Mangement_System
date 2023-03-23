@@ -58,7 +58,54 @@ export const ViewTables = async (req,res)=>{
         if(user.Role === "Manager" || user.Role === "Staff-Member" || user.Role === "Admin"){
             const tables = await Table.find();
             if(tables !== null){
-                res.json(tables);
+                res.status(200).json({
+                    status:"Success",
+                    message:"Details of all tables",
+                    data:{
+                        tables
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:"Not Found",
+                    message:"There are no any recordes please add tables"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:'Only Manager, Staff-Member & Admin have access to do this operation'
+            });
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
+    }
+}
+
+export const getAvailableTables = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Customer"){
+            const tables = await Table.find();
+            let availableTables = [];
+            if(tables !== null){
+                tables.map(table=>{
+                    if(table.Status === "Available"){
+                        availableTables.push(table);
+                    }
+                })
+                res.status(200).json({
+                    status:"Success",
+                    message:"Details of Available Tables",
+                    data:{
+                        availableTables
+                    }
+                })
             }
             else{
                 res.status(404).json({message:"There are no any recordes please add tables"});
@@ -68,6 +115,6 @@ export const ViewTables = async (req,res)=>{
             res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
         }
     } catch (error) {
-        res.status(501).json(error.message);
+        
     }
 }

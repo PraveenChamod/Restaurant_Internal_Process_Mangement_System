@@ -3,18 +3,16 @@ export const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    
 `
 export const Container = styled.div`
     width: 70%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     background-color: #1A1E21;
     box-shadow: 3px 3px 3px #000;
     border-radius:20px;
     margin: 10% 0;
+   
 `
 export const SideNavBar = styled.div`
     width: 35%;
@@ -25,7 +23,6 @@ export const SideNavBar = styled.div`
     flex-direction: column;
     padding: 4% 0;
     justify-content: center;
-    height: 100vh;
 `
 export const UserHeader = styled.div`
     display: flex;
@@ -66,6 +63,7 @@ export const Menu = styled.div`
     align-items: center;
     flex-direction: column;
     width: 65%;
+    height: 100%;
 `
 export const Cards = styled.div`
     display: flex;

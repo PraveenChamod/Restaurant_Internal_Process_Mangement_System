@@ -12,7 +12,7 @@ const ViewStocks = (props) => {
     return ( 
         <>
             {isPending && <Spinner/>}
-            {data && <ViewStocksComponent items = {data} />}
+            {data && <ViewStocksComponent items = {data} BackRoutes={props.BackRoutes}/>}
             
         </>
      );

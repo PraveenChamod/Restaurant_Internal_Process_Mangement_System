@@ -9,7 +9,7 @@ const ManagerViewTables = (props) => {
     return ( 
         <>
             {isPending && <Spinner/>}
-            {data && <TableDetails tables = {data}/>}
+            {data && <TableDetails tables = {data} BackRoutes={props.BackRoutes}/>}
             
         </>
      );

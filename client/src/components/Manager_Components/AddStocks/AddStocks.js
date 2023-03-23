@@ -17,7 +17,7 @@ import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import axios from "axios";
 
-const AddStocks = () => {
+const AddStocks = (props) => {
 
   const [ItemName,setItemName] = useState('');
   const [Category,setCategory] = useState('');
@@ -88,7 +88,7 @@ const AddStocks = () => {
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to={props.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

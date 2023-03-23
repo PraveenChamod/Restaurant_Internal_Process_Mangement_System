@@ -1,9 +1,9 @@
 import AddTableComponent from "../../components/shared/AddTables/AddTable";
 
-const ManagerAddTables = () => {
+const ManagerAddTables = (props) => {
     return ( 
         <>
-            <AddTableComponent/>
+            <AddTableComponent BackRoutes={props.BackRoutes}/>
         </>
      );
 }

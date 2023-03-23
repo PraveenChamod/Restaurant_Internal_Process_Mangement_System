@@ -1,4 +1,5 @@
 import { AiFillEye } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './AllOffersElements'
@@ -33,6 +34,7 @@ const AllOffersComponent = (props) => {
                 </l.Table>
             </l.SubContainer>
             <l.ButtonSection>
+                <Link to={props.BackRoutes}></Link>
                 <RegularButton>
                     Back
                 </RegularButton>

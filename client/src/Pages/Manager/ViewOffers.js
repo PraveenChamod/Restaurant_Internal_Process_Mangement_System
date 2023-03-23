@@ -8,7 +8,7 @@ const ManagerViewOffers = (props) => {
     return ( 
         <>
             {isPending && <Spinner/>}
-            {data && <AllOffersComponent data1 = {data}/>}
+            {data && <AllOffersComponent data1 = {data} BackRoutes={props.BackRoutes}/>}
         </>
      );
 }

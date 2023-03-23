@@ -7,7 +7,7 @@ const ViewSupplierOrder = (props) => {
     return ( 
         <>
         {isPending && <Spinner/>}
-        {data && <SupplierOrderDetails data3={data}/>}
+        {data && <SupplierOrderDetails data3={data} BackRoutes={props.BackRoutes}/>}
         </>
      );
 }

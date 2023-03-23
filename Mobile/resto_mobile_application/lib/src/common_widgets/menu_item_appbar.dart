@@ -5,7 +5,8 @@ import '../features/authentication/screens/Customer/customer_main_page.dart';
 
 class MenuItemAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
-  const MenuItemAppBar({Key? key, required this.title}) : super(key: key);
+  final Widget Function() navigationScreen;
+  const MenuItemAppBar({Key? key, required this.title, required this.navigationScreen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MenuItemAppBar extends StatelessWidget implements PreferredSizeWidget{
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_){
-                return const CustomerMainPage();
+                return navigationScreen();
               },
             ),
           );

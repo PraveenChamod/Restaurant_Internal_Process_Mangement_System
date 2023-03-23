@@ -137,7 +137,7 @@ const Login = () => {
                     navigate('/Staff-MemberDashBoard')
                     break;
                 case 'Supplier':
-                    navigate('/SuppliierDashBoard')
+                    navigate('/SupplierDashBoard')
                     break;
                 case 'Deliverer':
                     navigate('/DelivererDashBoard')

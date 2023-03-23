@@ -122,6 +122,7 @@ const Ordering = (props) => {
           {
             Items && Items.length > 0 ? (
               Items.map((data,index)=>{
+                console.log(data);
                 return(
                   <l.Div1 key={data.id} >
                     <l.Div2>
