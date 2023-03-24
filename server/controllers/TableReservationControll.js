@@ -56,14 +56,45 @@ export const ViewPendingReservations = async(req,res)=>{
         if(user.Role === "Staff-Member"){
             const findReservations = await TableReservation.find();
             let pendingReservations = [];
-            findReservations.map(order=>{
-                    if(order.Status === "Pending"){
-                        pendingReservations.push(order);
-                    }
-                })
+            for(const reservation of findReservations){
+                let ReservationDetails;
+                console.log(reservation);
+                try {
+                    const populatedReservation = await TableReservation.findById(reservation.id)
+                        .populate({
+                            path:'Customer',
+                            model:'Customer'
+                        })
+                        .populate({
+                            path:'Tables.table',
+                            model:'Table'
+                        })
+                        .exec();
+                        const Name = populatedReservation.Customer.Name;
+                        const ContactNo = populatedReservation.Customer.ContactNumber;
+                        const Tables = populatedReservation.Tables.map(table=>({
+                            TableNo:table.table.TableNo
+                        }));
+                        ReservationDetails = {
+                            CustomerName:Name,
+                            CustomerContactNo:ContactNo,
+                            Tables,
+                            ArrivalTime:populatedReservation.ArrivalTime,
+                            DepartureTime:populatedReservation.DepartureTime,
+                            Date:populatedReservation.Date,
+                            id:populatedReservation.id
+                        };
+                        pendingReservations.push(ReservationDetails);
+                } catch (error) {
+                    return res.status(500).send({
+                        status:"Server Error",
+                        message:error.message
+                    });
+                }
+            }
             res.status(201).json({
                 status: 'success',
-                message: 'Pending Reservations',
+                message: 'Details of Pending Reservations',
                 data: {
                     pendingReservations
                 }
@@ -91,16 +122,42 @@ export const ViewReservation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
-            console.log(_id);
-            const findReservation = await TableReservation.findById(_id);
-            if(findReservation !== null){
-                res.status(201).json({
-                    status: 'success',
-                    message: 'Reservation Details',
-                    data: {
-                        findReservation
+            let ReservationDetails;
+            try {
+                const populatedReservation = await TableReservation.findById(_id)
+                .populate({
+                    path:'Customer',
+                    model:'Customer'
+                })
+                .populate({
+                    path:'Tables.table',
+                    model:'Table'
+                })
+                .exec();
+                const Name = populatedReservation.Customer.Name;
+                const ContactNo = populatedReservation.Customer.ContactNumber;
+                const Tables = populatedReservation.Tables.map(table=>({
+                    TableNo:table.table.TableNo
+                }));
+                ReservationDetails = {
+                    CustomerName:Name,
+                    CustomerContactNo:ContactNo,
+                    Tables,
+                    ArrivalTime:populatedReservation.ArrivalTime,
+                    DepartureTime:populatedReservation.DepartureTime,
+                    Date:populatedReservation.Date,
+                    id:populatedReservation.id,
+                    Amount:populatedReservation.amount
+                };
+                res.status(200).json({
+                    status:'Success',
+                    message:`Details of Reservation ${_id}`,
+                    data:{
+                        ReservationDetails
                     }
-                })  
+                })
+            } catch (error) {
+                return res.status(500).send('Server Error');
             }
         }
     } catch (error) {

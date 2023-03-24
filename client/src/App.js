@@ -208,7 +208,7 @@ function App() {
                 <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails/>}/>
                 <Route path="/Staff-MemberPendingTable-Reservation-Details" element={<StaffMemberPendingReservations BackRoutes={BackRoutes[2].nav}/>}/>
-                <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
+                <Route path="/Staff-MemberTable-Reservation-Details/:id" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
                 <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>

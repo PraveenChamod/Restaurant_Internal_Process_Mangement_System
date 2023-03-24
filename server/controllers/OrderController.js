@@ -137,6 +137,7 @@ export const ViewAllOrders = async(req,res)=>{
                       Category: item.food.Category,
                       image: item.food.FoodImage,
                       quantity: item.Quantity,
+                      price:item.food.Price,
                       PaymentMethod: populatedOrder.paymentMethod
                     }));
                     OrderDetails = {

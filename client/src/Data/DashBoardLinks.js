@@ -163,14 +163,15 @@ export const Roles = [
                 icon:<GoSearch style={iconStyle}/>,
                 link:"/Staff-MemberView-Tables"
             },
-            {                text:'Order Details',
+            {   
+                text:'Order Details',
                 icon:<FaUserMinus style={iconStyle}/>,
                 link:"/Staff-MemberPendingOrder-Details"
             },
             {
                 text:'Table Reservation Details',
                 icon:<FaUserMinus style={iconStyle}/>,
-                link:"/Staff-MemberTable-Reservation-Details"
+                link:"/Staff-MemberPendingTable-Reservation-Details"
             },
             {
                 text:'Place Order',
