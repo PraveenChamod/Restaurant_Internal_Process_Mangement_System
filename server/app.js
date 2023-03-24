@@ -21,6 +21,7 @@ import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
 import path from 'path';
 import ejs from 'ejs';
 import morgan from "morgan";
+import PaymentRoute from "./routes/PaymentRoutes.js";
 
 export const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
 
@@ -109,6 +110,8 @@ app.use('/api/v1',requireAuth,CartRoutes);
 app.use('/api/v1/',requireAuth,TableReservationRoutes);
 
 app.use('/api/v1/',requireAuth,SupplierItemsRoutes);
+
+app.use('/api/v1/',PaymentRoute)
 
 export default app;
 

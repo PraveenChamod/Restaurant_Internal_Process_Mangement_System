@@ -6,11 +6,11 @@ import useFetch from "../../Hooks/useFetch";
 const StaffMemberOrderDetails = () => {
     const {id} = useParams(); 
     const{data,isPending} = useFetch(`/api/v1/Order/${id}`);
-    console.log(data?.data?.pendingOrders);
+    console.log(data?.data?.pendingOrders[0]);
     return ( 
         <>
         {isPending && <Spinner/>}
-        {data &&  <OrderDetailsComponent data={data} />}
+        {data &&  <OrderDetailsComponent data={data?.data?.pendingOrders[0]} />}
         </>
        
      );

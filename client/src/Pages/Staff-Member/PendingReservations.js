@@ -3,7 +3,7 @@ import PendingReservationComponent from "../../components/shared/PendingReservat
 const StaffMemberPendingReservations = (props) => {
     return ( 
         <>
-           <PendingReservationComponent BackRoutes={props.BackRoutes}/> 
+           <PendingReservationComponent data={"test"} BackRoutes={props.BackRoutes}/> 
         </>
      );
 }

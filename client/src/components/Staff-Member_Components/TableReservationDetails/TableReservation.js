@@ -48,16 +48,8 @@ const TableReservationComponent = () => {
                         <TextField id="standard-basic" label="Date & Time" variant="standard" InputLabelProps={{className:'textFeild_Label'}} sx={{marginBottom:'10%'}} />
                     </Div1>
                 </Div2>
-                <Div3>
-                    <Div8>
-                        <Hr></Hr>
-                    </Div8>
-                    <Div9>
-                        <Hr></Hr>
-                    </Div9>                   
-                </Div3>
                 <Div4>
-                    <Div5>
+                    {/* <Div5>
                         <SubHeader>Select Deliverer</SubHeader>
                         <FormControl>
                             <Select
@@ -78,7 +70,7 @@ const TableReservationComponent = () => {
                                 <MenuItem value={3} >Staff-Member</MenuItem>
                             </Select> 
                         </FormControl>
-                    </Div5>
+                    </Div5> */}
                     <Div6>
                         <FormControl>
                             <RegularButton>

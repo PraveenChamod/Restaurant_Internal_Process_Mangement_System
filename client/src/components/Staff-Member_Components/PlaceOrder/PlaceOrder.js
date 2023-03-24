@@ -43,9 +43,25 @@ const PlaceOrderComponent = (props) => {
         e.preventDefault();
         try {
             const formData = {Name:Name,ContactNumber:ContactNumber,Foods:Foods,TotalPrice:Price,Type:"Outlet Order",Status:"Confirm"};
-            console.log(formData);
-            const res = await axios.post('api/v1/staffmemberorderItem',formData);
-            console.log(res);
+            await toast.promise(
+                axios.post('api/v1/staffmemberorderItem',formData),
+                {
+                    loading:'Order is Placing....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999'
+                    }
+                }
+            )
         } catch (error) {
             console.log(error.message);
         }
@@ -72,7 +88,7 @@ const PlaceOrderComponent = (props) => {
                     value={Name}
                     onChange={e=>setName(e.target.value)}
                 /> 
-                <InputLabel id="ItemList" >Item List</InputLabel>
+                <InputLabel id="ItemList" InputLabelProps={{className:'textFeild_Label'}} >Item List</InputLabel>
                 <FormControl  sx={{ m: 1, width: "40ch" }} variant="standard">
                              <Select
                         labelId="ItemList"

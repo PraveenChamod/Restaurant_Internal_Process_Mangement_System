@@ -126,3 +126,11 @@ export const CartSection = styled.div`
     justify-content: center;
     align-items: center;
 `
+export const ItemSection = styled.div`
+    height: 280px;
+    width: 350px;
+    background-color: #1A1E21;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px 3px #000;
+`

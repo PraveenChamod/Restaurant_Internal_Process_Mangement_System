@@ -3,7 +3,7 @@ import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './PendingReservationElements'
-const PendingReservationComponent = () => {
+const PendingReservationComponent = (props) => {
     return (  
         <Container>
             <Header>
@@ -18,8 +18,9 @@ const PendingReservationComponent = () => {
                         <l.Th>Date & Time</l.Th>
                         <l.Th></l.Th>
                     </l.Tr>
-                    {
-                        res.data.map(data=>{
+                    {/* +++++++++++++++++++++++++++++++++++++++set with table reservation data+++++++++++++++++++++++++++++++++++++++++++++++ */}
+                    {/* {
+                        props.data.map(data=>{
                             return(
                                 <l.Tr>
                                     <l.Td>{data.FoodName}</l.Td>
@@ -30,7 +31,7 @@ const PendingReservationComponent = () => {
                                 </l.Tr>
                             )
                         })
-                    }
+                    } */}
                 </l.Table>
             </l.SubContainer>
             <l.ButtonSection>

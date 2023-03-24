@@ -37,6 +37,13 @@ const OrderSchema = mongoose.Schema({
             message:"Select One Payment Method"
         },
     },
+    DeliveryStatus:{
+        type:String,
+        enum:{
+            values:['Delivered','Not Delivered']
+        },
+        default:'Not Delivered'
+    },
     Type:{
         type:String,
         enum:{

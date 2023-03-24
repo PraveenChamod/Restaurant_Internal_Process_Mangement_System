@@ -1,5 +1,5 @@
 import express from 'express';
-import {CheckOrderDetails, OrderItem, payToOrder, PlaceOrderByStaffMember, SendOrderConfrimation, ViewAllOrders, ViewOrder, ViewPendingOrders } from '../controllers/OrderController.js';
+import {CheckOrderDetails, confirmDelivery, OrderItem, PlaceOrderByStaffMember, SendOrderConfrimation, ViewAllOrders, ViewOrder, ViewPendingOrders } from '../controllers/OrderController.js';
 
 
 const OrderRoutes = express.Router();
@@ -11,6 +11,7 @@ OrderRoutes.route('/Order/:id').get(ViewOrder);
 OrderRoutes.route('/OrderConfirmation/:_id').post(SendOrderConfrimation);
 OrderRoutes.route('/Deliverer/OrderDetails').get(CheckOrderDetails);
 OrderRoutes.route('/staffmemberorderItem').post(PlaceOrderByStaffMember);
-OrderRoutes.route('/Payment').post(payToOrder);
+OrderRoutes.route('/Deliverer/ConfirmDelivery/:_id').post(confirmDelivery);
+
 
 export default OrderRoutes;  

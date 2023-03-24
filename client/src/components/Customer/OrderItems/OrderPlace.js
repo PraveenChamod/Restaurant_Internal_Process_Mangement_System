@@ -130,12 +130,8 @@ const OrderPlace = ({data}) => {
                 <l.Left> 
                     {
                         data.map((cart)=>{
-                            
                             return(
                                 <l.CartSection>
-                                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                    </l.SelectIcon> */}
                                     <l.ItemsCard>
                                         <l.FoodImage>
                                             <l.Food src={`http://localhost:5000/Foodimages/${cart.image}`}/>
@@ -147,9 +143,6 @@ const OrderPlace = ({data}) => {
                                                 </l.FoodName>
                                             </l.MainText>
                                             <l.SubText>
-                                                {/* <l.Text>
-                                                    {cart.Size}
-                                                </l.Text> */}
                                                 <l.Text>
                                                     Quantity : {cart.quantity}
                                                 </l.Text>

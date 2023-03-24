@@ -89,6 +89,7 @@ import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 import Map from './Pages/Deliverer/Map';
 import BackRoutes from './Data/BackRotes';
 import SideNavbar from './components/Navbar/SideNavBar';
+import StaffMemberPendingReservations from './Pages/Staff-Member/PendingReservations';
 
 function App() {
   
@@ -180,7 +181,7 @@ function App() {
                 <Route path="/ManagerView-User" element={<ManagerViewUser BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1]} BackRoutes={BackRoutes[1]}/>}/>
                 <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile/>}/>
-                <Route path="/ManagerReport-Generation" element={<ReportGeneration/>}/>
+                <Route path="/ManagerReport-Generation" element={<ReportGeneration BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>
                 <Route path="/ManagerAddStock" element={<AddStockItem BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerViewStock" element={<ViewStock BackRoutes={BackRoutes[1].nav}/>}/>
@@ -206,6 +207,7 @@ function App() {
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables BackRoutes={BackRoutes[2].nav} />}/>
                 <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails/>}/>
+                <Route path="/Staff-MemberPendingTable-Reservation-Details" element={<StaffMemberPendingReservations BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
@@ -220,10 +222,13 @@ function App() {
                 <Route path="/CustomerPay" element={<ProductDisplay/>}/>     
                 <Route path="/CustomerMyCart" element={<Cart cartData = {CartData} BackRoutes={BackRoutes[3].nav}/>}/>     
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
-                <Route path="/CustomerTable-Reservation" element={<TableReservation BackRoutes={BackRoutes[3].nav}/>}/>     
+                <Route path="/CustomerTable-Reservation" element={
+                  <Elements stripe={stripePromise}>
+                    <TableReservation BackRoutes={BackRoutes[3].nav}/>     
+                  </Elements>
+                }/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview BackRoutes={BackRoutes[3].nav}/>}/>     
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/> 
-                <Route path="/CustomerTable-Reservation1" element={<TableReservation/>}/>    
                 <Route path="/CustomerOrdering" element={
                   <Elements stripe={stripePromise}>
                     <OrderItems/>       

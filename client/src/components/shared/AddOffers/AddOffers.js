@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
 import * as l from './AddOffersElements';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 const AddOffersComponent = (props) => {
     const[Category,setCategory] = useState('');
     const[SpecialPrice,setSpecialPrice] = useState('');
@@ -19,8 +20,25 @@ const AddOffersComponent = (props) => {
             Data.append('SpecialPrice',SpecialPrice);
             Data.append('image',image);           
             console.log(Data);
-            const res = await axios.post('api/v1/Offer',Data);
-            console.log(res);
+            await toast.promise(
+                axios.post('api/v1/Offer',Data),
+                {
+                    loading:'Food is Adding....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999'
+                    }
+                }
+            )
         } catch (error) {
             console.log(error.message);
         }

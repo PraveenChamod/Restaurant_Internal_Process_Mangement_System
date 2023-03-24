@@ -1,12 +1,10 @@
 
 import mongoose from "mongoose";
-import Stripe from "stripe";
 import Customer from "../models/Customer.js";
 import Foods from "../models/Foods.js";
 import Order from "../models/Order.js";
 import ServiceProviders from "../models/ServiceProviders.js";
 
-const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 // Method : POST
 // End Point : "api/v1/OrderItem";
 // Description : Ordering Item
@@ -105,23 +103,6 @@ export const PlaceOrderByStaffMember = async(req,res,next)=>{
       })
   }
 }
-
-export const payToOrder = async (req, res) => {
-    const TotalPrice = req.body.amount * 100;
-    const Email = req.body.receipt_email;
-    console.log(Email);
-    console.log("Payment Request recieved for this ruppess", TotalPrice);
-  
-    const payment = await stripe.paymentIntents.create({
-      amount: TotalPrice,
-      currency: "lkr",
-      receipt_email:Email
-    });
-  
-    res.status(201).send({
-      clientSecret: payment.client_secret,
-    });
-  }
   
 // Method : GET
 // End Point : "api/v1/Orders";
@@ -394,49 +375,49 @@ export const CheckOrderDetails = async(req, res)=>{
           let pendingOrders = [];
           for (const order of findOrder) {
             if(order.Type !== "Outlet Order"){
-              if (order.Status === "Confirm") {
+              if (order.Status === "Confirm" && order.DeliveryStatus !== "Delivered") {
                 console.log(order);
-              let OrderDetails;
-              try {
-                const populatedOrder = await Order.findById(order.id)
-                  .populate({
-                    path: 'Customer',
-                    model: 'Customer'
-                  })
-                  .populate({
-                    path: 'Foods.food',
-                    model: 'Foods'
-                  })
-                  .populate({
-                    path:'ServiceProvider',
-                    model:'ServiceProvider'
-                  })
-                  .exec();
-                  if(populatedOrder.ServiceProvider.id === deliverer.id){
-                      const Name = populatedOrder.Customer.Name;
-                      const Email = populatedOrder.Customer.Email;
-                      const ContactNumber = populatedOrder.Customer.ContactNumber;
-                      const food = populatedOrder.Foods.map((item) => ({
-                      FoodName: item.food.FoodName,
-                      Category: item.food.Category,
-                      image: item.food.FoodImage,
-                      quantity: item.Quantity,
-                      PaymentMethod: populatedOrder.paymentMethod
-                      }));
-                      OrderDetails = {
-                      OrderId:order.id,
-                      customerName: Name,
-                      customerEmail:Email,
-                      ContactNumber:ContactNumber,
-                      food,
-                      TotalPrice: populatedOrder.TotalPrice,
-                      };
-                      pendingOrders.push(OrderDetails);
+                let OrderDetails;
+                try {
+                  const populatedOrder = await Order.findById(order.id)
+                    .populate({
+                      path: 'Customer',
+                      model: 'Customer'
+                    })
+                    .populate({
+                      path: 'Foods.food',
+                      model: 'Foods'
+                    })
+                    .populate({
+                      path:'ServiceProvider',
+                      model:'ServiceProvider'
+                    })
+                    .exec();
+                    if(populatedOrder.ServiceProvider.id === deliverer.id){
+                        const Name = populatedOrder.Customer.Name;
+                        const Email = populatedOrder.Customer.Email;
+                        const ContactNumber = populatedOrder.Customer.ContactNumber;
+                        const food = populatedOrder.Foods.map((item) => ({
+                        FoodName: item.food.FoodName,
+                        Category: item.food.Category,
+                        image: item.food.FoodImage,
+                        quantity: item.Quantity,
+                        PaymentMethod: populatedOrder.paymentMethod
+                        }));
+                        OrderDetails = {
+                        OrderId:order.id,
+                        customerName: Name,
+                        customerEmail:Email,
+                        ContactNumber:ContactNumber,
+                        food,
+                        TotalPrice: populatedOrder.TotalPrice,
+                        };
+                        pendingOrders.push(OrderDetails);
+                    }
+                  } catch (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
                   }
-                } catch (err) {
-                  console.error(err);
-                  return res.status(500).send('Server Error');
-                }
               }
             }
           }
@@ -462,3 +443,44 @@ export const CheckOrderDetails = async(req, res)=>{
   }
 }
 
+
+// Method : POST
+// End Point : "api/v1/Deliverer/ConfirmDelivery"; 
+// Description : Confirm Delivery
+export const confirmDelivery = async(req,res)=>{
+  const user = req.user;
+  try {
+    if(user.Role === "Deliverer"){
+      const {_id} = req.params;
+      const findOrder = await Order.findById(_id);
+      if(findOrder !== null){
+          const session = await mongoose.startSession();
+          try {
+              session.startTransaction();
+              const findDeliverer = await ServiceProviders.findOne({Email:user.Email}).populate('Email');
+              console.log(findDeliverer);
+              const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,DeliveryStatus:'Delivered'},{new:true,runValidators:true}).session(session);
+              const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:undefined},{new:true,runValidators:true}).session(session);
+              console.log(updateDeliverer);
+              await session.commitTransaction();
+              session.endSession();
+              
+              res.status(201).json({
+                  status: 'success',
+                  message: 'Order is Delivered',
+                  data: {
+                      UpdateOrder
+                  }
+              })
+          } catch (error) {
+              res.status(401).json({
+                  status: 'Error',
+                  message: error.message,
+              });
+          }
+      }
+  }
+  } catch (error) {
+    
+  }
+}

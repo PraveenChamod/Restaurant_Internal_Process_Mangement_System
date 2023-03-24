@@ -87,6 +87,10 @@ export const ViewTables = async (req,res)=>{
     }
 }
 
+
+// Method : Get
+// End Point : "api/v1/availabletables";
+// Description : Get Available Tables
 export const getAvailableTables = async(req,res)=>{
     try {
         const user = req.user;
@@ -115,6 +119,9 @@ export const getAvailableTables = async(req,res)=>{
             res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
         }
     } catch (error) {
-        
+        res.status(500).json({
+            status:"Server Error",
+            message:error.message,
+        })
     }
 }

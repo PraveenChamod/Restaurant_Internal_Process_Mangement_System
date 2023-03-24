@@ -4,54 +4,40 @@ import TableReservation from "../models/TableReservation.js";
 import Table from "../models/Tables.js";
 
 // Method : POST
-// End Point : "api/v1/Table";
+// End Point : "api/v1/TableReservation";
 // Description : Reserve Table
 export const ReserveTable = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Customer"){
-            const {TableNo,NoOfPersons,Date,Time} = req.body;
-            const findTable = await Table.findOne({TableNo:TableNo}).populate('TableNo');
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
-            if(findTable){
-                const amount = findTable.price;
-                if(findTable.NoOfPersons < NoOfPersons){
-                    res.status(300).json({
-                        status:'Warning',
-                        message:`This Table Cannot allocated for ${NoOfPersons} persons` 
+            const session = await mongoose.startSession();
+                // console.log(session);
+                try {
+                    session.startTransaction();
+                    req.body.TableNo.forEach(async (table) => {
+                        const findTable = await Table.findOne({TableNo:table}).populate('TableNo');
+                        const updateTable = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
+                    });
+                    const newReservation = await TableReservation.create([
+                        req.body
+                    ],{session});
+                    const commit = await session.commitTransaction();
+                    session.endSession();
+                
+                    res.status(201).json({
+                        status: 'success',
+                        message: 'Reservation is successfull',
+                        data: {
+                            newReservation
+                        }
+                    })
+                } catch (error) {
+                    res.status(400).json({
+                        status:'Error',
+                        message:error.message
                     });
                 }
-                else{
-                    const session = await mongoose.startSession();
-                    // console.log(session);
-                    try {
-                        session.startTransaction();
-                        const updateTable = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
-                        const newReservation = await TableReservation.create([req.body],{session});
-                        const commit = await session.commitTransaction();
-                        session.endSession();
-                    
-                        res.status(201).json({
-                            status: 'success',
-                            message: 'Reservation successfully',
-                            data: {
-                                newReservation
-                            }
-                        })
-                    } catch (error) {
-                        res.status(400).json({
-                            status:'Error',
-                            message:error.message
-                        });
-                    }
-                }
-            }
-            else{
-                res.status(404).json({
-                    status:'Error',
-                    message:'This Food is not available'
-                });
-            }
         }
     } catch (error) {
         res.status(500).json({
