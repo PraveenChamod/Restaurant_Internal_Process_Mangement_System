@@ -17,13 +17,13 @@ const TableReservationSchema = mongoose.Schema({
         type:String,
         required:[true,"You must have provide the date"]
     },
-    Time:{
+    ArrivalTime:{
         type:String,
-        required:[true,"You must have provide the time"]
+        required:[true,"You must have provide the arrival time"]
     },
-    NoOfPersons:{
-        type:Number,
-        required:[true,"You must provide the no of persons"]
+    DepartureTime:{
+        type:String,
+        required:[true,"You must have provide the departure time"]
     },
     amount:{
         type:Number,

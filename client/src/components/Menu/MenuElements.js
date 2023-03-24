@@ -23,6 +23,10 @@ export const Column2 = styled.div`
     background: #B16C29;
     height: 100%;
     width: 33.33%;
+    @media screen and (max-width: 800px){
+        position: relative;
+       margin-top: -12%;
+    }
 `
 export const Column3 = styled.div`
     display: flex;
@@ -41,6 +45,7 @@ export const Items1  =styled.div`
     width: 100%;
     margin:3% 0;
     height: auto;
+
 `
 export const Items2  =styled.div`
 
@@ -55,7 +60,11 @@ export const ImageSection1 = styled.div`
       border-radius: 0 12rem 12rem 0;
     border: 5px solid #B16C29;
     position: relative;
-    left: -40%
+    left: -40%;
+    @media screen and (max-width: 800px){
+        width: 70px;
+        height: 150px;
+    }
 `
 export const Image1 = styled.img`
     width: 200px;
@@ -63,6 +72,10 @@ export const Image1 = styled.img`
       border-radius: 0 12rem 12rem 0;
     object-fit: cover;
     object-position: 100% 0;
+    @media screen and (max-width: 800px){
+        width: 70px;
+        height: 150px;
+    }
 `
 export const ImageSection2 = styled.div`
     display: flex;
@@ -71,30 +84,49 @@ export const ImageSection2 = styled.div`
       border-radius:12rem 0 0 12rem;
     border: 5px solid #B16C29;
     position: relative;
-    right: -40%
+    right: -40%;
+    @media screen and (max-width: 800px){
+        width: 70px;
+        height: 150px;
+    }
 `
 export const Image2 = styled.img`
-width: 200px;
+        width: 200px;
       height: 300px;
       border-radius:12rem 0 0 12rem;
+      object-fit: cover;
+    object-position: 100% 0;
+    @media screen and (max-width: 800px){
+        width: 70px;
+        height: 150px;
+    }
 `
 export const Category1 = styled.div`
     font-size: 26px;
     font-weight: 600;
     color: #B26C29;
     font-style: italic;
+    @media screen and (max-width: 800px){
+        font-size: 16px;
+    }
 `
 export const Category2 = styled.div`
     font-size: 26px;
     font-weight: 600;
     color: #fff;
     font-style: italic;
+    @media screen and (max-width: 800px){
+        font-size: 16px;
+    }
 `
 export const Category3 = styled.div`
     font-size: 26px;
     font-weight: 600;
     color: #B26C29;
     font-style: italic;
+    @media screen and (max-width: 800px){
+        font-size: 16px;
+    }
 `
 export const Meals = styled.div`
     display: flex;
@@ -109,6 +141,9 @@ export const ItemDetails = styled.div`
     width: 100%;
     color: #fff;
     margin: 2% 0;
+    @media screen and (max-width: 800px){
+        font-size: 7px;
+    }
 `
 export const ItemDetails1 = styled.div`
     display: flex;
@@ -116,12 +151,21 @@ export const ItemDetails1 = styled.div`
     width: 100%;
     color: #000;
     margin: 2% 0;
+    @media screen and (max-width: 800px){
+        font-size: 7px;
+    }
 `
 export const Price = styled.div`
     width: 30%;
     margin-left: 5%;
+    @media screen and (max-width: 800px){
+        margin-left: 0%;
+    }
 `
 export const ItemName = styled.div`
     width: 70%;
     margin-right: 5%;
+    @media screen and (max-width: 800px){
+        margin-right: 0%;
+    }
 `

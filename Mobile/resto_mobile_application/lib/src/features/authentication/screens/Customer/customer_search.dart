@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../common_widgets/background_image.dart';
-import '../../../../constants/image_strings.dart';
-import '../../models/food_model.dart';
 import '../login_screen.dart';
 
 class CustomerSearch extends StatefulWidget {
@@ -53,44 +50,6 @@ class _CustomerSearchState extends State<CustomerSearch> {
     },
   ];
 
-  static List<FoodModel> main_food_list = [
-    FoodModel(
-      "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-      "Pizza",
-      "4.60",
-      'With Almond Milk',
-    ),
-    FoodModel(
-      "assets/Food Types/Burger/Chicken_Burger.jpg",
-      "Burger",
-      "4.50",
-      'With Coconut Milk',
-    ),
-    FoodModel(
-      "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "Koththu",
-      "5.60",
-      'With Chocolate',
-    ),
-    FoodModel(
-      "assets/Food Types/Rice/Veg_Rice.jpg",
-      "Rice",
-      "3.60",
-      'With Chilies',
-    ),
-    FoodModel(
-      "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "Koththu",
-      "5.60",
-      'With Chocolate',
-    ),
-    FoodModel(
-      "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-      "Pizza",
-      "4.60",
-      'With Almond Milk',
-    ),
-  ];
   void updateList(String value){
     //This is the function that will filter our list
 
@@ -256,4 +215,17 @@ class SearchFoodTile extends StatelessWidget {
       ),
     );
   }
+}
+class FoodModel{
+  String? foodImagePath;
+  String? foodName;
+  String? foodSpecialIngredient;
+  String? foodPrice;
+
+  FoodModel(
+      this.foodImagePath,
+      this.foodName,
+      this.foodSpecialIngredient,
+      this.foodPrice
+      );
 }

@@ -17,7 +17,7 @@
     position: relative;
     top: 8%;
     left: -5%;
-    margin: 2% ;
+    margin: 0 2% ;
     /* background-color: blue; */
 }
 
@@ -41,8 +41,8 @@
 }
 
 .description{
-    font-size: 120%;
-    padding: 0 100px 0 0;
+    font-size: 18px;
+    width: 90%;
     color: #fff;
 }
 
@@ -66,11 +66,13 @@
   color: #fff;
 }
 
-@media screen and (max-width: 769px){
+@media screen and (max-width: 800px){
     .container{
-        padding: 0;
-        text-align: center;
-        height: auto;
+        background-position: right;
+        width: 100%;
+        margin: 0;
+        background-size: 70% 100%;
+        overflow-x: hidden;
     }
 
     .foodImage, .descriptionBox{
@@ -78,29 +80,38 @@
     }
 
     .foodImage{
-        height: 20vh;
+        width: 350px;
+        height: 350px;
         margin: 0;
         padding: 0;
     }
 
     .descriptionBox{
         height: auto;
-        padding: 10px;
+        padding: 10px 0;
+        width: 100%;
     }
 
     .imgBurger{
         margin: 0;
+        width: 350px;
+        height: 350px;
         padding: 0;
     }
 
     .title{
-        font-size: 30px;
+        font-size: 24px;
         padding: 0;
         margin: 0;
     }
 
     .description{
-        font-size: 120%;
+        font-size: 12px;
         padding: 0;
+    }
+    .loginBtn{
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
     }
 }

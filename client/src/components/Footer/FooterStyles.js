@@ -3,8 +3,8 @@ import styled from 'styled-components';
 export const Box = styled.div`
 	background: transparent;
 	position: center;
-@media (max-width: 1000px) {
-	padding: 70px 30px;
+@media screen and (max-width: 800px) {
+	margin: 0;
 }
 `;
 
@@ -15,6 +15,12 @@ export const Container = styled.div`
 	width: 100%;
 	margin: 0 auto;
 	/* background: red; */
+	@media screen and (max-width: 800px) {
+		display: flex;
+		flex-wrap: wrap;
+		margin: 0;
+		justify-content: center;
+	}
 `
 
 export const Column = styled.div`
@@ -22,6 +28,11 @@ export const Column = styled.div`
 	flex-direction: column;
 	text-align: left;
 	margin-left: 60px;
+	@media screen and (max-width: 800px) {
+		display: flex;
+		width: 35%;
+		margin-left:5%;
+	}
 `;
 
 export const Row = styled.div`
@@ -30,9 +41,13 @@ export const Row = styled.div`
 							minmax(185px, 1fr));
 	grid-gap: 10%;
 
-@media (max-width: 1000px) {
-	grid-template-columns: repeat(auto-fill,
-						minmax(200px, 1fr));
+@media screen and (max-width: 800px) {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0;
 }
 `;
 
@@ -41,6 +56,9 @@ export const FooterLink = styled.a`
 	margin-bottom: 20px;
 	font-size: 16px;
 	text-decoration: none;
+	@media screen and (max-width: 1000px) {
+		font-size: 12px;
+	}
 
 &:hover {
 	color: #febf10;
@@ -53,6 +71,9 @@ export const Heading = styled.p`
 	color: #fff;
 	margin-bottom: 20px;
 	font-weight: bold;
+	@media screen and (max-width: 1000px) {
+		font-size: 1em;
+	}
 `;
 
 export const H2 = styled.h2`
@@ -60,7 +81,7 @@ export const H2 = styled.h2`
 	text-align: center;
 
 @media screen and (max-width:800px){
-	font-size: 15px;
+	font-size: 1em;
 }
 `;
 
@@ -69,7 +90,7 @@ export const P = styled.p`
 	text-align: center;
 
 @media screen and (max-width:800px){
-	font-size: 15px;
+	font-size: 12px;
 }
 `;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/authentication/screens/Products/products_menu_titles.dart';
+import '../features/authentication/screens/Products/products_menu_categories.dart';
 import '../features/authentication/screens/forget_password/make_selction.dart';
 import '../features/authentication/screens/login_screen.dart';
 import '../features/authentication/screens/signup_screen.dart';
@@ -71,6 +71,11 @@ class _MainFeaturesState extends State<MainFeatures> {
                 fontSize: 15,
                 color: Colors.white70,
               ),
+            ),
+            const Icon(
+              Icons.add_circle,
+              color: Color(0xFFfebf10),
+              size: 24.0,
             ),
             const Spacer(),
           ],

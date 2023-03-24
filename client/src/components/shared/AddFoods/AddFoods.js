@@ -6,6 +6,7 @@ import { Container, Header } from '../SharedElements/SharedElements';
 import * as l from './AddFoodsElements';
 import { FaCamera } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 const AddFoodsComponent = (props) => {
     const[FoodName,setFoodName] = useState('');
     const[Price,setPrice] = useState('');
@@ -21,8 +22,25 @@ const AddFoodsComponent = (props) => {
             Data.append('Price',Price);
             Data.append('Category',Category);
             console.log(Data);
-            const res = await axios.post('api/v1/Food',Data);
-            console.log(res);
+            await toast.promise(
+                axios.post('api/v1/Food',Data),
+                {
+                    loading:'Food is Adding....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999'
+                    }
+                }
+            )
         } catch (error) {
             console.log(error.message);
         }

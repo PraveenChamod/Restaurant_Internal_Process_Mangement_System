@@ -1,12 +1,10 @@
 
 import mongoose from "mongoose";
-import Stripe from "stripe";
 import Customer from "../models/Customer.js";
 import Foods from "../models/Foods.js";
 import Order from "../models/Order.js";
 import ServiceProviders from "../models/ServiceProviders.js";
 
-const stripe = Stripe('sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV');
 // Method : POST
 // End Point : "api/v1/OrderItem";
 // Description : Ordering Item
@@ -56,23 +54,55 @@ export const OrderItem = async(req,res,next)=>{
     }
 }
 
-
-export const payToOrder = async (req, res) => {
-    const TotalPrice = req.body.amount * 100;
-    const Email = req.body.receipt_email;
-    console.log(Email);
-    console.log("Payment Request recieved for this ruppess", TotalPrice);
-  
-    const payment = await stripe.paymentIntents.create({
-      amount: TotalPrice,
-      currency: "lkr",
-      receipt_email:Email
-    });
-  
-    res.status(201).send({
-      clientSecret: payment.client_secret,
-    });
+// Method : POST
+// End Point : "api/v1/staffmemberorderItem";
+// Description : Place Order By StaffMember
+export const PlaceOrderByStaffMember = async(req,res,next)=>{
+  try {
+      const user = req.user;
+      if(user.Role === 'Staff-Member'){
+          console.log(req.body);
+          const {ContactNumber} = req.body;
+          const findCustomer = await Customer.findOne({ContactNumber:ContactNumber}).populate('ContactNumber');
+          const session = await mongoose.startSession();
+          try {
+              if(findCustomer !== null){
+                      session.startTransaction();
+                      const newOrder = await Order.create([
+                              req.body
+                          ],
+                          {session}
+                      )
+                      const commit = await session.commitTransaction();
+                      session.endSession();
+                      res.status(201).json({
+                          status:'Success',
+                          message:'Your order is successed',
+                          data:{
+                              newOrder
+                          }
+                      })
+              }
+              else{
+                  return res.status(400).json({
+                      status:'Error',
+                      message:'Customer is not found'
+                  })
+              }
+          } catch (error) {
+              res.status(500).json({
+                  status:'Error',
+                  message:error.message
+              })
+          }
+      }
+  } catch (error) {
+      res.status(500).json({
+          status:'Server Error',
+          message:error.message
+      })
   }
+}
   
 // Method : GET
 // End Point : "api/v1/Orders";
@@ -117,7 +147,8 @@ export const ViewAllOrders = async(req,res)=>{
                       CustomerAddress:CustomerAddress,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
-                      Status:populatedOrder.Status
+                      Status:populatedOrder.Status,
+                      Date:order.Date
                     };
                     Orders.push(OrderDetails);
                   } catch (err) {
@@ -128,7 +159,7 @@ export const ViewAllOrders = async(req,res)=>{
               
               res.status(200).json({
                 status: "Success",
-                message: "Pending Order Details",
+                message: "All Order Details",
                 data: {
                   Orders
                 }
@@ -173,6 +204,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                       .exec();
                     
                     const Name = populatedOrder.Customer.Name;
+                    const Customer_id = populatedOrder.Customer.id;
                     const Email = populatedOrder.Customer.Email;
                     const ContactNumber = populatedOrder.Customer.ContactNumber;
                     const food = populatedOrder.Foods.map((item) => ({
@@ -186,6 +218,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                       OrderId:order.id,
                       customerName: Name,
                       customerEmail:Email,
+                      customerId : Customer_id,
                       ContactNumber:ContactNumber,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
@@ -244,6 +277,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                 console.log(populatedOrder);
                 const Name = populatedOrder.Customer.Name;
                 const Email = populatedOrder.Customer.Email;
+                const CustomerAddress = populatedOrder.Customer.Address
                 const ContactNumber = populatedOrder.Customer.ContactNumber;
                 const Address = populatedOrder.Customer.Address;
                 const lat = populatedOrder.Customer.lat;
@@ -335,32 +369,33 @@ export const SendOrderConfrimation = async(req,res)=>{
 // Method : GET
 // End Point : "api/v1/Deliverer/OrderDetails"; 
 // Description : Get Orders that deliverer have to deliver 
- export const CheckOrderDetails = async(req, res)=>{
-    const user = req.user;
-    try {
-        if(user.Role === "Deliverer"){
-            const findOrder = await Order.find();
-            const deliverer = await ServiceProviders.findById(user.id);
-            let pendingOrders = [];
-            for (const order of findOrder) {
-                if (order.Status === "Confirm") {
-                    console.log(order);
-                  let OrderDetails;
-                  try {
-                    const populatedOrder = await Order.findById(order.id)
-                      .populate({
-                        path: 'Customer',
-                        model: 'Customer'
-                      })
-                      .populate({
-                        path: 'Foods.food',
-                        model: 'Foods'
-                      })
-                      .populate({
-                        path:'ServiceProvider',
-                        model:'ServiceProvider'
-                      })
-                      .exec();
+export const CheckOrderDetails = async(req, res)=>{
+  const user = req.user;
+  try {
+      if(user.Role === "Deliverer"){
+          const findOrder = await Order.find();
+          const deliverer = await ServiceProviders.findById(user.id);
+          let pendingOrders = [];
+          for (const order of findOrder) {
+            if(order.Type !== "Outlet Order"){
+              if (order.Status === "Confirm" && order.DeliveryStatus !== "Delivered") {
+                console.log(order);
+                let OrderDetails;
+                try {
+                  const populatedOrder = await Order.findById(order.id)
+                    .populate({
+                      path: 'Customer',
+                      model: 'Customer'
+                    })
+                    .populate({
+                      path: 'Foods.food',
+                      model: 'Foods'
+                    })
+                    .populate({
+                      path:'ServiceProvider',
+                      model:'ServiceProvider'
+                    })
+                    .exec();
                     if(populatedOrder.ServiceProvider.id === deliverer.id){
                         const Name = populatedOrder.Customer.Name;
                         const Email = populatedOrder.Customer.Email;
@@ -386,27 +421,69 @@ export const SendOrderConfrimation = async(req,res)=>{
                     console.error(err);
                     return res.status(500).send('Server Error');
                   }
-                }
+              }
             }
-            res.status(201).json({
-                status: 'success',
-                message: 'Received Orders',
-                data: {
-                    pendingOrders
-                }
-            })
-        }
-        else{
-            res.status(401).json({
-                status: 'Error',
-                message: 'User Have No Authorization to do this action',
-            })
-        }   
-    } catch (error) {
-        res.status(500).json({
-            status: 'Server Error',
-            message: error.message,
-        });
-    }
+          }
+          res.status(201).json({
+              status: 'success',
+              message: 'Received Orders',
+              data: {
+                  pendingOrders
+              }
+          })
+      }
+      else{
+          res.status(401).json({
+              status: 'Error',
+              message: 'User Have No Authorization to do this action',
+          })
+      }   
+  } catch (error) {
+      res.status(500).json({
+          status: 'Server Error',
+          message: error.message,
+      });
+  }
 }
 
+
+// Method : POST
+// End Point : "api/v1/Deliverer/ConfirmDelivery"; 
+// Description : Confirm Delivery
+export const confirmDelivery = async(req,res)=>{
+  const user = req.user;
+  try {
+    if(user.Role === "Deliverer"){
+      const {_id} = req.params;
+      const findOrder = await Order.findById(_id);
+      if(findOrder !== null){
+          const session = await mongoose.startSession();
+          try {
+              session.startTransaction();
+              const findDeliverer = await ServiceProviders.findOne({Email:user.Email}).populate('Email');
+              console.log(findDeliverer);
+              const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,DeliveryStatus:'Delivered'},{new:true,runValidators:true}).session(session);
+              const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:undefined},{new:true,runValidators:true}).session(session);
+              console.log(updateDeliverer);
+              await session.commitTransaction();
+              session.endSession();
+              
+              res.status(201).json({
+                  status: 'success',
+                  message: 'Order is Delivered',
+                  data: {
+                      UpdateOrder
+                  }
+              })
+          } catch (error) {
+              res.status(401).json({
+                  status: 'Error',
+                  message: error.message,
+              });
+          }
+      }
+  }
+  } catch (error) {
+    
+  }
+}

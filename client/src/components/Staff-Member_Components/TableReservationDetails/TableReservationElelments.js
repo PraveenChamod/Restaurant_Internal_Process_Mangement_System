@@ -93,7 +93,7 @@ export const Div5 = styled.div`
 
 export const Div6 = styled.div`
   margin-top: 0px;
-  width: 50%;
+  width: 100%;
   height: 100%;
   background-color: #1a1e21;
   display: flex;
@@ -102,8 +102,8 @@ export const Div6 = styled.div`
   padding-right: 20px;
   padding-top: 0px;
   padding-bottom: 0px;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: right;
+  align-items: right;
 `;
 export const Div7 = styled.div`
   margin-top: 15px;

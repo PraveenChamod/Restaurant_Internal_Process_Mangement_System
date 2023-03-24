@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:resto_mobile_application/src/common_widgets/drawer_item_appbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
+import '../../../../constants/image_strings.dart';
+import 'package:path/path.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({Key? key}) : super(key: key);
@@ -21,17 +25,28 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(image == null ) return;
-    final imageTemporary = File(image.path);
+  Future getImage(ImageSource source) async {
+    try{
+      final image = await ImagePicker().pickImage(source: source);
+      if(image == null ) return;
+      //final imageTemporary = File(image.path);
+      final imagePermanent = await saveFilePermanently(image.path);
 
-    setState(() {
-      _image = imageTemporary;
-    });
+      setState(() {
+        _image = imagePermanent;
+      });
+    }on PlatformException catch (e){
+      print('failed to pick Image: $e');
+    }
   }
   ///----------------------------------------------------------------------------///
 
+  Future<File> saveFilePermanently(String imagePath) async{
+    final directory = await getApplicationDocumentsDirectory();
+    final name = basename(imagePath);
+    final image = File('${directory.path}/$name');
+    return File(imagePath).copy(image.path);
+  }
 
   late Future<Map<String, dynamic>> _futureData;
   @override
@@ -39,9 +54,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     super.initState();
     _futureData = getUserDetails();
   }
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,16 +82,17 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         final String userEmail = snapshot.data!['user']['Email'];
                         final String userContact = snapshot.data!['user']['ContactNumber'];
                         final String userAddress = snapshot.data!['user']['Address'];
-                        final String imageUrl = 'http://localhost:5000/images/$userImagePath';
+                        final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                        //const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            _image != null ?
-                            Image.file(_image!, width: 50, height: 50, fit: BoxFit.cover) :
-                            CircleAvatar(
-                              radius: 70,
-                              backgroundImage: NetworkImage(imageUrl),
-                            ),
+                            _image != null
+                                ? Image.file(_image!, width: 80, height: 80, fit: BoxFit.cover,)
+                                : CircleAvatar(
+                                    radius: 70,
+                                    backgroundImage: NetworkImage(imageUrl),
+                                  ),
                             const SizedBox(height: 10.0,),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -101,7 +114,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       //color: const Color(0xFFfebf10),
                                       color: Colors.transparent,
                                       pressEvent: () {
-                                        getImage();
+                                        getImage(ImageSource.gallery);
                                       },
                                     ),
                                   ),
@@ -313,7 +326,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     String? userToken = pref.getString("JwtToken");
     print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
-      Uri.parse('http://localhost:5000/api/v1/Auth/Profile'),
+      Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",

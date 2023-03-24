@@ -59,6 +59,7 @@ export const ViewSupplierOrder = async (req,res)=>{
         res.status(501).json(error.message);
     }
 }
+
 export const ViewReceivedOrders = async(req,res)=>{
     try {
         const user = req.user;

@@ -9,7 +9,7 @@ import useAuth from "../../../Hooks/useAuth";
 
 const UserProfileComponent = (props) => {
     const { logout,user,loadUser,loading } = useAuth();
-
+    console.log(user);
     return ( 
         <UserProfileContainer>
             <Div>

@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../features/authentication/screens/Customer/customer_main_page.dart';
+import '../features/authentication/screens/Products/product_cart.dart';
 
 class MenuItemAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
-  const MenuItemAppBar({Key? key, required this.title}) : super(key: key);
+  final Widget Function() navigationScreen;
+  const MenuItemAppBar({Key? key, required this.title, required this.navigationScreen}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class MenuItemAppBar extends StatelessWidget implements PreferredSizeWidget{
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_){
-                return const CustomerMainPage();
+                return navigationScreen();
               },
             ),
           );
@@ -30,13 +32,13 @@ class MenuItemAppBar extends StatelessWidget implements PreferredSizeWidget{
           padding: const EdgeInsets.only(right: 20.0),
           child: IconButton(
             onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_){
-              //       return const CustomerCart();
-              //     },
-              //   ),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_){
+                    return ProductCart();
+                  },
+                ),
+              );
             },
             icon: const Icon(Icons.shopping_cart),
           ),

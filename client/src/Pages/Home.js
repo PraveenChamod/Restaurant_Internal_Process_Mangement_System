@@ -10,14 +10,13 @@ import Testimonials from '../components/Testimonial/Testimonial'
 export const Home = (props) => {
 
   return (
-    <div>
-        {/* <h1>Home</h1> */}
+    <>
         <Cover ScrollToTop1={props.ScrollToTop}/>
         <Deals ScrollToTop1={props.ScrollToTop}/>
         <AboutUs/>
         <Services/>
-        <Testimonials/>
+        <Testimonials/> 
         <ContactUs/>
-    </div>
+    </>
   )
 }

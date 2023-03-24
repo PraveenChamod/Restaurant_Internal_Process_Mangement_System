@@ -43,9 +43,10 @@ const OrderPlace = ({data}) => {
     const PlaceOrder = async(e)=>{
         e.preventDefault();
         try {
-            const formData = {Customer:Customer,Foods:Foods,paymentMethod:paymentMethod,TotalPrice:TotalPrice};
+            const formData = {Customer:Customer,Foods:Foods,paymentMethod:paymentMethod,TotalPrice:TotalPrice,Type:"Online Order"};
             console.log(formData);
             const res = await axios.post('api/v1/OrderItem',formData);
+            toast.success('Order Placed Successfully');
             console.log(res);
         } catch (error) {
             console.log(error.message);
@@ -129,12 +130,8 @@ const OrderPlace = ({data}) => {
                 <l.Left> 
                     {
                         data.map((cart)=>{
-                            
                             return(
                                 <l.CartSection>
-                                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                    </l.SelectIcon> */}
                                     <l.ItemsCard>
                                         <l.FoodImage>
                                             <l.Food src={`http://localhost:5000/Foodimages/${cart.image}`}/>
@@ -146,9 +143,6 @@ const OrderPlace = ({data}) => {
                                                 </l.FoodName>
                                             </l.MainText>
                                             <l.SubText>
-                                                {/* <l.Text>
-                                                    {cart.Size}
-                                                </l.Text> */}
                                                 <l.Text>
                                                     Quantity : {cart.quantity}
                                                 </l.Text>

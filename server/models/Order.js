@@ -19,7 +19,7 @@ const OrderSchema = mongoose.Schema({
     ],
     ServiceProvider:{
         type:mongoose.Schema.ObjectId,
-        ref:'ServiceProviders'
+        ref:'ServiceProvider'
     },
     Date:{
         type:Date,
@@ -36,7 +36,19 @@ const OrderSchema = mongoose.Schema({
             values:['Cash On Delivery','Card Payments'],
             message:"Select One Payment Method"
         },
-        required:[true,"Please Select the Payment Method"]
+    },
+    DeliveryStatus:{
+        type:String,
+        enum:{
+            values:['Delivered','Not Delivered']
+        },
+        default:'Not Delivered'
+    },
+    Type:{
+        type:String,
+        enum:{
+            values:['Online Order',"Outlet Order"]
+        }
     },
     Status:{
         type:String,

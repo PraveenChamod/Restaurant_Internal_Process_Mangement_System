@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
+import '../../../constants/image_strings.dart';
 import 'forget_password/make_selction.dart';
 import 'login_screen.dart';
 class SignupScreen extends StatefulWidget {
@@ -270,8 +271,7 @@ class _LoginScreenState extends State<SignupScreen> {
   }
   void signup() async {
     final http.Response response = await http.post(
-      //Uri.parse("http://localhost:5000/api/v1/Auth/LoginUser"),
-      Uri.parse("http://192.168.8.181:5000/api/v1/customer/AddCustomer"),
+      Uri.parse("http://$hostName:5000/api/v1/customer/AddCustomer"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

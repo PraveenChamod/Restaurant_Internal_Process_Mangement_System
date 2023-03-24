@@ -3,7 +3,7 @@ import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './TableDetailsElements'
 const TableDetails = (props) => {
-    console.log(props)
+    console.log(props.tables)
     return ( 
         <Container>
             <Header>
@@ -18,7 +18,7 @@ const TableDetails = (props) => {
                             <l.Th>Status</l.Th>
                         </l.Tr>
                         {
-                            props.data2.map(table => {
+                            props.tables.map(table => {
                                 return(
                                     <l.Tr key={table._id}>
                                         <l.Td>{table.TableNo}</l.Td>
