@@ -8,6 +8,7 @@ import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 const FoodDetails = (props) => {
     console.log(props.data1);
+    const {user} = useAuth();
     return ( 
         <Container>
             <Header>
@@ -30,9 +31,14 @@ const FoodDetails = (props) => {
                                         <l.Td>{row.Category}</l.Td>
                                         <l.Td>{row.Price}</l.Td>
                                         <l.Td>{row.Status}</l.Td>
-                                        <Link to={`/AdminView-Food/${row.id}` || `/ManagerView-Food/${row.id}` } className="btn">
-                                            <l.Icon><AiFillEye/></l.Icon>
-                                        </Link>
+                                        {
+                                            user.Role === "Manager" || user.Role === "Admin" ? 
+                                                <Link to={`/AdminView-Food/${row.id}` || `/ManagerView-Food/${row.id}` } className="btn">
+                                                    <l.Icon><AiFillEye/></l.Icon>
+                                                </Link>
+                                            :
+                                            null
+                                        }
                                     </l.Tr>
                                 )
                             })

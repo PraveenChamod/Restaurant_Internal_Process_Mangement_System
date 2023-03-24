@@ -20,3 +20,21 @@ const BackRoutes = [
 ]
 
 export default BackRoutes;
+
+export const EditProfileBackRoute = [
+    {
+        nav:"/AdminMy-Profile"
+    },
+    {
+        nav:"/ManagerMy-Profile"
+    },
+    {
+        nav:"/Staff-MemberMy-Profile"
+    },
+    {
+        nav:"/DelivererMy-Profile"
+    },
+    {
+        nav:"/SupplierMy-Profile"
+    }
+]

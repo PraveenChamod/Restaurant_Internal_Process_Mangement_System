@@ -87,9 +87,10 @@ import { Elements } from '@stripe/react-stripe-js';
 import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
 import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 import Map from './Pages/Deliverer/Map';
-import BackRoutes from './Data/BackRotes';
+import BackRoutes, { EditProfileBackRoute } from './Data/BackRotes';
 import SideNavbar from './components/Navbar/SideNavBar';
 import StaffMemberPendingReservations from './Pages/Staff-Member/PendingReservations';
+import ManagerViewTableDetails from './Pages/Manager/ManagerViewTable';
 
 function App() {
   
@@ -166,10 +167,11 @@ function App() {
                 <Route path="/AdminDashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]} ScrollToTop={scrollToTop}/>} />
                 <Route path="/AdminAdd-User" element={<AdminAddUser BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-User" element={<AdminViewUser BackRoutes={BackRoutes[0].nav}/>}/>
-                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0]} BackRoutes={BackRoutes[0]}/>}/>
-                <Route path="/AdminEdit-Profile" element={<AdminEditProfile />}/>
+                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0]} BackRoutes={BackRoutes[0].nav}/>}/>
+                <Route path="/AdminEdit-Profile" element={<AdminEditProfile EditProfileBackRoute={EditProfileBackRoute[0].nav}/>}/>
                 <Route path="/AdminAdd-Table" element={<AdminAddTables BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Tables" element={<AdminViewTables BackRoutes={BackRoutes[0].nav}/>}/>
+                <Route path="/AdminView-Table/:id" element={< ManagerViewTableDetails/>}/>
                 <Route path="/AdminAdd-Foods" element={<AdminAddFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Foods" element={<AdminViewFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Food/:id" element={<AdminViewFood/>}/>
@@ -180,7 +182,7 @@ function App() {
                 <Route path="/ManagerAdd-User" element={<AddOutletStaff BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-User" element={<ManagerViewUser BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1]} BackRoutes={BackRoutes[1]}/>}/>
-                <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile/>}/>
+                <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile EditProfileBackRoute={EditProfileBackRoute[1].nav}/>}/>
                 <Route path="/ManagerReport-Generation" element={<ReportGeneration BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>
                 <Route path="/ManagerAddStock" element={<AddStockItem BackRoutes={BackRoutes[1].nav}/>}/>
@@ -188,12 +190,13 @@ function App() {
                 <Route path="/ManagerViewItem" element={<ViewItem/>}/>
                 <Route path="/ManagerAdd-Table" element={<ManagerAddTables BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-Tables" element={<ManagerViewTables BackRoutes={BackRoutes[1].nav} />}/>
+                <Route path="/ManagerView-Table/:id" element={< ManagerViewTableDetails/>}/>
                 <Route path="/ManagerAdd-Foods" element={<ManagerAddFoods BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerAdd-Offers" element={<AddOffers BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-Foods" element={<ManagerViewFoods BackRoutes={BackRoutes[1].nav} />}/>
                 <Route path="/ManagerView-Food/:id" element={<ManagerViewFood/>}/>
                 <Route path="/ManagerView-Offers" element={<ManagerViewOffers BackRoutes={BackRoutes[1].nav}/>}/>
-                <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
+                <Route path="/ManagerView-Offer/:id" element={<ManagerViewOffer/>}/>
                 <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
 
@@ -210,7 +213,7 @@ function App() {
                 <Route path="/Staff-MemberPendingTable-Reservation-Details" element={<StaffMemberPendingReservations BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details/:id" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>
-                <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
+                <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile EditProfileBackRoute={EditProfileBackRoute[2].nav}/>}/>
                 <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
                 
                 
@@ -240,7 +243,7 @@ function App() {
                   
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/DelivererMy-Profile" element={<DelivererUserProfile route={EditProfileLinks[3]} BackRoutes={BackRoutes[4].nav}/>}/>   
-                <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
+                <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/>  
                 <Route path="/DelivererAllOrderDetails" element={<AllOrderDetails BackRoutes={BackRoutes[4].nav}/>}/>   
                 <Route path="/DelivererOrderDetails/:id" element={<DeliveryOrderDetails/>}/>   
                 <Route path="/DelivererMap/:id" element={<Map/>}/>   
@@ -249,7 +252,7 @@ function App() {
                   
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
-                <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile/>}/> 
+                <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
             </Routes>
             <Footer/>
