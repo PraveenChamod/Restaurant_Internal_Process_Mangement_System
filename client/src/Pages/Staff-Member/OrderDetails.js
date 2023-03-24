@@ -12,8 +12,8 @@ const StaffMemberOrderDetails = () => {
         {isPending && <Spinner/>}
         {data &&  <OrderDetailsComponent data={data?.data?.pendingOrders[0]} />}
         </>
-       
-     );
+
+    );
 }
- 
+
 export default StaffMemberOrderDetails;
