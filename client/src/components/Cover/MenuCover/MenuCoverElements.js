@@ -64,12 +64,21 @@ export const Button = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        @media screen and (max-width: 800px){
+            width: 100px;
+        height: 30px;
+        font-size: 12px;
+        }
 `
 export const H1 = styled.div`
-
+    @media screen and (max-width: 800px){
+         font-size: 3rem;
+    }
 `
 export const H2 = styled.div`
-
+    @media screen and (max-width: 800px){
+         font-size: 3rem;
+    }
 `
 export const Image = styled.img`
     width: 100%;

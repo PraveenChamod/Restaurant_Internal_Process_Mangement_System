@@ -51,7 +51,7 @@ const ReportGenerationComponent = (props) => {
             </l.Content>
             <l.Div3>
                 <RegularButton>
-                <Link to="./login" className="btn">
+                <Link to={props.BackRoutes} className="btn">
                     Back
                 </Link>
                 </RegularButton>

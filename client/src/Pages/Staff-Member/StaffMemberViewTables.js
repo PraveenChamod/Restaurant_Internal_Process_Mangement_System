@@ -8,7 +8,7 @@ const StaffMemberViewTables = (props) => {
     return (  
         <>
         {isPending && <Spinner/>}
-        {data && <TableDetails data2={data?.data?.tables} BackRoutes={props.BackRoutes}/>}
+        {data && <TableDetails tables={data?.data?.tables} BackRoutes={props.BackRoutes}/>}
         </>
     );
 }

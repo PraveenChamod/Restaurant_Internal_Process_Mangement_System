@@ -87,6 +87,88 @@ export const ViewTables = async (req,res)=>{
     }
 }
 
+// Method : Get
+// End Point : "api/v1/table/:id";
+// Description : Get Table By Id
+export const getTableById = async(req,res)=>{
+    const user = req.user;
+    try {
+        if(user.Role === "Manager" || user.Role === "Admin"){
+            const{id} = req.params;
+            const table = await Table.findOne({_id:id});
+            if(table !== null){
+                res.status(200).json({
+                    status:"Success",
+                    message:"Table Deatils",
+                    data:{
+                        table
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes plase add foods"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:'User has not authorization to perform this operation'
+            })
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
+    }
+}
+
+// Method : PATCH
+// End Point : "api/v1/table/:id";
+// Description : update Table
+export const updateTable = async(req,res)=>{
+    try{
+        const user = req.user;
+        if(user.Role === 'Manager' || user.Role === 'Admin'){
+            const {id} = req.params;
+            const table = await Table.findByIdAndUpdate(id,{
+                ...req.body
+            },{new:true});
+            if(!table){
+                res.status(404).json("No such food item to update")
+            }
+            else{
+                res.status(200).json({
+                    status:"Success",
+                    message:`${table.TableNo} is updated `,
+                    data:{
+                        table
+                    }
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                staus:"Error",
+                message:"This user not authorized for this operation"
+            })
+        }
+       
+    }
+    catch(error){
+        res.status(500).json({
+            status:"Server Error",
+            message:"This user not authorized for this operation"
+        });
+    }
+}
+
+// Method : Get
+// End Point : "api/v1/availabletables";
+// Description : Get Available Tables
 export const getAvailableTables = async(req,res)=>{
     try {
         const user = req.user;
@@ -115,6 +197,9 @@ export const getAvailableTables = async(req,res)=>{
             res.status(401).json('Only Manager, Staff-Member & Admin have access to do this operation');
         }
     } catch (error) {
-        
+        res.status(500).json({
+            status:"Server Error",
+            message:error.message,
+        })
     }
 }

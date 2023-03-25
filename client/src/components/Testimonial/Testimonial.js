@@ -34,7 +34,7 @@ const Testimonials = () => {
         text-align: center;
         margin: 1rem auto;
         @media screen and (max-width:800px){
-            font-size: 20px;
+            font-size: 1em;
         }
     `
         const H2 = styled.h1`
@@ -44,7 +44,7 @@ const Testimonials = () => {
         color: #fff;
         text-align: center;
         @media screen and (max-width:800px){
-            font-size: 20px;
+            font-size: 1.2em;
     }
     `
         const Sec = styled.div`
@@ -64,21 +64,23 @@ const Testimonials = () => {
             margin-right: auto;
             box-shadow: 3px 3px 3px #000;
             @media screen and (max-width:900px){
-            height: auto;
-            background: none;
-            flex-direction: column;
-            align-items: center;
-            justif-content: center;
-            padding: 0;}
+                width: 80%;
+                height: 50%;
+                background: none;
+                flex-direction: column;
+                align-items: center;
+                justif-content: center;
+                padding: 2% 5%;
+            }
             `
 
     const P = styled.p`
-    font-size: 1.1em;
-    color : white ;
-    text-align: center;
-    @media screen and (max-width:900px){
-    font-size: 1em;
-    }
+        font-size: 1.1em;
+        color : white ;
+        text-align: center;
+        @media screen and (max-width:900px){
+            font-size: 12px;
+        }
     `
 
 

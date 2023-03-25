@@ -30,7 +30,9 @@ const ScrollToTop = () => {
     @media screen and (max-width:800px){
             bottom: 20px;
             right: 10px;
-            font-size: 30px;
+            width: 35px;
+            height: 35px;
+            font-size: 18px;
     }
     `
 

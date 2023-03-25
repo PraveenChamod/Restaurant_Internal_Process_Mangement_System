@@ -5,7 +5,7 @@ import img from '../../Images/Untitled-1_1-removebg-preview.png'
 import { Link } from 'react-router-dom';
 const Cover = (props) => (
 
-    <div className='container' id="Cover">
+    <div className='container'>
             <div className='foodImage' data-aos="fade-right"
                                         data-aos-duration="1000">
                 <img alt="Burger" className='imgBurger' src={img} />

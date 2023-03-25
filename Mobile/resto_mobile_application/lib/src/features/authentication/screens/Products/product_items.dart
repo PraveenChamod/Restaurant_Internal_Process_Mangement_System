@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:resto_mobile_application/src/features/authentication/screens/Products/products_menu_titles.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/Products/products_menu_categories.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
@@ -12,7 +12,7 @@ class ProductItems extends StatelessWidget {
   final String category;
   ProductItems({Key? key, required this.category}) : super(key: key);
 
-  List<FoodItems> data = [];
+  final List<FoodItems> data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +45,23 @@ class ProductItems extends StatelessWidget {
                             itemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].foodImagePath}',
                             itemName: snapshot.data![index].foodName,
                             itemPrice: snapshot.data![index].price,
+                            itemCategory: snapshot.data![index].category,
+                            itemId: snapshot.data![index].foodId,
                           );
                         },
                       );
                     }else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
                     }
-                    return const CircularProgressIndicator();
+                    return const SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFFfebf10),
+                        ),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -86,13 +96,17 @@ class ProductItems extends StatelessWidget {
 class FoodItems{
   final String foodImagePath;
   final String foodName;
+  final String category;
+  final String foodId;
   final int price;
-  FoodItems({required this.foodImagePath, required this.foodName, required this.price,});
+  FoodItems({required this.foodImagePath, required this.foodName, required this.category, required this.price, required this.foodId});
   factory FoodItems.fromJson(Map<String, dynamic> json){
     return FoodItems(
       foodImagePath: json['FoodImage'],
       foodName: json['FoodName'],
       price: json['Price'],
+      category: json['Category'],
+      foodId: json['_id'],
     );
   }
   static List<FoodItems> fromJsonList(dynamic jsonList){

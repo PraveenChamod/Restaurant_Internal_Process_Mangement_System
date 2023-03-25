@@ -4,20 +4,23 @@ import ContactUs from '../components/ContactUs/ContactUs'
 import Cover from '../components/Cover/Cover'
 import Deals from '../components/Deals/Deals'
 import Services from '../components/Services/Services'
+import Spinner from '../components/shared/Spinner/Spinner'
 import Testimonials from '../components/Testimonial/Testimonial'
+import useFetch from '../Hooks/useFetch'
 
 
 export const Home = (props) => {
-
+  const{data,isPending} = useFetch('api/v1/Offers');
+  console.log(data);
   return (
-    <div>
-        {/* <h1>Home</h1> */}
+    <>
         <Cover ScrollToTop1={props.ScrollToTop}/>
-        <Deals ScrollToTop1={props.ScrollToTop}/>
+        {isPending && <Spinner/>}
+        {data && <Deals ScrollToTop1={props.ScrollToTop} data={data}/>}
         <AboutUs/>
         <Services/>
-        <Testimonials/>
+        <Testimonials/> 
         <ContactUs/>
-    </div>
+    </>
   )
 }

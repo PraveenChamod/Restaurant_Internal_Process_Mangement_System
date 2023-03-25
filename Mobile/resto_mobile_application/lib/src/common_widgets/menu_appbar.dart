@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../features/authentication/screens/Customer/customer_home.dart';
 import '../features/authentication/screens/Customer/customer_main_page.dart';
 import '../features/authentication/screens/Customer/customer_search.dart';
+import '../features/authentication/screens/Products/product_cart.dart';
 
 class MenuAppBar extends StatelessWidget implements PreferredSizeWidget{
   const MenuAppBar({Key? key}) : super(key: key);
@@ -31,13 +32,13 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget{
           padding: const EdgeInsets.only(right: 20.0),
           child: IconButton(
             onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_){
-              //       return const CustomerCart();
-              //     },
-              //   ),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_){
+                    return ProductCart();
+                  },
+                ),
+              );
             },
             icon: const Icon(Icons.shopping_cart),
           ),
