@@ -54,17 +54,17 @@ const Deals = (props) => {
           <Section2 data-aos={"zoom-out-up"}>
               <Slider {...settings}>
                   {
-                      card.map((cardData,index)=>{
+                      props.data.map((cardData,index)=>{
                           return(
                               <SubSec className={index === slideIndex ? 'slider sliderActive' : 'slider'} key={index}>
                                 <Images>
-                                  <Img src={cardData.img}/>
+                                  <Img src={`http://localhost:5000/offerimages/${cardData.OfferImage}`}/>
                                 </Images>
                                     <div className="text">
                                       <Description>
                                         <SubHeading>Today Special Offer</SubHeading>
-                                        <Name>{cardData.Name}</Name>
-                                        <p>{cardData.price}</p>
+                                        <Name>{cardData.OfferName}</Name>
+                                        <p>{cardData.SpecialPrice}</p>
                                       </Description>
                                     </div>
                               </SubSec>

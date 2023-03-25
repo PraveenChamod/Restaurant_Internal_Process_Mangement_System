@@ -5,6 +5,10 @@ const offerSchema = mongoose.Schema({
         type:Number,
         required:[true,"Add Price of the offer"]
     },
+    OfferName:{
+        type:String,
+        required:[true,"Add Offer Name"]
+    },
     SerialNo:{
         type:String,
         required:[true,"Serial Number Must Be Add"]

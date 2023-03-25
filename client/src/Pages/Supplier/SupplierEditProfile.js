@@ -1,8 +1,8 @@
 import EditProfileComponent from "../../components/shared/EditProfile/Editprofile";
 
-const SupplierEditProfile = () => {
+const SupplierEditProfile = (props) => {
     return ( 
-        <EditProfileComponent/>
+        <EditProfileComponent EditProfileBackRoute={props.EditProfileBackRoute}/>
      );
 }
  

@@ -83,7 +83,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use('/images', express.static('images/Users'));
 app.use('/Foodimages', express.static('images/Foods'));
-
+app.use('/offerimages', express.static('images/Offers'));
 // app.use('/api/v1/customer',Customerrouter);
 
 // app.use('/api/v1/admin',requireAuth,AdminRoutes);
@@ -101,7 +101,7 @@ app.use('/api/v1/',requireAuth,BlogRoutes);
 
 app.use('/api/v1/',requireAuth,TableRoutes);
 
-app.use('/api/v1',requireAuth,OfferRoutes);
+app.use('/api/v1',OfferRoutes);
 
 app.use('/api/v1',requireAuth,OrderRoutes);
 
