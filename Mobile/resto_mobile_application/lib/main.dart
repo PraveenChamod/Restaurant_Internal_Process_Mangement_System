@@ -43,11 +43,6 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
-      //home: const ProductDetails(category: 'Burgers', itemName: 'Burger',),
-      //home: const DelivererHome(),
-      //home: const MyAccountScreen(),
-      //home: const ProductItems(category: 'Burgers',),
-      //home: const ProductMenuTitles(),
     );
   }
 }
