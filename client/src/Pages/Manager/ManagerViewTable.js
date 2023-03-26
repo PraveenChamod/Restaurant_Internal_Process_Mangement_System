@@ -4,10 +4,10 @@ import useFetch from "../../Hooks/useFetch";
 
 const ManagerViewTableDetails = () => {
     const {id} = useParams()
-    console.log("table id is ddd ", id);
+
     /** usefetch */
     const {data,isPending} = useFetch('/api/v1/table/'+id)
-    console.log("table data is ddd ", data?.data?.table);
+    console.log("table data", data?.data?.table);
     const table = data?.data?.table
 
     return ( 

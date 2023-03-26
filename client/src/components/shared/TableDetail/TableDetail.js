@@ -3,7 +3,7 @@ import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from "./TableDetailElement";
 const TableDetail = ({table}) => {
-    console.log("props table ddddd " , table);
+    console.log("table data " , table);
     const [tableNo,setTableNo] = useState(0)
     const  [maxpersons,setmaxPersons] = useState(0)
     const [reservationFee,setReservationFee] = useState(0)
