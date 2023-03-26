@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
+import 'delivery_save_order.dart';
 
 enum SingingCharacter { cashOn, card }
 
@@ -375,6 +376,13 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
                                   print(_method);
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) {
+                                        return const DeliverySaveOrder();
+                                      },
+                                    ),
+                                  );
                                 },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(0),

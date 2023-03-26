@@ -300,10 +300,13 @@ class _CartItemContainerState extends State<CartItemContainer> {
 
   //Remove Cart Item
   void removeFromCart(String cartId, String foodId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
       Uri.parse("http://$hostName:5000/api/v1/FoodItem"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
       },
       body: jsonEncode(<String, dynamic>{
         "cartId": cartId,
@@ -313,10 +316,12 @@ class _CartItemContainerState extends State<CartItemContainer> {
     if(response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
+      print(msg);
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
       final msg = json["message"];
+      print(msg);
       unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
     }
   }

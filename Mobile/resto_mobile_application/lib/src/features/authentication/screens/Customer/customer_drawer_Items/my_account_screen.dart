@@ -67,9 +67,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   //   return File(imagePath).copy(image.path);
   // }
 
-
-
-
   //For getUserDetails
   late Future<Map<String, dynamic>> _futureData;
   @override
