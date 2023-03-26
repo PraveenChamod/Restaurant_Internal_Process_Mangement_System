@@ -49,7 +49,7 @@ export const AddTable = async(req,res)=>{
 
 
 // Method : Get
-// End Point : "api/v1/Tables";
+// End Point : "api/v1/Tables"; 
 // Description : Get Tables
 
 export const ViewTables = async (req,res)=>{
