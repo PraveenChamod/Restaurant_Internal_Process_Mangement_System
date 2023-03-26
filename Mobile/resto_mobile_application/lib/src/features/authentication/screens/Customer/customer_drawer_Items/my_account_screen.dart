@@ -3,15 +3,14 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:resto_mobile_application/src/common_widgets/drawer_item_appbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../constants/image_strings.dart';
-import 'package:path/path.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({Key? key}) : super(key: key);
@@ -22,6 +21,11 @@ class MyAccountScreen extends StatefulWidget {
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
 
+  //For Get User Input
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var contactController = TextEditingController();
+  var addressController = TextEditingController();
 
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
@@ -43,11 +47,30 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   Future<File> saveFilePermanently(String imagePath) async{
     final directory = await getApplicationDocumentsDirectory();
-    final name = basename(imagePath);
+    final name = path.basename(imagePath);
     final image = File('${directory.path}/$name');
     return File(imagePath).copy(image.path);
   }
 
+  // Future<File> saveFilePermanently(String imagePath, String previousPath) async {
+  //   final directory = await getApplicationDocumentsDirectory();
+  //   final name = path.basename(imagePath);
+  //   final image = File('${directory.path}/$name');
+  //
+  //   if(previousPath != null) {
+  //     final previousImage = File(previousPath);
+  //     if(await previousImage.exists()) {
+  //       await previousImage.delete(); // delete the previous file if it exists
+  //     }
+  //   }
+  //
+  //   return File(imagePath).copy(image.path);
+  // }
+
+
+
+
+  //For getUserDetails
   late Future<Map<String, dynamic>> _futureData;
   @override
   void initState() {
@@ -84,6 +107,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         final String userAddress = snapshot.data!['user']['Address'];
                         final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
                         //const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
+
+                        nameController = TextEditingController(text: userName);
+                        emailController = TextEditingController(text: userEmail);
+                        contactController = TextEditingController(text: userContact);
+                        addressController = TextEditingController(text: userAddress);
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -159,7 +187,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userName,
+                              controller: nameController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -191,7 +219,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userEmail,
+                              controller: emailController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -223,7 +251,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userContact,
+                              controller: contactController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -255,7 +283,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userAddress,
+                              controller: addressController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -300,7 +328,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   ),
                                   color: const Color(0xFFfebf10),
                                   pressEvent: () {
-
+                                    updateUserDetails();
                                   },
                                 ),
                               ),
@@ -310,7 +338,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       }else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
-                      return const CircularProgressIndicator();
+                      return const SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFfebf10),
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),
@@ -337,5 +373,62 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     } else {
       throw Exception('Failed to load data');
     }
+  }
+  void updateUserDetails() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userEmail = pref.getString("LoginEmail");
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.patch(
+      Uri.parse("http://$hostName:5000/api/v1/User/Profile/$userEmail"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "Name": nameController.text,
+        "Email": emailController.text,
+        "ContactNumber": contactController.text,
+        "Address": addressController.text
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      print(msg);
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      //awesomeDialog(DialogType.warning, msg, "Warning");
+    }
+  }
+
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context as BuildContext,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const MyAccountScreen();
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
   }
 }

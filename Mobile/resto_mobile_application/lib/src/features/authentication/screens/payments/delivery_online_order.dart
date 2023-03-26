@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +55,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
             },
             icon: const Icon(Icons.chevron_left),
           ),
-          title: const Text('Your Cart'),
+          title: const Text('Confirm Your Details!'),
           backgroundColor: const Color(0xFF161b1d),
           centerTitle: true,
         ),
@@ -67,179 +66,190 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
               children: [
                 Expanded(
                   child: Center(
-                    child: FutureBuilder(
-                      future: _futureData,
-                      builder: (context, snapshot) {
-                        if(snapshot.hasData){
-                          final String userName = snapshot.data!['user']['Name'];
-                          final String userEmail = snapshot.data!['user']['Email'];
-                          final String userContact = snapshot.data!['user']['ContactNumber'];
-                          final String userAddress = snapshot.data!['user']['Address'];
-                          return Column(
-                            children: [
-                              Expanded(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      controller: nameController,
-                                      initialValue: userName,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xFFfebf10),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      decoration: InputDecoration(
-                                        labelText: 'Delivery To',
-                                        labelStyle: const TextStyle(
+                    child: Container(
+                      color: Colors.black38,
+                      child: FutureBuilder(
+                        future: _futureData,
+                        builder: (context, snapshot) {
+                          if(snapshot.hasData){
+                            final String userName = snapshot.data!['user']['Name'];
+                            final String userEmail = snapshot.data!['user']['Email'];
+                            final String userContact = snapshot.data!['user']['ContactNumber'];
+                            final String userAddress = snapshot.data!['user']['Address'];
+                            nameController = TextEditingController(text: userName);
+                            emailController = TextEditingController(text: userEmail);
+                            contactController = TextEditingController(text: userContact);
+                            addressController = TextEditingController(text: userAddress);
+                            return Column(
+                              children: [
+                                Expanded(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        controller: nameController,
+                                        style: const TextStyle(
                                           fontSize: 15,
                                           color: Color(0xFFfebf10),
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFFFFF33)),
-                                        ),
-                                        suffixIcon: const Icon(
-                                          Icons.person,
-                                          color: Color(0xFFfebf10),
+                                        decoration: InputDecoration(
+                                          labelText: 'Delivery To',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFFfebf10),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                          ),
+                                          suffixIcon: const Icon(
+                                            Icons.person,
+                                            color: Color(0xFFfebf10),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      controller: emailController,
-                                      initialValue: userEmail,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xFFfebf10),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      decoration: InputDecoration(
-                                        labelText: 'Email',
-                                        labelStyle: const TextStyle(
+                                Expanded(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        controller: emailController,
+                                        style: const TextStyle(
                                           fontSize: 15,
                                           color: Color(0xFFfebf10),
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFFFFF33)),
-                                        ),
-                                        suffixIcon: const Icon(
-                                          Icons.email,
-                                          color: Color(0xFFfebf10),
+                                        decoration: InputDecoration(
+                                          labelText: 'Email',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFFfebf10),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                          ),
+                                          suffixIcon: const Icon(
+                                            Icons.email,
+                                            color: Color(0xFFfebf10),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      controller: contactController,
-                                      initialValue: userContact,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xFFfebf10),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      decoration: InputDecoration(
-                                        labelText: 'Contact Number',
-                                        labelStyle: const TextStyle(
+                                Expanded(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        controller: contactController,
+                                        style: const TextStyle(
                                           fontSize: 15,
                                           color: Color(0xFFfebf10),
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFFFFF33)),
-                                        ),
-                                        suffixIcon: const Icon(
-                                          Icons.phone_android,
-                                          color: Color(0xFFfebf10),
+                                        decoration: InputDecoration(
+                                          labelText: 'Contact Number',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFFfebf10),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                          ),
+                                          suffixIcon: const Icon(
+                                            Icons.phone_android,
+                                            color: Color(0xFFfebf10),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                      controller: addressController,
-                                      initialValue: userAddress,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xFFfebf10),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      decoration: InputDecoration(
-                                        labelText: 'Address',
-                                        labelStyle: const TextStyle(
+                                Expanded(
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextFormField(
+                                        controller: addressController,
+                                        style: const TextStyle(
                                           fontSize: 15,
                                           color: Color(0xFFfebf10),
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFfebf10)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                          borderSide: const BorderSide(color: Color(0xFFFFFF33)),
-                                        ),
-                                        suffixIcon: const Icon(
-                                          Icons.location_on_outlined,
-                                          color: Color(0xFFfebf10),
+                                        decoration: InputDecoration(
+                                          labelText: 'Address',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFFfebf10),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(10),
+                                            borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                          ),
+                                          suffixIcon: const Icon(
+                                            Icons.location_on_outlined,
+                                            color: Color(0xFFfebf10),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
+                              ],
+                            );
+                          }else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          }
+                          return const SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFfebf10),
                               ),
-                            ],
+                            ),
                           );
-                        }else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
                         }
-                        return const CircularProgressIndicator();
-                      }
+                      ),
                     ),
                   ),
                 ),
@@ -263,13 +273,6 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
                                   updateUserDetails();
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return const DeliveryOnlineOrder();
-                                      },
-                                    ),
-                                  );
                                 },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(0),
@@ -302,42 +305,54 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                           ),
                         ),
                         Expanded(
-                          child: ListTile(
-                            title: const Text(
-                              'Cash On Delivery',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFFfebf10),
+                          child: Container(
+                            color: Colors.black38,
+                            child: ListTile(
+                              title: const Text(
+                                'Cash On Delivery',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFFfebf10),
+                                ),
                               ),
-                            ),
-                            leading: Radio<SingingCharacter>(
-                              value: SingingCharacter.cashOn,
-                              groupValue: _method,
-                              onChanged: (SingingCharacter? value) {
-                                setState(() {
-                                  _method = value;
-                                });
-                              },
+                              leading: Radio<SingingCharacter>(
+                                fillColor: MaterialStateColor.resolveWith(
+                                      (states) => const Color(0xFFfebf10),
+                                ),
+                                value: SingingCharacter.cashOn,
+                                groupValue: _method,
+                                onChanged: (SingingCharacter? value) {
+                                  setState(() {
+                                    _method = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
                         Expanded(
-                          child: ListTile(
-                            title: const Text(
-                              'Card Payment',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xFFfebf10),
+                          child: Container(
+                            color: Colors.black38,
+                            child: ListTile(
+                              title: const Text(
+                                'Card Payment',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFFfebf10),
+                                ),
                               ),
-                            ),
-                            leading: Radio<SingingCharacter>(
-                              value: SingingCharacter.card,
-                              groupValue: _method,
-                              onChanged: (SingingCharacter? value) {
-                                setState(() {
-                                  _method = value;
-                                });
-                              },
+                              leading: Radio<SingingCharacter>(
+                                fillColor: MaterialStateColor.resolveWith(
+                                      (states) => const Color(0xFFfebf10),
+                                ),
+                                value: SingingCharacter.card,
+                                groupValue: _method,
+                                onChanged: (SingingCharacter? value) {
+                                  setState(() {
+                                    _method = value;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -394,6 +409,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
       },
     );
     if (response.statusCode == 201) {
+      print(jsonDecode(response.body));
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load data');
@@ -420,13 +436,40 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      //successAwesomeDialog(DialogType.success, msg, "Success");
       print(msg);
+      successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      //unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
-      print(msg);
+      awesomeDialog(DialogType.warning, msg, "Warning");
     }
+  }
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const DeliveryOnlineOrder();
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
   }
 }
