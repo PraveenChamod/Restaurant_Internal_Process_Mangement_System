@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/cart_item_container.dart';
 import '../../../../constants/image_strings.dart';
+import '../payments/delivery_online_order.dart';
 
 class ProductCart extends StatefulWidget {
   const ProductCart({Key? key}) : super(key: key);
@@ -143,7 +144,13 @@ class _ProductCartState extends State<ProductCart> {
                                 ),
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
-                                  //incrementPrice();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_){
+                                        return const DeliveryOnlineOrder();
+                                      },
+                                    ),
+                                  );
                                 },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(0),

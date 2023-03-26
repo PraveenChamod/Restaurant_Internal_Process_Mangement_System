@@ -30,10 +30,10 @@ class _MainFeaturesState extends State<MainFeatures> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return widget.title == "Explore Menu"
+              return widget.title == "Explore Menu at Restaurant"
                   ? const ProductMenuTitles()
-                  : widget.title == "Online Order"
-                  ? const SignupScreen()
+                  : widget.title == "Online Order To Your Doorstep"
+                  ? const ProductMenuTitles()
                   : const LoginScreen();
             },
           ),

@@ -9,8 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:resto_mobile_application/src/common_widgets/drawer_item_appbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../common_widgets/background_image.dart';
-import '../../../../constants/image_strings.dart';
+import '../../../../../common_widgets/background_image.dart';
+import '../../../../../constants/image_strings.dart';
 import 'package:path/path.dart';
 
 class MyAccountScreen extends StatefulWidget {

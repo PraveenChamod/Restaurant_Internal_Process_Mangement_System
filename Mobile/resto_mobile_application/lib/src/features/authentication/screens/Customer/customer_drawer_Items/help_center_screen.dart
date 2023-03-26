@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../common_widgets/background_image.dart';
-import '../../../../common_widgets/drawer_item_appbar.dart';
+import '../../../../../common_widgets/background_image.dart';
+import '../../../../../common_widgets/drawer_item_appbar.dart';
 
 class HelpCenterScreen extends StatelessWidget {
   const HelpCenterScreen({Key? key}) : super(key: key);
