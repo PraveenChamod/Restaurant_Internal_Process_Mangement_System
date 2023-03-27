@@ -5,9 +5,10 @@ import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './TableDetailsElements'
 import { AiFillEye } from 'react-icons/ai';
 const TableDetails = (props) => {
-    console.log(props.tables)
+    console.log("tables, dhana",props.data2)
     const{user} = useAuth();
-    return ( 
+    const tables = props.data2
+    return (  
         <Container>
             <Header>
             Details Of All Tables
@@ -22,7 +23,7 @@ const TableDetails = (props) => {
                             <l.Th></l.Th>
                         </l.Tr>
                         {
-                            props.tables.map(table => {
+                            tables.map(table => {
                                 return(
                                     <l.Tr key={table._id}>
                                         <l.Td>{table.TableNo}</l.Td>
