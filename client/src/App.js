@@ -158,9 +158,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
                 <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
-                <Route path="/login" element={<LoginPg/>}/>
+                <Route path="/login" element={<LoginPg ScrollToTop={scrollToTop}/>}/>
                 <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
-                <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
+                <Route path="/ResetPassword/:Email" element={<PasswordReset/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
               {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
@@ -214,7 +214,7 @@ function App() {
                 <Route path="/Staff-MemberTable-Reservation-Details/:id" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile EditProfileBackRoute={EditProfileBackRoute[2].nav}/>}/>
-                <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
+                <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder BackRoutes={BackRoutes[2].nav}/>}/>
                 
                 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}

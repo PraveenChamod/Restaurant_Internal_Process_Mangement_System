@@ -24,6 +24,7 @@ export const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
   margin-top:40px;
   @media screen and (max-width: 769px) {
     width: 90%;

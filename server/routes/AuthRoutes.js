@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { getUserProfile, LogInUser, LogoutUser, passportSAuth, PasswordReset, redirect, UploadProfileImage } from '../controllers/AuthController.js';
+import { ForgotPassword, getUserProfile, LogInUser, LogoutUser, passportSAuth, PasswordReset, redirect, sendOTP, UploadProfileImage } from '../controllers/AuthController.js';
 import { requireAuth } from '../middleware/Authmiddleware.js';
 
 
@@ -20,6 +20,10 @@ AuthRoutes.route('sessions/oauth/google').get(passportSAuth,redirect)
 AuthRoutes.route('/logout').get(LogoutUser);
 
 AuthRoutes.route('/ResetPassword/:Email').patch(PasswordReset);
+
+AuthRoutes.route('/OTP').post(sendOTP);
+
+AuthRoutes.route('/Forgotpassword').patch(ForgotPassword);
 
 // AuthRoutes.route('/google').get(passport.authenticate('google', ["profile", "email"]));
 

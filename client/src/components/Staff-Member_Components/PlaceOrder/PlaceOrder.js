@@ -10,6 +10,7 @@ import * as l from "./PlaceOrderElements";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 
 const PlaceOrderComponent = (props) => {
@@ -216,7 +217,9 @@ const PlaceOrderComponent = (props) => {
             </l.FormSection>
         </l.SubSection>
         <l.ButtonSection1>
-          <RegularButton >Back</RegularButton>
+            <Link to={props.BackRoutes} className="btn">
+                <RegularButton >Back</RegularButton>
+            </Link>
         </l.ButtonSection1>
 
     </Container>

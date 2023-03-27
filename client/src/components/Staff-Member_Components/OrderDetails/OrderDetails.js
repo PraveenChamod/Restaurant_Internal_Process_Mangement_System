@@ -89,7 +89,7 @@ const OrderDetailsComponent = (props) => {
                                                         </l.SelectIcon> */}
                                                         <l.ItemsCard>
                                                             <l.FoodImage>
-                                                                <l.Food src={`http://localhost:5000/Foodimages/${data.image}`}/>
+                                                                <l.Food src={`http://localhost:5000/${data.Foodid == null ? 'offerimages' : 'Foodimages'}/${data.image}`}/>
                                                             </l.FoodImage>
                                                             <l.Details>
                                                                 <l.MainText>

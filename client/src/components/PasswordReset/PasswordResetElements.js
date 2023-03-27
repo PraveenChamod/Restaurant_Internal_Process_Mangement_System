@@ -16,7 +16,7 @@ export const Div = styled.div`
     height: 350px;
   }
 `;
-export const Div1 = styled.div`
+export const Div1 = styled.form`
   width: 50%;
   height: 90%;
   display: flex;

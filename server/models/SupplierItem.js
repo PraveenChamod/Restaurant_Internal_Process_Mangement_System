@@ -2,21 +2,22 @@ import mongoose  from "mongoose";
 
 const SupplierItemSchema = mongoose.Schema({
     Items:{
-        type:String,
-        required:true
+        type:mongoose.Schema.ObjectId,
+        ref:'Item',
     },
-
     Quantity:{
         type:Number,
         required:true
     },
-
     Date:{
         type:Date,
         required:true,
         default:Date.now()
     },
-    
+    Supplier:{
+        type:mongoose.Schema.ObjectId,
+        ref:'ServiceProvider',
+    }
 },
 {
     toJSON: { 
