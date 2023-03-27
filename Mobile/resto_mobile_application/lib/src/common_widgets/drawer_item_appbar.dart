@@ -18,7 +18,7 @@ class DrawerItemAppbar extends StatelessWidget implements PreferredSizeWidget{
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_){
-                return const CustomerMainPage();
+                return const CustomerMainPage(choice: 3,);
               },
             ),
           );

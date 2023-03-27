@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../common_widgets/background_image.dart';
-import '../../../../common_widgets/drawer_item_appbar.dart';
+import '../../../../../common_widgets/background_image.dart';
+import '../../../../../common_widgets/drawer_item_appbar.dart';
+
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({Key? key}) : super(key: key);

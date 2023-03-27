@@ -10,7 +10,8 @@ import '../../../../constants/image_strings.dart';
 import '../Products/product_cart.dart';
 
 class CustomerCart extends StatefulWidget {
-  const CustomerCart({Key? key}) : super(key: key);
+  final int choice;
+  const CustomerCart({Key? key, required this.choice}) : super(key: key);
   @override
   State<CustomerCart> createState() => _CustomerCartState();
 }
@@ -48,6 +49,7 @@ class _CustomerCartState extends State<CustomerCart> {
                               totalPrice: snapshot.data![index].totalPrice,
                               cartId: snapshot.data![index].cartId,
                               cartItemId: snapshot.data![index].foodId,
+                              choice: widget.choice,
                             );
                           },
                         );

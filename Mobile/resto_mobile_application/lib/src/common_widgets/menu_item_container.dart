@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import '../features/authentication/screens/Products/product_items.dart';
 
 class MenuContainer extends StatelessWidget {
+  final int choice;
   final String itemImagePath;
   final String itemName;
   const MenuContainer({Key? key,
     required this.itemImagePath,
     required this.itemName,
+    required this.choice,
   }) :super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class MenuContainer extends StatelessWidget {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return ProductItems(category: itemName,);
+              return ProductItems(category: itemName, choice: choice,);
             },
           ),
         );
