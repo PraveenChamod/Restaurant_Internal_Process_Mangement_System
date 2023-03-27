@@ -7,6 +7,7 @@ import '../constants/image_strings.dart';
 import '../features/authentication/screens/Products/product_cart.dart';
 
 class CartItemContainer extends StatefulWidget {
+  final int choice;
   final String cartItemImagePath;
   final String cartItemName;
   final String cartId;
@@ -21,6 +22,7 @@ class CartItemContainer extends StatefulWidget {
     required this.totalPrice,
     required this.cartId,
     required this.cartItemId,
+    required this.choice,
   }) : super(key: key);
 
   @override
@@ -290,7 +292,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return const ProductCart();
+              return ProductCart(choice: widget.choice);
             },
           ),
         );
@@ -347,7 +349,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return const ProductCart();
+              return ProductCart(choice: widget.choice);
             },
           ),
         );

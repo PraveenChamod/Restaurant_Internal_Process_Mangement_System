@@ -11,13 +11,16 @@ import 'delivery_save_order.dart';
 enum SingingCharacter { cashOn, card }
 
 class DeliveryOnlineOrder extends StatefulWidget {
-  const DeliveryOnlineOrder({Key? key}) : super(key: key);
+  final num totalPrice;
+  const DeliveryOnlineOrder({Key? key, required this.totalPrice}) : super(key: key);
 
   @override
   State<DeliveryOnlineOrder> createState() => _DeliveryOnlineOrderState();
 }
 
 class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
+
+  
   //For Get User Input
   var nameController = TextEditingController();
   var emailController = TextEditingController();
@@ -379,7 +382,16 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) {
-                                        return const DeliverySaveOrder();
+                                        String paymentMethod = '';
+                                        if(_method == SingingCharacter.cashOn){
+                                          paymentMethod = 'Cash On Delivery';
+                                        }else{
+                                          paymentMethod = 'Card Payments';
+                                        }
+                                        return DeliverySaveOrder(
+                                          paymentMethod: paymentMethod,
+                                          address: addressController.text, totalPrice: widget.totalPrice,
+                                        );
                                       },
                                     ),
                                   );
@@ -463,7 +475,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return const DeliveryOnlineOrder();
+              return DeliveryOnlineOrder(totalPrice: widget.totalPrice,);
             },
           ),
         );

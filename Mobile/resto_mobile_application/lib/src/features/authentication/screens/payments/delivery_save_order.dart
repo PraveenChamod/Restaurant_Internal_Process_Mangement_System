@@ -1,18 +1,33 @@
+import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
+import '../../../../constants/image_strings.dart';
 import 'delivery_online_order.dart';
-
 class DeliverySaveOrder extends StatefulWidget {
-  const DeliverySaveOrder({Key? key}) : super(key: key);
+  final String paymentMethod;
+  final String address;
+  final num totalPrice;
+
+  const DeliverySaveOrder({Key? key,
+    required this.paymentMethod,
+    required this.address,
+    required this.totalPrice
+  }) : super(key: key);
 
   @override
   State<DeliverySaveOrder> createState() => _DeliverySaveOrderState();
 }
 
 class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
+
+  List<FoodList> orderFoods = [];
+  List<CartItems> data = [];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -26,7 +41,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const DeliveryOnlineOrder();
+                    return DeliveryOnlineOrder(totalPrice: widget.totalPrice,);
                   },
                 ),
               );
@@ -50,13 +65,15 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                     child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Expanded(
+                              children: [
+                                const Divider(
+                                  color: Color(0xFFfebf10),
+                                ),
+                                const Expanded(
                                   child: Text(
                                     'Payment Method:',
                                     style: TextStyle(
@@ -67,14 +84,14 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'Cash On Delivery',
-                                    style: TextStyle(
+                                    widget.paymentMethod,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
                                 ),
-                                Divider(
+                                const Divider(
                                   color: Color(0xFFfebf10),
                                 ),
                               ],
@@ -84,8 +101,8 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                             flex: 2,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Expanded(
+                              children: [
+                                const Expanded(
                                   child: Text(
                                     'Deliver To',
                                     style: TextStyle(
@@ -97,14 +114,14 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    'No. 187/1, Bothale Pahalagamaa, Temple Road, Ambepussa',
-                                    style: TextStyle(
+                                    widget.address,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
                                 ),
-                                Divider(
+                                const Divider(
                                   color: Color(0xFFfebf10),
                                 ),
                               ],
@@ -113,8 +130,8 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Expanded(
+                              children: [
+                                const Expanded(
                                   child: Text(
                                     'Total Price:',
                                     style: TextStyle(
@@ -125,15 +142,38 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    'Cash On Delivery',
-                                    style: TextStyle(
+                                    "Rs. ${widget.totalPrice}",
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
                                 ),
-                                Divider(
-                                  color: Color(0xFFfebf10),
+                                Center(
+                                  child: FutureBuilder(
+                                    future: fetchOrderData(),
+                                    builder: (context, snapshot){
+                                      if (snapshot.hasData) {
+                                        for (int i = 0; i < snapshot.data!.length; i++) {
+                                          orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                        }
+                                        return const Divider(
+                                          color: Color(0xFFfebf10),
+                                        );
+                                      }else if (snapshot.hasError) {
+                                        return Text('${snapshot.error}');
+                                      }
+                                      return const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            color: Color(0xFFfebf10),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -158,7 +198,9 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                           fontWeight: FontWeight.bold,
                         ),
                         color: const Color(0xFFfebf10),
-                        pressEvent: () {},
+                        pressEvent: () {
+                          orderItems(orderFoods, widget.paymentMethod, widget.totalPrice, 'Outlet Order');
+                        },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
                           topRight: Radius.circular(80),
@@ -176,4 +218,91 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
       ),
     );
   }
+  void orderItems(List<FoodList> foods, String paymentMethod, num totalPrice, String type) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    final http.Response response = await http.post(
+      Uri.parse("http://$hostName:5000/api/v1/OrderItem"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "Foods":foods,
+        "paymentMethod":paymentMethod,
+        "TotalPrice":totalPrice,
+        "Type":type
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      final orderDetails = json["data"];
+      final msg = json["message"];
+      print(msg);
+      print(orderDetails);
+      //awesomeDialog(DialogType.success, msg, "Success");//Successfully User registered.
+    }else{
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      print("Order Unsuccuessfull");
+      //awesomeDialog(DialogType.warning, msg, "Warning");//Unsuccessfully User registered.
+    }
+  }
+  //For get order data
+  Future<List<dynamic>> fetchOrderData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    print("In the fetchdata() ${userToken!}");
+    final response = await http.get(
+      Uri.parse('http://$hostName:5000/api/v1/CartItems'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    if (response.statusCode == 200) {
+      final cartFood = json.decode(response.body);
+      print(cartFood);
+      return CartItems.fromJsonList(cartFood);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }
+//For get orderlist data
+class CartItems{
+  final String foodId;
+  final int quantity;
+  CartItems({
+    required this.quantity,
+    required this.foodId,
+  });
+  factory CartItems.fromJson(Map<String, dynamic> json){
+    return CartItems(
+      quantity: json['quantity'],
+      foodId: json['id'],
+    );
+  }
+  static List<CartItems> fromJsonList(dynamic jsonList){
+    final cartItemsList = <CartItems>[];
+    if (jsonList is List<dynamic>) {
+      for (final json in jsonList) {
+        cartItemsList.add(CartItems.fromJson(json),);
+      }
+    }
+    return cartItemsList;
+  }
+}
+class FoodList {
+  final String foodId;
+  final int qty;
+  FoodList({required this.foodId, required this.qty});
+
+  Map<String, dynamic> toJson() => {
+    'food': foodId,
+    'Quantity': qty,
+  };
+}
+
+
+

@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? role = pref.getString("LoginUserRole");
     val != null ?
       role == 'Customer'
-        ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage()))
+        ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage(choice: 3,)))
         : Navigator.push(context, MaterialPageRoute(builder: (context) => const DelivererHome()))
         : Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
   }

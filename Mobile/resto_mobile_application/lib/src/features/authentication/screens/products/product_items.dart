@@ -9,8 +9,9 @@ import '../../../../common_widgets/menu_item_appbar.dart';
 import '../../../../constants/image_strings.dart';
 
 class ProductItems extends StatelessWidget {
+  final int choice;
   final String category;
-  ProductItems({Key? key, required this.category}) : super(key: key);
+  ProductItems({Key? key, required this.category, required this.choice}) : super(key: key);
 
   final List<FoodItems> data = [];
 
@@ -20,7 +21,9 @@ class ProductItems extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
         appBar: MenuItemAppBar(
-          title: "Catalog of $category",  navigationScreen: () => const ProductMenuTitles(),
+          title: "Catalog of $category",
+          navigationScreen: () => ProductMenuTitles(choice: choice,),
+          choice: choice,
         ),
         body: Stack(
           children: <Widget>[
@@ -47,6 +50,7 @@ class ProductItems extends StatelessWidget {
                             itemPrice: snapshot.data![index].price,
                             itemCategory: snapshot.data![index].category,
                             itemId: snapshot.data![index].foodId,
+                            choice: choice,
                           );
                         },
                       );
