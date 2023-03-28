@@ -73,8 +73,8 @@ export const Div4 = styled.div`
   padding-right: 2px;
   padding-top: 2px;
   padding-bottom: 2px;
-  justify-content: left;
-  align-items: left;
+  justify-content: right;
+  align-items: right;
 `;
 export const Div5 = styled.div`
   margin-top: 0px;
@@ -87,8 +87,8 @@ export const Div5 = styled.div`
   padding-right: 20px;
   padding-top: 0px;
   padding-bottom: 0px;
-  justify-content: left;
-  align-items: left;
+  justify-content: right;
+  align-items: right;
 `;
 
 export const Div6 = styled.div`

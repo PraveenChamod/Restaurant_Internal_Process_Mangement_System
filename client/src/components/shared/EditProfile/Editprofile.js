@@ -10,7 +10,8 @@ import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { FaCamera } from 'react-icons/fa';
 import { toast } from "react-hot-toast";
-const EditProfileComponent = () => {
+const EditProfileComponent = (props) => {
+    console.log(props.EditProfileBackRoute);
     const { logout,user,loadUser,loading } = useAuth();
     const [Email,setEmail] = useState(user?.Email);
     const [Name,setName] = useState(user?.Name);
@@ -167,7 +168,7 @@ const EditProfileComponent = () => {
             </Div>
             <Div3>
                 <RegularButton>
-                    <Link to="./login" className="btn">
+                    <Link to={props.EditProfileBackRoute} className="btn">
                         Back
                     </Link>
                 </RegularButton>

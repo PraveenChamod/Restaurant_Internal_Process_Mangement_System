@@ -7,9 +7,11 @@ import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/cart_item_container.dart';
 import '../../../../constants/image_strings.dart';
+import '../payments/delivery_online_order.dart';
 
 class ProductCart extends StatefulWidget {
-  const ProductCart({Key? key}) : super(key: key);
+  final int choice;
+  const ProductCart({Key? key, required this.choice,}) : super(key: key);
 
   @override
   State<ProductCart> createState() => _ProductCartState();
@@ -32,7 +34,7 @@ class _ProductCartState extends State<ProductCart> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const ProductMenuTitles();
+                    return ProductMenuTitles(choice: widget.choice,);
                   },
                 ),
               );
@@ -71,7 +73,7 @@ class _ProductCartState extends State<ProductCart> {
                                   cartItemQty: snapshot.data![index].quantity,
                                   totalPrice: snapshot.data![index].totalPrice,
                                   cartId: snapshot.data![index].cartId,
-                                  cartItemId: snapshot.data![index].foodId,
+                                  cartItemId: snapshot.data![index].foodId, choice: widget.choice,
                                 );
                               },
                             );
@@ -143,7 +145,14 @@ class _ProductCartState extends State<ProductCart> {
                                 ),
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
-                                  //incrementPrice();
+                                  print('Choice Value is: ${widget.choice}');
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_){
+                                        return DeliveryOnlineOrder(totalPrice: totalCartPrice,);
+                                      },
+                                    ),
+                                  );
                                 },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(0),

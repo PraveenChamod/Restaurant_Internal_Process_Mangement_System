@@ -23,9 +23,13 @@ const itemSchema = mongoose.Schema({
         type:Number,
         required:[true,"Must provide the unit price of the selected item"]
     },
-    WholeSalePrice:{
+    TotalPrice:{
         type:Number,
-        required:[true,"Must provide the wholesale price"]
+        required:[true,"Must provide the Total price"]
+    },
+    Status:{
+        type:String,
+        default:'Available'
     }
     },
     {

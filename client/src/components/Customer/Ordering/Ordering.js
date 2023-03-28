@@ -22,11 +22,11 @@ import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { toast } from "react-hot-toast";
 const Ordering = (props) => {
-
-
+  console.log(props.data2);
   const[count,setCount] = useState(0);
   const[search,setSerach] = useState('');
   const[Items,setItems] = useState(props.data1);
+  const[Offers,setOffers] = useState(props.data2);
   const [clickedIndex, setClickedIndex] = useState({});
   const[selectItem,setSelectItem] = useState({});
   console.log(Items);
@@ -36,7 +36,7 @@ const Ordering = (props) => {
       ...state, //copy previous state
       [index]: !state[index] //update value by index key
     }));
-    setSelectItem(Items[index]);
+    setSelectItem(Items[index] || Offers[index]);
   };
 
   //Add items into the cart
@@ -67,12 +67,48 @@ const Ordering = (props) => {
     }
   }
 
+  const AddOfferToCart = async (offerId)=>{
+    try {
+      console.log(offerId);
+      await toast.promise(
+        axios.post('api/v1/CartItem',{offerId:offerId}),
+        {
+          loading:`Adding to the cart`,
+          success:(data)=>{
+            console.log({ data });
+            return ` ${data.data?.message} ` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
+              fontSize:'1rem',
+              zIndex:'99999999'
+          }
+        }
+      )
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   //Add To Cart Option Manage
   const handleAddToCart = async (index) => {
+    handleClick(index);
     const item = Items[index];
     await AddToCart(item.id);
+    
+  }
+
+  const handleAddOfferToCart = async (index) => {
     handleClick(index);
+    const item = Offers[index];
+    console.log(item.id);
+    await AddOfferToCart(item.id);
+    
   }
 
   //Search Items
@@ -81,10 +117,15 @@ const Ordering = (props) => {
     if (keyword !== '') {
       const results = props.data1.filter((user) => {
         return user.FoodName.toLowerCase().startsWith(keyword.toLowerCase()) || user.Category.toLowerCase().startsWith(keyword.toLowerCase());
+      })
+      const results1 = props.data2.filter((user) => {
+        return user.OfferName.toLowerCase().startsWith(keyword.toLowerCase()) || user.Category.toLowerCase().startsWith(keyword.toLowerCase());
       });
       setItems(results);
+      setOffers(results1);
     } else {
       setItems(props.data1);
+      setOffers(props.data2);
     }
 
     setSerach(keyword);
@@ -122,7 +163,6 @@ const Ordering = (props) => {
           {
             Items && Items.length > 0 ? (
               Items.map((data,index)=>{
-                console.log(data);
                 return(
                   <l.Div1 key={data.id} >
                     <l.Div2>
@@ -135,6 +175,34 @@ const Ordering = (props) => {
                           <l.P1>{'Rs.'+ data.Price}</l.P1>
                       </l.Div4>
                       <l.Div5 onClick={()=>{handleAddToCart(index)}}>
+                        <l.Button2>
+                          <FaShoppingCart/>
+                        </l.Button2>
+                      </l.Div5>
+                    </l.Div3>
+                  </l.Div1>
+                )
+              })
+            ) : (<h1>No Result Found</h1>)
+          }
+        </l.Div>
+          <Header>Today's Special</Header>
+        <l.Div>
+          {
+            Offers && Offers.length > 0 ? (
+              Offers.map((data,index)=>{
+                return(
+                  <l.Div1 key={data.id} >
+                    <l.Div2>
+                      <l.Img1 src={`http://localhost:5000/offerimages/${data.OfferImage}`} alt="buttonpng"></l.Img1>
+                      <l.P>{data.OfferName}</l.P>
+                    </l.Div2>
+                    <l.Div3>
+                      <l.Div4>
+                          <l.P1>Reguler</l.P1>
+                          <l.P1>{'Rs.'+ data.SpecialPrice}</l.P1>
+                      </l.Div4>
+                      <l.Div5 onClick={()=>{handleAddOfferToCart(index)}}>
                         <l.Button2>
                           <FaShoppingCart/>
                         </l.Button2>

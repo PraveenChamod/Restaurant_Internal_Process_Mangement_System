@@ -1,11 +1,14 @@
 import User from "../models/User.js";
 import { createToken, findUser, handleErrors } from "../util/AuthUtil.js";
-import { validatePassword } from "../util/PasswordUtility.js";
+import { GeneratePassword, GenerateSalt, validatePassword } from "../util/PasswordUtility.js";
 import jwt from 'jsonwebtoken';
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
 import passport from "passport";
+import path from 'path';
+import ejs from 'ejs';
+import { transporter } from "../util/NotificationUtil.js";
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -13,7 +16,7 @@ const imageStorage = multer.diskStorage({
     }
 })
 const image = multer({storage:imageStorage}).single('image');
-
+const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
 // Method : POST
 // End Point : "api/v1/Auth/LoginUser";
 // Description : Login User
@@ -207,43 +210,105 @@ const createOTP = ()=>{
     const otp = Math.floor(100000 + Math.random() * 900000);
     return otp;
 }
-const sendOTP = async (req,res)=>{
+let otp;
+export const sendOTP = async (req,res)=>{
     try {
-        const Email = req.body;
-        const user = await User.findOne({Email:Email}).populate('Email');
-        const otp= createOTP();
-        if(user){
-            if(createUser.Role !== "Customer"){
-                const mailOption = {
-                    from : 'resto6430@gmail.com',
-                    to : Email,
-                    subject : 'Registration Confrimation',
-                    text:`Your OTP is ${otp}`
+        const { Email } = req.body;
+        const customer = await Customer.findOne({ Email: Email }).populate('Email');
+        const serviceProvider = await ServiceProviders.findOne({ Email: Email }).populate('Email');
+        otp = createOTP();
+        if (customer || serviceProvider) {
+            const mailOption = {
+                from: 'resto6430@gmail.com',
+                to: Email,
+                subject: 'Password Reset OTP',
+                attachments: [{
+                    filename: 'logo.png',
+                    path: `${__dirname}/Template/logo.png`,
+                    cid: 'logo'
+                }]
+            }
+            ejs.renderFile(`${__dirname}/Template/ForgotPassword.ejs`, { otp: otp }, (err, renderedHtml) => {
+                if (err) {
+                    console.log(err.message);
+                    res.status(500).json({
+                        status: "Server Error",
+                        message: err.message
+                    });
                 }
+                else {
+                    mailOption.html = renderedHtml;
+                    transporter.sendMail(mailOption, (err, info) => {
+                        if (err) {
+                            console.log(err.message);
+                            res.status(500).json({
+                                status: "Server Error",
+                                message: err.message
+                            });
+                        }
+                        else {
+                            res.status(200).json({
+                                status: "Success",
+                                message: `OTP is sent`
+                            });
+                        }
+                    })
+                }
+            })
+        }
+        else {
+            res.status(404).json({ message: `Invalid Email` });
+        }
+    } catch (error) {
+        res.status(500).json({
+            status: "Server Error",
+            message: error.message
+        })
+    }
+}
 
-                transporter.sendMail(mailOption,(err,info)=>{
-                    if(err){
-                        console.log(err.message);
+export const ForgotPassword = async(req,res)=>{
+    try {
+        const {Email,OTP,Password,ConfirmPassword} = req.body;
+        console.log(OTP);
+        console.log(otp);
+        const customer = await Customer.findOne({Email:Email}).populate('Email');
+        const serviceProvider = await ServiceProviders.findOne({Email:Email}).populate('Email');
+        const salt = await GenerateSalt();
+        const encryptedPassword = await GeneratePassword(Password,salt);
+        const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
+        if(otp == OTP){
+            if(customer){
+                const updateCustomerPwd = await Customer.findByIdAndUpdate(customer.id,{Password:encryptedPassword,ConfirmPassword:confirmEncryptedPassword},{new:true});
+                res.status(200).json({
+                    status:'Success',
+                    message:'Password Reset Successfully',
+                    data:{
+                        updateCustomerPwd
                     }
-                    else{
-                        console.log(info.response);
+                })
+            }
+            else if(serviceProvider){
+                const updateServiceProviderPwd = await ServiceProviders.findByIdAndUpdate(customer.id,{Password:encryptedPassword,ConfirmPassword:confirmEncryptedPassword},{new:true});
+                res.status(200).json({
+                    status:'Success',
+                    message:'Password Reset Successfully',
+                    data:{
+                        updateServiceProviderPwd
                     }
                 })
             }
         }
         else{
-            res.status(404).json({message:`Invalid Email`});
+            res.status(400).json({
+                status:'Success',
+                message:'Invalid OTP',
+            })
         }
     } catch (error) {
-        
-    }
-}
-
-export const FrogotPassword = async (req,res)=>{
-    try {
-        const {OTP,Password,ConfirmPassword} = req.body;
-        const otp = sendOTP();
-    } catch (error) {
-        
+        res.status(500).json({
+            status: "Server Error",
+            message: error.message
+        })
     }
 }

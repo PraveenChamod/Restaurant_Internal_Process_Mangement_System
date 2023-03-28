@@ -14,7 +14,7 @@ export const addOffer  = async (req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Staff-Member" || user.Role === "Manager"){
-            const {Category,SpecialPrice} = req.body;
+            const {Category,SpecialPrice,OfferName} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             const existingOffer = await Offers.findOne({SerialNo:SerialNumber});
             if(existingOffer !== null){
@@ -23,7 +23,7 @@ export const addOffer  = async (req,res)=>{
                 const session = await mongoose.startSession();
                 try {
                     session.startTransaction();
-                    const OfferData = {SpecialPrice:SpecialPrice,SerialNo:SerialNumber,Category:Category,OfferImage:req.file.filename}
+                    const OfferData = {OfferName:OfferName,SpecialPrice:SpecialPrice,SerialNo:SerialNumber,Category:Category,OfferImage:req.file.filename}
                     const NewOffer = await Offers.create([OfferData],{session});
                     const commit = await session.commitTransaction();
                     session.endSession();
@@ -49,21 +49,14 @@ export const addOffer  = async (req,res)=>{
 
 //View Offers
 export const getOffers = async (req,res)=>{
-
     try {
-        const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Customer" || user.Role === "Manager"){
-            const offers = await Offers.find();
+        const offers = await Offers.find();
             if(offers !== null){
                 res.json(offers);
             }
             else{
                 res.status(404).json({message:"No offers found."});
             }
-        }
-        else{
-            res.status(401).json('Only Staff member has access to do this operation');
-        }
     } catch (error) {
         res.status(501).json(error.message);
     }

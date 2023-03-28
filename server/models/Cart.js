@@ -14,6 +14,10 @@ const CartSchema = mongoose.Schema({
             Quantity:{
                 type:Number,
                 default:1
+            },
+            offer:{
+                type:mongoose.Schema.ObjectId,
+                ref:'Offers'
             }
         }
     ],

@@ -3,12 +3,6 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/homeScreen_indicator.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/main_features.dart';
-import '../Drawer_Items/favourites_screen.dart';
-import '../Drawer_Items/help_center_screen.dart';
-import '../Drawer_Items/my_account_screen.dart';
-import '../Drawer_Items/orders_screen.dart';
-import '../Drawer_Items/settings_screen.dart';
-import 'customer_search.dart';
 
 class CustomerHome extends StatefulWidget {
   const CustomerHome({Key? key}) : super(key: key);
@@ -21,11 +15,11 @@ class _CustomerHomeState extends State<CustomerHome> {
   var _selectedIndex = 0;
   //Main Features List
   List<Map<String, String>> splashData = [
-    {"title": "Explore Menu",
-      "text": "Create and display your menu online",
+    {"title": "Explore Menu at Restaurant",
+      "text": "Order Foods & Dine In Restaurant",
       "image": chooseOnline,
     },
-    {"title": "Online Order",
+    {"title": "Online Order To Your Doorstep",
       "text": "Take orders on your site for delivery",
       "image": orderFood,
     },

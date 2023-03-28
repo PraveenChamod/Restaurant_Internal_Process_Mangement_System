@@ -1,8 +1,8 @@
 import EditProfileComponent from "../../components/shared/EditProfile/Editprofile";
 
-const AdminEditProfile = () => {
+const AdminEditProfile = (props) => {
     return ( 
-        <EditProfileComponent/>
+        <EditProfileComponent EditProfileBackRoute={props.EditProfileBackRoute}/>
      );
 }
  

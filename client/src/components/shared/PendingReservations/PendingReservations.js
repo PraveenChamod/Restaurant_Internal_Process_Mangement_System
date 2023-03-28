@@ -1,4 +1,5 @@
 import { AiFillEye } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
@@ -13,31 +14,42 @@ const PendingReservationComponent = (props) => {
                 <l.Table>
                     <l.Tr>
                         <l.Th>Customer Name</l.Th>
-                        <l.Th>Table No</l.Th>
                         <l.Th>Contact No</l.Th>
-                        <l.Th>Date & Time</l.Th>
+                        <l.Th>Arrival Time</l.Th>
+                        <l.Th>Departure Time</l.Th>
+                        <l.Th>Booked Date</l.Th>
                         <l.Th></l.Th>
                     </l.Tr>
                     {/* +++++++++++++++++++++++++++++++++++++++set with table reservation data+++++++++++++++++++++++++++++++++++++++++++++++ */}
-                    {/* {
+                    {
                         props.data.map(data=>{
+                            console.log(data);
                             return(
                                 <l.Tr>
-                                    <l.Td>{data.FoodName}</l.Td>
-                                    <l.Td>{data.Category}</l.Td>
-                                    <l.Td>{data.Price}</l.Td>
-                                    <l.Td>{data.Status}</l.Td>
-                                    <l.Td><l.Icon><AiFillEye/></l.Icon></l.Td>
+                                    <l.Td>{data.CustomerName}</l.Td>
+                                    <l.Td>{data.CustomerContactNo}</l.Td>
+                                    <l.Td>{data.ArrivalTime}</l.Td>
+                                    <l.Td>{data.DepartureTime}</l.Td>
+                                    <l.Td>{data.Date}</l.Td>
+                                    <Link to={`/Staff-MemberTable-Reservation-Details/${data.id}`} className="btn">
+                                        <l.Td>
+                                            <l.Icon>
+                                                <AiFillEye/>
+                                            </l.Icon>
+                                        </l.Td>
+                                    </Link>
                                 </l.Tr>
                             )
                         })
-                    } */}
+                    }
                 </l.Table>
             </l.SubContainer>
             <l.ButtonSection>
-                <RegularButton>
-                    Back
-                </RegularButton>
+                <Link to={props.BackRoutes} className="btn">
+                    <RegularButton>
+                        Back
+                    </RegularButton>
+                </Link>
             </l.ButtonSection>
         </Container>
     );

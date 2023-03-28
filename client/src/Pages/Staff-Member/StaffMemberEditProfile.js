@@ -2,7 +2,7 @@ import EditProfileComponent from "../../components/shared/EditProfile/Editprofil
 
 const StaffMemberEditProfile = (props) => {
     return ( 
-        <EditProfileComponent BackRoutes={props.BackRoutes}/>
+        <EditProfileComponent BackRoutes={props.BackRoutes} EditProfileBackRoute={props.EditProfileBackRoute}/>
      );
 }
  

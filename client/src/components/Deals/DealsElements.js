@@ -38,7 +38,7 @@ export const SubSec = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #161a1d;
+    background-color: #fff;
     border-radius: 20px;
     box-shadow: 2px 3px 3px 2px #fdf8ed;
     margin-top: 5%;
@@ -110,3 +110,16 @@ export const SubHeading = styled.div`
         line-height: 120%;
     }
 `
+export const Div = styled.div`
+  /* background: red; */
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top:40px;
+  @media screen and (max-width: 769px) {
+    width: 90%;
+    height: 350px;
+  }
+`;

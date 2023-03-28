@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 const CartComponent = ({data}) => {
     const{user}=useAuth();
     const[Items,setItem] = useState(data);
+    console.log(data);
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
     const[OrderItem,setOrderItem] = useState({});
@@ -33,9 +34,9 @@ const CartComponent = ({data}) => {
     };
     
     //Delete Cart Item
-    const deleteCartItem = async ({cartId,foodId})=>{
+    const deleteCartItem = async ({cartId,foodId,offerId})=>{
         try {
-            const formData = {cartId,foodId} 
+            const formData = {cartId,foodId,offerId} 
             const res = await axios.patch('api/v1/FoodItem',formData);
             console.log(res.data.message);
             toast.success(res.data.message);
@@ -46,16 +47,17 @@ const CartComponent = ({data}) => {
     const selectOne = async (index)=>{
         const item = Items[index];
         const cartId = item.cartId;
-        const foodId = item.id;
+        const foodId = item.Foodid;
+        const offerId = item.Offerid;
         console.log(item);
-        await deleteCartItem({cartId,foodId});
+        await deleteCartItem({cartId,foodId,offerId});
         handleClick(index);
     }
     
     //Increase Quantity
-    const AddQuantity = async ({foodId,quantity})=>{
+    const AddQuantity = async ({foodId,quantity,offerId})=>{
         try {
-        const formData = {foodId,quantity}
+        const formData = {foodId,quantity,offerId}
           const res = await axios.post('api/v1/CartItem',formData);
           console.log(res);
         } catch (error) {
@@ -65,13 +67,14 @@ const CartComponent = ({data}) => {
 
     const increaseQTY = async(index)=>{
         const item = Items[index];
-        const foodId = item.id;
+        const offerId = item.Offerid;
+        const foodId = item.Foodid;
         handleClick(index);
         const newQuantity = item.quantity + 1;
         setQuantity(newQuantity);
         item.quantity = newQuantity;
         setItem([...data]); // update the state of the data array
-        await AddQuantity({foodId, quantity: newQuantity});
+        await AddQuantity({foodId:foodId, quantity: newQuantity,offerId:offerId});
     }
     // console.log(quantity);
     let Price = 0;
@@ -99,7 +102,7 @@ const CartComponent = ({data}) => {
                 <l.Left> 
                     {
                         data.map((cart,index)=>{
-                            
+                            console.log(cart);
                             return(
                                 <l.CartSection>
                                     {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
@@ -107,7 +110,7 @@ const CartComponent = ({data}) => {
                                     </l.SelectIcon> */}
                                     <l.ItemsCard>
                                         <l.FoodImage>
-                                            <l.Food src={`http://localhost:5000/Foodimages/${cart.image}`}/>
+                                            <l.Food src={`http://localhost:5000/${cart.Foodid == null ? 'offerimages' : 'Foodimages'}/${cart.image}`}/>
                                         </l.FoodImage>
                                         <l.Details>
                                             <l.MainText>
