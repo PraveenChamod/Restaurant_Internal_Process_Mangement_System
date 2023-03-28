@@ -8,6 +8,8 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/cart_item_container.dart';
 import '../../../../constants/image_strings.dart';
 import '../Products/product_cart.dart';
+import '../payments/delivery_online_order.dart';
+import '../payments/dine_in_order.dart';
 
 class CustomerCart extends StatefulWidget {
   final int choice;
@@ -107,30 +109,75 @@ class _CustomerCartState extends State<CustomerCart> {
                         },
                       ),
                       const Spacer(),
-                      Center(
-                        child: Container(
-                          width: 150,
-                          height: 35,
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: AnimatedButton(
-                            text: "Check Out",
-                            buttonTextStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            color: const Color(0xFFfebf10),
-                            pressEvent: () {
-                              //incrementPrice();
-                            },
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(0),
-                              topRight: Radius.circular(80),
-                              bottomLeft: Radius.circular(80),
-                              bottomRight: Radius.circular(80),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Online Order",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return DeliveryOnlineOrder(totalPrice: totalCartPrice, choice: 2,);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Expanded(
+                            child: Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Outlet Dine In",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const DineInOrder( choice: 1,);
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const Spacer(),
                     ],
