@@ -90,6 +90,7 @@ import Map from './Pages/Deliverer/Map';
 import BackRoutes from './Data/BackRotes';
 import SideNavbar from './components/Navbar/SideNavBar';
 import StaffMemberPendingReservations from './Pages/Staff-Member/PendingReservations';
+import SupplierOrderConform from './Pages/Supplier/SupplierOrderConform';
 
 function App() {
   
@@ -251,6 +252,7 @@ function App() {
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile/>}/> 
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
+                <Route path="/SupplierConformOrder/:id" element={<SupplierOrderConform/>}/>
             </Routes>
             <Footer/>
           </div>
