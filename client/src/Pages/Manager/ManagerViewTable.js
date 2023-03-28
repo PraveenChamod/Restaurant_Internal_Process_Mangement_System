@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import Spinner from "../../components/shared/Spinner/Spinner";
 import TableDetail from "../../components/shared/TableDetail/TableDetail";
 import useFetch from "../../Hooks/useFetch";
 
@@ -11,8 +12,8 @@ const ManagerViewTableDetails = () => {
     const table = data?.data?.table
 
     return ( 
-        <>
-            <TableDetail table = {table}/>
+        <>  {isPending&& <Spinner/>}
+           {table && <TableDetail table = {table}/>}
         </> 
      );
 }
