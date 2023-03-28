@@ -565,6 +565,98 @@ export const confirmDelivery = async(req,res)=>{
       }
   }
   } catch (error) {
-    
+    res.status(500).json({
+      status: 'Server Error',
+      message: error.message,
+    });
+  }
+}
+
+// Method : GET
+// End Point : "api/v1/Customer/Orders"; 
+// Description :Orders Ordered By Customer
+export const viewOrdersOrderedByCustomer = async(req,res)=>{
+  const user = req.user;
+  try {
+    if(user.Role === "Customer"){
+      const orders = await Order.find();
+      const customer = await Customer.findOne({Email:user.Email}).populate('Email');
+      let customerorders = [];
+      let OrderDetails;
+      for(const order of orders){
+        try {
+          const populatedOrder = await Order.findById(order.id)
+            .populate({
+              path: 'Customer',
+              model: 'Customer'
+            })
+            .populate({
+              path: 'Foods.food',
+              model: 'Foods'
+            })
+            .populate({
+              path: 'Foods.offer',
+              model: 'Offers'
+            })
+            .populate({
+              path:'ServiceProvider',
+              model:'ServiceProvider'
+            })
+            .exec();
+            if(populatedOrder.Customer.id === customer.id){
+                const status = populatedOrder.Status;
+                const deliveryStatus = populatedOrder.DeliveryStatus;
+                const food = populatedOrder.Foods.map((item) => {
+                  if(item.food !== undefined){
+                    return{
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      Foodid: item.food.id,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      price:item.food.Price,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                  else if(item.offer !== undefined){
+                    return{
+                      FoodName: item.offer.OfferName,
+                      Category: item.offer.Category,
+                      Offerid: item.offer.id,
+                      image: item.offer.OfferImage,
+                      quantity: item.Quantity,
+                      price:item.offer.SpecialPrice,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                });
+                OrderDetails = {
+                  OrderId:order.id,
+                  Status:status,
+                  DeliveryStatus:deliveryStatus,
+                  food,
+                  TotalPrice: populatedOrder.TotalPrice,
+                };
+                customerorders.push(OrderDetails);
+            }
+            
+          } catch (err) {
+            console.error(err);
+            return res.status(500).send('Server Error');
+          }
+      }
+      res.status(201).json({
+        status: 'success',
+        message: 'My Orders',
+        data: {
+            customerorders
+        }
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: 'Server Error',
+      message: error.message,
+    });
   }
 }
