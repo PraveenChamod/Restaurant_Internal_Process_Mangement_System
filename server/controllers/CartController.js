@@ -122,7 +122,7 @@ export const AddToCart = async(req,res)=>{
 
 
 // Method : POST
-// End Point : "api/v1/customer/MyCart";
+// End Point : "api/v1/CartItems";
 // Description : View Cart
 export const viewCart = async (req,res)=>{
     try {

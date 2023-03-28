@@ -237,6 +237,7 @@ function App() {
                     <OrderItems/>       
                   </Elements>
                 }/>
+                <Route path="/CustomerMy-Orders" element={<MyOrders BackRoutes={BackRoutes[3].nav}/>}/>   
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/>     
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}

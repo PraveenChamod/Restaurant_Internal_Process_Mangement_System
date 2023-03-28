@@ -8,6 +8,7 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/cart_item_container.dart';
 import '../../../../constants/image_strings.dart';
 import '../payments/delivery_online_order.dart';
+import '../payments/dine_in_order.dart';
 
 class ProductCart extends StatefulWidget {
   final int choice;
@@ -146,13 +147,11 @@ class _ProductCartState extends State<ProductCart> {
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
                                   print('Choice Value is: ${widget.choice}');
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_){
-                                        return DeliveryOnlineOrder(totalPrice: totalCartPrice,);
-                                      },
-                                    ),
-                                  );
+                                  String msg = '';
+                                  widget.choice == 1
+                                      ? msg = 'Your Order will prepared for Dine In the Restaurant!'
+                                      : msg = 'Your Order will prepared for Delivery!';
+                                  awesomeDialog(DialogType.infoReverse , msg, "Consider");
                                 },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(0),
@@ -195,6 +194,36 @@ class _ProductCartState extends State<ProductCart> {
       throw Exception('Failed to load data');
     }
   }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        widget.choice == 1
+            ? Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return DineInOrder(choice: widget.choice,);
+                },
+              ),
+            ) : Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return DeliveryOnlineOrder(totalPrice: totalCartPrice, choice: widget.choice,);
+                    },
+                  ),
+              );
+      },
+    ).show();
+  }
+
+
+
+
 }
 class CartItems{
   final String cartFoodImagePath;
@@ -218,7 +247,7 @@ class CartItems{
       totalPrice: json['TotalPrice'],
       quantity: json['quantity'],
       cartId: json['cartId'],
-      foodId: json['id'],
+      foodId: json['Foodid'],
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){

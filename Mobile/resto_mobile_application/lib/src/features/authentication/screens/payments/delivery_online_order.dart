@@ -6,13 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
+import '../Customer/customer_cart.dart';
+import '../Products/product_cart.dart';
 import 'delivery_save_order.dart';
 
 enum SingingCharacter { cashOn, card }
 
 class DeliveryOnlineOrder extends StatefulWidget {
+  final int choice;
   final num totalPrice;
-  const DeliveryOnlineOrder({Key? key, required this.totalPrice}) : super(key: key);
+  const DeliveryOnlineOrder({Key? key, 
+    required this.totalPrice, 
+    required this.choice}) : super(key: key);
 
   @override
   State<DeliveryOnlineOrder> createState() => _DeliveryOnlineOrderState();
@@ -49,13 +54,13 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_){
-              //       return const ProductMenuTitles();
-              //     },
-              //   ),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_){
+                    return ProductCart(choice: widget.choice,);
+                  },
+                ),
+              );
             },
             icon: const Icon(Icons.chevron_left),
           ),
@@ -390,7 +395,9 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                         }
                                         return DeliverySaveOrder(
                                           paymentMethod: paymentMethod,
-                                          address: addressController.text, totalPrice: widget.totalPrice,
+                                          address: addressController.text,
+                                          totalPrice: widget.totalPrice,
+                                          choice: widget.choice,
                                         );
                                       },
                                     ),
@@ -475,7 +482,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return DeliveryOnlineOrder(totalPrice: widget.totalPrice,);
+              return DeliveryOnlineOrder(totalPrice: widget.totalPrice, choice: widget.choice,);
             },
           ),
         );

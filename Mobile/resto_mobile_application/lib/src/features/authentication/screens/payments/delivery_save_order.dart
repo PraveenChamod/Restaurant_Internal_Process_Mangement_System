@@ -9,6 +9,7 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
 import 'delivery_online_order.dart';
 class DeliverySaveOrder extends StatefulWidget {
+  final int choice;
   final String paymentMethod;
   final String address;
   final num totalPrice;
@@ -16,7 +17,8 @@ class DeliverySaveOrder extends StatefulWidget {
   const DeliverySaveOrder({Key? key,
     required this.paymentMethod,
     required this.address,
-    required this.totalPrice
+    required this.totalPrice,
+    required this.choice
   }) : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return DeliveryOnlineOrder(totalPrice: widget.totalPrice,);
+                    return DeliveryOnlineOrder(totalPrice: widget.totalPrice, choice: widget.choice,);
                   },
                 ),
               );
@@ -280,7 +282,7 @@ class CartItems{
   factory CartItems.fromJson(Map<String, dynamic> json){
     return CartItems(
       quantity: json['quantity'],
-      foodId: json['id'],
+      foodId: json['Foodid'],
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){

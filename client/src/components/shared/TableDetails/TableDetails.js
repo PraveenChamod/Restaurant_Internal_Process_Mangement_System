@@ -7,7 +7,7 @@ import { AiFillEye } from 'react-icons/ai';
 const TableDetails = (props) => {
     console.log("tables, dhana",props.data2)
     const{user} = useAuth();
-    const tables = props.data2
+    const tables = props.tables
     return (  
         <Container>
             <Header>

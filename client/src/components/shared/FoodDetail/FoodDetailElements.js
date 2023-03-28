@@ -34,9 +34,6 @@ export const H1 = styled.h1`
 
 export const Div1 = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
   margin-top: 10px;
   flex-direction: column;
   height: 80%;
@@ -51,7 +48,7 @@ export const Div2 = styled.div`
 `;
 
 export const Sec = styled.div`
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,6 +78,15 @@ export const TextFeild = styled.input`
     height: 30px;
     border-radius: 30px;
     padding: 1% 5%;
+`
+export const Text = styled.div`
+    color: #fff;
+    margin: 0 5%;
+`
+export const TextSection = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `
 export const RadioButtonSection = styled.div`
   display: flex;
