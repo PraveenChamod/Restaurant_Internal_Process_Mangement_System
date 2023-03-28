@@ -4,7 +4,6 @@ import useFetch from "../../Hooks/useFetch";
 
 const ManagerViewTables = (props) => {
     const {data,isPending} = useFetch('api/v1/Tables');
-
     console.log(data?.data);
     return ( 
         <>
