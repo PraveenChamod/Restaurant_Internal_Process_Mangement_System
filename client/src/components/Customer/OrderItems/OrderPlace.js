@@ -22,17 +22,28 @@ const OrderPlace = ({data}) => {
     
 
     let food ;
+    let offer;
     let Quantity;
     let Foods = [];
     let TotalPrice = 0;
 
     data.forEach(item=>{
-        food=item.id;
-        Quantity=item.quantity;
-        Foods.push({
-            food,
-            Quantity
-        })
+        if(item.Foodid != null){
+            food=item.Foodid;
+            Quantity=item.quantity;
+            Foods.push({
+                food,
+                Quantity
+            })
+        }
+        else if(item.Offerid !== null){
+            offer=item.Offerid;
+            Quantity=item.quantity;
+            Foods.push({
+                offer,
+                Quantity
+            })
+        }
     });
 
     data.forEach(element => {
@@ -47,6 +58,9 @@ const OrderPlace = ({data}) => {
             console.log(formData);
             const res = await axios.post('api/v1/OrderItem',formData);
             toast.success('Order Placed Successfully');
+            setTimeout(() => {
+                navigate('/CustomerPlace-Order');
+            }, 2000);
             console.log(res);
         } catch (error) {
             console.log(error.message);
@@ -134,7 +148,7 @@ const OrderPlace = ({data}) => {
                                 <l.CartSection>
                                     <l.ItemsCard>
                                         <l.FoodImage>
-                                            <l.Food src={`http://localhost:5000/Foodimages/${cart.image}`}/>
+                                            <l.Food src={`http://localhost:5000/${cart.Foodid == null ? 'offerimages' : 'Foodimages'}/${cart.image}`}/>
                                         </l.FoodImage>
                                         <l.Details>
                                             <l.MainText>

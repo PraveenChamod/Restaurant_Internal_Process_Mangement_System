@@ -1,9 +1,9 @@
 import React from 'react'
 import Login from '../components/Login/Login'
 
-const LoginPg = () => {
+const LoginPg = (props) => {
   return ( 
-      <Login/>
+      <Login ScrollToTop={props.ScrollToTop}/>
    );
 }
 

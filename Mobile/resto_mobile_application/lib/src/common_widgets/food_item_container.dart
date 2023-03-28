@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../features/authentication/screens/Products/product_item_details.dart';
 
 class FoodItemContainer extends StatelessWidget {
+  final int choice;
   final String itemImagePath;
   final String itemName;
   final String itemCategory;
@@ -15,6 +16,7 @@ class FoodItemContainer extends StatelessWidget {
     required this.itemPrice,
     required this.itemCategory,
     required this.itemId,
+    required this.choice,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class FoodItemContainer extends StatelessWidget {
                 itemName: itemName,
                 itemImagePath: itemImagePath,
                 price: itemPrice,
-                itemId: itemId,
+                itemId: itemId, choice: choice,
               );
             },
           ),

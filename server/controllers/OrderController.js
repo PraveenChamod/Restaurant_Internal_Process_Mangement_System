@@ -126,20 +126,38 @@ export const ViewAllOrders = async(req,res)=>{
                         path: 'Foods.food',
                         model: 'Foods'
                       })
+                      .populate({
+                        path: 'Foods.offer',
+                        model: 'Offers'
+                      })
                       .exec();
                     
                     const Name = populatedOrder.Customer.Name;
                     const Email = populatedOrder.Customer.Email;
                     const ContactNumber = populatedOrder.Customer.ContactNumber;
                     const CustomerAddress = populatedOrder.Customer.Address;
-                    const food = populatedOrder.Foods.map((item) => ({
-                      FoodName: item.food.FoodName,
-                      Category: item.food.Category,
-                      image: item.food.FoodImage,
-                      quantity: item.Quantity,
-                      price:item.food.Price,
-                      PaymentMethod: populatedOrder.paymentMethod
-                    }));
+                    const food = populatedOrder.Foods.map((item) => {
+                      if(item.food !== undefined){
+                        return{
+                          FoodName: item.food.FoodName,
+                          Category: item.food.Category,
+                          image: item.food.FoodImage,
+                          quantity: item.Quantity,
+                          price:item.food.Price,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                      else if(item.offer !== undefined){
+                        return{
+                          FoodName: item.offer.OfferName,
+                          Category: item.offer.Category,
+                          image: item.offer.OfferImage,
+                          quantity: item.Quantity,
+                          price:item.offer.SpecialPrice,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                    });
                     OrderDetails = {
                       OrderId:order.id,
                       customerName: Name,
@@ -190,7 +208,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
             const findOrders = await Order.find();
             let pendingOrders = [];
             for (const order of findOrders) {
-                if (order.Status === "Pending") {
+                if (order.Status === "Pending" && order.Type === "Online Order") {
                   let OrderDetails;
                   try {
                     const populatedOrder = await Order.findById(order.id)
@@ -202,27 +220,48 @@ export const ViewPendingOrders = async(req,res,next)=>{
                         path: 'Foods.food',
                         model: 'Foods'
                       })
+                      .populate({
+                        path: 'Foods.offer',
+                        model: 'Offers'
+                      })
                       .exec();
-                    
+                    console.log(populatedOrder);
                     const Name = populatedOrder.Customer.Name;
-                    const Customer_id = populatedOrder.Customer.id;
                     const Email = populatedOrder.Customer.Email;
                     const ContactNumber = populatedOrder.Customer.ContactNumber;
-                    const food = populatedOrder.Foods.map((item) => ({
-                      FoodName: item.food.FoodName,
-                      Category: item.food.Category,
-                      image: item.food.FoodImage,
-                      quantity: item.Quantity,
-                      PaymentMethod: populatedOrder.paymentMethod
-                    }));
+                    const CustomerAddress = populatedOrder.Customer.Address;
+                    const food = populatedOrder.Foods.map((item) => {
+                      if(item.food !== undefined){
+                        return{
+                          FoodName: item.food.FoodName,
+                          Category: item.food.Category,
+                          image: item.food.FoodImage,
+                          quantity: item.Quantity,
+                          price:item.food.Price,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                      else if(item.offer !== undefined){
+                        return{
+                          FoodName: item.offer.OfferName,
+                          Category: item.offer.Category,
+                          image: item.offer.OfferImage,
+                          quantity: item.Quantity,
+                          price:item.offer.SpecialPrice,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                    });
                     OrderDetails = {
                       OrderId:order.id,
                       customerName: Name,
                       customerEmail:Email,
-                      customerId : Customer_id,
                       ContactNumber:ContactNumber,
+                      CustomerAddress:CustomerAddress,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
+                      Status:populatedOrder.Status,
+                      Date:order.Date
                     };
                     pendingOrders.push(OrderDetails);
                   } catch (err) {
@@ -274,22 +313,42 @@ export const ViewPendingOrders = async(req,res,next)=>{
                     path: 'Foods.food',
                     model: 'Foods'
                   })
+                  .populate({
+                    path: 'Foods.offer',
+                    model: 'Offers'
+                  })
                   .exec();
                 console.log(populatedOrder);
                 const Name = populatedOrder.Customer.Name;
                 const Email = populatedOrder.Customer.Email;
-                const CustomerAddress = populatedOrder.Customer.Address
                 const ContactNumber = populatedOrder.Customer.ContactNumber;
                 const Address = populatedOrder.Customer.Address;
                 const lat = populatedOrder.Customer.lat;
                 const lang = populatedOrder.Customer.lang;
-                const food = populatedOrder.Foods.map((item) => ({
-                  FoodName: item.food.FoodName,
-                  Category: item.food.Category,
-                  image: item.food.FoodImage,
-                  quantity: item.Quantity,
-                  PaymentMethod: populatedOrder.paymentMethod
-                }));
+                const food = populatedOrder.Foods.map((item) => {
+                  if(item.food !== undefined){
+                    return{
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      Foodid: item.food.id,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      price:item.food.Price,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                  else if(item.offer !== undefined){
+                    return{
+                      FoodName: item.offer.OfferName,
+                      Category: item.offer.Category,
+                      Offerid: item.offer.id,
+                      image: item.offer.OfferImage,
+                      quantity: item.Quantity,
+                      price:item.offer.SpecialPrice,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                });
                 OrderDetails = {
                   OrderId:id,
                   customerName: Name,
@@ -393,6 +452,10 @@ export const CheckOrderDetails = async(req, res)=>{
                       model: 'Foods'
                     })
                     .populate({
+                      path: 'Foods.offer',
+                      model: 'Offers'
+                    })
+                    .populate({
                       path:'ServiceProvider',
                       model:'ServiceProvider'
                     })
@@ -401,13 +464,30 @@ export const CheckOrderDetails = async(req, res)=>{
                         const Name = populatedOrder.Customer.Name;
                         const Email = populatedOrder.Customer.Email;
                         const ContactNumber = populatedOrder.Customer.ContactNumber;
-                        const food = populatedOrder.Foods.map((item) => ({
-                        FoodName: item.food.FoodName,
-                        Category: item.food.Category,
-                        image: item.food.FoodImage,
-                        quantity: item.Quantity,
-                        PaymentMethod: populatedOrder.paymentMethod
-                        }));
+                        const food = populatedOrder.Foods.map((item) => {
+                          if(item.food !== undefined){
+                            return{
+                              FoodName: item.food.FoodName,
+                              Category: item.food.Category,
+                              Foodid: item.food.id,
+                              image: item.food.FoodImage,
+                              quantity: item.Quantity,
+                              price:item.food.Price,
+                              PaymentMethod: populatedOrder.paymentMethod
+                            }
+                          }
+                          else if(item.offer !== undefined){
+                            return{
+                              FoodName: item.offer.OfferName,
+                              Category: item.offer.Category,
+                              Offerid: item.offer.id,
+                              image: item.offer.OfferImage,
+                              quantity: item.Quantity,
+                              price:item.offer.SpecialPrice,
+                              PaymentMethod: populatedOrder.paymentMethod
+                            }
+                          }
+                        });
                         OrderDetails = {
                         OrderId:order.id,
                         customerName: Name,
@@ -464,7 +544,7 @@ export const confirmDelivery = async(req,res)=>{
               const findDeliverer = await ServiceProviders.findOne({Email:user.Email}).populate('Email');
               console.log(findDeliverer);
               const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,DeliveryStatus:'Delivered'},{new:true,runValidators:true}).session(session);
-              const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:undefined},{new:true,runValidators:true}).session(session);
+              const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:null},{new:true,runValidators:true}).session(session);
               console.log(updateDeliverer);
               await session.commitTransaction();
               session.endSession();

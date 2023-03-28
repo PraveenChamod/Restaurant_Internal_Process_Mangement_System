@@ -8,7 +8,7 @@ import { Container, Header } from "../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3} from'./FrogotPasswordElements';
 const ForgotPasswordComponent = () => {
   
-  const[OTP,setOtp] = useState();
+  const[OTP,setOtp] = useState(0);
   const[Email,setEmail] = useState("");
   const[Password,setPassword] = useState("");
   const[ConfirmPassword,setConfirmPassword] = useState("");

@@ -81,7 +81,7 @@ const handleSubmit =  async(e)=>{
                                                     </l.SelectIcon> */}
                                                     <l.ItemsCard>
                                                         <l.FoodImage>
-                                                            <l.Food src={`http://localhost:5000/Foodimages/${food.image}`}/>
+                                                            <l.Food src={`http://localhost:5000/${food.Foodid == null ? 'offerimages' : 'Foodimages'}/${food.image}`}/>
                                                         </l.FoodImage>
                                                         <l.Details>
                                                             <l.MainText>

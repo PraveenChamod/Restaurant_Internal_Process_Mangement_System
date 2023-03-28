@@ -44,7 +44,7 @@ const useFetch = (url) => {
         }
     }, [url]);// eslint-disable-line react-hooks/exhaustive-deps
     
-    return {data,isPending}
+    return {data:data,isPending:isPending}
 }
  
 export default useFetch;

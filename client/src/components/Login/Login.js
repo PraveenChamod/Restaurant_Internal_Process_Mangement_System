@@ -38,11 +38,8 @@ import {
 } from './LoginElements'
 import { toast } from "react-hot-toast";
 
-const Login = () => {
-
-   
-
-      
+const Login = (props) => {
+    console.log(props.ScrollToTop);
     const[change,setChange] = useState(false);
     const handleChange = ()=>{
         if(!change){
@@ -221,7 +218,7 @@ const Login = () => {
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia>
                         <Bottom>
-                        {loading && <RegularButton>
+                        {loading && <RegularButton onClick={props.ScrollToTop}>
                                 <RotatingLines
                                     strokeColor="#fff"
                                     strokeWidth="2"
@@ -230,7 +227,7 @@ const Login = () => {
                                     visible={true}
                                 />
                             </RegularButton>}
-                            {!loading && <RegularButton>Sign Up</RegularButton>}
+                            {!loading && <RegularButton onClick={props.ScrollToTop}>Sign Up</RegularButton>}
                             <Option>
                                 <p>Already have an account ? <LinkToSignUpAndLogIn onClick={handleChange}>Login</LinkToSignUpAndLogIn></p>
                             </Option>
