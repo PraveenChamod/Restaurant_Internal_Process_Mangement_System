@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
@@ -80,7 +80,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                     'Payment Method:',
                                     style: TextStyle(
                                       fontSize: 22,
-                                      color: Colors.white70,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -109,7 +109,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                     'Deliver To',
                                     style: TextStyle(
                                       fontSize: 22,
-                                      color: Colors.white70,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -138,7 +138,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                     'Total Price:',
                                     style: TextStyle(
                                       fontSize: 22,
-                                      color: Colors.white70,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),

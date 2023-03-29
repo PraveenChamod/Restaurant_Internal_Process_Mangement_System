@@ -71,28 +71,31 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
         body: Stack(
           children: [
             const BackgroundImage(),
-            Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Container(
-                      color: Colors.black38,
-                      child: FutureBuilder(
-                        future: _futureData,
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData){
-                            final String userName = snapshot.data!['user']['Name'];
-                            final String userEmail = snapshot.data!['user']['Email'];
-                            final String userContact = snapshot.data!['user']['ContactNumber'];
-                            final String userAddress = snapshot.data!['user']['Address'];
-                            nameController = TextEditingController(text: userName);
-                            emailController = TextEditingController(text: userEmail);
-                            contactController = TextEditingController(text: userContact);
-                            addressController = TextEditingController(text: userAddress);
-                            return Column(
-                              children: [
-                                Expanded(
-                                  child: Center(
+            SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Container(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10,),
+                    Center(
+                      child: Container(
+                        color: Colors.black38,
+                        child: FutureBuilder(
+                          future: _futureData,
+                          builder: (context, snapshot) {
+                            if(snapshot.hasData){
+                              final String userName = snapshot.data!['user']['Name'];
+                              final String userEmail = snapshot.data!['user']['Email'];
+                              final String userContact = snapshot.data!['user']['ContactNumber'];
+                              final String userAddress = snapshot.data!['user']['Address'];
+                              nameController = TextEditingController(text: userName);
+                              emailController = TextEditingController(text: userEmail);
+                              contactController = TextEditingController(text: userContact);
+                              addressController = TextEditingController(text: userAddress);
+                              return Column(
+                                children: [
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -128,9 +131,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Center(
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -166,9 +167,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Center(
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -204,9 +203,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Center(
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -242,182 +239,174 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
+                                ],
+                              );
+                            }else if (snapshot.hasError) {
+                              return Text('${snapshot.error}');
+                            }
+                            return const SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Color(0xFFfebf10),
                                 ),
-                              ],
-                            );
-                          }else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: Color(0xFFfebf10),
                               ),
-                            ),
-                          );
-                        }
+                            );
+                          }
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Container(
-                              width: 150,
-                              height: 35,
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: AnimatedButton(
-                                text: "Update Details",
-                                buttonTextStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                color: const Color(0xFFfebf10),
-                                pressEvent: () {
-                                  updateUserDetails();
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(80),
-                                  bottomLeft: Radius.circular(80),
-                                  bottomRight: Radius.circular(80),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Color(0xFFfebf10),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Select Payment Method:',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
+                    const SizedBox(height: 10,),
+                    Container(
+                      padding: EdgeInsets.zero,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Update Details",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    updateUserDetails();
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.black38,
-                            child: ListTile(
-                              title: const Text(
-                                'Cash On Delivery',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ),
-                              leading: Radio<SingingCharacter>(
-                                fillColor: MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xFFfebf10),
-                                ),
-                                value: SingingCharacter.cashOn,
-                                groupValue: _method,
-                                onChanged: (SingingCharacter? value) {
-                                  setState(() {
-                                    _method = value;
-                                  });
-                                },
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.black38,
-                            child: ListTile(
-                              title: const Text(
-                                'Card Payment',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ),
-                              leading: Radio<SingingCharacter>(
-                                fillColor: MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xFFfebf10),
-                                ),
-                                value: SingingCharacter.card,
-                                groupValue: _method,
-                                onChanged: (SingingCharacter? value) {
-                                  setState(() {
-                                    _method = value;
-                                  });
-                                },
-                              ),
+                            const Divider(
+                              color: Color(0xFFfebf10),
                             ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Color(0xFFfebf10),
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Container(
-                              width: 150,
-                              height: 35,
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: AnimatedButton(
-                                text: "Save Details",
-                                buttonTextStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                color: const Color(0xFFfebf10),
-                                pressEvent: () {
-                                  print(_method);
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        String paymentMethod = '';
-                                        if(_method == SingingCharacter.cashOn){
-                                          paymentMethod = 'Cash On Delivery';
-                                        }else{
-                                          paymentMethod = 'Card Payments';
-                                        }
-                                        return DeliverySaveOrder(
-                                          paymentMethod: paymentMethod,
-                                          address: addressController.text,
-                                          totalPrice: widget.totalPrice,
-                                          choice: widget.choice,
-                                        );
-                                      },
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    'Select Payment Method:',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
                                     ),
-                                  );
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(80),
-                                  bottomLeft: Radius.circular(80),
-                                  bottomRight: Radius.circular(80),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              color: Colors.black38,
+                              child: ListTile(
+                                title: const Text(
+                                  'Cash On Delivery',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFFfebf10),
+                                  ),
+                                ),
+                                leading: Radio<SingingCharacter>(
+                                  fillColor: MaterialStateColor.resolveWith(
+                                        (states) => const Color(0xFFfebf10),
+                                  ),
+                                  value: SingingCharacter.cashOn,
+                                  groupValue: _method,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _method = value;
+                                    });
+                                  },
                                 ),
                               ),
                             ),
-                          ),
+                            Container(
+                              color: Colors.black38,
+                              child: ListTile(
+                                title: const Text(
+                                  'Card Payment',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFFfebf10),
+                                  ),
+                                ),
+                                leading: Radio<SingingCharacter>(
+                                  fillColor: MaterialStateColor.resolveWith(
+                                        (states) => const Color(0xFFfebf10),
+                                  ),
+                                  value: SingingCharacter.card,
+                                  groupValue: _method,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _method = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            const Divider(
+                              color: Color(0xFFfebf10),
+                            ),
+                            Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Save Details",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    print(_method);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          String paymentMethod = '';
+                                          if(_method == SingingCharacter.cashOn){
+                                            paymentMethod = 'Cash On Delivery';
+                                          }else{
+                                            paymentMethod = 'Card Payments';
+                                          }
+                                          return DeliverySaveOrder(
+                                            paymentMethod: paymentMethod,
+                                            address: addressController.text,
+                                            totalPrice: widget.totalPrice,
+                                            choice: widget.choice,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
