@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
 import '../Customer/customer_cart.dart';
+import '../Customer/customer_main_page.dart';
 import '../Products/product_cart.dart';
 import 'delivery_save_order.dart';
 
@@ -31,6 +32,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
   var emailController = TextEditingController();
   var contactController = TextEditingController();
   var addressController = TextEditingController();
+  var customerIdController = TextEditingController();
 
   //For Radio Button
   SingingCharacter? _method = SingingCharacter.cashOn;
@@ -65,6 +67,24 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
             icon: const Icon(Icons.chevron_left),
           ),
           title: const Text('Confirm Your Details!'),
+          actions:  <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_){
+                        return const CustomerMainPage(choice: 2,);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.home),
+              ),
+              //child: Icon(Icons.search),
+            ),
+          ],
           backgroundColor: const Color(0xFF161b1d),
           centerTitle: true,
         ),
@@ -89,10 +109,12 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                               final String userEmail = snapshot.data!['user']['Email'];
                               final String userContact = snapshot.data!['user']['ContactNumber'];
                               final String userAddress = snapshot.data!['user']['Address'];
+                              final String userId = snapshot.data!['user']['id'];
                               nameController = TextEditingController(text: userName);
                               emailController = TextEditingController(text: userEmail);
                               contactController = TextEditingController(text: userContact);
                               addressController = TextEditingController(text: userAddress);
+                              customerIdController = TextEditingController(text: userId);
                               return Column(
                                 children: [
                                   Center(
@@ -386,6 +408,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                             address: addressController.text,
                                             totalPrice: widget.totalPrice,
                                             choice: widget.choice,
+                                            customerId: customerIdController.text,
                                           );
                                         },
                                       ),

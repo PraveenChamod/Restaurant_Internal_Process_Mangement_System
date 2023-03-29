@@ -366,7 +366,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     String? role = pref.getString("LoginUserRole");
     role == 'Customer'
-      ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage(choice: 3,)))
+      ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage(choice: 2,)))
       : Navigator.push(context, MaterialPageRoute(builder: (context) => const DelivererHome()));
   }
 }
