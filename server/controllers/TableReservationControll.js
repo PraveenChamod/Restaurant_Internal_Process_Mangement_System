@@ -59,38 +59,40 @@ export const ViewPendingReservations = async(req,res)=>{
             for(const reservation of findReservations){
                 let ReservationDetails;
                 console.log(reservation);
-                try {
-                    const populatedReservation = await TableReservation.findById(reservation.id)
-                        .populate({
-                            path:'Customer',
-                            model:'Customer'
-                        })
-                        .populate({
-                            path:'Tables.table',
-                            model:'Table'
-                        })
-                        .exec();
-                        const Name = populatedReservation.Customer.Name;
-                        const ContactNo = populatedReservation.Customer.ContactNumber;
-                        const Tables = populatedReservation.Tables.map(table=>({
-                            TableNo:table.table.TableNo
-                        }));
-                        ReservationDetails = {
-                            CustomerName:Name,
-                            CustomerContactNo:ContactNo,
-                            Tables,
-                            ArrivalTime:populatedReservation.ArrivalTime,
-                            DepartureTime:populatedReservation.DepartureTime,
-                            Date:populatedReservation.Date,
-                            id:populatedReservation.id
-                        };
-                        pendingReservations.push(ReservationDetails);
-                } catch (error) {
-                    return res.status(500).send({
-                        status:"Server Error",
-                        message:error.message
-                    });
-                }
+                if(reservation.Status === "Pending"){
+                    try {
+                        const populatedReservation = await TableReservation.findById(reservation.id)
+                            .populate({
+                                path:'Customer',
+                                model:'Customer'
+                            })
+                            .populate({
+                                path:'Tables.table',
+                                model:'Table'
+                            })
+                            .exec();
+                            const Name = populatedReservation.Customer.Name;
+                            const ContactNo = populatedReservation.Customer.ContactNumber;
+                            const Tables = populatedReservation.Tables.map(table=>({
+                                TableNo:table.table.TableNo
+                            }));
+                            ReservationDetails = {
+                                CustomerName:Name,
+                                CustomerContactNo:ContactNo,
+                                Tables,
+                                ArrivalTime:populatedReservation.ArrivalTime,
+                                DepartureTime:populatedReservation.DepartureTime,
+                                Date:populatedReservation.Date,
+                                id:populatedReservation.id
+                            };
+                            pendingReservations.push(ReservationDetails);
+                    } catch (error) {
+                        return res.status(500).send({
+                            status:"Server Error",
+                            message:error.message
+                        });
+                    }
+                }                
             }
             res.status(201).json({
                 status: 'success',
@@ -184,7 +186,6 @@ export const SendReservationConfirmation = async(req,res)=>{
                 try {
                     session.startTransaction();
                     const UpdateReservation = await TableReservation.findByIdAndUpdate(findReservation.id,{Status:'Confirm'},{new:true,runValidators:true}).session(session);
-                    const UpdateTable = await Table.findByIdAndUpdate(findReservation.Table._id)
                     await session.commitTransaction();
                     session.endSession();
                     
