@@ -21,6 +21,7 @@ import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
 
 import morgan from "morgan";
 import PaymentRoute from "./routes/PaymentRoutes.js";
+import { getOffers } from "./controllers/OfferController.js";
 
 
 
@@ -78,7 +79,7 @@ app.use(function(req, res, next) {
 app.use(express.json({extended:true}));
 app.use(express.urlencoded({extended:true}));
 
-
+app.use('/api/v1/public/offers',getOffers);
 
 app.use(cookieParser());
 app.use('/images', express.static('images/Users'));

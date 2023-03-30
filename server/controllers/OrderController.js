@@ -89,10 +89,26 @@ export const PlaceOrderByStaffMember = async(req,res,next)=>{
                       })
               }
               else{
-                  return res.status(400).json({
-                      status:'Error',
-                      message:'Customer is not found'
-                  })
+                session.startTransaction();
+                const newOrder = await Order.create([
+                        {
+                          Foods:Foods,
+                          TotalPrice:TotalPrice,
+                          Status:"Confirm",
+                          Type:"Outlet Order"
+                        }
+                    ],
+                    {session}
+                )
+                const commit = await session.commitTransaction();
+                session.endSession();
+                res.status(201).json({
+                    status:'Success',
+                    message:'Your order is successed',
+                    data:{
+                        newOrder
+                    }
+                })
               }
           } catch (error) {
               res.status(500).json({

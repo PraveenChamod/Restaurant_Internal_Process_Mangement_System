@@ -4,15 +4,14 @@ import TextField from "@mui/material/TextField";
 import { Select, MenuItem, InputLabel } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
-
 import * as l from "./PlaceOrderElements";
-
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { BsPlusCircleFill } from 'react-icons/bs';
 import { MdDelete } from 'react-icons/md';
+import { AiFillMinusCircle,AiFillPlusCircle } from 'react-icons/ai';
 const PlaceOrderComponent = (props) => {
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
@@ -33,43 +32,81 @@ const PlaceOrderComponent = (props) => {
         setSelectItem(index);
         setOrderItem(join[index]);
     };
+    const removeItem = (index,item) => {
+        const newJoin = [...join];
+        newJoin.splice(index, 1);
+        setJoin(newJoin);
+        setPrice(TotalPrice - (item.Price*item.quantity || item.SpecialPrice*item.quantity));
+      };
     const increaseQTY = (index,item)=>{
+        const updatedJoin = join.map((data, i) => {
+            if (i === index) {
+              // Update quantity for clicked item
+              return { ...data, quantity: (data.quantity || 1) + 1 };
+            } else {
+              return data;
+            }
+          });
+        setJoin(updatedJoin);
         handleClick(index);
-        setQuantity(quantity + 1);
-        console.log(item.Price || item.SpecialPrice);
-        setPrice(TotalPrice + item.Price || item.SpecialPrice)
+        setQuantity(state => ({
+            ...state,
+            [index]: (state[index] || 1) + 1 // update quantity only for clicked item
+        }));
+        setPrice(TotalPrice + (item.Price || item.SpecialPrice))
+    }
+    const decreseQTY = (index,item)=>{
+        const updatedJoin = join.map((data, i) => {
+            if (i === index) {
+              // Update quantity for clicked item
+              return { ...data, quantity: (data.quantity) - 1 };
+            } else {
+              return data;
+            }
+          });
+        setJoin(updatedJoin);
+        handleClick(index);
+        setQuantity(state => ({
+            ...state,
+            [index]: (state[index]) - 1 // update quantity only for clicked item
+        }));
+        setPrice(TotalPrice - (item.Price || item.SpecialPrice))
     }
     const handleItemClick = (item) => {
-        setItems([...items, item]);
+        const newItem = { ...item, quantity: 1 }; 
         setPrice(TotalPrice + item.Price);
-        setJoin([...join,item]);
+        setJoin([...join,newItem]);
       };     
     const handleOfferClick = (item) => {
-        setOffers([...offers, item]);
+        const newItem = { ...item, quantity: 1 }; 
         setPrice(TotalPrice + item.SpecialPrice);
-        setJoin([...join,item]);
+        setJoin([...join,newItem]);
     };
       let food ;
       let Quantity;
       let Foods = [];
       let offer;
       
-        items.forEach(item=>{
-            food=item.id;
-            Quantity=item.quantity;
-            Foods.push({
-                food,
-                Quantity
-            })
+        join.forEach(item=>{
+            if(item.FoodName !== undefined){
+                food=item.id;
+                Quantity=item.quantity;
+                Foods.push({
+                    food,
+                    Quantity
+                })
+            }
         });
 
-        offers.forEach(item=>{
-            offer=item.id;
-            Quantity=item.quantity;
-            Foods.push({
-                offer,
-                Quantity
-            })
+        join.forEach(item=>{
+            if(item.OfferName !== undefined){
+                offer=item.id;
+                Quantity=item.quantity;
+                Foods.push({
+                    offer,
+                    Quantity
+                })
+            }
         });
     var response;
     console.log(join);
@@ -290,18 +327,23 @@ const PlaceOrderComponent = (props) => {
                                                                 Category : {data.Category}
                                                             </l.Text>
                                                             <l.Text>
-                                                                Price : { data.Price || data.SpecialPrice}
+                                                                Price : { (data.Price || data.SpecialPrice) * quantity[index] || (data.Price || data.SpecialPrice) }
                                                             </l.Text>
+                                                            {quantity[index] && (
                                                             <l.Text>
-                                                                Quantity : {quantity}
+                                                                Quantity : {quantity[index]}
                                                             </l.Text>
+                                                        )}
                                                         </l.SubText>
                                                     </l.Details>
                                                     <l.IconSection>
-                                                        <l.Icon onClick={()=>increaseQTY(index,data)}>
-                                                            <BsPlusCircleFill/>
+                                                        <l.Icon onClick={()=>decreseQTY(index,data)}>
+                                                            <AiFillMinusCircle/>
                                                         </l.Icon>
-                                                        <l.Icon>
+                                                        <l.Icon onClick={()=>increaseQTY(index,data)}>
+                                                            <AiFillPlusCircle/>
+                                                        </l.Icon>
+                                                        <l.Icon onClick={()=>removeItem(index,data)}>
                                                             <MdDelete/>
                                                         </l.Icon>
                                                     </l.IconSection>

@@ -5,7 +5,7 @@ export const SubSection= styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 5%;
+    margin-top: 10%;
     width: fit-content;
     
 `
