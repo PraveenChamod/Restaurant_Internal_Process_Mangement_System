@@ -34,7 +34,7 @@ export const Div1 = styled.div`
 export const Div2 = styled.div`
   margin-top: 0px;
   width: 90%;
-  height: 60%;
+  /* height: 60%; */
   background-color: #1a1e21;
   display: flex;
   flex-direction: row;

@@ -99,7 +99,7 @@ export const ViewPendingReservations = async(req,res)=>{
                     pendingReservations
                 }
             })
-        }
+        } 
         else{
             res.status(401).json({
                 status: 'Error',

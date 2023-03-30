@@ -5,6 +5,7 @@ import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './PendingReservationElements'
 const PendingReservationComponent = (props) => {
+    
     return (  
         <Container>
             <Header>
