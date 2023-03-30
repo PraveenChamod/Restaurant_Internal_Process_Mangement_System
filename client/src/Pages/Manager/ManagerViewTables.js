@@ -4,12 +4,11 @@ import useFetch from "../../Hooks/useFetch";
 
 const ManagerViewTables = (props) => {
     const {data,isPending} = useFetch('api/v1/Tables');
-
-    console.log(data);
+    console.log(data?.data);
     return ( 
         <>
             {isPending && <Spinner/>}
-            {data && <TableDetails tables = {data} BackRoutes={props.BackRoutes}/>}
+            {data && <TableDetails tables = {data?.data?.tables} BackRoutes={props.BackRoutes}/>}
             
         </>
      );

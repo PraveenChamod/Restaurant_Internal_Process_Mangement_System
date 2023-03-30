@@ -23,7 +23,7 @@ const ContactUs = () => {
         text-align: center;
         color: #fff;
         @media screen and (max-width:800px){
-            font-size: 20px;
+            font-size: 1.2em;
         }
     `
     const MainSubSec = styled.div`
@@ -55,7 +55,7 @@ const ContactUs = () => {
         align-items: center;
         justify-content: center;
         @media screen and (max-width:800px){
-            font-size: 40px;
+            font-size: 24px;
             margin: 0;
         }
     `
@@ -63,7 +63,7 @@ const ContactUs = () => {
         margin: 10px 10px 20px 10px;
         color: #fff;
         @media screen and (max-width:800px){
-            font-size: 15px;
+            font-size: 12px;
         }
     `
     const P = styled.p`
@@ -71,7 +71,7 @@ const ContactUs = () => {
         color: #fff;
         text-align: center;
         @media screen and (max-width:800px){
-            font-size: 12px;
+            font-size: 10px;
         }
     `
     return ( 

@@ -16,16 +16,20 @@ import { Container } from "../shared/SharedElements/SharedElements";
 import { Header } from "../shared/SharedElements/SharedElements";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
+import { TiTick } from 'react-icons/ti';
 import { FaMapMarkedAlt } from "react-icons/fa";
 const DeliverComponent = (props) =>{
 
     console.log(props.data.OrderId);
+    const[click,setClick] = useState(false);
 const handleSubmit =  async(e)=>{
-    e.preventDefaults();
+    e.preventDefault();
     try{
-        
+        const res = await axios.post(`/api/v1/Deliverer/ConfirmDelivery/${props.data.OrderId}`);
+        console.log(res);
+        setClick(true);
     }catch(error){
-
+        console.log(error.message);
     }
     
 }
@@ -67,40 +71,42 @@ const handleSubmit =  async(e)=>{
                                         <FaMapMarkedAlt/>
                                     </l.Icon>
                                 </Link>
-                            {
-                                props.data.food.map(food=>{
-                                    return(
-                                        <l.CartSection>
-                                            {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                                {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                            </l.SelectIcon> */}
-                                            <l.ItemsCard>
-                                                <l.FoodImage>
-                                                    <l.Food src={`http://localhost:5000/Foodimages/${food.image}`}/>
-                                                </l.FoodImage>
-                                                <l.Details>
-                                                    <l.MainText>
-                                                        <l.FoodName>
-                                                            {food.FoodName}
-                                                        </l.FoodName>
-                                                    </l.MainText>
-                                                    <l.SubText>
-                                                        {/* <l.Text>
-                                                            {cart.Size}
-                                                        </l.Text> */}
-                                                        <l.Text>
-                                                            Quantity : {food.quantity}
-                                                        </l.Text>
-                                                        {/* <l.Text>
-                                                            Price : {food.quantity * cart.price}
-                                                        </l.Text> */}
-                                                    </l.SubText>
-                                                </l.Details>
-                                            </l.ItemsCard>
-                                        </l.CartSection> 
-                                    )
-                                })
-                            }
+                                <l.ItemSection>
+                                    {
+                                        props.data.food.map(food=>{
+                                            return(
+                                                <l.CartSection>
+                                                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
+                                                    </l.SelectIcon> */}
+                                                    <l.ItemsCard>
+                                                        <l.FoodImage>
+                                                            <l.Food src={`http://localhost:5000/${food.Foodid == null ? 'offerimages' : 'Foodimages'}/${food.image}`}/>
+                                                        </l.FoodImage>
+                                                        <l.Details>
+                                                            <l.MainText>
+                                                                <l.FoodName>
+                                                                    {food.FoodName}
+                                                                </l.FoodName>
+                                                            </l.MainText>
+                                                            <l.SubText>
+                                                                {/* <l.Text>
+                                                                    {cart.Size}
+                                                                </l.Text> */}
+                                                                <l.Text>
+                                                                    Quantity : {food.quantity}
+                                                                </l.Text>
+                                                                {/* <l.Text>
+                                                                    Price : {food.quantity * cart.price}
+                                                                </l.Text> */}
+                                                            </l.SubText>
+                                                        </l.Details>
+                                                    </l.ItemsCard>
+                                                </l.CartSection> 
+                                            )
+                                        })
+                                    }
+                            </l.ItemSection>
                         </l.Div1>
                         <l.Div2>
                         <FormControl  sx={{ m: 1, width: "35ch" }} variant="standard">
@@ -140,10 +146,14 @@ const handleSubmit =  async(e)=>{
                          </FormControl>
                             <l.IconSection>
                                 <l.Icon1> 
-                                    <BsHourglassSplit/>
+                                    {
+                                        click ? <TiTick/> : <BsHourglassSplit/>
+                                    }
                                 </l.Icon1>
                                 <l.Text>
-                                    Pending
+                                    {
+                                        click ? "Confirm" : "Pending"
+                                    }
                                 </l.Text>
                             </l.IconSection>
                             <l.ButtonSection>

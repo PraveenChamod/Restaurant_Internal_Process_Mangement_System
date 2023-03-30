@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import '../Drawer_Items/favourites_screen.dart';
-import '../Drawer_Items/help_center_screen.dart';
-import '../Drawer_Items/my_account_screen.dart';
-import '../Drawer_Items/orders_screen.dart';
-import '../Drawer_Items/settings_screen.dart';
+import '../../../../constants/image_strings.dart';
 import '../home_screen.dart';
+import 'customer_drawer_Items/favourites_screen.dart';
+import 'customer_drawer_Items/help_center_screen.dart';
+import 'customer_drawer_Items/my_account_screen.dart';
+import 'customer_drawer_Items/orders_screen.dart';
+import 'customer_drawer_Items/settings_screen.dart';
 
 class CustomerHomeDrawer extends StatefulWidget {
   const CustomerHomeDrawer({Key? key}) : super(key: key);
@@ -32,14 +33,12 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             bottomRight: Radius.circular(20)),
       ),
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(
               color: Color(0xFF161b1d),
             ),
-            
             child: Center(
               child: FutureBuilder<Map<String, dynamic>>(
                 future: _futureData,
@@ -48,7 +47,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                     final String userImagePath = snapshot.data!['user']['ProfileImage'];
                     final String userName = snapshot.data!['user']['Name'];
                     final String userEmail = snapshot.data!['user']['Email'];
-                    final String imageUrl = 'http://localhost:5000/images/$userImagePath';
+                    final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:  [
@@ -180,6 +179,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.remove("LoginId");
     await pref.remove("LoginEmail");
+    await pref.remove("LoginUserRole");
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -195,7 +195,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
     String? userToken = pref.getString("JwtToken");
     print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
-      Uri.parse('http://localhost:5000/api/v1/Auth/Profile'),
+      Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Div = styled.div`
   width: 50%;
-  height: 50%;
+  /* height: 50%; */
   background-color: #1a1e21;  
   border-radius: 25px;
   display: flex;
@@ -34,7 +34,7 @@ export const Div1 = styled.div`
 export const Div2 = styled.div`
   margin-top: 0px;
   width: 90%;
-  height: 60%;
+  /* height: 60%; */
   background-color: #1a1e21;
   display: flex;
   flex-direction: row;
@@ -73,8 +73,8 @@ export const Div4 = styled.div`
   padding-right: 2px;
   padding-top: 2px;
   padding-bottom: 2px;
-  justify-content: left;
-  align-items: left;
+  justify-content: right;
+  align-items: right;
 `;
 export const Div5 = styled.div`
   margin-top: 0px;
@@ -87,13 +87,13 @@ export const Div5 = styled.div`
   padding-right: 20px;
   padding-top: 0px;
   padding-bottom: 0px;
-  justify-content: left;
-  align-items: left;
+  justify-content: right;
+  align-items: right;
 `;
 
 export const Div6 = styled.div`
   margin-top: 0px;
-  width: 50%;
+  width: 100%;
   height: 100%;
   background-color: #1a1e21;
   display: flex;
@@ -102,8 +102,8 @@ export const Div6 = styled.div`
   padding-right: 20px;
   padding-top: 0px;
   padding-bottom: 0px;
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: right;
+  align-items: right;
 `;
 export const Div7 = styled.div`
   margin-top: 15px;

@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 code {
@@ -50,7 +52,7 @@ code {
   opacity: 0;
   cursor: pointer;
   transition: 1s;
-  background-color: #C98621dd;
+  background-color: #1A1E21;
 }
 .sliderActive:hover .text{
   opacity: 1;
@@ -157,4 +159,9 @@ code {
 .react-time-picker__button--down {
   border-top: 1px solid #ccc;
   color: #fff;
+}
+@media screen and (max-width:800px) {
+    body{
+      overflow-x: hidden;
+    }
 }

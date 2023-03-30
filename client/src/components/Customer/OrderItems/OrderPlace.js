@@ -22,17 +22,28 @@ const OrderPlace = ({data}) => {
     
 
     let food ;
+    let offer;
     let Quantity;
     let Foods = [];
     let TotalPrice = 0;
 
     data.forEach(item=>{
-        food=item.id;
-        Quantity=item.quantity;
-        Foods.push({
-            food,
-            Quantity
-        })
+        if(item.Foodid != null){
+            food=item.Foodid;
+            Quantity=item.quantity;
+            Foods.push({
+                food,
+                Quantity
+            })
+        }
+        else if(item.Offerid !== null){
+            offer=item.Offerid;
+            Quantity=item.quantity;
+            Foods.push({
+                offer,
+                Quantity
+            })
+        }
     });
 
     data.forEach(element => {
@@ -43,9 +54,13 @@ const OrderPlace = ({data}) => {
     const PlaceOrder = async(e)=>{
         e.preventDefault();
         try {
-            const formData = {Customer:Customer,Foods:Foods,paymentMethod:paymentMethod,TotalPrice:TotalPrice};
+            const formData = {Customer:Customer,Foods:Foods,paymentMethod:paymentMethod,TotalPrice:TotalPrice,Type:"Online Order"};
             console.log(formData);
             const res = await axios.post('api/v1/OrderItem',formData);
+            toast.success('Order Placed Successfully');
+            setTimeout(() => {
+                navigate('/CustomerPlace-Order');
+            }, 2000);
             console.log(res);
         } catch (error) {
             console.log(error.message);
@@ -129,15 +144,11 @@ const OrderPlace = ({data}) => {
                 <l.Left> 
                     {
                         data.map((cart)=>{
-                            
                             return(
                                 <l.CartSection>
-                                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                    </l.SelectIcon> */}
                                     <l.ItemsCard>
                                         <l.FoodImage>
-                                            <l.Food src={`http://localhost:5000/Foodimages/${cart.image}`}/>
+                                            <l.Food src={`http://localhost:5000/${cart.Foodid == null ? 'offerimages' : 'Foodimages'}/${cart.image}`}/>
                                         </l.FoodImage>
                                         <l.Details>
                                             <l.MainText>
@@ -146,9 +157,6 @@ const OrderPlace = ({data}) => {
                                                 </l.FoodName>
                                             </l.MainText>
                                             <l.SubText>
-                                                {/* <l.Text>
-                                                    {cart.Size}
-                                                </l.Text> */}
                                                 <l.Text>
                                                     Quantity : {cart.quantity}
                                                 </l.Text>

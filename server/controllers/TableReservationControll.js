@@ -4,54 +4,40 @@ import TableReservation from "../models/TableReservation.js";
 import Table from "../models/Tables.js";
 
 // Method : POST
-// End Point : "api/v1/Table";
+// End Point : "api/v1/TableReservation";
 // Description : Reserve Table
 export const ReserveTable = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Customer"){
-            const {TableNo,NoOfPersons,Date,Time} = req.body;
-            const findTable = await Table.findOne({TableNo:TableNo}).populate('TableNo');
             const logedCustomer = await Customer.findOne({Email:user.Email}).populate('Email');
-            if(findTable){
-                const amount = findTable.price;
-                if(findTable.NoOfPersons < NoOfPersons){
-                    res.status(300).json({
-                        status:'Warning',
-                        message:`This Table Cannot allocated for ${NoOfPersons} persons` 
+            const session = await mongoose.startSession();
+                // console.log(session);
+                try {
+                    session.startTransaction();
+                    req.body.TableNo.forEach(async (table) => {
+                        const findTable = await Table.findOne({TableNo:table}).populate('TableNo');
+                        const updateTable = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
+                    });
+                    const newReservation = await TableReservation.create([
+                        req.body
+                    ],{session});
+                    const commit = await session.commitTransaction();
+                    session.endSession();
+                
+                    res.status(201).json({
+                        status: 'success',
+                        message: 'Reservation is successfull',
+                        data: {
+                            newReservation
+                        }
+                    })
+                } catch (error) {
+                    res.status(400).json({
+                        status:'Error',
+                        message:error.message
                     });
                 }
-                else{
-                    const session = await mongoose.startSession();
-                    // console.log(session);
-                    try {
-                        session.startTransaction();
-                        const updateTable = await Table.findByIdAndUpdate(findTable._id,{Status:"Reserved"},{new:true,runValidators:true}).session(session);
-                        const newReservation = await TableReservation.create([req.body],{session});
-                        const commit = await session.commitTransaction();
-                        session.endSession();
-                    
-                        res.status(201).json({
-                            status: 'success',
-                            message: 'Reservation successfully',
-                            data: {
-                                newReservation
-                            }
-                        })
-                    } catch (error) {
-                        res.status(400).json({
-                            status:'Error',
-                            message:error.message
-                        });
-                    }
-                }
-            }
-            else{
-                res.status(404).json({
-                    status:'Error',
-                    message:'This Food is not available'
-                });
-            }
         }
     } catch (error) {
         res.status(500).json({
@@ -70,19 +56,52 @@ export const ViewPendingReservations = async(req,res)=>{
         if(user.Role === "Staff-Member"){
             const findReservations = await TableReservation.find();
             let pendingReservations = [];
-            findReservations.map(order=>{
-                    if(order.Status === "Pending"){
-                        pendingReservations.push(order);
+            for(const reservation of findReservations){
+                let ReservationDetails;
+                console.log(reservation);
+                if(reservation.Status === "Pending"){
+                    try {
+                        const populatedReservation = await TableReservation.findById(reservation.id)
+                            .populate({
+                                path:'Customer',
+                                model:'Customer'
+                            })
+                            .populate({
+                                path:'Tables.table',
+                                model:'Table'
+                            })
+                            .exec();
+                            const Name = populatedReservation.Customer.Name;
+                            const ContactNo = populatedReservation.Customer.ContactNumber;
+                            const Tables = populatedReservation.Tables.map(table=>({
+                                TableNo:table.table.TableNo
+                            }));
+                            ReservationDetails = {
+                                CustomerName:Name,
+                                CustomerContactNo:ContactNo,
+                                Tables,
+                                ArrivalTime:populatedReservation.ArrivalTime,
+                                DepartureTime:populatedReservation.DepartureTime,
+                                Date:populatedReservation.Date,
+                                id:populatedReservation.id
+                            };
+                            pendingReservations.push(ReservationDetails);
+                    } catch (error) {
+                        return res.status(500).send({
+                            status:"Server Error",
+                            message:error.message
+                        });
                     }
-                })
+                }                
+            }
             res.status(201).json({
                 status: 'success',
-                message: 'Pending Reservations',
+                message: 'Details of Pending Reservations',
                 data: {
                     pendingReservations
                 }
             })
-        }
+        } 
         else{
             res.status(401).json({
                 status: 'Error',
@@ -105,16 +124,42 @@ export const ViewReservation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
-            console.log(_id);
-            const findReservation = await TableReservation.findById(_id);
-            if(findReservation !== null){
-                res.status(201).json({
-                    status: 'success',
-                    message: 'Reservation Details',
-                    data: {
-                        findReservation
+            let ReservationDetails;
+            try {
+                const populatedReservation = await TableReservation.findById(_id)
+                .populate({
+                    path:'Customer',
+                    model:'Customer'
+                })
+                .populate({
+                    path:'Tables.table',
+                    model:'Table'
+                })
+                .exec();
+                const Name = populatedReservation.Customer.Name;
+                const ContactNo = populatedReservation.Customer.ContactNumber;
+                const Tables = populatedReservation.Tables.map(table=>({
+                    TableNo:table.table.TableNo
+                }));
+                ReservationDetails = {
+                    CustomerName:Name,
+                    CustomerContactNo:ContactNo,
+                    Tables,
+                    ArrivalTime:populatedReservation.ArrivalTime,
+                    DepartureTime:populatedReservation.DepartureTime,
+                    Date:populatedReservation.Date,
+                    id:populatedReservation.id,
+                    Amount:populatedReservation.amount
+                };
+                res.status(200).json({
+                    status:'Success',
+                    message:`Details of Reservation ${_id}`,
+                    data:{
+                        ReservationDetails
                     }
-                })  
+                })
+            } catch (error) {
+                return res.status(500).send('Server Error');
             }
         }
     } catch (error) {
@@ -141,7 +186,6 @@ export const SendReservationConfirmation = async(req,res)=>{
                 try {
                     session.startTransaction();
                     const UpdateReservation = await TableReservation.findByIdAndUpdate(findReservation.id,{Status:'Confirm'},{new:true,runValidators:true}).session(session);
-                    const UpdateTable = await Table.findByIdAndUpdate(findReservation.Table._id)
                     await session.commitTransaction();
                     session.endSession();
                     

@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 import Customer from "../models/Customer.js";
 import User from "../models/User.js";
-import { GeneratePassword, GenerateSalt } from "../util/PasswordUtility.js";
+import { GeneratePassword, GenerateSalt, validatePassword } from "../util/PasswordUtility.js";
 import { createToken } from "../util/AuthUtil.js";
 import { transporter } from "../util/NotificationUtil.js";
 import dotenv from 'dotenv';
 import ShoutoutClient from 'shoutout-sdk';
 import Stripe from "stripe";
 import ServiceProviders from "../models/ServiceProviders.js";
-import { __dirname } from "../app.js";
+import path from 'path';
 import axios from 'axios';
+import ejs from 'ejs';
 
+const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
+
+console.log(__dirname);
 var apiKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM';
 
 var debug = true, verifySSL = false;
@@ -144,33 +148,47 @@ export const RegisterServiceProviders = async (req,res)=>{
                             subject : 'Registration Confrimation',
                             attachments:[{
                                 filename : 'logo.png',
-                                path:`${__dirname}/server/Template/logo.png`,
+                                path:`${__dirname}/Template/logo.png`,
                                 cid:'logo'
                             },
                             {
                                 filename : 'welcome_vector.png',
-                                path:`${__dirname}/server/Template/welcome_vector.png`,
+                                path:`${__dirname}/Template/welcome_vector.png`,
                                 cid:'welcome'
                             }],
-                            html: { path:`${__dirname}/server/Template/Email.ejs` }
                         }
-                        transporter.sendMail(mailOption,(err,info)=>{
+                        ejs.renderFile(`${__dirname}/Template/Email.ejs`,{Email:Email},(err,renderHTML)=>{
                             if(err){
                                 console.log(err.message);
+                                res.status(500).json({
+                                    status: "Server Error",
+                                    message: err.message
+                                });
                             }
                             else{
-                                console.log(info.response);
+                                mailOption.html = renderHTML;
+                                transporter.sendMail(mailOption,(err,info)=>{
+                                    if (err) {
+                                        console.log(err.message);
+                                        res.status(500).json({
+                                            status: "Server Error",
+                                            message: err.message
+                                        });
+                                    }
+                                    else {
+                                        const token = createToken(createServiceProvider._id,createServiceProvider.Email);
+                                        res.status(201).json({
+                                            status:'Success',
+                                            message:'User added to the system successfully',
+                                            data:{
+                                                token
+                                            }
+                                        });
+                                    }
+                                })
                             }
                         })
                     }
-                    const token = createToken(createServiceProvider._id,createServiceProvider.Email);
-                    res.status(201).json({
-                        status:'Success',
-                        message:'User added to the system successfully',
-                        data:{
-                            token
-                        }
-                    });
                 }
                 
             }
@@ -472,7 +490,7 @@ export const getAvailableDeliverers = async (req,res)=>{
             if(Deliverers !== null){
                 let deliverers = [];
                     Deliverers.map(user=>{
-                        if(user.Order === undefined){
+                        if(user.Order === undefined || user.Order === null){
                             deliverers.push(user);
                         }
                     })
@@ -521,10 +539,13 @@ export const UpdateProfile = async(req,res)=>{
                 const {Name,ContactNumber,Address,Email} = req.body;
                 const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(Address)}&key=${geocodeApiKey}`;
                 const response = await axios.get(url);
+                console.log(url);
                 const location = response.data.results[0].geometry.location;
-                const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address,lat:location.lat,lang:location.lng}
-                const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
-                console.log(updateCustomer);
+                
+                const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address,lat:location.lat,lang:location.lng};
+                console.log(userDetails);
+                const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer.id,userDetails,{new:true});
+                
                 createToken(updateCustomer._id,updateCustomer.Email);
                 res.status(201).json({
                     message:'Update Customer Successfully',
@@ -569,3 +590,48 @@ export const getLocation = async (address) => {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${API_KEY}`;
     
   }
+
+
+// Method : PATCH
+// End Point : "api/v1/User/resetpassword/:Email";
+// Description : Password Reset
+export const ResetPassword = async(req,res)=>{
+    try {
+        const {Email} = req.params;
+        const serviceProvider = await ServiceProviders.findOne({Email:Email}).populate('Email');
+        if(serviceProvider){
+            const{InitialPassword,Password,ConfirmPassword} = req.body;
+            const result = await validatePassword(InitialPassword,serviceProvider.Password);
+            if(result){
+                const salt = await GenerateSalt();
+                const encryptedPassword = await GeneratePassword(Password,salt);
+                const confirmEncryptedPassword = await GeneratePassword(ConfirmPassword,salt);
+                const resetPassword = await ServiceProviders.findByIdAndUpdate(serviceProvider.id,{Password:encryptedPassword,ConfirmPassword:confirmEncryptedPassword},{new:true});
+                res.status(200).json({
+                    status:"Success",
+                    message:'Password Reset Succcessfull',
+                    data:{
+                        resetPassword
+                    }
+                })
+            }
+            else{
+                res.status(400).json({
+                    status:"Error",
+                    message:"Entered Initial Password is Invalid"
+                })
+            }
+        }
+        else{
+            res.status(404).json({
+                status:"Error",
+                message:"User Not Found"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            status:"Server Error",
+            message:error.message
+        })
+    }
+} 

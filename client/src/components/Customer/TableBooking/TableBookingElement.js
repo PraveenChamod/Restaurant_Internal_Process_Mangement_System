@@ -47,7 +47,7 @@ flex-direction: row;
 `
 export const Div31 = styled.div`
 height: 88%;
-width: 50%;
+width: 40%;
 background-color: #1a1e21;
   border-radius: 25px;
   box-shadow: 3px 3px 3px #000;
@@ -56,8 +56,7 @@ flex-direction:column;
 justify-content: center;
 align-items: center;
 text-align: center;
-padding: 20px;
-padding-left: 80px;
+padding: 5px;
 `
 
 export const Div4 = styled.div`
@@ -110,6 +109,9 @@ export const Item = styled.button`
     text-decoration: none;
     text-transform: uppercase;
 `
+export const ClickedItem = styled(Item)`
+    border: 5px solid #04C411;
+`
 
 export const RegularButton = styled.button`
     width: 150px;
@@ -137,4 +139,11 @@ export const H2 = styled.h1`
     margin-top: 20px;
     font-weight: bold;
     font-family: cursive;
+`
+export const Table = styled.div`
+    margin: 2%;
+`
+export const Payment = styled.div`
+    width: 90%;
+    margin: 3%;
 `

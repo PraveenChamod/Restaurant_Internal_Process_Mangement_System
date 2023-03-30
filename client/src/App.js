@@ -5,7 +5,7 @@ import {Menu} from './Pages/Menu'
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import LoginPg from './Pages/Login';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import ScrollToTop from './Hooks/ScrollToTop';
 import AdminDashBoard from './Pages/Admin/AdminDashBoard';
 import AdminUserProfile from './Pages/Admin/UserProfile';
@@ -87,14 +87,23 @@ import { Elements } from '@stripe/react-stripe-js';
 import StaffMemberPendingOrders from './Pages/Staff-Member/PendingOrders';
 import AllOrderDetails from './Pages/Deliverer/AllOrderDetails';
 import Map from './Pages/Deliverer/Map';
-import BackRoutes from './Data/BackRotes';
+import BackRoutes, { EditProfileBackRoute } from './Data/BackRotes';
+import SideNavbar from './components/Navbar/SideNavBar';
+import StaffMemberPendingReservations from './Pages/Staff-Member/PendingReservations';
+import ManagerViewTableDetails from './Pages/Manager/ManagerViewTable';
+import SupplierItems from './Pages/Supplier/SupplyItems';
+import WithoutNavAndFooter from './components/Routing/WithoutNavandFooter';
+import WithNavAndFooter from './components/Routing/WithNavandFooter';
 
 function App() {
   
   const stripePromise = loadStripe('pk_test_51MbCY3GuiFrtKvgKd8w5qdphJciL87lB1ITs2nFL1FUNQnfIqxPA4hX2A3qrhDd7Gfcsab01gcVNpXlTJs6ArcyF00t5WxYsrg');
 
   useEffect(() => {
-    Aos.init({duration:1000});
+    Aos.init({
+      disable: 'mobile',
+      duration:1000
+    });
   }, [])
 
   useEffect(() => {
@@ -124,6 +133,17 @@ function App() {
     }
   }
   
+  const[view,setView] = useState(window.innerWidth >= 800 ? true : false);
+  useEffect(()=>{
+    const resize = ()=>{
+      if(window.innerWidth >= 800){
+          setView(true);
+      }else{
+          setView(false);
+      }
+    }
+    window.addEventListener('resize',resize);
+  })
   
 
   return (
@@ -135,23 +155,26 @@ function App() {
               position="top-center"
               reverseOrder={false}/>
             <ScrollToTop/> 
-            <Navbar ScrollToTop={scrollToTop}/>
+            
             <Routes>
+              <Route element={<WithNavAndFooter ScrollToTop = {scrollToTop}/>}>
                 <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
                 <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
-                <Route path="/login" element={<LoginPg/>}/>
+                <Route path="/login" element={<LoginPg ScrollToTop={scrollToTop}/>}/>
                 <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
-                <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
-
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                <Route path="/ResetPassword/:Email" element={<PasswordReset/>}/>
+              </Route>
+              <Route element={<WithoutNavAndFooter ScrollToTop = {scrollToTop}/>}>
+                  {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
               {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
                 <Route path="/AdminDashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]} ScrollToTop={scrollToTop}/>} />
                 <Route path="/AdminAdd-User" element={<AdminAddUser BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-User" element={<AdminViewUser BackRoutes={BackRoutes[0].nav}/>}/>
-                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0].nav} BackRoutes={BackRoutes[0]}/>}/>
-                <Route path="/AdminEdit-Profile" element={<AdminEditProfile />}/>
+                <Route path="/AdminMy-Profile" element={<AdminUserProfile route={EditProfileLinks[0]} BackRoutes={BackRoutes[0].nav}/>}/>
+                <Route path="/AdminEdit-Profile" element={<AdminEditProfile EditProfileBackRoute={EditProfileBackRoute[0].nav}/>}/>
                 <Route path="/AdminAdd-Table" element={<AdminAddTables BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Tables" element={<AdminViewTables BackRoutes={BackRoutes[0].nav}/>}/>
+                <Route path="/AdminView-Table/:id" element={< ManagerViewTableDetails/>}/>
                 <Route path="/AdminAdd-Foods" element={<AdminAddFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Foods" element={<AdminViewFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Food/:id" element={<AdminViewFood/>}/>
@@ -161,21 +184,22 @@ function App() {
                 <Route path="/ManagerDashBoard" element={<ManagerDashBoard Navs = {Roles[1]} Card = {Cards[1]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/ManagerAdd-User" element={<AddOutletStaff BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-User" element={<ManagerViewUser BackRoutes={BackRoutes[1].nav}/>}/>
-                <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1].nav} BackRoutes={BackRoutes[1]}/>}/>
-                <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile/>}/>
-                <Route path="/ManagerReport-Generation" element={<ReportGeneration/>}/>
+                <Route path="/ManagerMy-Profile" element={<ManagerUserProfile route={EditProfileLinks[1]} BackRoutes={BackRoutes[1]}/>}/>
+                <Route path="/ManagerEdit-Profile" element={<ManagerEditProfile EditProfileBackRoute={EditProfileBackRoute[1].nav}/>}/>
+                <Route path="/ManagerReport-Generation" element={<ReportGeneration BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>
                 <Route path="/ManagerAddStock" element={<AddStockItem BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerViewStock" element={<ViewStock BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerViewItem" element={<ViewItem/>}/>
                 <Route path="/ManagerAdd-Table" element={<ManagerAddTables BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-Tables" element={<ManagerViewTables BackRoutes={BackRoutes[1].nav} />}/>
+                <Route path="/ManagerView-Table/:id" element={< ManagerViewTableDetails/>}/>
                 <Route path="/ManagerAdd-Foods" element={<ManagerAddFoods BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerAdd-Offers" element={<AddOffers BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-Foods" element={<ManagerViewFoods BackRoutes={BackRoutes[1].nav} />}/>
                 <Route path="/ManagerView-Food/:id" element={<ManagerViewFood/>}/>
                 <Route path="/ManagerView-Offers" element={<ManagerViewOffers BackRoutes={BackRoutes[1].nav}/>}/>
-                <Route path="/ManagerView-Offer" element={<ManagerViewOffer/>}/>
+                <Route path="/ManagerView-Offer/:id" element={<ManagerViewOffer/>}/>
                 <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
 
@@ -189,10 +213,11 @@ function App() {
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables BackRoutes={BackRoutes[2].nav} />}/>
                 <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails/>}/>
-                <Route path="/Staff-MemberTable-Reservation-Details" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
+                <Route path="/Staff-MemberPendingTable-Reservation-Details" element={<StaffMemberPendingReservations BackRoutes={BackRoutes[2].nav}/>}/>
+                <Route path="/Staff-MemberTable-Reservation-Details/:id" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>
-                <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile/>}/>
-                <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
+                <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile EditProfileBackRoute={EditProfileBackRoute[2].nav}/>}/>
+                <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder BackRoutes={BackRoutes[2].nav}/>}/>
                 
                 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
@@ -203,22 +228,26 @@ function App() {
                 <Route path="/CustomerPay" element={<ProductDisplay/>}/>     
                 <Route path="/CustomerMyCart" element={<Cart cartData = {CartData} BackRoutes={BackRoutes[3].nav}/>}/>     
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
-                <Route path="/CustomerTable-Reservation" element={<TableReservation BackRoutes={BackRoutes[3].nav}/>}/>     
+                <Route path="/CustomerTable-Reservation" element={
+                  <Elements stripe={stripePromise}>
+                    <TableReservation BackRoutes={BackRoutes[3].nav}/>     
+                  </Elements>
+                }/>     
                 <Route path="/CustomerAdd-Review" element={<AddReview BackRoutes={BackRoutes[3].nav}/>}/>     
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/> 
-                <Route path="/CustomerTable-Reservation1" element={<TableReservation/>}/>    
                 <Route path="/CustomerOrdering" element={
                   <Elements stripe={stripePromise}>
                     <OrderItems/>       
                   </Elements>
                 }/>
+                <Route path="/CustomerMy-Orders" element={<MyOrders BackRoutes={BackRoutes[3].nav}/>}/>   
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/>     
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                   
                 <Route path="/DelivererDashBoard" element={<DelivererDashBoard Navs = {Roles[3]} Card = {Cards[3]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/DelivererMy-Profile" element={<DelivererUserProfile route={EditProfileLinks[3]} BackRoutes={BackRoutes[4].nav}/>}/>   
-                <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile/>}/>  
+                <Route path="/DelivererEdit-Profile" element={<DelivererEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/>  
                 <Route path="/DelivererAllOrderDetails" element={<AllOrderDetails BackRoutes={BackRoutes[4].nav}/>}/>   
                 <Route path="/DelivererOrderDetails/:id" element={<DeliveryOrderDetails/>}/>   
                 <Route path="/DelivererMap/:id" element={<Map/>}/>   
@@ -227,10 +256,11 @@ function App() {
                   
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
-                <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile/>}/> 
+                <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
+                <Route path="/SupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
+              </Route>
             </Routes>
-            <Footer/>
           </div>
           </Fragment>
       </AuthState>

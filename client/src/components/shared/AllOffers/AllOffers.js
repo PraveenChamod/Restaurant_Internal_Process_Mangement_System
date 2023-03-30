@@ -34,10 +34,11 @@ const AllOffersComponent = (props) => {
                 </l.Table>
             </l.SubContainer>
             <l.ButtonSection>
-                <Link to={props.BackRoutes}></Link>
+                <Link to={props.BackRoutes} className="btn">
                 <RegularButton>
                     Back
                 </RegularButton>
+                </Link>
             </l.ButtonSection>
         </Container>
      );

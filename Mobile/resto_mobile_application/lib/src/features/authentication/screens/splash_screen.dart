@@ -4,10 +4,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../constants/image_strings.dart';
-import 'Customer/customer_home.dart';
 import 'Customer/customer_main_page.dart';
+import 'deliverer/deliverer_home.dart';
 import 'home_screen.dart';
-import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Stack(
           children: <Widget>[
-            //const BackgroundImage(),
             Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -78,30 +76,6 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
               ),
-              // child: Center(
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       checkLogin();
-              //     },
-              //     style: ElevatedButton.styleFrom(
-              //       padding: const EdgeInsets.all(10.0),
-              //       fixedSize: const Size(200, 50),
-              //       backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
-              //       elevation: 15,
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(20.0),
-              //       ),
-              //     ),
-              //     child: const Text(
-              //         'GET STARTED',
-              //       style: TextStyle(
-              //         color: Colors.black,
-              //         fontSize: 18,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ),
           ],
         ),
@@ -112,20 +86,11 @@ class _SplashScreenState extends State<SplashScreen> {
     //In this checkLogin function check if user already login or credential already available or not
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("LoginId");
-    if(val != null){
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const CustomerMainPage(),
-        ),
-      );
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
-    }
+    String? role = pref.getString("LoginUserRole");
+    val != null ?
+      role == 'Customer'
+        ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage(choice: 3,)))
+        : Navigator.push(context, MaterialPageRoute(builder: (context) => const DelivererHome()))
+        : Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
   }
 }

@@ -14,7 +14,7 @@ const useFetch = (url) => {
         const fetchData = async () => {
             try {
                 const res = await axios.get(url);
-                console.log(res);
+                console.log(res); 
                 if (res.status === 200 || res.status === 201) {
                     setData(res.data);
                 } else {
@@ -44,7 +44,7 @@ const useFetch = (url) => {
         }
     }, [url]);// eslint-disable-line react-hooks/exhaustive-deps
     
-    return {data,isPending}
+    return {data:data,isPending:isPending}
 }
  
 export default useFetch;

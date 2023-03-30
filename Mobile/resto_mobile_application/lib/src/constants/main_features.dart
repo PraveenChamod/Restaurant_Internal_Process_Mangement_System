@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/authentication/screens/Products/products_menu_titles.dart';
+import '../features/authentication/screens/Products/products_menu_categories.dart';
 import '../features/authentication/screens/forget_password/make_selction.dart';
 import '../features/authentication/screens/login_screen.dart';
 import '../features/authentication/screens/signup_screen.dart';
@@ -22,6 +22,7 @@ class MainFeatures extends StatefulWidget {
 }
 
 class _MainFeaturesState extends State<MainFeatures> {
+  int choice = 0;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -30,10 +31,11 @@ class _MainFeaturesState extends State<MainFeatures> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return widget.title == "Explore Menu"
-                  ? const ProductMenuTitles()
-                  : widget.title == "Online Order"
-                  ? const SignupScreen()
+              widget.title == "Explore Menu at Restaurant" ? choice = 1 : choice = 2;
+              return widget.title == "Explore Menu at Restaurant"
+                  ? ProductMenuTitles(choice: choice,)
+                  : widget.title == "Online Order To Your Doorstep"
+                  ? ProductMenuTitles(choice: choice,)
                   : const LoginScreen();
             },
           ),
@@ -71,6 +73,11 @@ class _MainFeaturesState extends State<MainFeatures> {
                 fontSize: 15,
                 color: Colors.white70,
               ),
+            ),
+            const Icon(
+              Icons.add_circle,
+              color: Color(0xFFfebf10),
+              size: 24.0,
             ),
             const Spacer(),
           ],

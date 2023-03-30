@@ -5,6 +5,9 @@ export const Page = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+        @media screen and (max-width: 800px){
+            margin-bottom: 25%;
+        }
     `
 export const Container = styled.div`
         background-color: #1A1E21;
@@ -19,6 +22,9 @@ export const Container = styled.div`
             width: 90%;
             justify-content: center;
             align-items: center;
+            position: relative;
+            top: 12%;
+            height: 100%;
         }
     `
 export const LoginPage = styled.div`
@@ -51,6 +57,10 @@ export const Logo = styled.h1`
         padding: 0;
         position: relative;
         top: 5%;
+        @media screen and (max-width: 800px){
+            top: 18%;
+            margin: 0;
+        }
     `
 export const Title = styled.h2`
         color: #fff;
@@ -59,6 +69,9 @@ export const Title = styled.h2`
         letter-spacing: 0.1rem;
         position: relative;
         top: -20%;
+        @media screen and (max-width: 800px){
+            top:-15%
+        }
     `
 export const TextArea = styled.form`
         width: 80%;
@@ -92,7 +105,7 @@ export const Input = styled.input`
         border: none;
         @media screen and (max-width:769px){
             width: 200px;
-            height: 30px;
+            height: 25px;
             font-size: 12px;
         }
     `
@@ -107,6 +120,10 @@ export const ForgotPWD = styled.div`
         &:hover{
             cursor: pointer;
         }
+        @media screen and (max-width:769px){
+            font-size: 12px;
+            top: -3%;
+        }
     `
 export const Bottom = styled.div`
         width: 90%;
@@ -116,7 +133,6 @@ export const Bottom = styled.div`
         justify-content: center;
         
         @media screen and (max-width:769px){
-            height: 20%;
             font-size: 12px;
         }
     `
@@ -133,7 +149,7 @@ export const Option = styled.div`
         font-size: 100%;
         margin: 0 2%;
         @media screen and (max-width:769px){
-            font-size: 14px;
+            font-size: 12px;
         }
     `
 export const LinkToSignUpAndLogIn = styled.a`
@@ -148,6 +164,7 @@ export const ImageSection = styled.div`
         @media screen and (max-width:769px){
             width: 100%;
             overflow: hidden;
+            height: 300px;
         }
     `
 export const Img = styled.img`
@@ -159,6 +176,7 @@ export const Img = styled.img`
         @media screen and (max-width:800px){
             border-bottom-left-radius: 20px;
             border-top-right-radius: 0px;
+            height: 300px;
         }
     ` 
 export const SignUpPage = styled.div`
@@ -225,23 +243,34 @@ export const InputSignUp = styled.input`
 export const IMG = styled.img`
          width: 150px;
         height: 150px;
+        @media screen and (max-width:769px){
+            width: 75px;
+            height: 75px;
+        }
     `
 export const SocialMedia = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 3%;
+    @media screen and (max-width: 800px){
+        margin-top: 0;
+    }
 `
 export const Icon = styled.div`
-    &{margin: 0 5%;
-    width: 30px;
-    height: 30px;
-    font-size: 28px;
+    &{
+        margin: 0 5%;
+        width: 30px;
+        height: 30px;
+        font-size: 28px;
     }
     &:hover{
         cursor: pointer;
         transform: scale(1.3);
         transition: 0.5 ease-out;
+    }
+    @media screen and (max-width: 800px){
+        font-size: 18px;
     }
 
 `

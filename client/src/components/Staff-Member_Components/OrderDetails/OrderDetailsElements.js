@@ -1,11 +1,39 @@
 import styled from "styled-components";
+import Chef from '../../../Images/Chef.png';
 
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+   
+    align-items: center;
+    flex-direction: column;
+    background:url(${Chef}) left bottom no-repeat;
+    background-size: 21.5rem;
+`
+export const Header = styled.h1`
+    justify-content: center;
+    text-transform:uppercase;
+  align-items: center;
+  text-align: center;
+  margin-top: 10%;
+  background: linear-gradient(
+    60deg,
+    rgb(178, 108, 41) 0%,
+    rgb(253, 190, 16) 100%
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  letter-spacing: 1rem;
+  margin-bottom: 15px;
+
+`
 export const Div = styled.div`
   width: 50%;
-  height: 50%;
+  height:60%;
   background-color: #1a1e21;  
   border-radius: 25px;
-  display: flex;
+  display: flex; 
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -31,7 +59,7 @@ export const Div1 = styled.div`
   justify-content: left;
   align-items: left;
 `;
-export const Div2 = styled.div`
+export const Div2 = styled.form`
   margin-top: 0px;
   width: 90%;
   height: 60%;
@@ -87,8 +115,7 @@ export const Div5 = styled.div`
   padding-right: 20px;
   padding-top: 0px;
   padding-bottom: 0px;
-  justify-content: left;
-  align-items: left;
+  justify-content: center;
 `;
 
 export const Div6 = styled.div`
@@ -154,7 +181,7 @@ export const SubHeader = styled.h3`
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
-  letter-spacing: 0.5rem;
+  letter-spacing: 0.25rem;
   margin-bottom: 0px;
 `;
 export const FormButton = styled.button`
@@ -174,7 +201,66 @@ export const FormButton = styled.button`
     text-transform: uppercase;
     font-weight: 500;
 `;
+
 export const Hr = styled.hr`
 width:100%;
 
+`
+export const ItemsCard = styled.button`
+    &{
+        display: flex;
+        margin: 3%;
+        width: 100%;
+        align-items:center;
+        background-color: transparent;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+`
+export const Details = styled.div`
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    line-height: 0.1rem;
+    text-align: left;
+`
+export const FoodImage = styled.div`
+    height: 90px;
+    width: 30%;
+    margin: 3%;
+`
+export const Food = styled.img`
+     width: 90px;
+    height: 90px;
+`
+export const MainText = styled.div`
+    color: #fff;
+`
+export const FoodName = styled.h2`
+    font-size: 20px;
+    font-weight: 300;
+`
+export const SubText = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+export const Text = styled.p`
+    color: #ffffff9d;
+    font-size: 16px;
+`
+export const CartSection = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1A1E21;
+`
+export const ItemSection = styled.div`
+    height: 280px;
+    width: 350px;
+    background-color: #1A1E21;
+    overflow: auto;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px 3px #000;
 `

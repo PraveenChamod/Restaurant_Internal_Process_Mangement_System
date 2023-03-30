@@ -3,9 +3,10 @@ import './CoverStyles.css';
 import img from '../../Images/Untitled-1_1-removebg-preview.png'
 //import img from '../../Images/Hot_Burger.png'
 import { Link } from 'react-router-dom';
-const Cover = (props) => (
-
-    <div className='container' id="Cover">
+const Cover = (props) => {
+    console.log(props.ScrollToTop1);
+    return(
+        <div className='container'>
             <div className='foodImage' data-aos="fade-right"
                                         data-aos-duration="1000">
                 <img alt="Burger" className='imgBurger' src={img} />
@@ -19,8 +20,7 @@ const Cover = (props) => (
                                                 data-aos-duration="2100" onClick={props.ScrollToTop1}><Link to='./login'>Login</Link></button>
             </div>
     </div>
-
-
-);
+    )
+};
 
 export default Cover;

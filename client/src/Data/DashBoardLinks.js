@@ -5,6 +5,8 @@ import { IoFastFoodSharp } from 'react-icons/io5';
 import { GoSearch ,GoDiffAdded } from 'react-icons/go';
 import { AiOutlineStock } from 'react-icons/ai';
 import { BsGraphUp } from 'react-icons/bs';
+import { HiDocumentReport } from 'react-icons/hi';
+import { MdOutlineAddToPhotos } from "react-icons/md";
 let iconStyle = {fontWeight:"600",color:"#fff",fontSize:"1.8rem"};
 
 
@@ -123,6 +125,11 @@ export const Roles = [
                 link:"/ManagerView-supllierorder"
             },
             {
+                text:'Report Generation',
+                icon:<HiDocumentReport style={iconStyle}/>,
+                link:"/ManagerReport-Generation"
+            },
+            {
                 text:'Log Out',
                 icon:<BiLogOut style={iconStyle}/>,
                 link:"/login"
@@ -157,14 +164,15 @@ export const Roles = [
                 icon:<GoSearch style={iconStyle}/>,
                 link:"/Staff-MemberView-Tables"
             },
-            {                text:'Order Details',
+            {   
+                text:'Order Details',
                 icon:<FaUserMinus style={iconStyle}/>,
                 link:"/Staff-MemberPendingOrder-Details"
             },
             {
                 text:'Table Reservation Details',
                 icon:<FaUserMinus style={iconStyle}/>,
-                link:"/Staff-MemberTable-Reservation-Details"
+                link:"/Staff-MemberPendingTable-Reservation-Details"
             },
             {
                 text:'Place Order',
@@ -210,6 +218,11 @@ export const Roles = [
                 text:'View Orders',
                 icon:<FaUsers style={iconStyle}/>,
                 link:"/SupplierMessages"
+            },
+            {
+                text:'Add Supply Items',
+                icon:<MdOutlineAddToPhotos style={iconStyle}/>,
+                link:"/SupplyItems"
             },
             {
                 text:'Log Out',

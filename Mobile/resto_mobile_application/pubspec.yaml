@@ -46,6 +46,8 @@ dependencies:
   mongo_dart: ^0.9.0
   awesome_dialog: ^3.0.2
   image_picker: ^0.8.7
+  path_provider: ^2.0.13
+  path: ^1.8.2
 
 
 dev_dependencies:
@@ -85,6 +87,11 @@ flutter:
     - assets/Food Types/Koththu/Chicken_Koththu.jpg
     - assets/Food Types/Pizza/Cheese_Pizza.jpg
     - assets/Food Types/Rice/Veg_Rice.jpg
+    - assets/Food Types/Appetizer/FriedFish.jpg
+    - assets/Food Types/Beverages/Beverages.jpg
+    - assets/Food Types/Chop-Suey/VegChopSuey.jpg
+    - assets/Food Types/Desert/FruitSalad.jpg
+    - assets/Food Types/Noodles/Noodles.jpg
   #Default User
     - assets/images/Default_User.png
 
