@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Div = styled.div`
   width: 50%;
-  height: 50%;
+  /* height: 50%; */
   background-color: #1a1e21;  
   border-radius: 25px;
   display: flex;
