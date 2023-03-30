@@ -91,6 +91,7 @@ import BackRoutes, { EditProfileBackRoute } from './Data/BackRotes';
 import SideNavbar from './components/Navbar/SideNavBar';
 import StaffMemberPendingReservations from './Pages/Staff-Member/PendingReservations';
 import ManagerViewTableDetails from './Pages/Manager/ManagerViewTable';
+import SupplierItems from './Pages/Supplier/SupplyItems';
 
 function App() {
   
@@ -254,6 +255,7 @@ function App() {
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
+                <Route path="/SupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
             </Routes>
             <Footer/>

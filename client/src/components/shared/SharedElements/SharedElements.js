@@ -3,11 +3,12 @@ import Chef from '../../../Images/Chef.png';
 export const Container = styled.div`
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: fit-content;
     align-items: center;
     flex-direction: column;
     background:url(${Chef}) left bottom no-repeat;
     background-size: 21.5rem;
+    margin-bottom: 5%;
 `
 export const Header = styled.h1`
     justify-content: center;

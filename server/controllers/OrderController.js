@@ -61,15 +61,20 @@ export const PlaceOrderByStaffMember = async(req,res,next)=>{
   try {
       const user = req.user;
       if(user.Role === 'Staff-Member'){
-          console.log(req.body);
-          const {ContactNumber} = req.body;
+          const {ContactNumber,Foods,TotalPrice} = req.body;
           const findCustomer = await Customer.findOne({ContactNumber:ContactNumber}).populate('ContactNumber');
           const session = await mongoose.startSession();
           try {
               if(findCustomer !== null){
                       session.startTransaction();
                       const newOrder = await Order.create([
-                              req.body
+                              {
+                                Customer:findCustomer,
+                                Foods:Foods,
+                                TotalPrice:TotalPrice,
+                                Status:"Confirm",
+                                Type:"Outlet Order"
+                              }
                           ],
                           {session}
                       )

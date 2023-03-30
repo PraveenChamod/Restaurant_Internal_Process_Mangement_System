@@ -37,18 +37,20 @@ export const Div1 = styled.div`
   margin-top: 10px;
   flex-direction: column;
   height: 80%;
-  width: 60%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 export const Div2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 2% 0;
-  width: 60%;
+  width: 100%;
 `;
 
 export const Sec = styled.div`
-    width: 100%;
+    width: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -81,32 +83,39 @@ export const TextFeild = styled.input`
 `
 export const Text = styled.div`
     color: #fff;
-    margin: 0 5%;
+    display: flex;
+    justify-content: left;
+    text-align: left;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 600;
 `
 export const TextSection = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
+  width: 500px;
+  justify-content: center;
+  align-items: center;
 `
 export const RadioButtonSection = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 500px;
   align-items: center;
 `
 export const RadioButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    margin: 2% 5%;
+    margin: 0 5%;
 `
 export const Label = styled.div`
-    width: 100%;
-    float: left;
+    width: 100%;;
     text-align: left;
-    margin: 2% 0;
+    margin: 3% 0;
     color: #fff;
+    font-size: 18px;
+    font-weight: 600;
 `
 export const Radio = styled.input`
 
