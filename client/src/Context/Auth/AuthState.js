@@ -56,7 +56,7 @@ const AuthState = (props) => {
 
     // const googleAuth = () => {
 	// 	window.open(
-	// 		`api/v1/Auth/google/callback`,
+	// 		`api/v1/Auth/google/callback`, 
 	// 		"_self"
 	// 	);
     //     dispatch({
