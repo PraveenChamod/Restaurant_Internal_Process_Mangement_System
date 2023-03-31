@@ -115,3 +115,44 @@ export const  deleteOffers =async (req,res)=>{
     }
    
 }
+
+// Method : GET
+// End Point : "api/v1/Offer/:id";
+// Description : get offer
+export const getOfferById = async (req,res)=>{
+    try {
+        const user = req.user;
+        console.log({user});
+        if(user.Role === "Manager" || user.Role === "Admin"){
+            const{id} = req.params;
+            console.log(req.params);
+            const Offer = await Offers.findOne({_id:id});
+            if(Offer !== null){
+                res.status(200).json({
+                    status:"Success",
+                    message:"Offer Deatils",
+                    data:{
+                        Offer
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes plase add offers"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:'Only Manager has access to do this operation'
+            });
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
+    }
+}

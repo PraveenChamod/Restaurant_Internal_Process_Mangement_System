@@ -5,7 +5,7 @@ import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './AllOffersElements'
 const AllOffersComponent = (props) => {
-    console.log("props is" + props)
+    console.log(props.data1)
     const {user} = useAuth();
     return ( 
         <Container>
@@ -29,7 +29,7 @@ const AllOffersComponent = (props) => {
                                 <l.Td>{offer.SpecialPrice}</l.Td>
                                 <l.Td>{offer.Validity}</l.Td>
                                 {
-                                    user.Role === "Manager" ? 
+                                    user.Role === "Manager" || user.Role === "Admin" ?
                                         <Link to={`/ManagerView-Offer/${offer.id}` } className="btn">
                                             <l.Icon><AiFillEye/></l.Icon>
                                         </Link>
