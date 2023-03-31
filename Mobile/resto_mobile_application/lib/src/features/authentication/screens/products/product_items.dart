@@ -41,7 +41,7 @@ class ProductItems extends StatelessWidget {
                           crossAxisCount: 1,
                           //crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          mainAxisExtent: 100,
+                          mainAxisExtent: 120,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return FoodItemContainer(
@@ -79,7 +79,6 @@ class ProductItems extends StatelessWidget {
   Future<List<dynamic>> fetchData(String category) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the fetchdata() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/Foods/$category'),
       headers: <String, String>{

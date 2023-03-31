@@ -24,7 +24,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const OrdersScreen();
+                    return OrdersScreen();
                   },
                 ),
               );
