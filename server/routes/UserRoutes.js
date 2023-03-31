@@ -1,5 +1,5 @@
 import express from 'express';
-import { deleteUser, deleteUsers, getAvailableDeliverers, getCustomerById, getUserByEmail, getUsers, getUsersByRole, RegisterCustomer, RegisterServiceProviders, ResetPassword, UpdateProfile, updateUserProfile } from '../controllers/UserController.js';
+import { deleteUser, deleteUsers, getAvailableDeliverers, getCustomerById, getUserByEmail, getUsers, getUsersByRole, RegisterCustomer, RegisterServiceProviders, ResetPassword, UpdateProfile, updateUserProfile, getSupplierById } from '../controllers/UserController.js';
 import { requireAuth } from '../middleware/Authmiddleware.js';
 
 
@@ -17,4 +17,5 @@ UserRoutes.route('/Users').delete(requireAuth,deleteUsers);
 UserRoutes.route('/AvailableDeliverers').get(requireAuth,getAvailableDeliverers);
 UserRoutes.route('/User/Profile/:Email').patch(requireAuth,UpdateProfile);
 UserRoutes.route('/User/resetpassword/:Email').patch(ResetPassword)
+UserRoutes.route('User-Supplier/:id').get(requireAuth,getSupplierById);
 export default UserRoutes;
