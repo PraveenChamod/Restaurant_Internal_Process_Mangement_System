@@ -10,7 +10,7 @@ import useFetch from '../Hooks/useFetch'
 
 
 export const Home = (props) => {
-  const{data,isPending} = useFetch('api/v1/Offers');
+  const{data,isPending} = useFetch('/api/v1/public/offers');
   console.log(data);
   return (
     <>

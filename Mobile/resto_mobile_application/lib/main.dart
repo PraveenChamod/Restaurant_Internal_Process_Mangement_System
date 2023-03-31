@@ -3,10 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:resto_mobile_application/src/features/authentication/screens/Drawer_Items/my_account_screen.dart';
-import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_item_details.dart';
-import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_items.dart';
-import 'package:resto_mobile_application/src/features/authentication/screens/Products/products_menu_categories.dart';
+//import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/splash_screen.dart';
 
 void main() => runApp(
@@ -15,6 +12,18 @@ void main() => runApp(
     builder: (context) => const MyApp(), // Wrap your app
   ),
 );
+
+// void main() async {
+//   //Payment Intent
+//   //WidgetsFlutterBinding.ensureInitialized();
+//   //Stripe.publishableKey = 'sk_test_51MbCY3GuiFrtKvgKRlTswuS2ZIlFZdYvBKP9TKGA4OdrqC5pgCreZkQJpNrX0d09pccyDr2iuXrTDrVBEkXKV9S000q80NzIvV';
+//   runApp(
+//     DevicePreview(
+//       enabled: !kReleaseMode,
+//       builder: (context) => const MyApp(), // Wrap your app
+//     ),
+//   );
+// }
 
 // void main() {
 //   runApp(const MyApp());

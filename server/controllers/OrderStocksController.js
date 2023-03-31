@@ -1,3 +1,4 @@
+import ServiceProviders from "../models/ServiceProviders.js";
 import SupplierItem from "../models/SupplierItem.js";
 
 // Method : POST
@@ -8,11 +9,12 @@ export const addSupplierOrder = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Manager"){
-            const {Item,Quantity,Date} = req.body;
+            const {Item,Quantity,Email} = req.body;
+            const supplier = await ServiceProviders.findOne({Email:Email}).populate('Email');
             const neworder = await SupplierItem.create({
-                Item:Item,
+                Items:Item,
                 Quantity:Quantity,
-                Date:Date
+                Supplier:supplier.id
             })
                 res.status(201).json({
                     status:'Success',
@@ -43,7 +45,7 @@ export const addSupplierOrder = async(req,res)=>{
 export const ViewSupplierOrder = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Manager"){
+        if(user.Role === "Manager" || user.Role === "Supplier" ){
             const tables = await SupplierItem.find();
             if(tables !== null){
                 res.json(tables);

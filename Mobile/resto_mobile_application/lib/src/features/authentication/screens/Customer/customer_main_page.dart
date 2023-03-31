@@ -8,7 +8,9 @@ import 'customer_notification.dart';
 import 'customer_support.dart';
 
 class CustomerMainPage extends StatefulWidget {
-  const CustomerMainPage({Key? key}) : super(key: key);
+  final int choice;
+  const CustomerMainPage({Key? key,
+    required this.choice}) : super(key: key);
 
   @override
   State<CustomerMainPage> createState() => _CustomerMainPageState();
@@ -20,7 +22,7 @@ class _CustomerMainPageState extends State<CustomerMainPage> {
     const CustomerHome(),
     const CustomerSupport(),
     const CustomerNotification(),
-    const CustomerCart(),
+    const CustomerCart(choice: 3,),
   ];
 
   @override

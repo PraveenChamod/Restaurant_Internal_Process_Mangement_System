@@ -2,8 +2,8 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../common_widgets/background_image.dart';
-import '../../../../common_widgets/drawer_item_appbar.dart';
+import '../../../../../common_widgets/background_image.dart';
+import '../../../../../common_widgets/drawer_item_appbar.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);

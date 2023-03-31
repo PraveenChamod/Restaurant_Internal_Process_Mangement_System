@@ -2,6 +2,7 @@ import TableDetails from "../../components/shared/TableDetails/TableDetails";
 import useFetch from "../../Hooks/useFetch";
 import Spinner from "../../components/shared/Spinner/Spinner";
 const AdminViewTables = (props) => {
+    
     const {data,isPending}= useFetch('api/v1/Tables');
     console.log(data?.data?.tables);
     return (  
@@ -12,4 +13,4 @@ const AdminViewTables = (props) => {
     );
 }
  
-export default AdminViewTables;
+export default AdminViewTables; 

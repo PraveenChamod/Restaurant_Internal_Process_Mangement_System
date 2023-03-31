@@ -18,12 +18,12 @@ import CartRoutes from "./routes/CartRoutes.js";
 import TableReservationRoutes from "./routes/TableReservationRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
 import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
-import path from 'path';
-import ejs from 'ejs';
+
 import morgan from "morgan";
 import PaymentRoute from "./routes/PaymentRoutes.js";
+import { getOffers } from "./controllers/OfferController.js";
 
-export const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
+
 
 const app = express();
 
@@ -41,9 +41,7 @@ const GoogleStrategy = Strategy.Strategy;
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next) {
-    //Change Access-Control_Origin to '*' instead of "http://localhost:3000"
     res.header('Access-Control-Origin', '*');
-    //res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Credentials", true);
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
@@ -80,28 +78,27 @@ app.use(function(req, res, next) {
   app.use(passport.session());
 app.use(express.json({extended:true}));
 app.use(express.urlencoded({extended:true}));
+
+app.use('/api/v1/public/offers',getOffers);
+
 app.use(cookieParser());
 app.use('/images', express.static('images/Users'));
 app.use('/Foodimages', express.static('images/Foods'));
 app.use('/offerimages', express.static('images/Offers'));
-// app.use('/api/v1/customer',Customerrouter);
 
-// app.use('/api/v1/admin',requireAuth,AdminRoutes);
-
-// app.use('/api/v1/serviceProvider',requireAuth,ServiceProviderrouter);
 app.use('/api/v1/Auth', AuthRoutes);
 
 app.use('/api/v1/', UserRoutes);
 
 app.use('/api/v1/',requireAuth,ItemsRoutes);
 
+app.use('/api/v1',OfferRoutes);
+
 app.use('/api/v1/',requireAuth,FoodRoutes);
 
 app.use('/api/v1/',requireAuth,BlogRoutes);
 
 app.use('/api/v1/',requireAuth,TableRoutes);
-
-app.use('/api/v1',OfferRoutes);
 
 app.use('/api/v1',requireAuth,OrderRoutes);
 

@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../features/authentication/screens/Products/product_item_details.dart';
 
 class FoodItemContainer extends StatelessWidget {
+  final int choice;
   final String itemImagePath;
   final String itemName;
   final String itemCategory;
@@ -15,6 +14,7 @@ class FoodItemContainer extends StatelessWidget {
     required this.itemPrice,
     required this.itemCategory,
     required this.itemId,
+    required this.choice,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class FoodItemContainer extends StatelessWidget {
                 itemName: itemName,
                 itemImagePath: itemImagePath,
                 price: itemPrice,
-                itemId: itemId,
+                itemId: itemId, choice: choice,
               );
             },
           ),
@@ -43,59 +43,67 @@ class FoodItemContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 5.0,),
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  itemImagePath,
-                  width: 80,
+            Expanded(
+              flex: 1,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    itemImagePath,
+                    width: 100,
+                  ),
                 ),
               ),
             ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Spacer(),
-                Text(
-                  itemName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0,
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Expanded(
+                    child: Text(
+                      itemName,
+                      style: const TextStyle(
+                        color: Color(0xFFfebf10),
+                        fontSize: 20.0,
+                      ),
+                    ),
                   ),
-                ),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Rs.$itemPrice",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        const Spacer(),
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            "Rs.$itemPrice",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                            ),
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFfebf10),
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFfebf10),
-                        borderRadius: BorderRadius.circular(6.0),
-                      ),
-                      child: const Icon(
-                        Icons.add,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-              ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -61,15 +61,20 @@ export const PlaceOrderByStaffMember = async(req,res,next)=>{
   try {
       const user = req.user;
       if(user.Role === 'Staff-Member'){
-          console.log(req.body);
-          const {ContactNumber} = req.body;
+          const {ContactNumber,Foods,TotalPrice} = req.body;
           const findCustomer = await Customer.findOne({ContactNumber:ContactNumber}).populate('ContactNumber');
           const session = await mongoose.startSession();
           try {
               if(findCustomer !== null){
                       session.startTransaction();
                       const newOrder = await Order.create([
-                              req.body
+                              {
+                                Customer:findCustomer,
+                                Foods:Foods,
+                                TotalPrice:TotalPrice,
+                                Status:"Confirm",
+                                Type:"Outlet Order"
+                              }
                           ],
                           {session}
                       )
@@ -84,10 +89,26 @@ export const PlaceOrderByStaffMember = async(req,res,next)=>{
                       })
               }
               else{
-                  return res.status(400).json({
-                      status:'Error',
-                      message:'Customer is not found'
-                  })
+                session.startTransaction();
+                const newOrder = await Order.create([
+                        {
+                          Foods:Foods,
+                          TotalPrice:TotalPrice,
+                          Status:"Confirm",
+                          Type:"Outlet Order"
+                        }
+                    ],
+                    {session}
+                )
+                const commit = await session.commitTransaction();
+                session.endSession();
+                res.status(201).json({
+                    status:'Success',
+                    message:'Your order is successed',
+                    data:{
+                        newOrder
+                    }
+                })
               }
           } catch (error) {
               res.status(500).json({
@@ -126,20 +147,38 @@ export const ViewAllOrders = async(req,res)=>{
                         path: 'Foods.food',
                         model: 'Foods'
                       })
+                      .populate({
+                        path: 'Foods.offer',
+                        model: 'Offers'
+                      })
                       .exec();
                     
                     const Name = populatedOrder.Customer.Name;
                     const Email = populatedOrder.Customer.Email;
                     const ContactNumber = populatedOrder.Customer.ContactNumber;
                     const CustomerAddress = populatedOrder.Customer.Address;
-                    const food = populatedOrder.Foods.map((item) => ({
-                      FoodName: item.food.FoodName,
-                      Category: item.food.Category,
-                      image: item.food.FoodImage,
-                      quantity: item.Quantity,
-                      price:item.food.Price,
-                      PaymentMethod: populatedOrder.paymentMethod
-                    }));
+                    const food = populatedOrder.Foods.map((item) => {
+                      if(item.food !== undefined){
+                        return{
+                          FoodName: item.food.FoodName,
+                          Category: item.food.Category,
+                          image: item.food.FoodImage,
+                          quantity: item.Quantity,
+                          price:item.food.Price,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                      else if(item.offer !== undefined){
+                        return{
+                          FoodName: item.offer.OfferName,
+                          Category: item.offer.Category,
+                          image: item.offer.OfferImage,
+                          quantity: item.Quantity,
+                          price:item.offer.SpecialPrice,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                    });
                     OrderDetails = {
                       OrderId:order.id,
                       customerName: Name,
@@ -190,7 +229,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
             const findOrders = await Order.find();
             let pendingOrders = [];
             for (const order of findOrders) {
-                if (order.Status === "Pending") {
+                if (order.Status === "Pending" && order.Type === "Online Order") {
                   let OrderDetails;
                   try {
                     const populatedOrder = await Order.findById(order.id)
@@ -202,27 +241,48 @@ export const ViewPendingOrders = async(req,res,next)=>{
                         path: 'Foods.food',
                         model: 'Foods'
                       })
+                      .populate({
+                        path: 'Foods.offer',
+                        model: 'Offers'
+                      })
                       .exec();
-                    
+                    console.log(populatedOrder);
                     const Name = populatedOrder.Customer.Name;
-                    const Customer_id = populatedOrder.Customer.id;
                     const Email = populatedOrder.Customer.Email;
                     const ContactNumber = populatedOrder.Customer.ContactNumber;
-                    const food = populatedOrder.Foods.map((item) => ({
-                      FoodName: item.food.FoodName,
-                      Category: item.food.Category,
-                      image: item.food.FoodImage,
-                      quantity: item.Quantity,
-                      PaymentMethod: populatedOrder.paymentMethod
-                    }));
+                    const CustomerAddress = populatedOrder.Customer.Address;
+                    const food = populatedOrder.Foods.map((item) => {
+                      if(item.food !== undefined){
+                        return{
+                          FoodName: item.food.FoodName,
+                          Category: item.food.Category,
+                          image: item.food.FoodImage,
+                          quantity: item.Quantity,
+                          price:item.food.Price,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                      else if(item.offer !== undefined){
+                        return{
+                          FoodName: item.offer.OfferName,
+                          Category: item.offer.Category,
+                          image: item.offer.OfferImage,
+                          quantity: item.Quantity,
+                          price:item.offer.SpecialPrice,
+                          PaymentMethod: populatedOrder.paymentMethod
+                        }
+                      }
+                    });
                     OrderDetails = {
                       OrderId:order.id,
                       customerName: Name,
                       customerEmail:Email,
-                      customerId : Customer_id,
                       ContactNumber:ContactNumber,
+                      CustomerAddress:CustomerAddress,
                       food,
                       TotalPrice: populatedOrder.TotalPrice,
+                      Status:populatedOrder.Status,
+                      Date:order.Date
                     };
                     pendingOrders.push(OrderDetails);
                   } catch (err) {
@@ -260,7 +320,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
  export const ViewOrder = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Deliverer"){
+        if(user.Role === "Staff-Member" || user.Role === "Deliverer" || user.Role === "Customer"){
             const {id} = req.params;
             let pendingOrders = [];
             let OrderDetails;
@@ -274,22 +334,42 @@ export const ViewPendingOrders = async(req,res,next)=>{
                     path: 'Foods.food',
                     model: 'Foods'
                   })
+                  .populate({
+                    path: 'Foods.offer',
+                    model: 'Offers'
+                  })
                   .exec();
                 console.log(populatedOrder);
                 const Name = populatedOrder.Customer.Name;
                 const Email = populatedOrder.Customer.Email;
-                const CustomerAddress = populatedOrder.Customer.Address
                 const ContactNumber = populatedOrder.Customer.ContactNumber;
                 const Address = populatedOrder.Customer.Address;
                 const lat = populatedOrder.Customer.lat;
                 const lang = populatedOrder.Customer.lang;
-                const food = populatedOrder.Foods.map((item) => ({
-                  FoodName: item.food.FoodName,
-                  Category: item.food.Category,
-                  image: item.food.FoodImage,
-                  quantity: item.Quantity,
-                  PaymentMethod: populatedOrder.paymentMethod
-                }));
+                const food = populatedOrder.Foods.map((item) => {
+                  if(item.food !== undefined){
+                    return{
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      Foodid: item.food.id,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      price:item.food.Price,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                  else if(item.offer !== undefined){
+                    return{
+                      FoodName: item.offer.OfferName,
+                      Category: item.offer.Category,
+                      Offerid: item.offer.id,
+                      image: item.offer.OfferImage,
+                      quantity: item.Quantity,
+                      price:item.offer.SpecialPrice,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                });
                 OrderDetails = {
                   OrderId:id,
                   customerName: Name,
@@ -306,7 +386,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                     status:'Success',
                     message:`Details of Order ${id}`,
                     data:{
-                        pendingOrders
+                      pendingOrders
                     }
                 })
               } catch (err) {
@@ -321,6 +401,74 @@ export const ViewPendingOrders = async(req,res,next)=>{
         })
     }
  }
+// Updated : Praveen
+// Method : GET
+// End Point : "api/v1/OrderFoods/:id";
+// Description : View Specific Order-foods
+export const ViewOrderFoods = async(req,res)=>{
+  try {
+      const user = req.user;
+      if(user.Role === "Customer"){
+          const {id} = req.params;
+          try {
+              const populatedOrder = await Order.findById(id)
+                .populate({
+                  path: 'Customer',
+                  model: 'Customer'
+                })
+                .populate({
+                  path: 'Foods.food',
+                  model: 'Foods'
+                })
+                .populate({
+                  path: 'Foods.offer',
+                  model: 'Offers'
+                })
+                .exec();
+              console.log(populatedOrder);
+              const food = populatedOrder.Foods.map((item) => {
+                if(item.food !== undefined){
+                  return{
+                    FoodName: item.food.FoodName,
+                    Category: item.food.Category,
+                    Foodid: item.food.id,
+                    image: item.food.FoodImage,
+                    quantity: item.Quantity,
+                    price:item.food.Price,
+                    PaymentMethod: populatedOrder.paymentMethod
+                  }
+                }
+                else if(item.offer !== undefined){
+                  return{
+                    FoodName: item.offer.OfferName,
+                    Category: item.offer.Category,
+                    Offerid: item.offer.id,
+                    image: item.offer.OfferImage,
+                    quantity: item.Quantity,
+                    price:item.offer.SpecialPrice,
+                    PaymentMethod: populatedOrder.paymentMethod
+                  }
+                }
+              });
+              res.status(200).json({
+                  status:'Success',
+                  message:`Foods of Order ${id}`,
+                  data:{
+                    food
+                  }
+              })
+            } catch (err) {
+              console.error(err);
+              return res.status(500).send('Server Error');
+            }  
+      }
+  } catch (error) {
+      res.status(500).json({
+          status:'Server Error',
+          message:error.message
+      })
+  }
+}
 
 // Method : POST
 // End Point : "api/v1/OrderConfirmation/:id"; 
@@ -393,6 +541,10 @@ export const CheckOrderDetails = async(req, res)=>{
                       model: 'Foods'
                     })
                     .populate({
+                      path: 'Foods.offer',
+                      model: 'Offers'
+                    })
+                    .populate({
                       path:'ServiceProvider',
                       model:'ServiceProvider'
                     })
@@ -401,13 +553,30 @@ export const CheckOrderDetails = async(req, res)=>{
                         const Name = populatedOrder.Customer.Name;
                         const Email = populatedOrder.Customer.Email;
                         const ContactNumber = populatedOrder.Customer.ContactNumber;
-                        const food = populatedOrder.Foods.map((item) => ({
-                        FoodName: item.food.FoodName,
-                        Category: item.food.Category,
-                        image: item.food.FoodImage,
-                        quantity: item.Quantity,
-                        PaymentMethod: populatedOrder.paymentMethod
-                        }));
+                        const food = populatedOrder.Foods.map((item) => {
+                          if(item.food !== undefined){
+                            return{
+                              FoodName: item.food.FoodName,
+                              Category: item.food.Category,
+                              Foodid: item.food.id,
+                              image: item.food.FoodImage,
+                              quantity: item.Quantity,
+                              price:item.food.Price,
+                              PaymentMethod: populatedOrder.paymentMethod
+                            }
+                          }
+                          else if(item.offer !== undefined){
+                            return{
+                              FoodName: item.offer.OfferName,
+                              Category: item.offer.Category,
+                              Offerid: item.offer.id,
+                              image: item.offer.OfferImage,
+                              quantity: item.Quantity,
+                              price:item.offer.SpecialPrice,
+                              PaymentMethod: populatedOrder.paymentMethod
+                            }
+                          }
+                        });
                         OrderDetails = {
                         OrderId:order.id,
                         customerName: Name,
@@ -464,7 +633,7 @@ export const confirmDelivery = async(req,res)=>{
               const findDeliverer = await ServiceProviders.findOne({Email:user.Email}).populate('Email');
               console.log(findDeliverer);
               const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,DeliveryStatus:'Delivered'},{new:true,runValidators:true}).session(session);
-              const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:undefined},{new:true,runValidators:true}).session(session);
+              const updateDeliverer = await ServiceProviders.findByIdAndUpdate(findDeliverer.id,{Order:null},{new:true,runValidators:true}).session(session);
               console.log(updateDeliverer);
               await session.commitTransaction();
               session.endSession();
@@ -485,6 +654,98 @@ export const confirmDelivery = async(req,res)=>{
       }
   }
   } catch (error) {
-    
+    res.status(500).json({
+      status: 'Server Error',
+      message: error.message,
+    });
+  }
+}
+
+// Method : GET
+// End Point : "api/v1/Customer/Orders"; 
+// Description :Orders Ordered By Customer
+export const viewOrdersOrderedByCustomer = async(req,res)=>{
+  const user = req.user;
+  try {
+    if(user.Role === "Customer"){
+      const orders = await Order.find();
+      const customer = await Customer.findOne({Email:user.Email}).populate('Email');
+      let customerorders = [];
+      let OrderDetails;
+      for(const order of orders){
+        try {
+          const populatedOrder = await Order.findById(order.id)
+            .populate({
+              path: 'Customer',
+              model: 'Customer'
+            })
+            .populate({
+              path: 'Foods.food',
+              model: 'Foods'
+            })
+            .populate({
+              path: 'Foods.offer',
+              model: 'Offers'
+            })
+            .populate({
+              path:'ServiceProvider',
+              model:'ServiceProvider'
+            })
+            .exec();
+            if(populatedOrder.Customer.id === customer.id){
+                const status = populatedOrder.Status;
+                const deliveryStatus = populatedOrder.DeliveryStatus;
+                const food = populatedOrder.Foods.map((item) => {
+                  if(item.food !== undefined){
+                    return{
+                      FoodName: item.food.FoodName,
+                      Category: item.food.Category,
+                      Foodid: item.food.id,
+                      image: item.food.FoodImage,
+                      quantity: item.Quantity,
+                      price:item.food.Price,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                  else if(item.offer !== undefined){
+                    return{
+                      FoodName: item.offer.OfferName,
+                      Category: item.offer.Category,
+                      Offerid: item.offer.id,
+                      image: item.offer.OfferImage,
+                      quantity: item.Quantity,
+                      price:item.offer.SpecialPrice,
+                      PaymentMethod: populatedOrder.paymentMethod
+                    }
+                  }
+                });
+                OrderDetails = {
+                  OrderId:order.id,
+                  Status:status,
+                  DeliveryStatus:deliveryStatus,
+                  food,
+                  TotalPrice: populatedOrder.TotalPrice,
+                };
+                customerorders.push(OrderDetails);
+            }
+            
+          } catch (err) {
+            console.error(err);
+            return res.status(500).send('Server Error');
+          }
+      }
+      res.status(201).json({
+        status: 'success',
+        message: 'My Orders',
+        data: {
+            customerorders
+        }
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: 'Server Error',
+      message: error.message,
+    });
   }
 }

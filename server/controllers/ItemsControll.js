@@ -8,7 +8,7 @@ export const addItems = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === "Manager"){
-            const {ItemName,Quantity,UnitPrice,WholeSalePrice,Category} = req.body;
+            const {ItemName,Quantity,UnitPrice,Category} = req.body;
             const SerialNumber =  Category.slice(0,2).toUpperCase() + Math.floor(100+Math.random()*1000);
             const existingItem = await Item.findOne({SerialNo:SerialNumber});
             if(existingItem !== null){
@@ -19,7 +19,7 @@ export const addItems = async(req,res)=>{
                     SerialNo:SerialNumber,
                     ItemName:ItemName,
                     Category:Category,
-                    WholeSalePrice:WholeSalePrice,
+                    TotalPrice:UnitPrice * Quantity,
                     Quantity:Quantity,
                     UnitPrice:UnitPrice,
                 })

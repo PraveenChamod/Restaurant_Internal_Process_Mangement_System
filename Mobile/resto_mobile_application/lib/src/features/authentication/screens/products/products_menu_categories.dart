@@ -9,8 +9,9 @@ import '../../../../constants/image_strings.dart';
 
 
 class ProductMenuTitles extends StatefulWidget {
+  final int choice;
 
-  const ProductMenuTitles({Key? key}) : super(key: key);
+  const ProductMenuTitles({Key? key, required this.choice}) : super(key: key);
 
   @override
   State<ProductMenuTitles> createState() => _ProductMenuTitlesState();
@@ -66,7 +67,7 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
-        appBar: const MenuAppBar(),
+        appBar: MenuAppBar(choice: widget.choice,),
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
@@ -84,6 +85,7 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
                     return MenuContainer(
                       itemImagePath: foodItems[index]["foodImagePath"] ?? '',
                       itemName: foodItems[index]["foodCategory"] ?? '',
+                      choice: widget.choice,
                     );
                   },
                 ),

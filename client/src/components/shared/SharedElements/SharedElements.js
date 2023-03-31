@@ -8,6 +8,7 @@ export const Container = styled.div`
     flex-direction: column;
     background:url(${Chef}) left bottom no-repeat;
     background-size: 21.5rem;
+    margin-bottom: 5%;
 `
 export const Header = styled.h1`
     justify-content: center;

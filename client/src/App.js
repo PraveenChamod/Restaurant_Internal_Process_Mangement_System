@@ -91,6 +91,9 @@ import BackRoutes, { EditProfileBackRoute } from './Data/BackRotes';
 import SideNavbar from './components/Navbar/SideNavBar';
 import StaffMemberPendingReservations from './Pages/Staff-Member/PendingReservations';
 import ManagerViewTableDetails from './Pages/Manager/ManagerViewTable';
+import SupplierItems from './Pages/Supplier/SupplyItems';
+import WithoutNavAndFooter from './components/Routing/WithoutNavandFooter';
+import WithNavAndFooter from './components/Routing/WithNavandFooter';
 
 function App() {
   
@@ -152,17 +155,17 @@ function App() {
               position="top-center"
               reverseOrder={false}/>
             <ScrollToTop/> 
-            {
-              view ? <Navbar ScrollToTop={scrollToTop}/> : <SideNavbar/>
-            }
+            
             <Routes>
+              <Route element={<WithNavAndFooter ScrollToTop = {scrollToTop}/>}>
                 <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
                 <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
-                <Route path="/login" element={<LoginPg/>}/>
+                <Route path="/login" element={<LoginPg ScrollToTop={scrollToTop}/>}/>
                 <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
-                <Route path="/ResetPassword/:token" element={<PasswordReset/>}/>
-
-              {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
+                <Route path="/ResetPassword/:Email" element={<PasswordReset/>}/>
+              </Route>
+              <Route element={<WithoutNavAndFooter ScrollToTop = {scrollToTop}/>}>
+                  {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
               {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
                 <Route path="/AdminDashBoard" element={<AdminDashBoard Navs = {Roles[0]} Card = {Cards[0]} ScrollToTop={scrollToTop}/>} />
                 <Route path="/AdminAdd-User" element={<AdminAddUser BackRoutes={BackRoutes[0].nav}/>}/>
@@ -214,7 +217,7 @@ function App() {
                 <Route path="/Staff-MemberTable-Reservation-Details/:id" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberEdit-Profile" element={<StaffMemberEditProfile EditProfileBackRoute={EditProfileBackRoute[2].nav}/>}/>
-                <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder/>}/>
+                <Route path="/Staff-MemberPlace-Order" element={<StaffMemberPlaceOrder BackRoutes={BackRoutes[2].nav}/>}/>
                 
                 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Customer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
@@ -237,6 +240,7 @@ function App() {
                     <OrderItems/>       
                   </Elements>
                 }/>
+                <Route path="/CustomerMy-Orders" element={<MyOrders BackRoutes={BackRoutes[3].nav}/>}/>   
                 <Route path="/CustomerDelivery-Tracking" element={<DeliveryTracking/>}/>     
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Deliverer ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
@@ -253,9 +257,10 @@ function App() {
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
+                <Route path="/SupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
+              </Route>
             </Routes>
-            <Footer/>
           </div>
           </Fragment>
       </AuthState>

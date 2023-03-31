@@ -10,16 +10,19 @@ import {
   Description,
   SubHeading,
   Name,
-  H2
+  H2,
+  Div
 } from './DealsElements'
 import Slider from "react-slick";
 import { useEffect, useState } from "react";
 import { card } from "../../Data/Content";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RegularButton } from '../shared/SharedElements/Buttons';
+import useAuth from '../../Hooks/useAuth';
 const Deals = (props) => {
   const [slideIndex,setSlideIndex] = useState(0);
   const[view,setView] = useState(window.innerWidth >= 800 ? true : false);
+  const{user} = useAuth();
   useEffect(()=>{
     const resize = ()=>{
       if(window.innerWidth >= 800){
@@ -30,6 +33,8 @@ const Deals = (props) => {
     }
     window.addEventListener('resize',resize);
   })
+  const navigate = useNavigate();
+  
   const[num,setNum] = useState(view ? 3 : 1)
   console.log(num);
   const settings = {
@@ -64,7 +69,14 @@ const Deals = (props) => {
                                       <Description>
                                         <SubHeading>Today Special Offer</SubHeading>
                                         <Name>{cardData.OfferName}</Name>
-                                        <p>{cardData.SpecialPrice}</p>
+                                        <p>Rs . {cardData.SpecialPrice}</p>
+                                        <Div>
+                                          <Link to={user !== null ? user.Role === "Customer" ? "/CustomerPlace-Order" : "/login" : "/login"} className="btn">
+                                            <RegularButton>
+                                                ORDER
+                                            </RegularButton>
+                                          </Link>
+                                        </Div>
                                       </Description>
                                     </div>
                               </SubSec>

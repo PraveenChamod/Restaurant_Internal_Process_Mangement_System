@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_cart.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_items.dart';
@@ -8,15 +7,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_item_appbar.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../constants/image_strings.dart';
 class ProductDetails extends StatefulWidget {
+  final int choice;
   final String itemImagePath;
   final String category;
   final String itemName;
   final String itemId;
   final int price;
-  const ProductDetails({Key? key, required this.category, required this.itemName, required this.itemImagePath, required this.price, required this.itemId}) : super(key: key);
+  const ProductDetails({Key? key,
+    required this.category,
+    required this.itemName,
+    required this.itemImagePath,
+    required this.price,
+    required this.itemId,
+    required this.choice
+  }) : super(key: key);
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -41,7 +47,6 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -49,7 +54,9 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
         appBar: MenuItemAppBar(
-          title: '',  navigationScreen: () => ProductItems(category: widget.category,),
+          title: '',
+          navigationScreen: () => ProductItems(category: widget.category, choice: widget.choice,),
+          choice: widget.choice,
         ),
         body: Stack(
           children: [
@@ -214,9 +221,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         color: const Color(0xFFfebf10),
                                         pressEvent: () {
                                           if(totalCount != 0){
-                                            successAwesomeDialog(DialogType.info, '${widget.itemName} x $totalCount will add to the Cart.', "Inform", totalCount, widget.itemId);
+                                            successAwesomeDialog(
+                                                DialogType.info,
+                                                '${widget.itemName} x $totalCount will add to the Cart.',
+                                                "Inform", totalCount, widget.itemId, widget.choice
+                                            );
                                           }else{
-                                            unSuccessAwesomeDialog(DialogType.warning, 'Please add the item count', "Warning");
+                                            unSuccessAwesomeDialog(
+                                                DialogType.warning,
+                                                'Please add the item count',
+                                                "Warning"
+                                            );
                                           }
                                         },
                                         borderRadius: const BorderRadius.only(
@@ -281,14 +296,14 @@ class _ProductDetailsState extends State<ProductDetails> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return const ProductCart();
+              return ProductCart(choice: widget.choice,);
             },
           ),
         ) : null;
       },
     ).show();
   }
-  successAwesomeDialog(DialogType type, String desc, String title, int qty, String foodId) {
+  successAwesomeDialog(DialogType type, String desc, String title, int qty, String foodId, int choice) {
     AwesomeDialog(
       context: context,
       dialogType: type,

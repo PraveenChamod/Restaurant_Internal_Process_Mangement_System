@@ -9,8 +9,9 @@ import '../../../../common_widgets/menu_item_appbar.dart';
 import '../../../../constants/image_strings.dart';
 
 class ProductItems extends StatelessWidget {
+  final int choice;
   final String category;
-  ProductItems({Key? key, required this.category}) : super(key: key);
+  ProductItems({Key? key, required this.category, required this.choice}) : super(key: key);
 
   final List<FoodItems> data = [];
 
@@ -20,7 +21,9 @@ class ProductItems extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
         appBar: MenuItemAppBar(
-          title: "Catalog of $category",  navigationScreen: () => const ProductMenuTitles(),
+          title: "Catalog of $category",
+          navigationScreen: () => ProductMenuTitles(choice: choice,),
+          choice: choice,
         ),
         body: Stack(
           children: <Widget>[
@@ -38,7 +41,7 @@ class ProductItems extends StatelessWidget {
                           crossAxisCount: 1,
                           //crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          mainAxisExtent: 100,
+                          mainAxisExtent: 120,
                         ),
                         itemBuilder: (BuildContext context, int index) {
                           return FoodItemContainer(
@@ -47,6 +50,7 @@ class ProductItems extends StatelessWidget {
                             itemPrice: snapshot.data![index].price,
                             itemCategory: snapshot.data![index].category,
                             itemId: snapshot.data![index].foodId,
+                            choice: choice,
                           );
                         },
                       );
@@ -75,7 +79,6 @@ class ProductItems extends StatelessWidget {
   Future<List<dynamic>> fetchData(String category) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the fetchdata() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/Foods/$category'),
       headers: <String, String>{

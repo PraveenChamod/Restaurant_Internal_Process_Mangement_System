@@ -22,6 +22,7 @@ class MainFeatures extends StatefulWidget {
 }
 
 class _MainFeaturesState extends State<MainFeatures> {
+  int choice = 0;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -30,10 +31,11 @@ class _MainFeaturesState extends State<MainFeatures> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return widget.title == "Explore Menu"
-                  ? const ProductMenuTitles()
-                  : widget.title == "Online Order"
-                  ? const SignupScreen()
+              widget.title == "Explore Menu at Restaurant" ? choice = 1 : choice = 2;
+              return widget.title == "Explore Menu at Restaurant"
+                  ? ProductMenuTitles(choice: choice,)
+                  : widget.title == "Online Order To Your Doorstep"
+                  ? ProductMenuTitles(choice: choice,)
                   : const LoginScreen();
             },
           ),

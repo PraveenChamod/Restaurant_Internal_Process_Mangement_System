@@ -6,6 +6,7 @@ import { GoSearch ,GoDiffAdded } from 'react-icons/go';
 import { AiOutlineStock } from 'react-icons/ai';
 import { BsGraphUp } from 'react-icons/bs';
 import { HiDocumentReport } from 'react-icons/hi';
+import { MdOutlineAddToPhotos } from "react-icons/md";
 let iconStyle = {fontWeight:"600",color:"#fff",fontSize:"1.8rem"};
 
 
@@ -217,6 +218,11 @@ export const Roles = [
                 text:'View Orders',
                 icon:<FaUsers style={iconStyle}/>,
                 link:"/SupplierMessages"
+            },
+            {
+                text:'Add Supply Items',
+                icon:<MdOutlineAddToPhotos style={iconStyle}/>,
+                link:"/SupplyItems"
             },
             {
                 text:'Log Out',

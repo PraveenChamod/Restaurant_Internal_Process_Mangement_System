@@ -7,7 +7,8 @@ import '../features/authentication/screens/Customer/customer_search.dart';
 import '../features/authentication/screens/Products/product_cart.dart';
 
 class MenuAppBar extends StatelessWidget implements PreferredSizeWidget{
-  const MenuAppBar({Key? key}) : super(key: key);
+  final int choice;
+  const MenuAppBar({Key? key, required this.choice}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget{
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (_){
-                return const CustomerMainPage();
+                return const CustomerMainPage(choice: 3,);
               },
             ),
           );
@@ -35,7 +36,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget{
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return ProductCart();
+                    return ProductCart(choice: choice);
                   },
                 ),
               );

@@ -1,10 +1,17 @@
 import React from "react";
-import Ordering from "../../components/Customer/Ordering/Ordering";
+import { useParams } from "react-router-dom";
+import MyOrdersComponent from "../../components/Customer/MyOrders/MyOrders";
+import Spinner from "../../components/shared/Spinner/Spinner";
+import useFetch from "../../Hooks/useFetch";
 
 const MyOrders = () => {
+    const{Email} = useParams();
+    const{data,isPending} = useFetch(`/api/v1/Customer/Orders`);
+    console.log(data);
     return ( 
         <div>
-            <Ordering/>
+            {isPending && <Spinner/>}
+            {data && <MyOrdersComponent data={data?.data?.customerorders}/>}
         </div>
      );
 }

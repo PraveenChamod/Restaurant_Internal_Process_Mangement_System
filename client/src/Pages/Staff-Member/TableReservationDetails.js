@@ -6,11 +6,11 @@ import useFetch from "../../Hooks/useFetch";
 const StaffMemberTableReservationDetails = (props) => {
     const{id} = useParams();
     const{data,isPending} = useFetch(`/api/v1/Reservation/${id}`);
-    console.log(data?.data?.findReservation);
+    console.log("table data xxx",data?.data?.ReservationDetails);
     return ( 
         <>
             {isPending && <Spinner/>}
-            {data && <TableReservationComponent data={data?.data?.findReservation} BackRoutes={props.BackRoutes}/>}
+            {data && <TableReservationComponent data={data?.data?.ReservationDetails} BackRoutes={props.BackRoutes}/>}
         </>
      );
 }

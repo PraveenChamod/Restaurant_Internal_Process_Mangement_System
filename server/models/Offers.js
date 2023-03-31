@@ -38,16 +38,16 @@ const offerSchema = mongoose.Schema({
 
 const Offers = mongoose.model('Offers',offerSchema);
 
-setInterval(() => {
-    const timeThreshold = new Date(Date.now() - 24 * 60 * 60 * 1000); // Delete documents older than 24 hours
+// setInterval(() => {
+//     const timeThreshold = new Date(Date.now() - 24 * 60 * 60 * 1000); // Delete documents older than 24 hours
   
-    Offers.deleteMany({ createdAt: { $lt: timeThreshold } }, (err) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log('Old documents deleted');
-      }
-    });
-  }, 60 * 60 * 1000);
+//     Offers.deleteMany({ createdAt: { $lt: timeThreshold } }, (err) => {
+//       if (err) {
+//         console.error(err);
+//       } else {
+//         console.log('Old documents deleted');
+//       }
+//     });
+//   }, 60 * 60 * 1000);
 
 export default Offers;

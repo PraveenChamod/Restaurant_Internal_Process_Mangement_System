@@ -11,6 +11,10 @@ const OrderSchema = mongoose.Schema({
                 type:mongoose.Schema.ObjectId,
                 ref:'Foods'
             },
+            offer:{
+                type:mongoose.Schema.ObjectId,
+                ref:'Offers'
+            },
             Quantity:{
                 type:Number,
                 default:1

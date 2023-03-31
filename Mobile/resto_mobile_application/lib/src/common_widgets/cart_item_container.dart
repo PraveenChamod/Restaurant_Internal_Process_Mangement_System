@@ -7,6 +7,7 @@ import '../constants/image_strings.dart';
 import '../features/authentication/screens/Products/product_cart.dart';
 
 class CartItemContainer extends StatefulWidget {
+  final int choice;
   final String cartItemImagePath;
   final String cartItemName;
   final String cartId;
@@ -21,6 +22,7 @@ class CartItemContainer extends StatefulWidget {
     required this.totalPrice,
     required this.cartId,
     required this.cartItemId,
+    required this.choice,
   }) : super(key: key);
 
   @override
@@ -91,7 +93,6 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           child: IconButton(
                             onPressed: () {
                               openBottomSheet(widget.cartItemQty);
-                              print('Final modified Qty: $totalCount');
                             },
                             icon: const Icon(
                               Icons.change_circle,
@@ -161,10 +162,8 @@ class _CartItemContainerState extends State<CartItemContainer> {
                               setState(() {
                                 totalCount++;
                               });
-                              print(totalCount);
                               Navigator.pop(context);
                               openBottomSheet(totalCount);
-                              print('Final modified Qty: $totalCount');
                             },
                             icon: const Icon(
                               Icons.add_circle,
@@ -192,10 +191,8 @@ class _CartItemContainerState extends State<CartItemContainer> {
                                 totalCount--;
                               });
                             }
-                            print(totalCount);
                             Navigator.pop(context);
                             openBottomSheet(totalCount);
-                            print('Final modified Qty: $totalCount');
                           },
                           icon: const Icon(
                             Icons.remove_circle,
@@ -222,7 +219,12 @@ class _CartItemContainerState extends State<CartItemContainer> {
                         ),
                         color: const Color(0xFFfebf10),
                         pressEvent: () {
-                          successAwesomeDialogBottomSheet(DialogType.info, '${widget.cartItemName} x $totalCount will add to the Cart.', "Inform", totalCount, widget.cartItemId);
+                          successAwesomeDialogBottomSheet(
+                              DialogType.info,
+                              '${widget.cartItemName} x $totalCount will add to the Cart.',
+                              "Inform", totalCount,
+                              widget.cartItemId
+                          );
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
@@ -290,7 +292,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return const ProductCart();
+              return ProductCart(choice: widget.choice);
             },
           ),
         );
@@ -300,10 +302,13 @@ class _CartItemContainerState extends State<CartItemContainer> {
 
   //Remove Cart Item
   void removeFromCart(String cartId, String foodId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
       Uri.parse("http://$hostName:5000/api/v1/FoodItem"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
       },
       body: jsonEncode(<String, dynamic>{
         "cartId": cartId,
@@ -342,7 +347,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return const ProductCart();
+              return ProductCart(choice: widget.choice);
             },
           ),
         );
