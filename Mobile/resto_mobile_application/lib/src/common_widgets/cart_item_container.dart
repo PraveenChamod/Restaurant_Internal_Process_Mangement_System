@@ -93,7 +93,6 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           child: IconButton(
                             onPressed: () {
                               openBottomSheet(widget.cartItemQty);
-                              print('Final modified Qty: $totalCount');
                             },
                             icon: const Icon(
                               Icons.change_circle,
@@ -163,10 +162,8 @@ class _CartItemContainerState extends State<CartItemContainer> {
                               setState(() {
                                 totalCount++;
                               });
-                              print(totalCount);
                               Navigator.pop(context);
                               openBottomSheet(totalCount);
-                              print('Final modified Qty: $totalCount');
                             },
                             icon: const Icon(
                               Icons.add_circle,
@@ -194,10 +191,8 @@ class _CartItemContainerState extends State<CartItemContainer> {
                                 totalCount--;
                               });
                             }
-                            print(totalCount);
                             Navigator.pop(context);
                             openBottomSheet(totalCount);
-                            print('Final modified Qty: $totalCount');
                           },
                           icon: const Icon(
                             Icons.remove_circle,
@@ -224,7 +219,12 @@ class _CartItemContainerState extends State<CartItemContainer> {
                         ),
                         color: const Color(0xFFfebf10),
                         pressEvent: () {
-                          successAwesomeDialogBottomSheet(DialogType.info, '${widget.cartItemName} x $totalCount will add to the Cart.', "Inform", totalCount, widget.cartItemId);
+                          successAwesomeDialogBottomSheet(
+                              DialogType.info,
+                              '${widget.cartItemName} x $totalCount will add to the Cart.',
+                              "Inform", totalCount,
+                              widget.cartItemId
+                          );
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
@@ -318,12 +318,10 @@ class _CartItemContainerState extends State<CartItemContainer> {
     if(response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      print(msg);
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      print(msg);
       unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
     }
   }

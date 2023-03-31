@@ -129,8 +129,8 @@ class _CustomerCartState extends State<CustomerCart> {
                               return Text('${snapshot.error}');
                             }
                             return const SizedBox(
-                              height: 40,
-                              width: 40,
+                              height: 1,
+                              width: 1,
                               child: Center(
                                 child: CircularProgressIndicator(
                                   color: Colors.transparent,
