@@ -539,10 +539,13 @@ export const UpdateProfile = async(req,res)=>{
                 const {Name,ContactNumber,Address,Email} = req.body;
                 const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(Address)}&key=${geocodeApiKey}`;
                 const response = await axios.get(url);
+                console.log(url);
                 const location = response.data.results[0].geometry.location;
-                const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address,lat:location.lat,lang:location.lng}
-                const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer._id,userDetails,{new:true});
-                console.log(updateCustomer);
+                
+                const userDetails = {Name:Name,Email:Email,ContactNumber:ContactNumber,Address:Address,lat:location.lat,lang:location.lng};
+                console.log(userDetails);
+                const updateCustomer = await Customer.findByIdAndUpdate(logedCustomer.id,userDetails,{new:true});
+                
                 createToken(updateCustomer._id,updateCustomer.Email);
                 res.status(201).json({
                     message:'Update Customer Successfully',

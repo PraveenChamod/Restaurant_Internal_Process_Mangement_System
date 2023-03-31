@@ -7,7 +7,9 @@ import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/cart_item_container.dart';
 import '../../../../constants/image_strings.dart';
+import '../Customer/customer_main_page.dart';
 import '../payments/delivery_online_order.dart';
+import '../payments/dine_in_order.dart';
 
 class ProductCart extends StatefulWidget {
   final int choice;
@@ -18,8 +20,20 @@ class ProductCart extends StatefulWidget {
 }
 
 class _ProductCartState extends State<ProductCart> {
+
+  late Future<Map<String, dynamic>> _futureData;
+  @override
+  void initState() {
+    super.initState();
+    _futureData = getUserDetails();
+  }
+
   final List<CartItems> data = [];
   num totalCartPrice = 0;
+
+
+  var nameController = TextEditingController();
+  var customerIdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +56,24 @@ class _ProductCartState extends State<ProductCart> {
             icon: const Icon(Icons.menu_book),
           ),
           title: const Text('Your Cart'),
+          actions:  <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_){
+                        return const CustomerMainPage(choice: 2,);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.home),
+              ),
+              //child: Icon(Icons.search),
+            ),
+          ],
           backgroundColor: const Color(0xFF161b1d),
           centerTitle: true,
         ),
@@ -146,13 +178,11 @@ class _ProductCartState extends State<ProductCart> {
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
                                   print('Choice Value is: ${widget.choice}');
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_){
-                                        return DeliveryOnlineOrder(totalPrice: totalCartPrice,);
-                                      },
-                                    ),
-                                  );
+                                  String msg = '';
+                                  widget.choice == 1
+                                      ? msg = 'Your Order will prepared for Dine In the Restaurant!'
+                                      : msg = 'Your Order will prepared for Delivery!';
+                                  awesomeDialog(DialogType.infoReverse , msg, "Consider");
                                 },
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(0),
@@ -163,7 +193,30 @@ class _ProductCartState extends State<ProductCart> {
                               ),
                             ),
                           ),
-                          const Spacer(),
+                          FutureBuilder(
+                              future: _futureData,
+                              builder: (context, snapshot) {
+                                if(snapshot.hasData){
+                                  final String userName = snapshot.data!['user']['Name'];
+                                  final String userId = snapshot.data!['user']['id'];
+                                  nameController = TextEditingController(text: userName);
+                                  customerIdController = TextEditingController(text: userId);
+                                  return const Spacer();
+                                }else if (snapshot.hasError) {
+                                  return Text('${snapshot.error}');
+                                }
+                                return const SizedBox(
+                                  height: 40,
+                                  width: 40,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: Color(0xFFfebf10),
+                                    ),
+                                  ),
+                                );
+                              }
+                          ),
+                          //const Spacer(),
                         ],
                       ),
                     ),
@@ -195,6 +248,55 @@ class _ProductCartState extends State<ProductCart> {
       throw Exception('Failed to load data');
     }
   }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        widget.choice == 1
+            ? Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return DineInOrder(
+                      choice: widget.choice,
+                      totalPrice: totalCartPrice,
+                      customerId: customerIdController.text,
+                      customerName: nameController.text,
+                    );
+                },
+              ),
+            ) : Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return DeliveryOnlineOrder(totalPrice: totalCartPrice, choice: widget.choice,);
+                    },
+                  ),
+              );
+      },
+    ).show();
+  }
+  Future<Map<String, dynamic>> getUserDetails() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    print("In the getUserDetails() ${userToken!}");
+    final response = await http.get(
+      Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    if (response.statusCode == 201) {
+      print(jsonDecode(response.body));
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }
 class CartItems{
   final String cartFoodImagePath;
@@ -218,7 +320,7 @@ class CartItems{
       totalPrice: json['TotalPrice'],
       quantity: json['quantity'],
       cartId: json['cartId'],
-      foodId: json['id'],
+      foodId: json['Foodid'],
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){

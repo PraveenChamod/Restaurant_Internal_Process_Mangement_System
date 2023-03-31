@@ -6,13 +6,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
+import '../Customer/customer_cart.dart';
+import '../Customer/customer_main_page.dart';
+import '../Products/product_cart.dart';
 import 'delivery_save_order.dart';
 
 enum SingingCharacter { cashOn, card }
 
 class DeliveryOnlineOrder extends StatefulWidget {
+  final int choice;
   final num totalPrice;
-  const DeliveryOnlineOrder({Key? key, required this.totalPrice}) : super(key: key);
+  const DeliveryOnlineOrder({Key? key, 
+    required this.totalPrice, 
+    required this.choice}) : super(key: key);
 
   @override
   State<DeliveryOnlineOrder> createState() => _DeliveryOnlineOrderState();
@@ -26,6 +32,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
   var emailController = TextEditingController();
   var contactController = TextEditingController();
   var addressController = TextEditingController();
+  var customerIdController = TextEditingController();
 
   //For Radio Button
   SingingCharacter? _method = SingingCharacter.cashOn;
@@ -49,45 +56,68 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute(
-              //     builder: (_){
-              //       return const ProductMenuTitles();
-              //     },
-              //   ),
-              // );
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_){
+                    return ProductCart(choice: widget.choice,);
+                  },
+                ),
+              );
             },
             icon: const Icon(Icons.chevron_left),
           ),
           title: const Text('Confirm Your Details!'),
+          actions:  <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_){
+                        return const CustomerMainPage(choice: 2,);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.home),
+              ),
+              //child: Icon(Icons.search),
+            ),
+          ],
           backgroundColor: const Color(0xFF161b1d),
           centerTitle: true,
         ),
         body: Stack(
           children: [
             const BackgroundImage(),
-            Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Container(
-                      color: Colors.black38,
-                      child: FutureBuilder(
-                        future: _futureData,
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData){
-                            final String userName = snapshot.data!['user']['Name'];
-                            final String userEmail = snapshot.data!['user']['Email'];
-                            final String userContact = snapshot.data!['user']['ContactNumber'];
-                            final String userAddress = snapshot.data!['user']['Address'];
-                            nameController = TextEditingController(text: userName);
-                            emailController = TextEditingController(text: userEmail);
-                            contactController = TextEditingController(text: userContact);
-                            addressController = TextEditingController(text: userAddress);
-                            return Column(
-                              children: [
-                                Expanded(
-                                  child: Center(
+            SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Container(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10,),
+                    Center(
+                      child: Container(
+                        color: Colors.black38,
+                        child: FutureBuilder(
+                          future: _futureData,
+                          builder: (context, snapshot) {
+                            if(snapshot.hasData){
+                              final String userName = snapshot.data!['user']['Name'];
+                              final String userEmail = snapshot.data!['user']['Email'];
+                              final String userContact = snapshot.data!['user']['ContactNumber'];
+                              final String userAddress = snapshot.data!['user']['Address'];
+                              final String userId = snapshot.data!['user']['id'];
+                              nameController = TextEditingController(text: userName);
+                              emailController = TextEditingController(text: userEmail);
+                              contactController = TextEditingController(text: userContact);
+                              addressController = TextEditingController(text: userAddress);
+                              customerIdController = TextEditingController(text: userId);
+                              return Column(
+                                children: [
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -123,9 +153,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Center(
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -161,9 +189,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Center(
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -199,9 +225,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Center(
+                                  Center(
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: TextFormField(
@@ -237,180 +261,175 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                       ),
                                     ),
                                   ),
+                                ],
+                              );
+                            }else if (snapshot.hasError) {
+                              return Text('${snapshot.error}');
+                            }
+                            return const SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Color(0xFFfebf10),
                                 ),
-                              ],
-                            );
-                          }else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const SizedBox(
-                            height: 40,
-                            width: 40,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: Color(0xFFfebf10),
                               ),
-                            ),
-                          );
-                        }
+                            );
+                          }
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Container(
-                              width: 150,
-                              height: 35,
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: AnimatedButton(
-                                text: "Update Details",
-                                buttonTextStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                color: const Color(0xFFfebf10),
-                                pressEvent: () {
-                                  updateUserDetails();
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(80),
-                                  bottomLeft: Radius.circular(80),
-                                  bottomRight: Radius.circular(80),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Color(0xFFfebf10),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Select Payment Method:',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
+                    const SizedBox(height: 10,),
+                    Container(
+                      padding: EdgeInsets.zero,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Update Details",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    updateUserDetails();
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.black38,
-                            child: ListTile(
-                              title: const Text(
-                                'Cash On Delivery',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ),
-                              leading: Radio<SingingCharacter>(
-                                fillColor: MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xFFfebf10),
-                                ),
-                                value: SingingCharacter.cashOn,
-                                groupValue: _method,
-                                onChanged: (SingingCharacter? value) {
-                                  setState(() {
-                                    _method = value;
-                                  });
-                                },
                               ),
                             ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: Colors.black38,
-                            child: ListTile(
-                              title: const Text(
-                                'Card Payment',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ),
-                              leading: Radio<SingingCharacter>(
-                                fillColor: MaterialStateColor.resolveWith(
-                                      (states) => const Color(0xFFfebf10),
-                                ),
-                                value: SingingCharacter.card,
-                                groupValue: _method,
-                                onChanged: (SingingCharacter? value) {
-                                  setState(() {
-                                    _method = value;
-                                  });
-                                },
-                              ),
+                            const Divider(
+                              color: Color(0xFFfebf10),
                             ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Color(0xFFfebf10),
-                        ),
-                        Expanded(
-                          child: Center(
-                            child: Container(
-                              width: 150,
-                              height: 35,
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: AnimatedButton(
-                                text: "Save Details",
-                                buttonTextStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                color: const Color(0xFFfebf10),
-                                pressEvent: () {
-                                  print(_method);
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        String paymentMethod = '';
-                                        if(_method == SingingCharacter.cashOn){
-                                          paymentMethod = 'Cash On Delivery';
-                                        }else{
-                                          paymentMethod = 'Card Payments';
-                                        }
-                                        return DeliverySaveOrder(
-                                          paymentMethod: paymentMethod,
-                                          address: addressController.text, totalPrice: widget.totalPrice,
-                                        );
-                                      },
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    'Select Payment Method:',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
                                     ),
-                                  );
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(80),
-                                  bottomLeft: Radius.circular(80),
-                                  bottomRight: Radius.circular(80),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              color: Colors.black38,
+                              child: ListTile(
+                                title: const Text(
+                                  'Cash On Delivery',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFFfebf10),
+                                  ),
+                                ),
+                                leading: Radio<SingingCharacter>(
+                                  fillColor: MaterialStateColor.resolveWith(
+                                        (states) => const Color(0xFFfebf10),
+                                  ),
+                                  value: SingingCharacter.cashOn,
+                                  groupValue: _method,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _method = value;
+                                    });
+                                  },
                                 ),
                               ),
                             ),
-                          ),
+                            Container(
+                              color: Colors.black38,
+                              child: ListTile(
+                                title: const Text(
+                                  'Card Payment',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFFfebf10),
+                                  ),
+                                ),
+                                leading: Radio<SingingCharacter>(
+                                  fillColor: MaterialStateColor.resolveWith(
+                                        (states) => const Color(0xFFfebf10),
+                                  ),
+                                  value: SingingCharacter.card,
+                                  groupValue: _method,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _method = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            const Divider(
+                              color: Color(0xFFfebf10),
+                            ),
+                            Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Save Details",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    print(_method);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          String paymentMethod = '';
+                                          if(_method == SingingCharacter.cashOn){
+                                            paymentMethod = 'Cash On Delivery';
+                                          }else{
+                                            paymentMethod = 'Card Payments';
+                                          }
+                                          return DeliverySaveOrder(
+                                            paymentMethod: paymentMethod,
+                                            address: addressController.text,
+                                            totalPrice: widget.totalPrice,
+                                            choice: widget.choice,
+                                            customerId: customerIdController.text,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),
@@ -475,7 +494,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
-              return DeliveryOnlineOrder(totalPrice: widget.totalPrice,);
+              return DeliveryOnlineOrder(totalPrice: widget.totalPrice, choice: widget.choice,);
             },
           ),
         );

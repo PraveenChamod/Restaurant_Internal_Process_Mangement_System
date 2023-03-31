@@ -3,11 +3,13 @@ import PlaceOrderComponent from "../../components/Staff-Member_Components/PlaceO
 import useFetch from "../../Hooks/useFetch";
 
 const StaffMemberPlaceOrder = (props) => {
-    const {data,isPending} = useFetch('api/v1/Foods');
+    const {data:food,isPending:isPending1} = useFetch('api/v1/Foods') ;
+    const {data:offer,isPending:isPending2} = useFetch('api/v1/Offers');
+    console.log(food?.data?.foods);
     return ( 
         <>
-            {isPending && <Spinner/>}
-            {data &&  <PlaceOrderComponent  data1={data?.data?.foods} BackRoutes={props.BackRoutes}/>}
+            {isPending1 && isPending2 && <Spinner/>}
+            {food && offer && <PlaceOrderComponent data1={food?.data?.foods} data2={offer} BackRoutes={props.BackRoutes}/>}
         </>
      );
 }

@@ -1,32 +1,30 @@
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
+import '../../../../common_widgets/order_item_container.dart';
 import '../../../../constants/image_strings.dart';
+import '../Customer/customer_main_page.dart';
 import 'delivery_online_order.dart';
-class DeliverySaveOrder extends StatefulWidget {
+class DeliverySaveOrder extends StatelessWidget {
+  final int choice;
   final String paymentMethod;
   final String address;
+  final String customerId;
   final num totalPrice;
 
-  const DeliverySaveOrder({Key? key,
+  DeliverySaveOrder({Key? key,
     required this.paymentMethod,
     required this.address,
-    required this.totalPrice
+    required this.totalPrice,
+    required this.choice,
+    required this.customerId
   }) : super(key: key);
 
-  @override
-  State<DeliverySaveOrder> createState() => _DeliverySaveOrderState();
-}
-
-class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
-
-  List<FoodList> orderFoods = [];
-  List<CartItems> data = [];
+  final List<FoodList> orderFoods = [];
+  final List<CartItems> data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return DeliveryOnlineOrder(totalPrice: widget.totalPrice,);
+                    return DeliveryOnlineOrder(totalPrice: totalPrice, choice: choice,);
                   },
                 ),
               );
@@ -49,6 +47,23 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
             icon: const Icon(Icons.chevron_left),
           ),
           title: const Text('Checkout'),
+          actions:  <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_){
+                        return const CustomerMainPage(choice: 2,);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.home),
+              ),
+            ),
+          ],
           backgroundColor: const Color(0xFF161b1d),
           centerTitle: true,
         ),
@@ -56,139 +71,178 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
           children: [
             const BackgroundImage(),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  flex: 4,
-                  child: Container(
-                    color: Colors.black38,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Divider(
-                                  color: Color(0xFFfebf10),
-                                ),
-                                const Expanded(
-                                  child: Text(
-                                    'Payment Method:',
+                  flex: 5,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 300,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Divider(color: Color(0xFFfebf10),),
+                                      const SizedBox(height: 5.0,),
+                                      const Text(
+                                        'Payment Method:',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5.0,),
+                                      Text(
+                                        paymentMethod,
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xFFfebf10),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5.0,),
+                                    ],
+                                  ),
+                                  const Divider(color: Color(0xFFfebf10),),
+                                  const SizedBox(height: 5.0,),
+                                  const Text(
+                                    'Deliver To:',
                                     style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.white70,
+                                      fontSize: 18,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    widget.paymentMethod,
+                                  const SizedBox(height: 5.0,),
+                                  Text(
+                                    address,
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
-                                ),
-                                const Divider(
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Expanded(
-                                  child: Text(
-                                    'Deliver To',
-                                    style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.white70,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 2,
-                                  child: Text(
-                                    widget.address,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Color(0xFFfebf10),
-                                    ),
-                                  ),
-                                ),
-                                const Divider(
-                                  color: Color(0xFFfebf10),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Expanded(
-                                  child: Text(
+                                  const Divider(color: Color(0xFFfebf10),),
+                                  const SizedBox(height: 5.0,),
+                                  const Text(
                                     'Total Price:',
                                     style: TextStyle(
-                                      fontSize: 22,
-                                      color: Colors.white70,
+                                      fontSize: 18,
+                                      color: Colors.white,
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    "Rs. ${widget.totalPrice}",
+                                  const SizedBox(height: 5.0,),
+                                  Text(
+                                    "Rs. $totalPrice",
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       color: Color(0xFFfebf10),
                                     ),
                                   ),
-                                ),
-                                Center(
-                                  child: FutureBuilder(
-                                    future: fetchOrderData(),
-                                    builder: (context, snapshot){
-                                      if (snapshot.hasData) {
-                                        for (int i = 0; i < snapshot.data!.length; i++) {
-                                          orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                  const SizedBox(height: 5.0,),
+                                  Center(
+                                    child: FutureBuilder(
+                                      future: fetchOrderData(),
+                                      builder: (context, snapshot){
+                                        if (snapshot.hasData) {
+                                          for (int i = 0; i < snapshot.data!.length; i++) {
+                                            orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                          }
+                                          return const Divider(color: Color(0xFFfebf10),);
+                                        }else if (snapshot.hasError) {
+                                          return Text('${snapshot.error}');
                                         }
-                                        return const Divider(
-                                          color: Color(0xFFfebf10),
-                                        );
-                                      }else if (snapshot.hasError) {
-                                        return Text('${snapshot.error}');
-                                      }
-                                      return const SizedBox(
-                                        height: 20,
-                                        width: 20,
-                                        child: Center(
-                                          child: CircularProgressIndicator(
-                                            color: Color(0xFFfebf10),
+                                        return const SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              color: Color(0xFFfebf10),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 5.0,),
+                                  const Text(
+                                    'Order Items:',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 180,
+                              child: Center(
+                                child: FutureBuilder(
+                                  future: fetchOrderData(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          return OrderItemContainer(
+                                            foodQuantity: snapshot.data![index].quantity,
+                                            foodName: snapshot.data![index].foodName,
+                                          );
+                                        },
+                                      );
+                                    }else if (snapshot.hasError) {
+                                      return Text('${snapshot.error}');
+                                    }
+                                    return const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Color(0xFFfebf10),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            const Divider(color: Color(0xFFfebf10),),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: Center(
                     child: Container(
                       width: 150,
                       height: 35,
+                      decoration: const BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
                       padding: const EdgeInsets.only(left: 5, right: 5),
                       child: AnimatedButton(
                         text: "Place Order",
@@ -199,7 +253,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                         ),
                         color: const Color(0xFFfebf10),
                         pressEvent: () {
-                          orderItems(orderFoods, widget.paymentMethod, widget.totalPrice, 'Outlet Order');
+                          orderItems(orderFoods, paymentMethod, totalPrice, 'Online Order', customerId);
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
@@ -218,7 +272,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
       ),
     );
   }
-  void orderItems(List<FoodList> foods, String paymentMethod, num totalPrice, String type) async {
+  void orderItems(List<FoodList> foods, String paymentMethod, num totalPrice, String type, String customerId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final http.Response response = await http.post(
@@ -231,7 +285,8 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
         "Foods":foods,
         "paymentMethod":paymentMethod,
         "TotalPrice":totalPrice,
-        "Type":type
+        "Type":type,
+        "Customer":customerId
       }),
     );
     if(response.statusCode == 201) {
@@ -240,12 +295,10 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
       final msg = json["message"];
       print(msg);
       print(orderDetails);
-      //awesomeDialog(DialogType.success, msg, "Success");//Successfully User registered.
     }else{
       final json = jsonDecode(response.body);
       final msg = json["message"];
       print("Order Unsuccuessfull");
-      //awesomeDialog(DialogType.warning, msg, "Warning");//Unsuccessfully User registered.
     }
   }
   //For get order data
@@ -269,18 +322,22 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
     }
   }
 }
+
 //For get orderlist data
 class CartItems{
+  final String foodName;
   final String foodId;
   final int quantity;
   CartItems({
     required this.quantity,
     required this.foodId,
+    required this.foodName,
   });
   factory CartItems.fromJson(Map<String, dynamic> json){
     return CartItems(
       quantity: json['quantity'],
-      foodId: json['id'],
+      foodId: json['Foodid'],
+      foodName: json['name'],
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){
@@ -303,6 +360,3 @@ class FoodList {
     'Quantity': qty,
   };
 }
-
-
-

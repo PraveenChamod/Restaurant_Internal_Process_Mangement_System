@@ -12,24 +12,39 @@ const FoodDetail = (props) => {
       <Header>Food Details</Header>
       <l.Div>
         <l.Div1>
-            <l.TextFeild 
-                type="text" 
-                placeholder="Name"
-                value={FoodName}
-                onChange={e=>setName(e.target.value)}
-            />
-            <l.TextFeild 
-                type="text" 
-                placeholder="Category"
-                value={Category}
-                onChange={e=>setCategory(e.target.value)}
-            />
-            <l.TextFeild 
-                type="text" 
-                placeholder="Price"
-                value={'Rs.' + Price}
-                onChange={e=>setPrice(e.target.value)}
-            />
+            <l.TextSection>
+                <l.Text>
+                    Food Name
+                </l.Text>
+                <l.TextFeild 
+                    type="text" 
+                    placeholder="Name"
+                    value={FoodName}
+                    onChange={e=>setName(e.target.value)}
+                />
+            </l.TextSection>
+            <l.TextSection>
+                <l.Text>
+                    Category
+                </l.Text>
+                <l.TextFeild 
+                    type="text" 
+                    placeholder="Category"
+                    value={Category}
+                    onChange={e=>setCategory(e.target.value)}
+                />
+            </l.TextSection>
+            <l.TextSection>
+                <l.Text>
+                    Price
+                </l.Text>
+                <l.TextFeild 
+                    type="text" 
+                    placeholder="Price"
+                    value={'Rs.' + Price}
+                    onChange={e=>setPrice(e.target.value)}
+                />
+            </l.TextSection>
             <l.RadioButtonSection>
                 <l.RadioButton>
                     <l.Radio type="radio" name="Availablility" value="Available" onChange={e=>setStatus(e.target.value)} checked = {Status === "Available" ? true : false}/>
