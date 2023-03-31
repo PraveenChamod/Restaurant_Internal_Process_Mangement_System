@@ -1,10 +1,12 @@
 import { AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 import { RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from './AllOffersElements'
 const AllOffersComponent = (props) => {
     console.log("props is" + props)
+    const {user} = useAuth();
     return ( 
         <Container>
             <Header>
@@ -26,7 +28,14 @@ const AllOffersComponent = (props) => {
                                 <l.Td>{offer.Category}</l.Td>
                                 <l.Td>{offer.SpecialPrice}</l.Td>
                                 <l.Td>{offer.Validity}</l.Td>
-                                <l.Td><l.Icon><AiFillEye/></l.Icon></l.Td>
+                                {
+                                    user.Role === "Manager" ? 
+                                        <Link to={`/ManagerView-Offer/${offer.id}` } className="btn">
+                                            <l.Icon><AiFillEye/></l.Icon>
+                                        </Link>
+                                    :
+                                    null
+                                }
                             </l.Tr>
                         ))}
                     </tbody>
