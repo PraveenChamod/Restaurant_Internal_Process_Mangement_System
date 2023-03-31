@@ -320,7 +320,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
  export const ViewOrder = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Deliverer"){
+        if(user.Role === "Staff-Member" || user.Role === "Deliverer" || user.Role === "Customer"){
             const {id} = req.params;
             let pendingOrders = [];
             let OrderDetails;

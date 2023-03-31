@@ -25,7 +25,6 @@ class OrdersScreen extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
-
             Center(
               child: FutureBuilder(
                 future: fetchOrdersData(),

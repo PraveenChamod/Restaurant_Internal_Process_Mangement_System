@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../constants/image_strings.dart';
+import '../features/authentication/screens/customer/customer_order_details.dart';
 import 'order_item_container.dart';
 
 class MainOrderContainer extends StatelessWidget {
@@ -158,7 +159,17 @@ class MainOrderContainer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     color: const Color(0xFFfebf10),
-                    pressEvent: () {},
+                    pressEvent: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) {
+                            return CustomerOrderDetails(
+                              orderId: orderId,
+                            );
+                          },
+                        ),
+                      );
+                    },
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(0),
                       topRight: Radius.circular(80),
