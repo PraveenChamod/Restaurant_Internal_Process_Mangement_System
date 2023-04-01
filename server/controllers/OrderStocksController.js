@@ -12,7 +12,7 @@ export const addSupplierOrder = async(req,res)=>{
             const {Item,Quantity,Email} = req.body;
             const supplier = await ServiceProviders.findOne({Email:Email}).populate('Email');
             const neworder = await SupplierItem.create({
-                Item:Item,
+                Items:Item,
                 Quantity:Quantity,
                 Supplier:supplier.id
             })
@@ -45,7 +45,7 @@ export const addSupplierOrder = async(req,res)=>{
 export const ViewSupplierOrder = async (req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Manager"){
+        if(user.Role === "Manager" || user.Role === "Supplier" ){
             const tables = await SupplierItem.find();
             if(tables !== null){
                 res.json(tables);
