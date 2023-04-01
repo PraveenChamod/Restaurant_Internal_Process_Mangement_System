@@ -14,13 +14,13 @@ export const Section = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: fit-content;
     background-color: #1a1e21;
     border-radius: 25px;
     box-shadow: 3px 3px 3px #000;
 `
 export const FormSection= styled.div`
-    width: 70%;
+    width: 90%;
     height: 100%;
     background-color: #1a1e21;
     border-radius: 25px;
@@ -43,7 +43,7 @@ export const Icon = styled.label`
 `
 export const ButtonSection = styled.div`
     position: relative;
-    margin: 3% 0;
+    margin: 0 0 3% 0;
 `
 export const Div1 = styled.div`
     display: flex;
@@ -55,5 +55,10 @@ export const Div1 = styled.div`
     margin-bottom: 10%;
 `
 export const Preview = styled.div`
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height: 500px;
+    width: 100%;
 
 `

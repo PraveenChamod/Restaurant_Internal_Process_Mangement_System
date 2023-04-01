@@ -52,7 +52,8 @@ const serviceProvidersSchema = mongoose.Schema({
     },
     ProfileImage:{
         type:String,
-    }
+    },
+    
     },{
         toJSON: { virtuals: true },
         toObject: { virtuals: true },

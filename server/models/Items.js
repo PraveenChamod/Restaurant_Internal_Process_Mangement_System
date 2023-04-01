@@ -37,7 +37,6 @@ const itemSchema = mongoose.Schema({
         toObject: { virtuals: true },
         timestamps: true
     });
-
 const Item = mongoose.model('Item', itemSchema);
 
 export default Item;
