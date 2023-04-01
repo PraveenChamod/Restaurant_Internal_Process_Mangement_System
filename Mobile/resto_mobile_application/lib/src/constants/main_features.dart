@@ -5,6 +5,7 @@ import '../features/authentication/screens/forget_password/make_selction.dart';
 import '../features/authentication/screens/login_screen.dart';
 import '../features/authentication/screens/signup_screen.dart';
 import '../features/authentication/screens/splash_screen.dart';
+import '../features/authentication/screens/table_reservation/select_table.dart';
 import 'image_strings.dart';
 
 class MainFeatures extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MainFeaturesState extends State<MainFeatures> {
                   ? ProductMenuTitles(choice: choice,)
                   : widget.title == "Online Order To Your Doorstep"
                   ? ProductMenuTitles(choice: choice,)
-                  : const LoginScreen();
+                  : const SelectTable();
             },
           ),
         );

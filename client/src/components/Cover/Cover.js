@@ -1,7 +1,6 @@
 import React from 'react';
 import './CoverStyles.css';
-import img from '../../Images/Untitled-1_1-removebg-preview.png'
-//import img from '../../Images/Hot_Burger.png'
+import img from '../../Images/updated1.png'
 import { Link } from 'react-router-dom';
 const Cover = (props) => {
     console.log(props.ScrollToTop1);

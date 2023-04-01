@@ -320,7 +320,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
  export const ViewOrder = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Staff-Member" || user.Role === "Deliverer"){
+        if(user.Role === "Staff-Member" || user.Role === "Deliverer" || user.Role === "Customer"){
             const {id} = req.params;
             let pendingOrders = [];
             let OrderDetails;
@@ -386,7 +386,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
                     status:'Success',
                     message:`Details of Order ${id}`,
                     data:{
-                        pendingOrders
+                      pendingOrders
                     }
                 })
               } catch (err) {
@@ -401,6 +401,74 @@ export const ViewPendingOrders = async(req,res,next)=>{
         })
     }
  }
+// Updated : Praveen
+// Method : GET
+// End Point : "api/v1/OrderFoods/:id";
+// Description : View Specific Order-foods
+export const ViewOrderFoods = async(req,res)=>{
+  try {
+      const user = req.user;
+      if(user.Role === "Customer"){
+          const {id} = req.params;
+          try {
+              const populatedOrder = await Order.findById(id)
+                .populate({
+                  path: 'Customer',
+                  model: 'Customer'
+                })
+                .populate({
+                  path: 'Foods.food',
+                  model: 'Foods'
+                })
+                .populate({
+                  path: 'Foods.offer',
+                  model: 'Offers'
+                })
+                .exec();
+              console.log(populatedOrder);
+              const food = populatedOrder.Foods.map((item) => {
+                if(item.food !== undefined){
+                  return{
+                    FoodName: item.food.FoodName,
+                    Category: item.food.Category,
+                    Foodid: item.food.id,
+                    image: item.food.FoodImage,
+                    quantity: item.Quantity,
+                    price:item.food.Price,
+                    PaymentMethod: populatedOrder.paymentMethod
+                  }
+                }
+                else if(item.offer !== undefined){
+                  return{
+                    FoodName: item.offer.OfferName,
+                    Category: item.offer.Category,
+                    Offerid: item.offer.id,
+                    image: item.offer.OfferImage,
+                    quantity: item.Quantity,
+                    price:item.offer.SpecialPrice,
+                    PaymentMethod: populatedOrder.paymentMethod
+                  }
+                }
+              });
+              res.status(200).json({
+                  status:'Success',
+                  message:`Foods of Order ${id}`,
+                  data:{
+                    food
+                  }
+              })
+            } catch (err) {
+              console.error(err);
+              return res.status(500).send('Server Error');
+            }  
+      }
+  } catch (error) {
+      res.status(500).json({
+          status:'Server Error',
+          message:error.message
+      })
+  }
+}
 
 // Method : POST
 // End Point : "api/v1/OrderConfirmation/:id"; 

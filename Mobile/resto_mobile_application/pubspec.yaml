@@ -94,6 +94,15 @@ flutter:
     - assets/Food Types/Noodles/Noodles.jpg
   #Default User
     - assets/images/Default_User.png
+  #Table Images
+    - assets/Tables/One_Person_Table.png
+    - assets/Tables/Two_Person_Table.png
+    - assets/Tables/Three_Person_Table.png
+    - assets/Tables/Four_Person_Table.png
+    - assets/Tables/Five_Person_Table.png
+    - assets/Tables/Six_Person_Table.png
+    - assets/Tables/Seven_Person_Table.png
+    - assets/Tables/Eight_Person_Table.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

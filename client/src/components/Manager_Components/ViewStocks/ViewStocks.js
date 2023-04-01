@@ -1,12 +1,13 @@
 import { AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './ViewStocksElements'
 const ViewStocksComponent = (props) => {
 
     console.log(props);
-
+    const {user} = useAuth();
     return ( 
         <Container>
             <Header>
@@ -32,7 +33,14 @@ const ViewStocksComponent = (props) => {
                                 <l.Td>{item.Quantity}</l.Td>
                                 <l.Td>{item.WholeSalePrice}</l.Td>
                                 <l.Td>{item.id}</l.Td>
-                                <l.Td><l.Icon><AiFillEye/></l.Icon></l.Td>
+                                {
+                                    user.Role === "Manager" ? 
+                                        <Link to={`/ManagerViewItem/${item.SerialNo}` } className="btn">
+                                            <l.Icon><AiFillEye/></l.Icon>
+                                        </Link>
+                                    :
+                                    null
+                                }
                                 </l.Tr>
                         ))}                       
                     </tbody>

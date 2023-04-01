@@ -94,6 +94,7 @@ import ManagerViewTableDetails from './Pages/Manager/ManagerViewTable';
 import SupplierItems from './Pages/Supplier/SupplyItems';
 import WithoutNavAndFooter from './components/Routing/WithoutNavandFooter';
 import WithNavAndFooter from './components/Routing/WithNavandFooter';
+import ViewSupplierOrderDetails from './Pages/Manager/ViewSupplierOrderDetails';
 
 function App() {
   
@@ -190,7 +191,7 @@ function App() {
                 <Route path="/ManagerReportPreview" element={<ReportPreview/>}/>
                 <Route path="/ManagerAddStock" element={<AddStockItem BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerViewStock" element={<ViewStock BackRoutes={BackRoutes[1].nav}/>}/>
-                <Route path="/ManagerViewItem" element={<ViewItem/>}/>
+                <Route path="/ManagerViewItem/:SerialNo" element={<ViewItem/>}/>
                 <Route path="/ManagerAdd-Table" element={<ManagerAddTables BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-Tables" element={<ManagerViewTables BackRoutes={BackRoutes[1].nav} />}/>
                 <Route path="/ManagerView-Table/:id" element={< ManagerViewTableDetails/>}/>
@@ -202,6 +203,7 @@ function App() {
                 <Route path="/ManagerView-Offer/:id" element={<ManagerViewOffer/>}/>
                 <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
+                <Route path="/ManagerView-supllierorder-details/:id" element={<ViewSupplierOrderDetails/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 

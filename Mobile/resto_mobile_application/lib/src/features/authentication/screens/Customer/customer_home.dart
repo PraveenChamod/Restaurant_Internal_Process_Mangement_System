@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/homeScreen_indicator.dart';
@@ -12,7 +14,33 @@ class CustomerHome extends StatefulWidget {
 }
 
 class _CustomerHomeState extends State<CustomerHome> {
+
   var _selectedIndex = 0;
+
+  //For MainFeatures Auto Scrolling PageView
+  final _numPages = 3;
+  final _pageController = PageController();
+  @override
+  void initState() {
+    super.initState();
+    _startAutoScroll();
+  }
+  void _startAutoScroll() {
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_selectedIndex < _numPages - 1) {
+        _selectedIndex++;
+      } else {
+        _selectedIndex = 0;
+      }
+      _pageController.animateToPage(
+        _selectedIndex,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    });
+  }
+  //For Auto Scrolling PageView
+
   //Main Features List
   List<Map<String, String>> splashData = [
     {"title": "Explore Menu at Restaurant",
@@ -116,6 +144,7 @@ class _CustomerHomeState extends State<CustomerHome> {
               SizedBox(
                 height: 218,
                 child: PageView.builder(
+                  controller: _pageController,
                   onPageChanged: (index) {
                     setState(() {
                       _selectedIndex = index;

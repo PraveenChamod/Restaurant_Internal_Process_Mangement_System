@@ -23,6 +23,9 @@ const offerSchema = mongoose.Schema({
     OfferImage:{
         type:String,
     },
+    Status:{
+        type:String
+    },
 },
 {
     toJSON: { 

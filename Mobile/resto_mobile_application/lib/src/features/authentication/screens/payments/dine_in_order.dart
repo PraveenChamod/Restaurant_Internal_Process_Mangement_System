@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -75,6 +73,164 @@ class DineInOrder extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 5,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black38,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Divider(color: Color(0xFFfebf10),),
+                            const Text(
+                              'Payment Method:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            const Text(
+                              'To The Cashier',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            const Divider(color: Color(0xFFfebf10),),
+                            const Text(
+                              'Order Type:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            const Text(
+                              'Outlet Order',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            const Divider(color: Color(0xFFfebf10),),
+                            const Text(
+                              'Customer Name:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            Text(
+                              customerName,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
+                            const SizedBox(height: 10.0,),
+                            Center(
+                              child: FutureBuilder(
+                                future: fetchOrderData(),
+                                builder: (context, snapshot){
+                                  if (snapshot.hasData) {
+                                    for (int i = 0; i < snapshot.data!.length; i++) {
+                                      orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                    }
+                                    return const Divider(color: Color(0xFFfebf10),);
+                                  }else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                  }
+                                  return const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: Center(
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFfebf10),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            const Text(
+                              'Total Price:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            Text(
+                              "Rs. $totalPrice",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
+                            const Divider(color: Color(0xFFfebf10),),
+                            const Text(
+                              'Order Items:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0,),
+                            SizedBox(
+                              height: 180,
+                              child: Center(
+                                child: FutureBuilder(
+                                  future: fetchOrderData(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return ListView.builder(
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: snapshot.data!.length,
+                                        itemBuilder: (context, index) {
+                                          return OrderItemContainer(
+                                            foodQuantity: snapshot.data![index].quantity,
+                                            foodName: snapshot.data![index].foodName,
+                                          );
+                                        },
+                                      );
+                                    }else if (snapshot.hasError) {
+                                      return Text('${snapshot.error}');
+                                    }
+                                    return const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Color(0xFFfebf10),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                            //OrderItemContainer(foodQuantity: 5, foodName: 'Chicken Koththu',),
+                            const Divider(color: Color(0xFFfebf10),),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.black38,
@@ -85,164 +241,28 @@ class DineInOrder extends StatelessWidget {
                         bottomRight: Radius.circular(20),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Divider(color: Color(0xFFfebf10),),
-                        const Text(
-                          'Payment Method:',
-                          style: TextStyle(
+                    child: Center(
+                      child: Container(
+                        width: 150,
+                        height: 35,
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: AnimatedButton(
+                          text: "Place Order",
+                          buttonTextStyle: const TextStyle(
+                            color: Colors.black,
                             fontSize: 18,
-                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                        const SizedBox(height: 5.0,),
-                        const Text(
-                          'To The Cashier',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xFFfebf10),
+                          color: const Color(0xFFfebf10),
+                          pressEvent: () {
+                            orderItems(orderFoods, totalPrice, 'Outlet Order', customerId);
+                          },
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(80),
+                            bottomLeft: Radius.circular(80),
+                            bottomRight: Radius.circular(80),
                           ),
-                        ),
-                        const SizedBox(height: 5.0,),
-                        const Divider(color: Color(0xFFfebf10),),
-                        const Text(
-                          'Payment Type:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 5.0,),
-                        const Text(
-                          'Outlet Order',
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Color(0xFFfebf10),
-                          ),
-                        ),
-                        const SizedBox(height: 5.0,),
-                        const Divider(color: Color(0xFFfebf10),),
-                        const Text(
-                          'Customer Name:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 5.0,),
-                        Text(
-                          customerName,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            color: Color(0xFFfebf10),
-                          ),
-                        ),
-                        const SizedBox(height: 10.0,),
-                        Center(
-                          child: FutureBuilder(
-                            future: fetchOrderData(),
-                            builder: (context, snapshot){
-                              if (snapshot.hasData) {
-                                for (int i = 0; i < snapshot.data!.length; i++) {
-                                  orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
-                                }
-                                return const Divider(color: Color(0xFFfebf10),);
-                              }else if (snapshot.hasError) {
-                                return Text('${snapshot.error}');
-                              }
-                              return const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: Color(0xFFfebf10),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        //const Divider(color: Color(0xFFfebf10),),
-                        const Text(
-                          'Order Items:',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        const SizedBox(height: 5.0,),
-                        SizedBox(
-                          height: 180,
-                          child: Center(
-                            child: FutureBuilder(
-                              future: fetchOrderData(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      return OrderItemContainer(
-                                        foodQuantity: snapshot.data![index].quantity,
-                                        foodName: snapshot.data![index].foodName,
-                                      );
-                                    },
-                                  );
-                                }else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return const SizedBox(
-                                  height: 20,
-                                  width: 20,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: Color(0xFFfebf10),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        //OrderItemContainer(foodQuantity: 5, foodName: 'Chicken Koththu',),
-                        const Divider(color: Color(0xFFfebf10),),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Center(
-                    child: Container(
-                      width: 150,
-                      height: 35,
-                      decoration: const BoxDecoration(
-                        color: Colors.black38,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: AnimatedButton(
-                        text: "Place Order",
-                        buttonTextStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        color: const Color(0xFFfebf10),
-                        pressEvent: () {
-                          orderItems(orderFoods, totalPrice, 'Online Order', customerId);
-                        },
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(80),
-                          bottomLeft: Radius.circular(80),
-                          bottomRight: Radius.circular(80),
                         ),
                       ),
                     ),
@@ -250,115 +270,11 @@ class DineInOrder extends StatelessWidget {
                 ),
               ],
             ),
-
-            // SingleChildScrollView(
-            //   child: Container(
-            //     padding: const EdgeInsets.all(10.0),
-            //     decoration: BoxDecoration(
-            //       color: Colors.black38,
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     child: Column(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         const Divider(color: Color(0xFFfebf10),),
-            //         const Text(
-            //           'Payment Method:',
-            //           style: TextStyle(
-            //             fontSize: 18,
-            //             color: Colors.white,
-            //           ),
-            //         ),
-            //         const SizedBox(height: 5.0,),
-            //         const Text(
-            //           'To The Cashier',
-            //           style: TextStyle(
-            //             fontSize: 15,
-            //             color: Color(0xFFfebf10),
-            //           ),
-            //         ),
-            //         const SizedBox(height: 5.0,),
-            //         const Divider(color: Color(0xFFfebf10),),
-            //         const Text(
-            //           'Payment Type:',
-            //           style: TextStyle(
-            //             fontSize: 18,
-            //             color: Colors.white,
-            //           ),
-            //         ),
-            //         const SizedBox(height: 5.0,),
-            //         const Text(
-            //           'Outlet Order',
-            //           style: TextStyle(
-            //             fontSize: 15,
-            //             color: Color(0xFFfebf10),
-            //           ),
-            //         ),
-            //         const SizedBox(height: 5.0,),
-            //         const Divider(color: Color(0xFFfebf10),),
-            //         const Text(
-            //           'Customer Name:',
-            //           style: TextStyle(
-            //             fontSize: 18,
-            //             color: Colors.white,
-            //           ),
-            //         ),
-            //         const SizedBox(height: 5.0,),
-            //         const Text(
-            //           'Praveen Chamod',
-            //           style: TextStyle(
-            //             fontSize: 15,
-            //             color: Color(0xFFfebf10),
-            //           ),
-            //         ),
-            //         const SizedBox(height: 10.0,),
-            //         const Divider(color: Color(0xFFfebf10),),
-            //         const Text(
-            //           'Order Items:',
-            //           style: TextStyle(
-            //             fontSize: 18,
-            //             color: Colors.white,
-            //           ),
-            //         ),
-            //         const SizedBox(height: 5.0,),
-            //         const OrderItemContainer(foodQuantity: 5, foodName: 'Chicken Koththu',),
-            //
-            //         const Divider(color: Color(0xFFfebf10),),
-            //         const SizedBox(height: 20.0,),
-            //         Center(
-            //           child: Container(
-            //             width: 150,
-            //             height: 35,
-            //             padding: const EdgeInsets.only(left: 5, right: 5),
-            //             child: AnimatedButton(
-            //               text: "Place Order",
-            //               buttonTextStyle: const TextStyle(
-            //                 color: Colors.black,
-            //                 fontSize: 18,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //               color: const Color(0xFFfebf10),
-            //               pressEvent: () {},
-            //               borderRadius: const BorderRadius.only(
-            //                 topLeft: Radius.circular(0),
-            //                 topRight: Radius.circular(80),
-            //                 bottomLeft: Radius.circular(80),
-            //                 bottomRight: Radius.circular(80),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         const SizedBox(height: 20.0,),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
     );
   }
-  //For get order data
   Future<List<dynamic>> fetchOrderData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
@@ -407,8 +323,6 @@ class DineInOrder extends StatelessWidget {
     }
   }
 }
-
-//For get orderlist data
 class CartItems{
   final String foodName;
   final String foodId;

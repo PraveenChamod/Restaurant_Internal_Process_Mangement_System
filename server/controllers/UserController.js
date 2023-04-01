@@ -635,3 +635,36 @@ export const ResetPassword = async(req,res)=>{
         })
     }
 } 
+
+// Method : GET
+// End Point : "api/v1/User-Supplier/:id"
+// Description : Get Supplier By Id
+export const getSupplierById = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager"){
+            const {id} = req.params;
+            const findSupplier = await Supplier.findById(id);
+            if(findUser){
+                res.status(200).json({
+                    status:"Success",
+                    message:`Details of ${findSupplier.name}`,
+                    data:{
+                        findSupplier
+                    } 
+                })
+            }
+            else{
+                res.status(404).json({
+                    status: 'Error',
+                    message: 'Supplier is not found',
+                })
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
+    }
+}

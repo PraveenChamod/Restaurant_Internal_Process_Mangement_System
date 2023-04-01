@@ -230,36 +230,38 @@ class DeliverySaveOrder extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Center(
-                    child: Container(
-                      width: 150,
-                      height: 35,
-                      decoration: const BoxDecoration(
-                        color: Colors.black38,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
                       ),
-                      padding: const EdgeInsets.only(left: 5, right: 5),
-                      child: AnimatedButton(
-                        text: "Place Order",
-                        buttonTextStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        color: const Color(0xFFfebf10),
-                        pressEvent: () {
-                          orderItems(orderFoods, paymentMethod, totalPrice, 'Online Order', customerId);
-                        },
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(80),
-                          bottomLeft: Radius.circular(80),
-                          bottomRight: Radius.circular(80),
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 150,
+                        height: 35,
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: AnimatedButton(
+                          text: "Place Order",
+                          buttonTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          color: const Color(0xFFfebf10),
+                          pressEvent: () {
+                            orderItems(orderFoods, paymentMethod, totalPrice, 'Online Order', customerId);
+                          },
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(80),
+                            bottomLeft: Radius.circular(80),
+                            bottomRight: Radius.circular(80),
+                          ),
                         ),
                       ),
                     ),

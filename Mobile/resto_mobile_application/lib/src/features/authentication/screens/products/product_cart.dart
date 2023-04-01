@@ -31,7 +31,6 @@ class _ProductCartState extends State<ProductCart> {
   final List<CartItems> data = [];
   num totalCartPrice = 0;
 
-
   var nameController = TextEditingController();
   var customerIdController = TextEditingController();
 
@@ -71,7 +70,6 @@ class _ProductCartState extends State<ProductCart> {
                 },
                 icon: const Icon(Icons.home),
               ),
-              //child: Icon(Icons.search),
             ),
           ],
           backgroundColor: const Color(0xFF161b1d),
@@ -105,7 +103,8 @@ class _ProductCartState extends State<ProductCart> {
                                   cartItemQty: snapshot.data![index].quantity,
                                   totalPrice: snapshot.data![index].totalPrice,
                                   cartId: snapshot.data![index].cartId,
-                                  cartItemId: snapshot.data![index].foodId, choice: widget.choice,
+                                  cartItemId: snapshot.data![index].foodId,
+                                  choice: widget.choice,
                                 );
                               },
                             );
@@ -177,7 +176,6 @@ class _ProductCartState extends State<ProductCart> {
                                 ),
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
-                                  print('Choice Value is: ${widget.choice}');
                                   String msg = '';
                                   widget.choice == 1
                                       ? msg = 'Your Order will prepared for Dine In the Restaurant!'
@@ -194,29 +192,28 @@ class _ProductCartState extends State<ProductCart> {
                             ),
                           ),
                           FutureBuilder(
-                              future: _futureData,
-                              builder: (context, snapshot) {
-                                if(snapshot.hasData){
-                                  final String userName = snapshot.data!['user']['Name'];
-                                  final String userId = snapshot.data!['user']['id'];
-                                  nameController = TextEditingController(text: userName);
-                                  customerIdController = TextEditingController(text: userId);
-                                  return const Spacer();
-                                }else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return const SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: Color(0xFFfebf10),
-                                    ),
-                                  ),
-                                );
+                            future: _futureData,
+                            builder: (context, snapshot) {
+                              if(snapshot.hasData){
+                                final String userName = snapshot.data!['user']['Name'];
+                                final String userId = snapshot.data!['user']['id'];
+                                nameController = TextEditingController(text: userName);
+                                customerIdController = TextEditingController(text: userId);
+                                return const Spacer();
+                              }else if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
                               }
+                              return const SizedBox(
+                                height: 1,
+                                width: 1,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.transparent,
+                                  ),
+                                ),
+                              );
+                            }
                           ),
-                          //const Spacer(),
                         ],
                       ),
                     ),
@@ -232,7 +229,6 @@ class _ProductCartState extends State<ProductCart> {
   Future<List<dynamic>> fetchCartData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the fetchdata() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/CartItems'),
       headers: <String, String>{
@@ -242,7 +238,6 @@ class _ProductCartState extends State<ProductCart> {
     );
     if (response.statusCode == 200) {
       final cartFood = json.decode(response.body);
-      print(cartFood);
       return CartItems.fromJsonList(cartFood);
     } else {
       throw Exception('Failed to load data');
@@ -282,7 +277,6 @@ class _ProductCartState extends State<ProductCart> {
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
@@ -291,7 +285,6 @@ class _ProductCartState extends State<ProductCart> {
       },
     );
     if (response.statusCode == 201) {
-      print(jsonDecode(response.body));
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load data');

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,30 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var _selectedIndex = 0;
+  final _pageController = PageController();
+  final _numPages = 4;
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_selectedIndex < _numPages - 1) {
+        _selectedIndex++;
+      } else {
+        _selectedIndex = 0;
+      }
+      _pageController.animateToPage(
+        _selectedIndex,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.ease,
+      );
+    });
+  }
+
   List<Map<String, String>> splashData = [
     {"title": "Food Orders",
       "text": "Take orders on your site for delivery",
@@ -52,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 335,
                     child: PageView.builder(
+                      controller: _pageController,
                       onPageChanged: (index) {
                         setState(() {
                           _selectedIndex = index;

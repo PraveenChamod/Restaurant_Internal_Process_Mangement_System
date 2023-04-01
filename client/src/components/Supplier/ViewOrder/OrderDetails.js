@@ -1,15 +1,15 @@
 import { AiFillEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import useAuth from "../../../Hooks/useAuth";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
-import * as l from './SupplierOrderDetailsElements';
-const SupplierOrderDetails = (props) => {
-    const {user} = useAuth();
+import * as l from './OrderDetailsElements';
+const OrderDetails = (props) => {
+    console.log(props.data3);
+
     return ( 
         <Container>
             <Header>
-                Details of Supplier Orders
+                Supplier Orders
             </Header>
                 <l.SubContainer>
                     <l.Table>
@@ -26,14 +26,9 @@ const SupplierOrderDetails = (props) => {
                                         <l.Td>{row.Items}</l.Td>
                                         <l.Td>{row.Quantity}</l.Td>
                                         <l.Td>{row.Date}</l.Td>
-                                        {
-                                            user.Role === "Manager" ? 
-                                                <Link to={`/ManagerView-supllierorder-details/${row.id}` } className="btn">
-                                                    <l.Icon><AiFillEye/></l.Icon>
-                                                </Link>
-                                            :
-                                            null
-                                        }
+                                        {/* <l.Td><Link to={`/SupplierConformOrder/${row.id}` } className="btn">
+                                            <l.Icon><AiFillEye/></l.Icon>
+                                        </Link></l.Td>   */}
                                     </l.Tr>
                                 )
                             })
@@ -51,4 +46,4 @@ const SupplierOrderDetails = (props) => {
      );
 }
  
-export default SupplierOrderDetails;
+export default OrderDetails;
