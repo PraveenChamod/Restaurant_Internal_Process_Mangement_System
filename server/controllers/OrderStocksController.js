@@ -89,3 +89,37 @@ export const ViewReceivedOrders = async(req,res)=>{
         })
     }
  }
+
+
+// Method : GET
+// End Point : "api/v1/ViewSupplierOrderById/:id'"
+// Description : Get SupplierOrder By Id
+export const ViewSupplierOrderById = async(req,res)=>{
+    try {
+        const user = req.user;
+        if(user.Role === "Manager"){
+            const {id} = req.params;
+            const findSupplierItem = await SupplierItem.findById(id);
+            if(findSupplierItem){
+                res.status(200).json({
+                    status:"Success",
+                    message:`Details of ${findSupplierItem.Items.Itemname}`,
+                    data:{
+                        findSupplierItem
+                    } 
+                })
+            }
+            else{
+                res.status(404).json({
+                    status: 'Error',
+                    message: 'SupplierItem is not found',
+                })
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({
+            status:'Server Error',
+            message:error.message,
+        });
+    }
+}

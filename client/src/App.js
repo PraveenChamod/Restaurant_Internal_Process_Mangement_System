@@ -94,6 +94,7 @@ import ManagerViewTableDetails from './Pages/Manager/ManagerViewTable';
 import SupplierItems from './Pages/Supplier/SupplyItems';
 import WithoutNavAndFooter from './components/Routing/WithoutNavandFooter';
 import WithNavAndFooter from './components/Routing/WithNavandFooter';
+import ViewSupplierOrderDetails from './Pages/Manager/ViewSupplierOrderDetails';
 
 function App() {
   
@@ -202,6 +203,7 @@ function App() {
                 <Route path="/ManagerView-Offer/:id" element={<ManagerViewOffer/>}/>
                 <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
+                <Route path="/ManagerView-supllierorder-details/:id" element={<ViewSupplierOrderDetails/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
