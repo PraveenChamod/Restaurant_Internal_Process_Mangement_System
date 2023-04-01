@@ -36,6 +36,7 @@
     "shoutout-sdk": "^3.0.4",
     "stripe": "^11.10.0",
     "twilio": "^3.84.0",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "web-push": "^3.5.0"
   }
 }

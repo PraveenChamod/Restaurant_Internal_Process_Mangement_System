@@ -17,11 +17,11 @@ import OrderRoutes from "./routes/OrderRoutes.js";
 import CartRoutes from "./routes/CartRoutes.js";
 import TableReservationRoutes from "./routes/TableReservationRoutes.js";
 import UserRoutes from "./routes/UserRoutes.js";
-import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
 
 import morgan from "morgan";
 import PaymentRoute from "./routes/PaymentRoutes.js";
 import { getOffers } from "./controllers/OfferController.js";
+import StocksOrderRoutes from "./routes/StocksOrderRoutes.js";
 
 
 
@@ -106,7 +106,7 @@ app.use('/api/v1',requireAuth,CartRoutes);
 
 app.use('/api/v1/',requireAuth,TableReservationRoutes);
 
-app.use('/api/v1/',requireAuth,SupplierItemsRoutes);
+app.use('/api/v1/',requireAuth,StocksOrderRoutes);
 
 app.use('/api/v1/',PaymentRoute)
 

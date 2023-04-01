@@ -23,7 +23,7 @@ export const addOffer  = async (req,res)=>{
                 const session = await mongoose.startSession();
                 try {
                     session.startTransaction();
-                    const OfferData = {OfferName:OfferName,SpecialPrice:SpecialPrice,SerialNo:SerialNumber,Category:Category,OfferImage:req.file.filename}
+                    const OfferData = {OfferName:OfferName,SpecialPrice:SpecialPrice,SerialNo:SerialNumber,Category:Category,OfferImage:req.file.filename,Status:"Available"}
                     const NewOffer = await Offers.create([OfferData],{session});
                     const commit = await session.commitTransaction();
                     session.endSession();
