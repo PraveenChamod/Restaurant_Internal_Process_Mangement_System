@@ -13,7 +13,7 @@ class FavouritesScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF161b1d),
-        appBar: const DrawerItemAppbar(title: "Favourites"),
+        appBar: const DrawerItemAppbar(title: "Add Review"),
         body: Stack(
           children: const <Widget>[
             BackgroundImage(),
