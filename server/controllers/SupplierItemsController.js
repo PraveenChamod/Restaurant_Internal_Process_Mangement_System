@@ -1,6 +1,7 @@
 
 import mongoose from "mongoose";
 import ServiceProviders from "../models/ServiceProviders.js";
+import SupplierItem from "../models/SupplierItem.js";
 
 // Method : POST
 // End Point : "api/v1/SupplierItems";
@@ -59,18 +60,19 @@ export const ViewAllSupplierItems = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Supplier"){
             const findSupplierItems = await SupplierItem.find();
+            console.log(findSupplierItems);
             let SupplierItems = [];
-            for (const supplierItem of findSupplierItems) {
-                  let SupplierItemDetails;
-                  console.log(supplierItem);
+            let SupplierItemDetails;
+            for (const Item of findSupplierItems) {
+                  
                   try {
-                    const populatedSupplierItem = await SupplierItem.findById(supplierItem.id)
+                    const populatedSupplierItem = await SupplierItem.findById(Item.id)
                       .populate({
                         path: 'Supplier',
-                        model: 'ServiceProviders'
+                        model: 'ServiceProvider'
                       })
                       .exec();
-
+                    console.log(populatedSupplierItem);
                     const Name = populatedSupplierItem.Supplier.Name;
                     const ContactNumber = populatedSupplierItem.Supplier.ContactNumber;
                     const supplierItem = populatedSupplierItem.Items.map((item) => {
@@ -90,7 +92,7 @@ export const ViewAllSupplierItems = async(req,res)=>{
                       supplierContactNumber:ContactNumber,
                       supplierItem                      
                     };
-                    SupplierItem.push(SupplierItemDetails);
+                    SupplierItems.push(SupplierItemDetails);
                   } catch (err) {
                     console.error(err);
                     return res.status(500).send('Server Error');
