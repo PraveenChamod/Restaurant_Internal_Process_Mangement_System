@@ -1,5 +1,48 @@
-import styled from "styled-components"
-import { RegularButton } from "../shared/SharedElements/Buttons"
+import styled from "styled-components";
+import Chef from '../../Images/Chef.png';
+
+export const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    background:url(${Chef}) left bottom no-repeat;
+    background-size: 21.5rem;
+    margin-bottom: 5%;
+`
+
+export const FormSection= styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70rem;
+    height: auto;
+    background-color: #1a1e21;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #000;
+    margin: 0;
+`
+export const LeftSide= styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45%;
+    margin: 0;
+    padding: 0 2%;
+`
+export const RightSide= styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 45%;
+    margin: 0;
+    padding: 0 2%;
+`
 export const Div3 = styled.div`
     margin-top: 15px;
     width: 50%;
@@ -7,58 +50,101 @@ export const Div3 = styled.div`
     display: flex;
     flex-direction: column;
     padding-left: 30px;
-`
-export const Section = styled.div`
+`;
+
+export const AddButton = styled.button`
+    width: 40px;
+    height: 40px;
+    color:#fff;
+    background: linear-gradient(to right, #FFBF00, #B26C29);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 20px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: fit-content;
-    background-color: #1a1e21;
-    border-radius: 25px;
-    box-shadow: 3px 3px 3px #000;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-left: auto;
+    font-size: 30px;
+    @media screen and (max-width: 800px){
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+    }
 `
-export const FormSection= styled.div`
-    width: 90%;
-    height: 100%;
-    background-color: #1a1e21;
-    border-radius: 25px;
-    box-shadow: 3px 3px 10px #000;
-    margin: 2% 5%;
-    position: relative;
-`
-export const PrintButton = styled(RegularButton)`
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-`
-export const Icon = styled.label`
-    margin: 5%;
-    color: #fff;
-    font-size: 28px;
-`
-export const ButtonSection = styled.div`
-    position: relative;
-    margin: 0 0 3% 0;
-`
-export const Div1 = styled.div`
-    display: flex;
-    width: 50%;
-    height: 100vh;
-    flex-direction: column;
-    position: relative;
-    top: 10%;
-    margin-bottom: 10%;
-`
-export const Preview = styled.div`
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    height: 500px;
-    width: 100%;
 
+export const Table = styled.table`
+    border: 2px solid #fff;
+    color: #fff;
+    margin: 3%;
+    border-radius: 10px;
+    width: 80%;
+`
+export const Tr = styled.tr`
+    border: 2px solid #fff;
+    text-align: center;
+`
+export const Th = styled.th`
+   border-bottom: 2px solid #fff;
+`
+
+
+export const Td = styled.td`
+    padding: 0px 8px;
+
+    &:first-child {
+        width: 250px;
+    }
+`
+
+export const OkButton = styled.button`
+    width: 100px;
+    height: 30px;
+    color:#fff;
+    background: linear-gradient(to right, #FFBF00, #B26C29);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-left: auto;
+    font-size: 15px;
+    @media screen and (max-width: 800px){
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+    }
+`
+
+export const RemoveButton = styled.button`
+    width: 30px;
+    height: 20px;
+    color:#fff;
+    background: linear-gradient(to right, #FF0000, #990000);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    @media screen and (max-width: 800px){
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+    }
 `
