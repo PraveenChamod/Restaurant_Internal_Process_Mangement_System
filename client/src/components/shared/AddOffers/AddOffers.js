@@ -6,7 +6,7 @@ import axios from 'axios';
 import { FaCamera } from 'react-icons/fa';
 import * as l from './AddOffersElements';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast'; 
 const AddOffersComponent = (props) => {
     const[Category,setCategory] = useState('');
     const[SpecialPrice,setSpecialPrice] = useState('');
