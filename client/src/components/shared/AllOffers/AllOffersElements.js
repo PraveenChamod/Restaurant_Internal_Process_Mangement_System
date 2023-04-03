@@ -8,6 +8,10 @@ export const SubContainer = styled.div`
     box-shadow: 3px 3px 3px #000;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 769px) {
+    width: 90%;
+    height: 350px;
+  }
 `
 export const GridContainer = styled.div`
     width: 100%;
