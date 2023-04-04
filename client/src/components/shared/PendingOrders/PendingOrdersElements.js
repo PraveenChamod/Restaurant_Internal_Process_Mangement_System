@@ -11,7 +11,7 @@ export const SubContainer = styled.div`
 
     @media screen and (max-width: 769px) {
     width: 90%;
-    /* height: 350px; */
+    
   }
 
 ` 
@@ -34,6 +34,7 @@ export const Table = styled.table`
 
     @media screen and (max-width: 769px) {
     display:flex;
+    width:auto;
   }
 
 `

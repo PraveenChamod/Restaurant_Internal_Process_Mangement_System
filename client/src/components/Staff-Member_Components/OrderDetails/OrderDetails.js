@@ -15,7 +15,7 @@ const OrderDetailsComponent = (props) => {
     const [contactNo,setContactNo] = useState(props.data.ContactNumber)
     const [paymentMethod,setPaymentMethod] = useState(props.data.food[0].PaymentMethod)
     const [totalPrice,setTotalPrice] = useState(props.data.TotalPrice)
-    const [Email,setEmail] = useState();
+    const [Email,setEmail] = useState(); 
 
     const[deliverer,setDeliverer] = useState(0);
     const{data,isPending} = useFetch('/api/v1/AvailableDeliverers');
