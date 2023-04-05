@@ -95,6 +95,7 @@ import SupplierItems from './Pages/Supplier/SupplyItems';
 import WithoutNavAndFooter from './components/Routing/WithoutNavandFooter';
 import WithNavAndFooter from './components/Routing/WithNavandFooter';
 import ViewSupplierOrderDetails from './Pages/Manager/ViewSupplierOrderDetails';
+import SupplierOrderConform from './Pages/Supplier/SupplierOrderConform';
 
 function App() {
   
@@ -261,6 +262,8 @@ function App() {
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
                 <Route path="/SupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
+                <Route path="/SupplierOrderConform/:id" element={<SupplierOrderConform/>}/>
+
               </Route>
             </Routes>
           </div>
