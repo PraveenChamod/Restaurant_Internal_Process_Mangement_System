@@ -32,13 +32,13 @@ const PendingReservationComponent = (props) => {
                                     <l.Td>{data.ArrivalTime}</l.Td>
                                     <l.Td>{data.DepartureTime}</l.Td>
                                     <l.Td>{data.Date}</l.Td>
-                                    <Link to={`/Staff-MemberTable-Reservation-Details/${data.id}`} className="btn">
                                         <l.Td>
+                                    <Link to={`/Staff-MemberTable-Reservation-Details/${data.id}`} className="btn">
                                             <l.Icon>
                                                 <AiFillEye/>
                                             </l.Icon>
-                                        </l.Td>
                                     </Link>
+                                    </l.Td>
                                 </l.Tr>
                             )
                         })

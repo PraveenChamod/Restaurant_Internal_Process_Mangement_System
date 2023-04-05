@@ -13,7 +13,7 @@ const AllOffersComponent = (props) => {
                 Offers Details
             </Header>
             <l.SubContainer>
-                <l.Table>
+              <l.Table>
                     <thead>
                         <l.Tr>
                             <l.Th>Meal Name</l.Th>

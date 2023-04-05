@@ -14,7 +14,7 @@ const SupplierItemSchema = mongoose.Schema({
             Status:{
                 type:String,
                 enum:{
-                    values:['Available','Out of Stock']
+                    values:['Available' ,'Out of Stock']
                 },
                 default:'Available'
             },

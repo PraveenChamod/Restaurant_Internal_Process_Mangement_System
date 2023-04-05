@@ -9,7 +9,7 @@ const PendingOrdersComponent = (props) => {
     return (  
         <Container>
             <Header>
-                Pending Orders
+                Pending Orders 
             </Header>
             <l.SubContainer>
                 <l.Table>

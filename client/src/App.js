@@ -260,7 +260,9 @@ function App() {
                 <Route path="/SupplierDashBoard" element={<SupplierDashBoard Navs={Roles[4]} Card = {Cards[4]} ScrollToTop={scrollToTop}/>}/>
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
-                <Route path="/SupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
+                <Route path="/AddSupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
+                {/* <Route path="/ViewSupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
+                {/* <Route path="/ViewSupplyItem/:id" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
                 <Route path="/SupplierOrderConform/:id" element={<SupplierOrderConform/>}/>
 
