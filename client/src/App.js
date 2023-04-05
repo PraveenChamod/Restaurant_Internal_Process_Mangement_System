@@ -264,7 +264,7 @@ function App() {
                 {/* <Route path="/ViewSupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
                 {/* <Route path="/ViewSupplyItem/:id" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
-                <Route path="/SupplierOrderConform/:id" element={<SupplierOrderConform/>}/>
+                <Route path="/SupplierConformOrder/:id" element={<SupplierOrderConform/>}/>
 
               </Route>
             </Routes>
