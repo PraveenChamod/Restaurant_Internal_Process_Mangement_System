@@ -3,7 +3,7 @@ import Customer from "../models/Customer.js";
 import Reviews from "../models/Reviews.js";
 
 // Method : POST
-// End Point : "api/v1/customer/Reveiw";
+// End Point : "api/v1/Blogs";
 // Description : Add Review
 export const AddReview = async (req,res)=>{
     try {
