@@ -1,4 +1,4 @@
-import SupplierItemsComponent from "../../components/Supplier/SupplierItems";
+import SupplierItemsComponent from "../../components/Supplier/AddSupplierItems/SupplierItems";
 
 const SupplierItems = (props) => {
     return ( 
