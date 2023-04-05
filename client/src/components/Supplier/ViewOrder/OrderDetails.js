@@ -23,12 +23,12 @@ const OrderDetails = (props) => {
                             props.data3.map(row=>{
                                 return(
                                     <l.Tr>
-                                        <l.Td>{row.Items}</l.Td>
-                                        <l.Td>{row.Quantity}</l.Td>
+                                        <l.Td>{row.Items.ItemName}</l.Td>
+                                        <l.Td>{row.Items.Quantity}</l.Td>
                                         <l.Td>{row.Date}</l.Td>
-                                        {/* <l.Td><Link to={`/SupplierConformOrder/${row.id}` } className="btn">
+                                       <l.Td><Link to={`/SupplierConformOrder/${row.id}` } className="btn">
                                             <l.Icon><AiFillEye/></l.Icon>
-                                        </Link></l.Td>   */}
+                                        </Link></l.Td>   
                                     </l.Tr>
                                 )
                             })

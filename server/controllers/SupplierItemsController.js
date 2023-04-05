@@ -14,29 +14,21 @@ export const SupplierItems = async(req,res,next)=>{
             const logedSupplier = await ServiceProviders.findOne({Email:user.Email}).populate('Email');
             const session = await mongoose.startSession();
             try {
-                if(logedSupplier.Address !== null){
-                        session.startTransaction();
-                        const newSupplierItem = await SupplierItem.create([
-                                req.body
-                            ],
-                            {session}
-                        )
-                        const commit = await session.commitTransaction();
-                        session.endSession();
-                        res.status(201).json({
-                            status:'Success',
-                            message:'Your Supplier Item : successed',
-                            data:{
-                                newSupplierItem
-                            }
-                        })
-                }
-                else{
-                    res.status(400).json({
-                        status:'Error1',
-                        message:'Set Your Address First'
-                    })
-                }
+                session.startTransaction();
+                const newSupplierItem = await SupplierItem.create([
+                        req.body
+                    ],
+                    {session}
+                )
+                const commit = await session.commitTransaction();
+                session.endSession();
+                res.status(201).json({
+                    status:'Success',
+                    message:'Your Supplier Item : successed',
+                    data:{
+                        newSupplierItem
+                    }
+                })
             } catch (error) {
                 res.status(500).json({
                     status:'Error2',

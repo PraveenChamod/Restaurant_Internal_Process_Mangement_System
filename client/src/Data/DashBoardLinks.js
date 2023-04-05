@@ -222,7 +222,12 @@ export const Roles = [
             {
                 text:'Add Supply Items',
                 icon:<MdOutlineAddToPhotos style={iconStyle}/>,
-                link:"/SupplyItems"
+                link:"/AddSupplyItems"
+            },
+            {
+                text:'View Supply Items',
+                icon:<MdOutlineAddToPhotos style={iconStyle}/>,
+                link:"/ViewSupplyItems"
             },
             {
                 text:'Log Out',

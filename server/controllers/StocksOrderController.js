@@ -1,4 +1,5 @@
 import ServiceProviders from "../models/ServiceProviders.js";
+import StocksOrder from "../models/StockOrder.js";
 import SupplierItem from "../models/SupplierItem.js";
 
 // Method : POST
@@ -120,6 +121,48 @@ export const ViewSupplierOrderById = async(req,res)=>{
         return res.status(500).json({
             status:'Server Error',
             message:error.message,
+        });
+    }
+}
+
+
+// Method : GET
+// End Point : "api/v1/SupplierOrderById/:id";
+// Description : get Supplier Order conform
+export const getSupplierOrderById = async (req,res)=>{
+    try {
+        const user = req.user;
+        console.log({user});
+        if(user.Role === "Supplier"){
+            const{id} = req.params;
+            console.log(req.params);
+            const Order = await StocksOrder.findOne({_id:id});
+            if(Order !== null){
+                res.status(200).json({
+                    status:"Success",
+                    message:"Order Deatils",
+                    data:{
+                        food
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:'Only Supplier has access to do this operation'
+            });
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
         });
     }
 }
