@@ -15,6 +15,7 @@ export const FormSection= styled.form`
   @media screen and (max-width: 769px) {
     width: 100%;
     flex-direction:column-reverse;
+   
 
   }
 
@@ -39,6 +40,11 @@ export const SubSection= styled.div`
     align-items: center;
     flex-direction: column;
     margin-top: 5%;
+
+
+    @media screen and (max-width: 769px) {
+    font-size:80%;
+  }
 `
 export const RightSide= styled.div`
     display: flex;

@@ -274,19 +274,9 @@ const PlaceOrderComponent = (props) => {
                                 })
                             }
                             </Select> 
-                        </FormControl>
-                <l.Div3>
-                    <l.Text1>
-                    Total Price
-                    <br/>
-                    <l.Price>
-                      Rs. {TotalPrice}
-                    </l.Price>
-                    </l.Text1>
-                </l.Div3>
-                </l.Div1>
-                <l.Div2>
-                 <FormControl  sx={{ m: 1, width: "35ch" }} variant="standard">
+                        {/* </FormControl> */}
+                        {/* total price div3 */}
+                        {/* <FormControl  sx={{ m: 1, width: "35ch" }} variant="standard"> */}
                      <TextField 
                         id="standard-basic" 
                         label="Contact No" 
@@ -300,6 +290,9 @@ const PlaceOrderComponent = (props) => {
                             }}
                      />
                   </FormControl>
+                </l.Div1>
+                <l.Div2>
+                 
                     <l.ItemSection>
                     {
                                 join.map((data,index)=>{
@@ -353,6 +346,17 @@ const PlaceOrderComponent = (props) => {
                                 })
                             }    
                     </l.ItemSection>
+
+                            {/* fff */}
+                            <l.Div3>
+                    <l.Text1>
+                    Total Price
+                    <br/>
+                    <l.Price>
+                      Rs. {TotalPrice}
+                    </l.Price>
+                    </l.Text1>
+                </l.Div3>
                   <l.ButtonSection>
                      <RegularButton >PLACE ORDER</RegularButton>
                   </l.ButtonSection>

@@ -43,6 +43,7 @@ export const Tr = styled.tr`
         flex-direction: column;
         border:none;
         padding:10px;
+        
   }
 `
 export const Th = styled.th`
@@ -51,6 +52,10 @@ export const Th = styled.th`
     margin-bottom: 10px;
     border-bottom: 1px solid white;
     padding-bottom:10px;
+    max-height:25px;
+    min-height:25px;
+    overflow:hidden;
+    font-size:80%;
     &:last-child{
     border-bottom:none;
 
@@ -62,6 +67,11 @@ export const Td = styled.td`
     margin-bottom: 10px;
     border-bottom: 1px solid white;
     padding-bottom:10px;
+    min-height:25px;
+    max-height:25px;
+    overflow:hidden;
+    font-size:80%;
+    display:inline-block;
     /* padding-right:5px */
     &:last-child{
     border-bottom:none;

@@ -8,7 +8,7 @@ const AllOffersComponent = (props) => {
     console.log(props.data1)
     const {user} = useAuth();
     return ( 
-        <Container>
+        <Container> 
             <Header>
                 Offers Details
             </Header>

@@ -31,15 +31,46 @@ export const Table = styled.table`
     margin: 3%;
     border-radius: 10px;
     width: 80%;
+
+    @media screen and (max-width: 769px) { 
+    /* border:none; */
+    }
+
+
 `
 export const Tr = styled.tr`
     border: 2px solid #fff;
     text-align: center;
+    @media screen and (max-width: 769px) {
+    font-size:90%;
+       
+       /* border:none;
+       padding:10px; */
+ }
 `
 export const Th = styled.th`
    border-bottom: 2px solid #fff;
+
+   @media screen and (max-width: 769px) {
+    margin-bottom: 10px;
+    padding-bottom:10px;
+    &:last-child{
+
+    }
+  }
+
 `
 export const Td = styled.td`
+
+@media screen and (max-width: 769px) {
+    margin-bottom: 10px;
+    padding-bottom:10px;
+    border-bottom:none;
+    } 
+
+  
+
+
    
 `
 export const Icon  =styled.div`

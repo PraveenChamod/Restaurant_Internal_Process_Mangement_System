@@ -32,7 +32,7 @@ export const Table = styled.table`
     border-radius: 10px;
     width: 100%;
 
-    @media screen and (max-width: 769px) {
+    @media screen and (max-width: 769px) { 
     display:flex;
     width:auto;
   }
@@ -46,6 +46,8 @@ export const Tr = styled.tr`
         flex-direction: column;
         border:none;
         padding:10px;
+        font-size:90%;
+        
   }
 `
 export const Th = styled.th`
