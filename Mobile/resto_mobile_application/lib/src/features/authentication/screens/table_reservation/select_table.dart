@@ -121,14 +121,16 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
                                 mainAxisExtent: 300,
                               ),
                               itemBuilder: (BuildContext context, int index) {
                                 return TableItemContainer(
-                                  tableNumber: snapshot.data![0].tableNumber,
-                                  numberOfPersons: snapshot.data![0].numberOfPersons,
-                                  price: snapshot.data![0].price,
-                                  status: snapshot.data![0].status,
+                                  tableNumber: snapshot.data![index].tableNumber,
+                                  numberOfPersons: snapshot.data![index].numberOfPersons,
+                                  price: snapshot.data![index].price,
+                                  status: snapshot.data![index].status,
+                                  tableId: snapshot.data![index].id,
                                 );
                               },
                             );
@@ -179,6 +181,7 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
 }
 
 class SelectTables{
+  final String id;
   final String tableNumber;
   final int numberOfPersons;
   final int price;
@@ -188,6 +191,7 @@ class SelectTables{
     required this.numberOfPersons,
     required this.price,
     required this.status,
+    required this.id,
   });
   factory SelectTables.fromJson(Map<String, dynamic> json) {
     return SelectTables(
@@ -195,6 +199,7 @@ class SelectTables{
       numberOfPersons: json['NoOfPersons'],
       price: json['price'],
       status: json['Status'],
+      id: json['id'],
     );
   }
   static List<SelectTables> fromJsonList(dynamic jsonList){
