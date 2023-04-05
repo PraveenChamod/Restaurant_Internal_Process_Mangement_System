@@ -120,7 +120,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const FavouritesScreen();
+                    return FavouritesScreen();
                   },
                 ),
               );

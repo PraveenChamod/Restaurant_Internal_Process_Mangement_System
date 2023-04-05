@@ -402,7 +402,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   successAwesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
-      context: context as BuildContext,
+      context: context,
       dialogType: type,
       animType: AnimType.topSlide,
       title: title,
