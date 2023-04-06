@@ -9,19 +9,25 @@ import '../../../../constants/image_strings.dart';
 import '../Customer/customer_main_page.dart';
 import '../Products/product_cart.dart';
 
-class DineInOrder extends StatelessWidget {
+class DineInOrder extends StatefulWidget {
   final num totalPrice;
   final int choice;
   final String customerId;
   final String customerName;
-  DineInOrder({Key? key,
+  const DineInOrder({Key? key,
     required this.choice,
     required this.totalPrice,
     required this.customerId,
     required this.customerName
   }) : super(key: key);
 
+  @override
+  State<DineInOrder> createState() => _DineInOrderState();
+}
+
+class _DineInOrderState extends State<DineInOrder> {
   final List<FoodList> orderFoods = [];
+
   final List<CartItems> data = [];
 
   @override
@@ -37,7 +43,7 @@ class DineInOrder extends StatelessWidget {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return ProductCart(choice: choice,);
+                    return ProductCart(choice: widget.choice,);
                   },
                 ),
               );
@@ -133,7 +139,7 @@ class DineInOrder extends StatelessWidget {
                             ),
                             const SizedBox(height: 5.0,),
                             Text(
-                              customerName,
+                              widget.customerName,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -173,7 +179,7 @@ class DineInOrder extends StatelessWidget {
                             ),
                             const SizedBox(height: 5.0,),
                             Text(
-                              "Rs. $totalPrice",
+                              "Rs. ${widget.totalPrice}",
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -255,7 +261,7 @@ class DineInOrder extends StatelessWidget {
                           ),
                           color: const Color(0xFFfebf10),
                           pressEvent: () {
-                            orderItems(orderFoods, totalPrice, 'Outlet Order', customerId);
+                            orderItems(orderFoods, widget.totalPrice, 'Outlet Order', widget.customerId);
                           },
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(0),
@@ -275,6 +281,7 @@ class DineInOrder extends StatelessWidget {
       ),
     );
   }
+
   Future<List<dynamic>> fetchOrderData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
@@ -294,6 +301,7 @@ class DineInOrder extends StatelessWidget {
       throw Exception('Failed to load data');
     }
   }
+
   void orderItems(List<FoodList> foods, num totalPrice, String type, String customerId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
@@ -316,11 +324,43 @@ class DineInOrder extends StatelessWidget {
       final msg = json["message"];
       print(msg);
       print(orderDetails);
+      successAwesomeDialog(DialogType.success, 'Your Order Is Placed Successfully.', "Success");
     }else{
       final json = jsonDecode(response.body);
       final msg = json["message"];
       print("Order Unsuccuessfull");
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
     }
+  }
+
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const CustomerMainPage(choice: 2,);
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
   }
 }
 class CartItems{
