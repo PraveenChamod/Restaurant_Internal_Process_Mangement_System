@@ -7,6 +7,7 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/homeScreen_indicator.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/main_features.dart';
+import '../products/home_product_item_details.dart';
 
 class CustomerHome extends StatefulWidget {
   const CustomerHome({Key? key}) : super(key: key);
@@ -197,19 +198,22 @@ class _CustomerHomeState extends State<CustomerHome> {
               ),
               const SizedBox(height: 10,),
               //Horizontal Listview of food tiles
-              SizedBox(
-                height: 230,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: foodItems.length,
-                  itemBuilder: (context, index) {
-                    return FoodTile(
-                      foodImagePath: foodItems[index]["foodImagePath"] ?? '',
-                      foodName: foodItems[index]["foodName"] ?? '',
-                      foodPrice: foodItems[index]["foodPrice"] ?? '',
-                      foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
-                    );
-                  },
+              Center(
+                child: SizedBox(
+                  height: 250,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: foodItems.length,
+                    itemBuilder: (context, index) {
+                      return FoodTile(
+                        foodImagePath: foodItems[index]["foodImagePath"] ?? '',
+                        foodName: foodItems[index]["foodName"] ?? '',
+                        foodPrice: foodItems[index]["foodPrice"] ?? '',
+                        foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
+                        foodId: 'Test1',
+                      );
+                    },
+                  ),
                 ),
               ),
               const Divider(),
@@ -224,37 +228,40 @@ class _CustomerHomeState extends State<CustomerHome> {
                 ),
               ),
               const Divider(),
-              SizedBox(
-                height: 225,
-                child: FutureBuilder(
-                  future: fetchSpecialItems(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return FoodTile(
-                            foodImagePath: 'http://$hostName:5000/offerimages/${snapshot.data![index].offerImagePath}',
-                            foodName: snapshot.data![index].category,
-                            foodPrice: snapshot.data![index].price,
-                            foodSpecialIngredient: snapshot.data![index].offerName,
-                          );
-                        },
-                      );
-                    }else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                    return const SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFFfebf10),
+              Center(
+                child: SizedBox(
+                  height: 250,
+                  child: FutureBuilder(
+                    future: fetchSpecialItems(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return OfferFoodTile(
+                              offerFoodImagePath: 'http://$hostName:5000/offerimages/${snapshot.data![index].offerImagePath}',
+                              offerFoodName: snapshot.data![index].category,
+                              offerFoodSpecialIngredient: snapshot.data![index].offerName,
+                              offerFoodId: snapshot.data![index].offerId,
+                              offerFoodPrice: snapshot.data![index].price,
+                            );
+                          },
+                        );
+                      }else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFfebf10),
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
               const Divider(),
@@ -321,12 +328,139 @@ class OfferItems{
   }
 }
 
+//Offer Food Tile Stl
+class OfferFoodTile extends StatelessWidget {
+  final String offerFoodImagePath;
+  final String offerFoodName;
+  final String offerFoodSpecialIngredient;
+  final String offerFoodId;
+  final int offerFoodPrice;
+
+  const OfferFoodTile({Key? key,
+    required this.offerFoodImagePath,
+    required this.offerFoodName,
+    required this.offerFoodSpecialIngredient,
+    required this.offerFoodId,
+    required this.offerFoodPrice,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_){
+              return HomeProductItemDetails(
+                itemImagePath: offerFoodImagePath,
+                category: offerFoodName,
+                itemName: offerFoodSpecialIngredient,
+                itemId: offerFoodId,
+                price: offerFoodPrice,
+              );
+            },
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15.0),
+        child: Container(
+          width: 140,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.black54,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        offerFoodImagePath,
+                        //width: 125,
+                        width: 80,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          offerFoodName,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          offerFoodSpecialIngredient,
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 15.0,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                "Rs.$offerFoodPrice",
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFfebf10),
+                                  borderRadius: BorderRadius.circular(6.0),
+                                ),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
 //Food Tile stl
 class FoodTile extends StatelessWidget {
-
   final String foodImagePath;
   final String foodName;
   final String foodSpecialIngredient;
+  final String foodId;
   final int foodPrice;
 
   const FoodTile({Key? key,
@@ -334,88 +468,94 @@ class FoodTile extends StatelessWidget {
     required this.foodName,
     required this.foodPrice,
     required this.foodSpecialIngredient,
+    required this.foodId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0),
+      padding: const EdgeInsets.only(left: 15.0),
       child: Container(
-        padding: const EdgeInsets.all(12),
-        //width: 200,
-        width: 130,
+        width: 140,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Colors.black54,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Food Image
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  foodImagePath,
-                  //width: 125,
-                  width: 80,
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      foodImagePath,
+                      //width: 125,
+                      width: 80,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const Spacer(),
-            //Food Name & Special Ingredient
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    foodName,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        foodName,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5,),
-                  Text(
-                    foodSpecialIngredient,
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 15.0,
+                    Expanded(
+                      child: Text(
+                        foodSpecialIngredient,
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 15.0,
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              "Rs.$foodPrice",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFfebf10),
+                                borderRadius: BorderRadius.circular(6.0),
+                              ),
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-            //Price
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\$$foodPrice",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFfebf10),
-                      borderRadius: BorderRadius.circular(6.0),
-                    ),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

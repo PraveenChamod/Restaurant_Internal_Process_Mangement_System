@@ -60,6 +60,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
+                  flex: 1,
                   child: Text(
                     widget.cartItemName,
                     style: const TextStyle(
@@ -69,6 +70,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
                   ),
                 ),
                 Expanded(
+                  flex: 1,
                   child: Text(
                     'Quantity: ${widget.cartItemQty}',
                     style: const TextStyle(
@@ -78,6 +80,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
                   ),
                 ),
                 Expanded(
+                  flex: 1,
                   child: Text(
                     'Sub Total: Rs.${widget.totalPrice}',
                     style: const TextStyle(
@@ -87,52 +90,59 @@ class _CartItemContainerState extends State<CartItemContainer> {
                   ),
                 ),
                 Expanded(
+                  flex: 2,
                   child: Row(
                     children: [
                       Expanded(
-                        child: Center(
-                          child: AnimatedIconButton(
-                            onPressed: () {
-                              openBottomSheet(widget.cartItemQty);
-                            },
-                            duration: const Duration(milliseconds: 500),
-                            icons: <AnimatedIconItem>[
-                              AnimatedIconItem(
-                                icon: const Icon(
-                                  Icons.change_circle,
-                                  color: Color(0xFFfebf10),
-                                  size: 30.0,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Center(
+                            child: AnimatedIconButton(
+                              onPressed: () {
+                                openBottomSheet(widget.cartItemQty);
+                              },
+                              duration: const Duration(milliseconds: 500),
+                              icons: <AnimatedIconItem>[
+                                AnimatedIconItem(
+                                  icon: const Icon(
+                                    Icons.change_circle,
+                                    color: Color(0xFFfebf10),
+                                    size: 30.0,
+                                  ),
+                                  onPressed: () {},
                                 ),
-                                onPressed: () {},
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                       Expanded(
-                        child: Center(
-                          child: AnimatedIconButton(
-                            onPressed: () {
-                              removeFromCart(widget.cartId, widget.cartItemId);
-                            },
-                            duration: const Duration(milliseconds: 500),
-                            icons: <AnimatedIconItem>[
-                              AnimatedIconItem(
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                  size: 30.0,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Center(
+                            child: AnimatedIconButton(
+                              onPressed: () {
+                                removeFromCart(widget.cartId, widget.cartItemId);
+                              },
+                              duration: const Duration(milliseconds: 500),
+                              icons: <AnimatedIconItem>[
+                                AnimatedIconItem(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                    size: 30.0,
+                                  ),
+                                  onPressed: () {},
                                 ),
-                                onPressed: () {},
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                Expanded(child: Container(),),
+                //Expanded(child: Container(),),
               ],
             ),
           ),
