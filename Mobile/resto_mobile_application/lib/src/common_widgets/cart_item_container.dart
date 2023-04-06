@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:animated_icon_button/animated_icon_button.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -90,29 +91,41 @@ class _CartItemContainerState extends State<CartItemContainer> {
                     children: [
                       Expanded(
                         child: Center(
-                          child: IconButton(
+                          child: AnimatedIconButton(
                             onPressed: () {
                               openBottomSheet(widget.cartItemQty);
                             },
-                            icon: const Icon(
-                              Icons.change_circle,
-                              color: Color(0xFFfebf10),
-                              size: 30.0,
-                            ),
+                            duration: const Duration(milliseconds: 500),
+                            icons: <AnimatedIconItem>[
+                              AnimatedIconItem(
+                                icon: const Icon(
+                                  Icons.change_circle,
+                                  color: Color(0xFFfebf10),
+                                  size: 30.0,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
                           ),
                         ),
                       ),
                       Expanded(
                         child: Center(
-                          child: IconButton(
+                          child: AnimatedIconButton(
                             onPressed: () {
                               removeFromCart(widget.cartId, widget.cartItemId);
                             },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 30.0,
-                            ),
+                            duration: const Duration(milliseconds: 500),
+                            icons: <AnimatedIconItem>[
+                              AnimatedIconItem(
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                  size: 30.0,
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
                           ),
                         ),
                       ),
