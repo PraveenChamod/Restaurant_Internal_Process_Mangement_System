@@ -3,7 +3,7 @@ import Spinner from "../../components/shared/Spinner/Spinner";
 import useFetch from "../../Hooks/useFetch";
 
 const ViewSupplierOrder = (props) => {
-    const {data,isPending}= useFetch('api/v1/ViewSupplierOrder');
+    const {data,isPending}= useFetch('api/v1/SupplierItemsDetails');
     return ( 
         <>
         {isPending && <Spinner/>}

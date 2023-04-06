@@ -3,6 +3,7 @@ import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import * as l from "./ViewSupplierOrderDetailsElements";
 const ViewSupplierOrderDetailsComponent = (props) => {
+    //console.log(props)
     // const[FoodName,setName] = useState(props.food.FoodName);
     // const[Category,setCategory] = useState(props.food.Category);
     // const[Price,setPrice] = useState(props.food.Price);

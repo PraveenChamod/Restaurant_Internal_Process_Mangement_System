@@ -7,15 +7,14 @@ import useFetch from "../../Hooks/useFetch";
 const ViewSupplierOrderDetails = () => {
     const {id} = useParams();
     console.log(id);
-    const {data,isPending} = useFetch(`/api/v1/ViewSupplierOrderById/${id}`);
+    const {data,isPending} = useFetch(`api/v1/SupplierItemsDetailsById/${id}`);
     console.log(data)
-    // const supplierItem = data?.data?.Offer
-    // console.log(offer);
+    const SupplierItem = data?.data?.SupplierItems
+    console.log(SupplierItem);
     return ( 
         <>
             {isPending && <Spinner/>}
-            {/* {offer && <OfferDetails offer={offer}/>} */}
-            <ViewSupplierOrderDetailsComponent/>
+            {SupplierItem && <ViewSupplierOrderDetailsComponent SupplierItem={SupplierItem}/>}
         </>
      );
 }
