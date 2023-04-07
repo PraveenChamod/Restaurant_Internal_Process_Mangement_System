@@ -13,6 +13,7 @@ class CartItemContainer extends StatefulWidget {
   final String cartItemName;
   final String cartId;
   final String cartItemId;
+  final String cartItemType;
   final int cartItemQty;
   final int totalPrice;
 
@@ -24,6 +25,7 @@ class CartItemContainer extends StatefulWidget {
     required this.cartId,
     required this.cartItemId,
     required this.choice,
+    required this.cartItemType,
   }) : super(key: key);
 
   @override
@@ -122,7 +124,10 @@ class _CartItemContainerState extends State<CartItemContainer> {
                           child: Center(
                             child: AnimatedIconButton(
                               onPressed: () {
-                                removeFromCart(widget.cartId, widget.cartItemId);
+                                widget.cartItemType == 'food'
+                                    ? removeFoodFromCart(widget.cartId, widget.cartItemId)
+                                    : removeOfferFromCart(widget.cartId, widget.cartItemId)
+                                ;
                               },
                               duration: const Duration(milliseconds: 500),
                               icons: <AnimatedIconItem>[
@@ -142,7 +147,6 @@ class _CartItemContainerState extends State<CartItemContainer> {
                     ],
                   ),
                 ),
-                //Expanded(child: Container(),),
               ],
             ),
           ),
@@ -275,11 +279,14 @@ class _CartItemContainerState extends State<CartItemContainer> {
       showCloseIcon: true,
       desc: desc,
       btnOkOnPress: (){
-        updateCart(updatedCount, cartItemId);
+        widget.cartItemType == 'food'
+            ? updateFoodToCart(updatedCount, cartItemId)
+            : updateOfferToCart(updatedCount, cartItemId)
+        ;
       },
     ).show();
   }
-  void updateCart(int qty, String foodId) async {
+  void updateFoodToCart(int qty, String foodId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -290,6 +297,31 @@ class _CartItemContainerState extends State<CartItemContainer> {
       },
       body: jsonEncode(<String, dynamic>{
         "foodId": foodId,
+        "quantity": qty
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      awesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+    }
+  }
+
+  void updateOfferToCart(int qty, String offerId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.post(
+      Uri.parse("http://$hostName:5000/api/v1/CartItem"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "offerId": offerId,
         "quantity": qty
       }),
     );
@@ -323,8 +355,8 @@ class _CartItemContainerState extends State<CartItemContainer> {
     ).show();
   }
 
-  //Remove Cart Item
-  void removeFromCart(String cartId, String foodId) async {
+  //Remove Food Cart Item
+  void removeFoodFromCart(String cartId, String foodId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
@@ -336,6 +368,31 @@ class _CartItemContainerState extends State<CartItemContainer> {
       body: jsonEncode(<String, dynamic>{
         "cartId": cartId,
         "foodId": foodId
+      }),
+    );
+    if(response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+    }
+  }
+  //Remove Offer Cart Item
+  void removeOfferFromCart(String cartId, String offerId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.patch(
+      Uri.parse("http://$hostName:5000/api/v1/FoodItem"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "cartId": cartId,
+        "offerId": offerId
       }),
     );
     if(response.statusCode == 200) {

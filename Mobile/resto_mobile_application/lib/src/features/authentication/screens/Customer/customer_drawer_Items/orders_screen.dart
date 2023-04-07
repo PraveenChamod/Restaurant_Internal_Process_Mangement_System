@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../common_widgets/drawer_item_appbar.dart';
 import '../../../../../common_widgets/main_order_container.dart';
-import '../../../../../common_widgets/order_item_container.dart';
 import '../../../../../constants/image_strings.dart';
 
 
@@ -15,7 +14,6 @@ class OrdersScreen extends StatelessWidget {
 
   final List<OrderItems> data = [];
 
-  //final List<FoodList> orderFoods = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
