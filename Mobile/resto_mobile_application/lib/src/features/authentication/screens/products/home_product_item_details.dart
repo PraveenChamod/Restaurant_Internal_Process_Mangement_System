@@ -11,13 +11,15 @@ class HomeProductItemDetails extends StatefulWidget {
   final String category;
   final String itemName;
   final String itemId;
+  final String itemFoodType;
   final int price;
   const HomeProductItemDetails({Key? key,
     required this.itemImagePath,
     required this.category,
     required this.itemName,
     required this.itemId,
-    required this.price
+    required this.price,
+    required this.itemFoodType
   }) : super(key: key);
 
   @override
@@ -296,7 +298,9 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
       title: title,
       desc: desc,
       btnOkOnPress: (){
-        addOfferToCart(totalCount, widget.itemId);
+        widget.itemFoodType == 'offerItem'
+            ? addOfferToCart(totalCount, widget.itemId)
+            : addFoodItemToCart(totalCount, widget.itemId);
       },
     ).show();
   }
@@ -321,6 +325,30 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
       },
       body: jsonEncode(<String, dynamic>{
         "offerId": offerId,
+        "quantity": qty
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      awesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+    }
+  }
+  void addFoodItemToCart(int qty, String foodId) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.post(
+      Uri.parse("http://$hostName:5000/api/v1/CartItem"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "foodId": foodId,
         "quantity": qty
       }),
     );
