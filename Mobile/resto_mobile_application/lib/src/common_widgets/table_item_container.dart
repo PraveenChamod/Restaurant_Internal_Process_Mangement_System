@@ -2,45 +2,48 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/image_strings.dart';
 import 'package:http/http.dart' as http;
 import '../features/authentication/screens/table_reservation/select_table.dart';
+
 class TableItemContainer extends StatefulWidget {
   final String tableId;
   final String tableNumber;
   final int numberOfPersons;
   final int price;
   final String status;
-  const TableItemContainer({Key? key,
-    required this.tableNumber,
-    required this.numberOfPersons,
-    required this.price,
-    required this.status,
-    required this.tableId
-  }) : super(key: key);
+  const TableItemContainer(
+      {Key? key,
+      required this.tableNumber,
+      required this.numberOfPersons,
+      required this.price,
+      required this.status,
+      required this.tableId})
+      : super(key: key);
 
   @override
   State<TableItemContainer> createState() => _TableItemContainerState();
 }
 
 class _TableItemContainerState extends State<TableItemContainer> {
-
   DateTime datetime = DateTime(2023, 04, 01);
   DateTime arrivalTime = DateTime(2023, 04, 01, 05, 30);
   DateTime departureTime = DateTime(2023, 04, 01, 07, 30);
-  String arrivalPeriod = '';
-  String departurePeriod = '';
+  String arrivalPeriod = 'AM';
+  String departurePeriod = 'AM';
   final List<TableIdList> bookTables = [];
   final List tableNumbers = [];
+  Map<String, dynamic>? paymentIntent;
 
-  void addDataToList(String tableId, String tableNumber){
+  void addDataToList(String tableId, String tableNumber) {
     bookTables.add(TableIdList(tableIdentity: tableId));
     tableNumbers.add(tableNumber);
   }
 
-  Text setColorToStatus(String status){
-    if(status == 'Available'){
+  Text setColorToStatus(String status) {
+    if (status == 'Available') {
       return Text(
         status,
         style: const TextStyle(
@@ -58,7 +61,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
     );
   }
 
-  Image setImagePath(int personCount){
+  Image setImagePath(int personCount) {
     String imagePath = '';
     switch (personCount) {
       case 1:
@@ -93,7 +96,6 @@ class _TableItemContainerState extends State<TableItemContainer> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: 220,
       height: 300,
@@ -210,7 +212,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
     );
   }
 
-  void openBottomSheet(){
+  void openBottomSheet() {
     showModalBottomSheet(
       backgroundColor: Colors.black38,
       context: context,
@@ -240,21 +242,26 @@ class _TableItemContainerState extends State<TableItemContainer> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.black,
-                              backgroundColor: const Color(0xFFfebf10), // text color
+                              backgroundColor:
+                                  const Color(0xFFfebf10), // text color
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10), // button border radius
+                                borderRadius: BorderRadius.circular(
+                                    10), // button border radius
                               ),
                               elevation: 5, // button elevation
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // button padding
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10), // button padding
                             ),
                             onPressed: () async {
                               final date = await pickDate();
-                              if(date == null) return;
-                              setState(() => datetime = date );
+                              if (date == null) return;
+                              setState(() => datetime = date);
                               Navigator.pop(context);
                               openBottomSheet();
                             },
-                            child: Text('${datetime.year}/${datetime.month}/${datetime.day}'),
+                            child: Text(
+                                '${datetime.year}/${datetime.month}/${datetime.day}'),
                           ),
                         ),
                       ),
@@ -279,16 +286,20 @@ class _TableItemContainerState extends State<TableItemContainer> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.black,
-                              backgroundColor: const Color(0xFFfebf10), // text color
+                              backgroundColor:
+                                  const Color(0xFFfebf10), // text color
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10), // button border radius
+                                borderRadius: BorderRadius.circular(
+                                    10), // button border radius
                               ),
                               elevation: 5, // button elevation
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // button padding
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10), // button padding
                             ),
                             onPressed: () async {
                               final arrivalTimePick = await pickArrivalTime();
-                              if(arrivalTimePick == null) return;
+                              if (arrivalTimePick == null) return;
                               final newArrivalTime = DateTime(
                                 arrivalTime.year,
                                 arrivalTime.month,
@@ -297,12 +308,17 @@ class _TableItemContainerState extends State<TableItemContainer> {
                                 arrivalTimePick.minute,
                               );
                               setState(() => arrivalTime = newArrivalTime);
-                              TimeOfDay arrivalTimeOfDay = TimeOfDay.fromDateTime(newArrivalTime);
-                              arrivalPeriod = arrivalTimeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
+                              TimeOfDay arrivalTimeOfDay =
+                                  TimeOfDay.fromDateTime(newArrivalTime);
+                              arrivalPeriod =
+                                  arrivalTimeOfDay.period == DayPeriod.am
+                                      ? 'AM'
+                                      : 'PM';
                               Navigator.pop(context);
                               openBottomSheet();
                             },
-                            child: Text('${arrivalTime.hour}:${arrivalTime.minute}'),
+                            child: Text(
+                                '${arrivalTime.hour}:${arrivalTime.minute}'),
                           ),
                         ),
                       ),
@@ -327,16 +343,21 @@ class _TableItemContainerState extends State<TableItemContainer> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.black,
-                              backgroundColor: const Color(0xFFfebf10), // text color
+                              backgroundColor:
+                                  const Color(0xFFfebf10), // text color
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10), // button border radius
+                                borderRadius: BorderRadius.circular(
+                                    10), // button border radius
                               ),
                               elevation: 5, // button elevation
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), // button padding
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10), // button padding
                             ),
                             onPressed: () async {
-                              final departureTimePick = await pickDepartureTime();
-                              if(departureTimePick == null) return;
+                              final departureTimePick =
+                                  await pickDepartureTime();
+                              if (departureTimePick == null) return;
                               final newDepartureTime = DateTime(
                                 departureTime.year,
                                 departureTime.month,
@@ -345,12 +366,17 @@ class _TableItemContainerState extends State<TableItemContainer> {
                                 departureTimePick.minute,
                               );
                               setState(() => departureTime = newDepartureTime);
-                              TimeOfDay departureTimeOfDay = TimeOfDay.fromDateTime(newDepartureTime);
-                              departurePeriod = departureTimeOfDay.period == DayPeriod.am ? 'AM' : 'PM';
+                              TimeOfDay departureTimeOfDay =
+                                  TimeOfDay.fromDateTime(newDepartureTime);
+                              departurePeriod =
+                                  departureTimeOfDay.period == DayPeriod.am
+                                      ? 'AM'
+                                      : 'PM';
                               Navigator.pop(context);
                               openBottomSheet();
                             },
-                            child: Text('${departureTime.hour}:${departureTime.minute}'),
+                            child: Text(
+                                '${departureTime.hour}:${departureTime.minute}'),
                           ),
                         ),
                       ),
@@ -372,14 +398,13 @@ class _TableItemContainerState extends State<TableItemContainer> {
                         ),
                         color: const Color(0xFFfebf10),
                         pressEvent: () {
-                          orderItems(
+                          cardPayment(
                               tableNumbers,
                               bookTables,
                               '${datetime.year}/${datetime.month}/${datetime.day}',
                               '${arrivalTime.hour}.${arrivalTime.minute} $arrivalPeriod',
                               '${departureTime.hour}.${departureTime.minute} $departurePeriod',
-                              widget.price
-                          );
+                              widget.price);
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
@@ -400,19 +425,25 @@ class _TableItemContainerState extends State<TableItemContainer> {
   }
 
   Future<DateTime?> pickDate() => showDatePicker(
-    context: context,
-    initialDate: datetime,
-    firstDate: DateTime(2022),
-    lastDate: DateTime(2500),
-  );
+        context: context,
+        initialDate: datetime,
+        firstDate: DateTime(2022),
+        lastDate: DateTime(2500),
+      );
   Future<TimeOfDay?> pickArrivalTime() => showTimePicker(
-    context: context,
-    initialTime: TimeOfDay(hour: arrivalTime.hour, minute: arrivalTime.minute,),
-  );
+        context: context,
+        initialTime: TimeOfDay(
+          hour: arrivalTime.hour,
+          minute: arrivalTime.minute,
+        ),
+      );
   Future<TimeOfDay?> pickDepartureTime() => showTimePicker(
-    context: context,
-    initialTime: TimeOfDay(hour: departureTime.hour, minute: departureTime.minute,),
-  );
+        context: context,
+        initialTime: TimeOfDay(
+          hour: departureTime.hour,
+          minute: departureTime.minute,
+        ),
+      );
 
   void orderItems(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -425,27 +456,28 @@ class _TableItemContainerState extends State<TableItemContainer> {
         "Authorization": "Bearer $userToken",
       },
       body: jsonEncode(<String, dynamic>{
-        "Customer":cusId,
-        "TableNo":tableNumbers,
-        "Tables":tables,
-        "Date":date,
-        "ArrivalTime":arrivalTime,
-        "DepartureTime":departureTime,
-        "amount":amount,
+        "Customer": cusId,
+        "TableNo": tableNumbers,
+        "Tables": tables,
+        "Date": date,
+        "ArrivalTime": arrivalTime,
+        "DepartureTime": departureTime,
+        "amount": amount,
       }),
     );
-    if(response.statusCode == 201) {
+    if (response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final orderDetails = json["data"];
       final msg = json["message"];
-      print(msg);
-      successAwesomeDialog(DialogType.success, msg, "Success");
-    }else{
+      successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
+
+    } else {
       final json = jsonDecode(response.body);
       final msg = json["message"];
       unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
     }
   }
+
   successAwesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
       context: context,
@@ -453,7 +485,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      btnOkOnPress: (){
+      btnOkOnPress: () {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
@@ -464,6 +496,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
       },
     ).show();
   }
+
   unSuccessAwesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
       context: context,
@@ -471,15 +504,57 @@ class _TableItemContainerState extends State<TableItemContainer> {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      btnOkOnPress: (){},
+      btnOkOnPress: () {},
     ).show();
   }
+
+  //Payment Intent
+  Future<void> cardPayment(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    String? userEmail = pref.getString("LoginEmail");
+    final http.Response response = await http.post(
+      Uri.parse("http://$hostName:5000/api/v1/Payment"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "amount":amount,
+        "receipt_email":userEmail,
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      paymentIntent = json;
+    }else{
+      final json = jsonDecode(response.body);
+    }
+    //Initialize Payment Sheet
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent!['clientSecret'],
+          style: ThemeMode.dark,
+          merchantDisplayName: 'Resto_Mobile_App',)).then((value) => {}
+    );
+    //Display the payment sheet
+    try{
+      await Stripe.instance.presentPaymentSheet().then((value) => {
+        print('Payment Success'),
+        orderItems(tableNumbers, tables, date, arrivalTime, departureTime, amount),
+      });
+    }catch(error){
+      unSuccessAwesomeDialog(DialogType.warning, 'Payment Unsuccessful Try Again!', "Warning");
+      throw Exception(error);
+    }
+  }
 }
+
 class TableIdList {
   final String tableIdentity;
   TableIdList({required this.tableIdentity});
 
   Map<String, dynamic> toJson() => {
-    'table': tableIdentity,
-  };
+        'table': tableIdentity,
+      };
 }
