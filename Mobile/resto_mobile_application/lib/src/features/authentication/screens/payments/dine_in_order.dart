@@ -26,6 +26,7 @@ class DineInOrder extends StatefulWidget {
 }
 
 class _DineInOrderState extends State<DineInOrder> {
+
   final List<FoodList> orderFoods = [];
 
   final List<CartItems> data = [];
@@ -151,8 +152,23 @@ class _DineInOrderState extends State<DineInOrder> {
                                 future: fetchOrderData(),
                                 builder: (context, snapshot){
                                   if (snapshot.hasData) {
+                                    // for (int i = 0; i < snapshot.data!.length; i++) {
+                                    //   orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                    // }
                                     for (int i = 0; i < snapshot.data!.length; i++) {
-                                      orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                      if(snapshot.data![i].foodId != null){
+                                        orderFoods.add(FoodList(
+                                          foodId: snapshot.data![i].foodId,
+                                          qty: snapshot.data![i].quantity,
+                                          offerId: 'No',),
+                                        );
+                                      }else{
+                                        orderFoods.add(FoodList(
+                                          offerId: snapshot.data![i].offerId,
+                                          qty: snapshot.data![i].quantity,
+                                          foodId: 'No',),
+                                        );
+                                      }
                                     }
                                     return const Divider(color: Color(0xFFfebf10),);
                                   }else if (snapshot.hasError) {
@@ -227,7 +243,6 @@ class _DineInOrderState extends State<DineInOrder> {
                                 ),
                               ),
                             ),
-                            //OrderItemContainer(foodQuantity: 5, foodName: 'Chicken Koththu',),
                             const Divider(color: Color(0xFFfebf10),),
                           ],
                         ),
@@ -285,7 +300,6 @@ class _DineInOrderState extends State<DineInOrder> {
   Future<List<dynamic>> fetchOrderData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the fetchdata() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/CartItems'),
       headers: <String, String>{
@@ -295,7 +309,6 @@ class _DineInOrderState extends State<DineInOrder> {
     );
     if (response.statusCode == 200) {
       final cartFood = json.decode(response.body);
-      print(cartFood);
       return CartItems.fromJsonList(cartFood);
     } else {
       throw Exception('Failed to load data');
@@ -365,11 +378,13 @@ class _DineInOrderState extends State<DineInOrder> {
 }
 class CartItems{
   final String foodName;
-  final String foodId;
+  final String? foodId;
+  final String? offerId;
   final int quantity;
   CartItems({
     required this.quantity,
     required this.foodId,
+    required this.offerId,
     required this.foodName,
   });
   factory CartItems.fromJson(Map<String, dynamic> json){
@@ -377,6 +392,7 @@ class CartItems{
       quantity: json['quantity'],
       foodId: json['Foodid'],
       foodName: json['name'],
+      offerId: json['Offerid'],
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){
@@ -391,11 +407,24 @@ class CartItems{
 }
 class FoodList {
   final String foodId;
+  final String offerId;
   final int qty;
-  FoodList({required this.foodId, required this.qty});
-
-  Map<String, dynamic> toJson() => {
-    'food': foodId,
-    'Quantity': qty,
-  };
+  FoodList({
+    required this.qty,
+    required this.foodId,
+    required this.offerId
+  });
+  Map<String, dynamic> toJson() {
+    if (offerId == 'No') {
+      return {
+        'food': foodId,
+        'Quantity': qty,
+      };
+    } else{
+      return {
+        'offer': offerId,
+        'Quantity': qty,
+      };
+    }
+  }
 }

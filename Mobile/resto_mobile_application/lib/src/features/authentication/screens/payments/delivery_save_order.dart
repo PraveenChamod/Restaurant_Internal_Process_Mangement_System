@@ -168,7 +168,19 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                                       builder: (context, snapshot){
                                         if (snapshot.hasData) {
                                           for (int i = 0; i < snapshot.data!.length; i++) {
-                                            orderFoods.add(FoodList(foodId: snapshot.data![i].foodId, qty: snapshot.data![i].quantity));
+                                            if(snapshot.data![i].foodId != null){
+                                              orderFoods.add(FoodList(
+                                                  foodId: snapshot.data![i].foodId,
+                                                  qty: snapshot.data![i].quantity,
+                                                  offerId: 'No')
+                                              );
+                                            }else{
+                                              orderFoods.add(FoodList(
+                                                  offerId: snapshot.data![i].offerId,
+                                                  qty: snapshot.data![i].quantity,
+                                                  foodId: 'No')
+                                              );
+                                            }
                                           }
                                           return const Divider(color: Color(0xFFfebf10),);
                                         }else if (snapshot.hasError) {
@@ -265,8 +277,8 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
                           pressEvent: () {
                             widget.paymentMethod == 'Card Payments'
                                 ? cardPayment(orderFoods, widget.paymentMethod, widget.totalPrice, 'Online Order', widget.customerId)
-                                : orderItems(orderFoods, widget.paymentMethod, widget.totalPrice, 'Online Order', widget.customerId);
-                            //orderItems(orderFoods, paymentMethod, totalPrice, 'Online Order', customerId);
+                                : orderItems(orderFoods, widget.paymentMethod, widget.totalPrice, 'Online Order', widget.customerId)
+                            ;
                           },
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(0),
@@ -410,18 +422,21 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
 //For get orderliness data
 class CartItems{
   final String foodName;
-  final String foodId;
+  final String? foodId;
+  final String? offerId;
   final int quantity;
   CartItems({
     required this.quantity,
     required this.foodId,
+    required this.offerId,
     required this.foodName,
   });
   factory CartItems.fromJson(Map<String, dynamic> json){
     return CartItems(
       quantity: json['quantity'],
       foodId: json['Foodid'],
-      foodName: json['name'],
+      offerId: json['Offerid'],
+      foodName: json['name']
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){
@@ -436,11 +451,20 @@ class CartItems{
 }
 class FoodList {
   final String foodId;
+  final String offerId;
   final int qty;
-  FoodList({required this.foodId, required this.qty});
-
-  Map<String, dynamic> toJson() => {
-    'food': foodId,
-    'Quantity': qty,
-  };
+  FoodList({required this.qty, required this.foodId, required this.offerId});
+  Map<String, dynamic> toJson() {
+    if (offerId == 'No') {
+      return {
+        'food': foodId,
+        'Quantity': qty,
+      };
+    } else{
+      return {
+        'offer': offerId,
+        'Quantity': qty,
+      };
+    }
+  }
 }

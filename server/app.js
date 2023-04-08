@@ -10,6 +10,7 @@ import dotenv from 'dotenv';
 import passport from "passport";
 import ItemsRoutes from "./routes/ItemsRoutes.js";
 import FoodRoutes from "./routes/FoodsRoutes.js";
+import CategoryRoutes from "./routes/CategoryRoutes.js";
 import BlogRoutes from "./routes/BlogRoutes.js";
 import TableRoutes from "./routes/TableRoutes.js";
 import OfferRoutes from "./routes/OfferRoutes.js";
@@ -82,6 +83,7 @@ passport.deserializeUser(deserialize);
 app.use('/images', express.static('images/Users'));
 app.use('/Foodimages', express.static('images/Foods'));
 app.use('/offerimages', express.static('images/Offers'));
+app.use('/Categoryimages', express.static('images/Category'));
 
 app.use('/api/v1/Auth', AuthRoutes);
 
@@ -92,6 +94,8 @@ app.use('/api/v1/',requireAuth,ItemsRoutes);
 app.use('/api/v1',OfferRoutes);
 
 app.use('/api/v1/',requireAuth,FoodRoutes);
+
+app.use('/api/v1/',requireAuth,CategoryRoutes);
 
 app.use('/api/v1/',requireAuth,BlogRoutes);
 

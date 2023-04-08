@@ -234,7 +234,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
                                           successAwesomeDialog(
                                               DialogType.info,
                                               '${widget.itemName} x $totalCount will add to the Cart.',
-                                              "Inform", totalCount, widget.itemId
+                                              "Inform"
                                           );
                                         }else{
                                           unSuccessAwesomeDialog(
@@ -287,7 +287,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
       },
     ).show();
   }
-  successAwesomeDialog(DialogType type, String desc, String title, int qty, String foodId) {
+  successAwesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
       context: context,
       dialogType: type,
@@ -296,7 +296,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
       title: title,
       desc: desc,
       btnOkOnPress: (){
-        addToCart(totalCount, widget.itemId);
+        addOfferToCart(totalCount, widget.itemId);
       },
     ).show();
   }
@@ -310,7 +310,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
       btnOkOnPress: (){},
     ).show();
   }
-  void addToCart(int qty, String foodId) async {
+  void addOfferToCart(int qty, String offerId) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -320,7 +320,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
         "Authorization": "Bearer $userToken",
       },
       body: jsonEncode(<String, dynamic>{
-        "foodId": foodId,
+        "offerId": offerId,
         "quantity": qty
       }),
     );
