@@ -6,8 +6,8 @@ import useFetch from "../../Hooks/useFetch";
 const SupplierOrderConform = () => {
     const {id} = useParams();
     console.log(id);
-    const {data,isPending} = useFetch(`/api/v1/ViewSupplierOrder/${id}`);
-    const data2 = data?.data?.data2
+    const {data,isPending} = useFetch(`/api/v1/stockorderbyid/${id}`);
+    const data2 = data?.data?.UpdateOrder
     return ( 
         <>
             {isPending && <Spinner/>}

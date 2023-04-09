@@ -23,7 +23,7 @@ const SupplierOrderDetails = (props) => {
                             <l.Th></l.Th>
                         </l.Tr>
                         {
-                            props.data3.data.SupplierItems.map(ItemArray=>{
+                            props.data3.map(ItemArray=>{
                                 return(
                                     
                                     ItemArray.supplierItem.map(row =>{

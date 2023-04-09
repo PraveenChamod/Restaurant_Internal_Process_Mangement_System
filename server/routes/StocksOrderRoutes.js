@@ -1,11 +1,11 @@
 import express from 'express';
-import { addSupplierOrder , ViewSupplierOrder, ViewSupplierOrderById , getSupplierOrderById } from '../controllers/StocksOrderController.js';
+import { addSupplierOrder , ConfirmStockOrder, ViewSupplierOrder, ViewSupplierOrderById } from '../controllers/StocksOrderController.js';
 
 const StocksOrderRoutes = express.Router();
 
-StocksOrderRoutes.route('/AddSupplierOrder').post(addSupplierOrder);
-StocksOrderRoutes.route('/ViewSupplierOrder').get(ViewSupplierOrder);
-StocksOrderRoutes.route('/ViewSupplierOrderById/:id').get(ViewSupplierOrderById);
-StocksOrderRoutes.route('/SupplierOrderById/:id').get(getSupplierOrderById);
+StocksOrderRoutes.route('/SupplierOrder').post(addSupplierOrder);
+StocksOrderRoutes.route('/SupplierOrder').get(ViewSupplierOrder);
+StocksOrderRoutes.route('/stockorderbyid/:id').get(ViewSupplierOrderById);
+StocksOrderRoutes.route('/stockorderconfirmation').post(ConfirmStockOrder);
 
 export default StocksOrderRoutes;

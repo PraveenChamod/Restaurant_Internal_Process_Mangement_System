@@ -18,6 +18,13 @@ const StocksOrderSchema = mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:'ServiceProvider'
     },
+    Manager:{
+        type:mongoose.Schema.ObjectId,
+        ref:'ServiceProvider'
+    },
+    TotalPrice:{
+        type:Number
+    },
     Status:{
         type:String,
         default:'Pending',
