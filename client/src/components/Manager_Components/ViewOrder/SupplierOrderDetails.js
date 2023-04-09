@@ -5,7 +5,6 @@ import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './SupplierOrderDetailsElements';
 const SupplierOrderDetails = (props) => {
-    console.log(props);
     const {user} = useAuth();
     return ( 
         <Container>

@@ -4,6 +4,7 @@ import useFetch from "../../Hooks/useFetch";
 
 const ViewSupplierOrder = (props) => {
     const {data,isPending}= useFetch('api/v1/SupplierOrder');
+    console.log(data?.data?.placedorders);
     return ( 
         <>
         {isPending && <Spinner/>}

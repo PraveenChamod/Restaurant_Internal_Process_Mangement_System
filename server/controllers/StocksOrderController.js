@@ -266,7 +266,11 @@ export const ViewSupplierOrderById = async(req,res)=>{
                 .populate({
                     path:'Items.item',
                     model:'SupplierItem'
-                }) 
+                })
+                .populate({
+                    path:'Supplier',
+                    model:'ServiceProvider'
+                })
                 .exec();
                 if(populatedOrder.Supplier.id === user.id){
                     const Name = populatedOrder.Manager.Name;
@@ -286,13 +290,20 @@ export const ViewSupplierOrderById = async(req,res)=>{
                         }
                     });
                     orderDetails = {
-                        orderId : order.id,
-                        supplierName : Name,
-                        supplierEmail : Email,
+                        
+                        ManagerName : Name,
+                        ManagerEmail : Email,
                         OrderStatus : Status,
                         item
                     };
                 }
+                res.status(200).json({
+                    status:'Success',
+                    message:`Details of Order ${id}`,
+                    data:{
+                      orderDetails
+                    }
+                })
             } catch (error) {
                 res.status(400).json({
                     statuts:"Error",
