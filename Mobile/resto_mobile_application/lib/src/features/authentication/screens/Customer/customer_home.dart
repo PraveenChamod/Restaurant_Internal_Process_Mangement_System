@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,7 +18,14 @@ class CustomerHome extends StatefulWidget {
 }
 
 class _CustomerHomeState extends State<CustomerHome> {
+
   final List<OfferItems> offerData = [];
+
+  final List<Category> categoryData = [];
+
+  final List<FoodsByCategory> foodsByCategoryData = [];
+
+  String categoryName = 'Burgers';
 
   var _selectedIndex = 0;
 
@@ -61,75 +69,6 @@ class _CustomerHomeState extends State<CustomerHome> {
     },
   ];
 
-  //List of food items(Dummy)
-  List<Map<String, dynamic>> foodItems = [
-    {
-      "foodImagePath": "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-      "foodName": "Pizza",
-      "foodPrice": 470,
-      "foodSpecialIngredient": "With Almond Milk",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Burger/Chicken_Burger.jpg",
-      "foodName": "Burger",
-      "foodPrice": 450,
-      "foodSpecialIngredient": "With Coconut Milk",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "foodName": "Koththu",
-      "foodPrice": 560,
-      "foodSpecialIngredient": "With Chocolate",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Rice/Veg_Rice.jpg",
-      "foodName": "Rice",
-      "foodPrice": 360,
-      "foodSpecialIngredient": "With Chilies",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-      "foodName": "Pizza",
-      "foodPrice": 470,
-      "foodSpecialIngredient": "With Almond Milk",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "foodName": "Koththu",
-      "foodPrice": 560,
-      "foodSpecialIngredient": "With Chocolate",
-    },
-  ];
-
-  //List of food types(Dummy)
-  final List foodTypes = [
-    [
-      'Pizza',
-      true,
-    ],
-    [
-      'Burger',
-      false,
-    ],
-    [
-      'Koththu',
-      false,
-    ],
-    [
-      'Appetizer',
-      false,
-    ],
-  ];
-
-  //User Tapped on food types
-  void foodTypeSelected(int index) {
-    setState(() {
-       for(int i = 0; i < foodTypes.length; i++){
-         foodTypes[i][1] = false;
-       }
-      foodTypes[index][1] = true;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -179,38 +118,95 @@ class _CustomerHomeState extends State<CustomerHome> {
                 ),
               ),
               const SizedBox(height: 10,),
-              //Horizontal Listview of food types
-              SizedBox(
-                height: 30,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: foodTypes.length,
-                  itemBuilder: (context, index) {
-                    return FoodTypes(
-                      foodType: foodTypes[index][0],
-                      isSelected: foodTypes[index][1],
-                      onTap: () {
-                        foodTypeSelected(index);
-                      },
-                    );
-                  },
+              Center(
+                child: SizedBox(
+                  height: 60,
+                  child: FutureBuilder(
+                    future: getCategories(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 20.0),
+                                child: SizedBox(
+                                  width: 130,
+                                  height: 30,
+                                  child: AnimatedButton(
+                                    text: snapshot.data![index].categoryName,
+                                    buttonTextStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    pressEvent: () {
+                                      categoryName = snapshot.data![index].categoryName;
+                                    },
+                                    color: const Color(0xFFfebf10),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(20),
+                                      bottomLeft: Radius.circular(20),
+                                      bottomRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFfebf10),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
               const SizedBox(height: 10,),
-              //Horizontal Listview of food tiles
               Center(
                 child: SizedBox(
                   height: 250,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: foodItems.length,
-                    itemBuilder: (context, index) {
-                      return FoodTile(
-                        foodImagePath: foodItems[index]["foodImagePath"] ?? '',
-                        foodName: foodItems[index]["foodName"] ?? '',
-                        foodPrice: foodItems[index]["foodPrice"] ?? '',
-                        foodSpecialIngredient: foodItems[index]["foodSpecialIngredient"] ?? '',
-                        foodId: 'Test1',
+                  child: FutureBuilder(
+                    future: getFoodByCategory(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return OfferFoodTile(
+                              offerFoodImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].foodImagePath}',
+                              offerFoodName: snapshot.data![index].categoryName,
+                              offerFoodSpecialIngredient: snapshot.data![index].foodName,
+                              offerFoodId: snapshot.data![index].foodId,
+                              offerFoodPrice: snapshot.data![index].foodPrice,
+                              foodType: 'normalItem',
+                            );
+                          },
+                        );
+                      }else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      }
+                      return const SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFfebf10),
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -245,6 +241,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                               offerFoodSpecialIngredient: snapshot.data![index].offerName,
                               offerFoodId: snapshot.data![index].offerId,
                               offerFoodPrice: snapshot.data![index].price,
+                              foodType: 'offerItem',
                             );
                           },
                         );
@@ -287,6 +284,98 @@ class _CustomerHomeState extends State<CustomerHome> {
     } else {
       throw Exception('Failed to load data');
     }
+  }
+  Future<List<dynamic>> getCategories() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    final response = await http.get(
+      Uri.parse('http://$hostName:5000/api/v1/Categories'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    if (response.statusCode == 200) {
+      final categories = json.decode(response.body);
+      return Category.fromJsonList(categories['data']['categories']);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+  Future<List<dynamic>> getFoodByCategory() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    final response = await http.get(
+      Uri.parse('http://$hostName:5000/api/v1/Foods/$categoryName'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    if (response.statusCode == 200) {
+      final foodItems = json.decode(response.body);
+      return FoodsByCategory.fromJsonList(foodItems['data']['findFoods']);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+}
+
+class FoodsByCategory{
+  final String foodName;
+  final String categoryName;
+  final int foodPrice;
+  final String foodImagePath;
+  final String foodId;
+  FoodsByCategory({
+    required this.categoryName,
+    required this.foodName,
+    required this.foodPrice,
+    required this.foodImagePath,
+    required this.foodId,
+  });
+  factory FoodsByCategory.fromJson(Map<String, dynamic> json){
+    return FoodsByCategory(
+      foodName: json['FoodName'],
+      categoryName: json['Category'],
+      foodPrice:  json['Price'],
+      foodImagePath:  json['FoodImage'],
+      foodId:  json['id'],
+    );
+  }
+  static List<FoodsByCategory> fromJsonList(dynamic jsonList){
+    final foodsByCategoryList = <FoodsByCategory>[];
+    if (jsonList is List<dynamic>) {
+      for (final json in jsonList) {
+        foodsByCategoryList.add(
+          FoodsByCategory.fromJson(json),
+        );
+      }
+    }
+    return foodsByCategoryList;
+  }
+}
+
+class Category{
+  final String categoryName;
+  Category({
+    required this.categoryName,
+  });
+  factory Category.fromJson(Map<String, dynamic> json){
+    return Category(
+      categoryName: json['CategoryName'],
+    );
+  }
+  static List<Category> fromJsonList(dynamic jsonList){
+    final categoryList = <Category>[];
+    if (jsonList is List<dynamic>) {
+      for (final json in jsonList) {
+        categoryList.add(
+          Category.fromJson(json),
+        );
+      }
+    }
+    return categoryList;
   }
 }
 
@@ -334,6 +423,7 @@ class OfferFoodTile extends StatelessWidget {
   final String offerFoodName;
   final String offerFoodSpecialIngredient;
   final String offerFoodId;
+  final String foodType;
   final int offerFoodPrice;
 
   const OfferFoodTile({Key? key,
@@ -342,6 +432,7 @@ class OfferFoodTile extends StatelessWidget {
     required this.offerFoodSpecialIngredient,
     required this.offerFoodId,
     required this.offerFoodPrice,
+    required this.foodType,
   }) : super(key: key);
 
   @override
@@ -357,6 +448,7 @@ class OfferFoodTile extends StatelessWidget {
                 itemName: offerFoodSpecialIngredient,
                 itemId: offerFoodId,
                 price: offerFoodPrice,
+                itemFoodType: foodType,
               );
             },
           ),
@@ -451,9 +543,6 @@ class OfferFoodTile extends StatelessWidget {
     );
   }
 }
-
-
-
 
 //Food Tile stl
 class FoodTile extends StatelessWidget {
@@ -561,7 +650,6 @@ class FoodTile extends StatelessWidget {
     );
   }
 }
-
 
 class FoodTypes extends StatelessWidget {
   final String foodType;

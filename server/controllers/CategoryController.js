@@ -52,3 +52,43 @@ export const addCategories = async(req,res)=>{
         });
     }
 }
+
+
+// Method : GET
+// End Point : "api/v1/Categories";
+// Description : Get Categories
+export const getCategories = async (req,res)=>{
+
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role=== "Admin" || user.Role === "Customer"){
+            const categories = await CategoryModel.find();
+            if(categories !== null){
+                res.status(200).json({
+                    status:"Success",
+                    message:"Details of all categories",
+                    data:{
+                        categories
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes please add categories"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:'Only Manager, Admin and customer have access to do this operation'
+            });
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
+    }
+}
