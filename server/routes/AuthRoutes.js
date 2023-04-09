@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { ForgotPassword, getUserProfile, LogInUser, LogoutUser, passportSAuth, PasswordReset, redirect, sendOTP, UploadProfileImage } from '../controllers/AuthController.js';
+import { ForgotPassword, getUserProfile, LogInUser, LogoutUser, PasswordReset, sendOTP, UploadProfileImage } from '../controllers/AuthController.js';
 import { requireAuth } from '../middleware/Authmiddleware.js';
 
 
@@ -13,10 +13,6 @@ AuthRoutes.route('/Profile').get(requireAuth,getUserProfile);
 
 AuthRoutes.route('/ProfilePicture').patch(requireAuth,UploadProfileImage);
 
-AuthRoutes.route('/auth/google').get(passportSAuth);
-
-AuthRoutes.route('sessions/oauth/google').get(passportSAuth,redirect)
-
 AuthRoutes.route('/logout').get(LogoutUser);
 
 AuthRoutes.route('/ResetPassword/:Email').patch(PasswordReset);
@@ -25,13 +21,17 @@ AuthRoutes.route('/OTP').post(sendOTP);
 
 AuthRoutes.route('/Forgotpassword').patch(ForgotPassword);
 
-// AuthRoutes.route('/google').get(passport.authenticate('google', ["profile", "email"]));
+AuthRoutes.route('/callback').get(
+	passport.authenticate('google', {
+        failureRedirect:'http://localhost:3000/login',
+	}),
+    (req,res)=>{
+        res.redirect('/Profile')
+    }
+);
 
-// AuthRoutes.route('/google/callback').get(
-// 	passport.authenticate('google', {
-// 		successRedirect: process.env.CLIENT_URL,
-// 		failureRedirect: "/login/failed",
-// 	})
-// );
+AuthRoutes.route('/Profile').get((req, res) => {
+    res.json({ user: req.user.user1, token: req.user.token });
+  });
 
 export default AuthRoutes;

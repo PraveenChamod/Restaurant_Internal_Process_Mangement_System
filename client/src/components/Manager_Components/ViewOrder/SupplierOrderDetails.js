@@ -5,7 +5,6 @@ import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './SupplierOrderDetailsElements';
 const SupplierOrderDetails = (props) => {
-    console.log(props);
     const {user} = useAuth();
     return ( 
         <Container>
@@ -23,7 +22,7 @@ const SupplierOrderDetails = (props) => {
                             <l.Th></l.Th>
                         </l.Tr>
                         {
-                            props.data3.data.SupplierItems.map(ItemArray=>{
+                            props.data3.map(ItemArray=>{
                                 return(
                                     
                                     ItemArray.supplierItem.map(row =>{

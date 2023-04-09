@@ -24,7 +24,6 @@ const customerSchema = mongoose.Schema({
     },
     ContactNumber:{
         type:String,
-        required:[true,"Customer must provide his/her contact number"],
         minlength:10
     },
     Email:{

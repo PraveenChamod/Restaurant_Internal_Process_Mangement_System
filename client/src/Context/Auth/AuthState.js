@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react"
 import AuthContext from './AuthContext';
 import {
     USER_LOADED,
@@ -19,7 +19,8 @@ const AuthState = (props) => {
         isAuthenticated: null,
         loading: false,
         user: null,
-        error:null
+        error:null,
+        google:null
     }
 
     const[state,dispatch] = useReducer(AuthReducer,initialState);
@@ -42,27 +43,18 @@ const AuthState = (props) => {
         dispatch({type:SET_LOADING});
         try {
             const res = await axios.get('api/v1/Auth/Profile')
-            console.log(res.data.user);
+            console.log(res);
             dispatch(
                 {
                     type:USER_LOADED,
-                    payload:res.data.user
+                    payload:res.data.user,
+                    google:res.data.google
                 });
         } catch (error) {
             console.log(error);
             dispatch({ type: AUTH_ERROR })
         }
     }
-
-    // const googleAuth = () => {
-	// 	window.open(
-	// 		`api/v1/Auth/google/callback`, 
-	// 		"_self"
-	// 	);
-    //     dispatch({
-    //         type:GOOGLE_OAUTH
-    //     })
-	// };
 
     const logingUser = async (formData)=>{
         dispatch({type:SET_LOADING});
@@ -103,7 +95,6 @@ const AuthState = (props) => {
                 logout,
                 loadUser,
                 RegisterUser,
-                // googleAuth
             }}
         >
             {props.children}
