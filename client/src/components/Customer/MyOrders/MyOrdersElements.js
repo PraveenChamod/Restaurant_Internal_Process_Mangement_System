@@ -82,7 +82,7 @@ export const ItemsCard = styled.div`
         background-color: #1A1E21;
         border-radius: 10px;
         box-shadow: 3px 3px 3px 3px #000;
-        flex-direction: column;
+        
     }
     
 `
@@ -219,7 +219,7 @@ export const Icon = styled.div`
     width: 20%;
 `
 export const ItemSection = styled.div`
-    height: 100px;
+    height: 200px;
     width: 80%;
     background-color: #1A1E21;
     overflow: auto;
@@ -230,4 +230,8 @@ export const Icon1 = styled.div`
     display: flex;
     color: #FFBF00;
     margin: 0 1%;
+`
+export const Section = styled.div`
+    height: 100%;
+    width: 80%;
 `
