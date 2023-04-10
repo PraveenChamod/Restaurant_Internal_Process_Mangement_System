@@ -79,6 +79,7 @@ export const ViewPendingReservations = async(req,res)=>{
                             ReservationDetails = {
                                 CustomerName:Name,
                                 CustomerContactNo:ContactNo,
+                                Type:populatedReservation.Type,
                                 Tables,
                                 ArrivalTime:populatedReservation.ArrivalTime,
                                 DepartureTime:populatedReservation.DepartureTime,
@@ -145,6 +146,7 @@ export const ViewReservation = async(req,res)=>{
                     CustomerName:Name,
                     CustomerContactNo:ContactNo,
                     Tables,
+                    Type:populatedReservation.Type,
                     ArrivalTime:populatedReservation.ArrivalTime,
                     DepartureTime:populatedReservation.DepartureTime,
                     Date:populatedReservation.Date,

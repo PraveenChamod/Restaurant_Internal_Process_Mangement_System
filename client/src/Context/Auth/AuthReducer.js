@@ -49,7 +49,8 @@ export default (state,action) => {
                 ...state,
                 isAuthenticated: true,
                 loading: false,
-                user:action.payload
+                user:action.payload,
+                google: action.google
             }
         case SET_LOADING:
             return {

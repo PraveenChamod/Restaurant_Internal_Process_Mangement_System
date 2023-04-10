@@ -5,10 +5,12 @@ import jwt from 'jsonwebtoken';
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
-import passport from "passport";
 import path from 'path';
 import ejs from 'ejs';
 import { transporter } from "../util/NotificationUtil.js";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+
 const imageStorage = multer.diskStorage({
     destination:"images/Users",
     filename: (req,file,cb)=>{
@@ -17,6 +19,51 @@ const imageStorage = multer.diskStorage({
 })
 const image = multer({storage:imageStorage}).single('image');
 const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
+const clientId = '810530431238-ihd5ug241fdi5g07hfc0es3qfvri236q.apps.googleusercontent.com';
+const clientSecret = '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'
+
+export const strategy = 
+    new GoogleStrategy(
+        {
+            clientID:clientId,
+            clientSecret:clientSecret,
+            callbackURL:'/api/v1/Auth/callback',
+            scope:["profile","email"]
+        },
+        async (accesstoken,refreshtoken,profile,done)=>{
+           
+            const user1 = await Customer.findOne({Email:profile.emails[0].value}).populate('Email');
+            
+            if(user1){
+                const token = createToken(user1.id,user1.Email,user1.Role);
+                return done({user1,token})
+            }
+            else{
+                const salt = await GenerateSalt();
+                const pwd = Math.random().toString(36).substring(2,10);
+                const encryptedPassword = await GeneratePassword(pwd,salt);
+                const confirmEncryptedPassword = await GeneratePassword(pwd,salt);
+                const newUser = await Customer.create({
+                    Name:profile.displayName,
+                    Password:encryptedPassword,
+                    ConfirmPassword:confirmEncryptedPassword,
+                    Email:profile.emails[0].value,
+                    ProfileImage:profile.photos[0].value,
+                    Role:"Customer"
+                })
+                const token = createToken(newUser.id,newUser.Email,newUser.Role);
+                return done({newUser,token})
+            }
+        }
+    );
+export const serialize = (user, done) => {
+    done(user);
+};
+export const deserialize = async (id, done) => {
+    const user = await Customer.findById(id);
+    done(user);
+};
+
 // Method : POST
 // End Point : "api/v1/Auth/LoginUser";
 // Description : Login User
@@ -74,13 +121,7 @@ export const LogInUser = async (req,res)=>{
     
 }
 
-export const passportSAuth = passport.authenticate('google', {
-    scope: ['profile', 'email']
-})
 
-export const redirect = async (req, res) => {
-    res.redirect('/login'); // Redirect the user to the home page after authentication
-  }
 // Method : POST
 // End Point : "api/v1/Auth/uploadProfilePicture";
 // Description : Upload Profile Image

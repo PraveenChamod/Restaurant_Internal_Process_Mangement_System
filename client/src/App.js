@@ -48,6 +48,7 @@ import AdminViewUser from './Pages/Admin/AdminViewUser';
 import AdminAddTables from './Pages/Admin/AdminAddTable';
 import AdminViewTables from './Pages/Admin/AdminViewTables';
 import AdminAddFoods from './Pages/Admin/AddFoods';
+import AdminAddCategories from './Pages/Admin/AddCategories';
 import AdminViewFoods from './Pages/Admin/AdimnViewFoods';
 import AdminViewFood from './Pages/Admin/AdminViewFood';
 import ManagerViewUser from './Pages/Manager/ManagerViewUser';
@@ -58,6 +59,7 @@ import ManagerViewFoods from './Pages/Manager/ManagerViewFoods';
 import ManagerViewFood from './Pages/Manager/ManagerViewFood';
 import ManagerViewOffers from './Pages/Manager/ViewOffers';
 import ManagerViewOffer from './Pages/Manager/ViewOffer';
+import ManagerAddCategories from './Pages/Manager/AddCategories';
 import StaffMemberAddOffers from './Pages/Staff-Member/AddOffers';
 import StaffMemberViewOffers from './Pages/Staff-Member/ViewOffers';
 import StaffMemberViewOffer from './Pages/Staff-Member/ViewOffer';
@@ -180,6 +182,7 @@ function App() {
                 <Route path="/AdminAdd-Foods" element={<AdminAddFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Foods" element={<AdminViewFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Food/:id" element={<AdminViewFood/>}/>
+                <Route path="/AdminAdd-Categories" element={<AdminAddCategories BackRoutes={BackRoutes[0].nav}/>}/>
               {/* </Route> */}
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -205,6 +208,7 @@ function App() {
                 <Route path="/ManagerAdd-supllierorder" element={<SupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder-details/:id" element={<ViewSupplierOrderDetails/>}/>
+                <Route path="/ManagerAdd-Categories" element={<ManagerAddCategories BackRoutes={BackRoutes[1].nav}/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 

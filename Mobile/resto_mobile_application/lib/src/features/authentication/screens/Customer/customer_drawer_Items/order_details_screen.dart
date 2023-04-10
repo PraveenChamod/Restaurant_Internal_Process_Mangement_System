@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'orders_screen.dart';
 
 class OrderDetailsScreen extends StatefulWidget {

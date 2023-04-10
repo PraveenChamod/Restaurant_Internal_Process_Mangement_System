@@ -10,6 +10,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
 import { AiFillTwitterCircle } from 'react-icons/ai';
 import { RegularButton } from "../shared/SharedElements/Buttons";
+
 import {
     Page,
     Container,
@@ -119,6 +120,8 @@ const Login = (props) => {
         }
         
     }
+    
+    
 
     useEffect(()=>{
         if (!loading && user && isAuthenticated) {

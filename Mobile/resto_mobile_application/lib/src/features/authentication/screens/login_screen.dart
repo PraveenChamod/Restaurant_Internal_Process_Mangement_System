@@ -340,8 +340,8 @@ class _LoginScreenState extends State<LoginScreen> {
     await pref.setString("JwtToken", token);
     String? ID = pref.getString("LoginId");
     print("Shared Id: ${ID!}");
-    String? UserEmail = pref.getString("LoginEmail");
-    print("Shared Email: $UserEmail");
+    String? userEmail = pref.getString("LoginEmail");
+    print("Shared Email: $userEmail");
     String? userToken = pref.getString("JwtToken");
     print("Shared Token: $userToken");
 

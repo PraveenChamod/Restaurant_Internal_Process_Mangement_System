@@ -7,7 +7,6 @@ import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_appbar.dart';
 import '../../../../constants/image_strings.dart';
 
-
 class ProductMenuTitles extends StatefulWidget {
   final int choice;
 
@@ -19,48 +18,7 @@ class ProductMenuTitles extends StatefulWidget {
 
 class _ProductMenuTitlesState extends State<ProductMenuTitles> {
 
-
-
-  List<Map<String, String>> foodItems = [
-    {
-      "foodImagePath": "assets/Food Types/Appetizer/FriedFish.jpg",
-      "foodCategory": "Appetizer",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Beverages/Beverages.jpg",
-      "foodCategory": "Beverages",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Burger/Chicken_Burger.jpg",
-      "foodCategory": "Burgers",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Chop-Suey/VegChopSuey.jpg",
-      "foodCategory": "Chop-Suey",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Desert/FruitSalad.jpg",
-      "foodCategory": "Desert",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Koththu/Chicken_Koththu.jpg",
-      "foodCategory": "Koththu",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Noodles/Noodles.jpg",
-      "foodCategory": "Noodles",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Pizza/Cheese_Pizza.jpg",
-      "foodCategory": "Pizza",
-    },
-    {
-      "foodImagePath": "assets/Food Types/Rice/Veg_Rice.jpg",
-      "foodCategory": "Fried-Rice",
-    },
-  ];
-
-  List<FoodMenuItems> data = [];
+  List<MenuItems> data = [];
 
   @override
   Widget build(BuildContext context) {
@@ -74,18 +32,36 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
             Center(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: GridView.builder(
-                  itemCount: foodItems.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return MenuContainer(
-                      itemImagePath: foodItems[index]["foodImagePath"] ?? '',
-                      itemName: foodItems[index]["foodCategory"] ?? '',
-                      choice: widget.choice,
+                child: FutureBuilder(
+                  future: getCategories(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return GridView.builder(
+                        itemCount: snapshot.data!.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          return MenuContainer(
+                            itemImagePath: 'http://$hostName:5000/Categoryimages/${snapshot.data![index].itemImagePath}',
+                            itemName: snapshot.data![index].category,
+                            choice: widget.choice,
+                          );
+                        },
+                      );
+                    }else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return const SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFFfebf10),
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -93,85 +69,47 @@ class _ProductMenuTitlesState extends State<ProductMenuTitles> {
             ),
           ],
         ),
-        // body: Stack(
-        //   children: <Widget>[
-        //     const BackgroundImage(),
-        //     Center(
-        //       child: Padding(
-        //         padding: const EdgeInsets.all(10.0),
-        //         child: FutureBuilder(
-        //           future: fetchData(),
-        //           builder: (context, snapshot) {
-        //             if (snapshot.hasData) {
-        //               return GridView.builder(
-        //                 itemCount: snapshot.data!.length,
-        //                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //                   crossAxisCount: 2,
-        //                   crossAxisSpacing: 10,
-        //                   mainAxisSpacing: 10,
-        //                 ),
-        //                 itemBuilder: (BuildContext context, int index) {
-        //                   return MenuContainer(
-        //                     itemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].itemImagePath}',
-        //                     itemName: snapshot.data![index].category,
-        //                   );
-        //                 },
-        //               );
-        //             }else if (snapshot.hasError) {
-        //               return Text('${snapshot.error}');
-        //             }
-        //             return const CircularProgressIndicator();
-        //           },
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
-  Future<List<dynamic>> fetchData() async {
+  Future<List<dynamic>> getCategories() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the fetchdata() ${userToken!}");
     final response = await http.get(
-      Uri.parse('http://$hostName:5000/api/v1/Foods'),
+      Uri.parse('http://$hostName:5000/api/v1/Categories'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
       },
     );
     if (response.statusCode == 200) {
-      //print(json.decode(response.body));
-      final foood = json.decode(response.body);
-      //print(foood['data']['foods']);
-      return FoodMenuItems.fromJsonList(foood['data']['foods']);
-      //return FoodMenuItems.fromJsonList(json.decode(response.body));
+      final categories = json.decode(response.body);
+      return MenuItems.fromJsonList(categories['data']['categories']);
     } else {
       throw Exception('Failed to load data');
     }
   }
 }
 //use the fromJson method of our model class to convert the JSON data to an object.
-class FoodMenuItems{
+class MenuItems{
   final String itemImagePath;
   final String category;
-  FoodMenuItems({required this.itemImagePath, required this.category,});
-  factory FoodMenuItems.fromJson(Map<String, dynamic> json){
-    return FoodMenuItems(
-      itemImagePath: json['FoodImage'],
-      category: json['Category'],
+  MenuItems({required this.itemImagePath, required this.category,});
+  factory MenuItems.fromJson(Map<String, dynamic> json){
+    return MenuItems(
+      itemImagePath: json['CategoryImage'],
+      category: json['CategoryName'],
     );
   }
-  static List<FoodMenuItems> fromJsonList(dynamic jsonList){
-    final foodMenuItemsList = <FoodMenuItems>[];
+  static List<MenuItems> fromJsonList(dynamic jsonList){
+    final menuItemsList = <MenuItems>[];
     if (jsonList is List<dynamic>) {
       for (final json in jsonList) {
-        foodMenuItemsList.add(
-          FoodMenuItems.fromJson(json),
+        menuItemsList.add(
+          MenuItems.fromJson(json),
         );
       }
     }
-    return foodMenuItemsList;
+    return menuItemsList;
   }
 }

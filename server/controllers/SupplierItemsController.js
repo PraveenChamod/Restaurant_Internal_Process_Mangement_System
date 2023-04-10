@@ -50,7 +50,7 @@ export const SupplierItems = async(req,res,next)=>{
 export const ViewAllSupplierItems = async(req,res)=>{
     try {
         const user = req.user;
-        if(user.Role === "Supplier"){
+        if(user.Role === "Supplier" || user.Role === "Manager"){
             const findSupplierItems = await SupplierItem.find();
             console.log(findSupplierItems);
             let SupplierItems = [];
@@ -65,11 +65,16 @@ export const ViewAllSupplierItems = async(req,res)=>{
                       })
                       .exec();
                     console.log(populatedSupplierItem);
+                    const SupplierItemsId = Item.id;
+                    const Id = populatedSupplierItem.Supplier.id;
                     const Name = populatedSupplierItem.Supplier.Name;
                     const ContactNumber = populatedSupplierItem.Supplier.ContactNumber;
                     const supplierItem = populatedSupplierItem.Items.map((item) => {
                       if(item !== undefined){
                         return{
+                          SupplierItemsId : SupplierItemsId,
+                          SupplierId:Id,
+                          ItemId: item.id,
                           ItemName: item.ItemName,
                           Price: item.Price,
                           Status: item.Status,
@@ -79,7 +84,6 @@ export const ViewAllSupplierItems = async(req,res)=>{
                       
                     });
                     SupplierItemDetails = {
-                      SupplierItemId:supplierItem.id,
                       supplierName: Name,
                       supplierContactNumber:ContactNumber,
                       supplierItem                      
@@ -111,4 +115,60 @@ export const ViewAllSupplierItems = async(req,res)=>{
             message:error.message
         })
     }
+}
+
+// Method : GET
+// End Point : "api/v1/SupplierItemsDetailsById/:id";
+// Description : Get SupplierItem by id 
+export const ViewAllSupplierItemsById = async(req,res)=>{
+  try {
+      const user = req.user;
+      if(user.Role === "Manager"){
+          const {id} = req.params;
+          let SupplierItems = [];
+          let SupplierItemDetails;
+          try {
+              const populatedSupplierItem = await SupplierItem.findById(id)
+                .populate({
+                  path: 'Supplier',
+                  model: 'ServiceProvider'
+                })
+                .exec();
+              console.log(populatedSupplierItem);
+              const Name = populatedSupplierItem.Supplier.Name;
+              const ContactNumber = populatedSupplierItem.Supplier.ContactNumber;
+              const supplierItem = populatedSupplierItem.Items.map((item) => {
+                if(item !== undefined){
+                  return{
+                    ItemName: item.ItemName,
+                    Price: item.Price,
+                    Status: item.Status,
+                    Category: item.Category
+                  }
+                }        
+              });
+              SupplierItemDetails = {
+                supplierName: Name,
+                supplierContactNumber:ContactNumber,
+                supplierItem                      
+              };
+              SupplierItems.push(SupplierItemDetails);
+              res.status(200).json({
+                status: "Success",
+                message: "All Supplier Item Details",
+                data: {
+                    SupplierItems
+                }
+              });
+            } catch (err) {
+              console.error(err);
+              return res.status(500).send('Server Error');
+            }  
+      }
+  } catch (error) {
+      res.status(500).json({
+          status:'Server Error',
+          message:error.message
+      })
+  }
 }
