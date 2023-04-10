@@ -206,7 +206,7 @@ export const Hr = styled.hr`
 width:100%;
 
 `
-export const ItemsCard = styled.button`
+export const ItemsCard = styled.div`
     &{
         display: flex;
         margin: 3%;

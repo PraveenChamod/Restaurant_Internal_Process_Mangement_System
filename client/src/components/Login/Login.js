@@ -10,7 +10,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { SiFacebook } from 'react-icons/si';
 import { AiFillTwitterCircle } from 'react-icons/ai';
 import { RegularButton } from "../shared/SharedElements/Buttons";
-import GoogleLogin from 'react-google-login';
+
 import {
     Page,
     Container,
@@ -121,10 +121,7 @@ const Login = (props) => {
         
     }
     
-    const handleGoogleLogin = () => {
-        const authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=810530431238-ihd5ug241fdi5g07hfc0es3qfvri236q.apps.googleusercontent.com&redirect_uri=http://localhost:5000/api/v1/Auth/callback&response_type=code&scope=openid%20email%20profile';
-        window.location.href = authUrl;
-      };
+    
 
     useEffect(()=>{
         if (!loading && user && isAuthenticated) {
@@ -178,7 +175,7 @@ const Login = (props) => {
                                 </Link>
                             </ForgotPWD>
                             <SocialMedia>
-                                <Icon onClick={handleGoogleLogin}><FcGoogle/></Icon>
+                                <Icon><FcGoogle/></Icon>
                                 <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia>
@@ -220,7 +217,7 @@ const Login = (props) => {
                             </Column>
                             <SocialMedia>
                                 <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
-                                <Icon onClick={handleGoogleLogin}><FcGoogle/></Icon>
+                                <Icon><FcGoogle/></Icon>
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia>
                         <Bottom>

@@ -29,6 +29,12 @@ const TableReservationSchema = mongoose.Schema({
         type:Number,
         require:true
     },
+    Type:{
+        type:String,
+        enum:{
+            values:["Dine-in","Dating","Special-Events"]
+        }
+    },
     Status:{
         type:String,
         required:true,
