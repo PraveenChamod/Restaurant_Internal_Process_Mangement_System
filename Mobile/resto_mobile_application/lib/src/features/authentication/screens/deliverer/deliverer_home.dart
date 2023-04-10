@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
 import 'deliverer_home__drawer.dart';
+import 'deliverer_pickup_order.dart';
 
 
 class DelivererHome extends StatefulWidget {
@@ -72,119 +73,129 @@ class _DelivererHomeState extends State<DelivererHome> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Pick Your Order To Deliver.',
-                        style: TextStyle(
-                          fontSize: 20,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Pick Your An Order To Deliver.',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color(0xFFfebf10),
+                          ),
+                        ),
+                        const Divider(
                           color: Color(0xFFfebf10),
                         ),
-                      ),
-                      const Divider(
-                        color: Color(0xFFfebf10),
-                      ),
-                      const SizedBox(height: 20.0,),
-                      FutureBuilder(
-                        future: getAssignedOrder(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            print('Your OrderID in future builder: $orderId');
-                            if (orderId == ''){
-                              return Container(
-                                color: Colors.red,
-                                child: const Text(
-                                  'Order Not Have!',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Color(0xFFfebf10),
+                        const SizedBox(height: 20.0,),
+                        FutureBuilder(
+                          future: getAssignedOrder(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              print('Your OrderID in future builder: $orderId');
+                              if (orderId == ''){
+                                return Container(
+                                  color: Colors.red,
+                                  child: const Text(
+                                    'Order Not Have!',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFFfebf10),
+                                    ),
                                   ),
-                                ),
-                              );
-                            }else{
-                              return Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.black38,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(
-                                    color: const Color(0xFFfebf10), // set the border color here
-                                    width: 1.0, // set the border width (optional)
+                                );
+                              }else{
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black38,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: const Color(0xFFfebf10), // set the border color here
+                                      width: 1.0, // set the border width (optional)
+                                    ),
                                   ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Center(
-                                        child: Text(
-                                          'You Have Order To Deliver!',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.green,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const Center(
+                                          child: Text(
+                                            'You Have Order To Deliver!',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.green,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 10.0,),
-                                      const Text(
-                                        'Order Id:',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.white,
+                                        const SizedBox(height: 10.0,),
+                                        const Text(
+                                          'Order Id:',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 5.0,),
-                                      Text(
-                                        orderId,
-                                        style: const TextStyle(
-                                          fontSize: 17,
-                                          color: Color(0xFFfebf10),
+                                        const SizedBox(height: 5.0,),
+                                        Text(
+                                          orderId,
+                                          style: const TextStyle(
+                                            fontSize: 17,
+                                            color: Color(0xFFfebf10),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
+                            }else if (snapshot.hasError) {
+                              return Text('${snapshot.error}');
                             }
-                          }else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const SizedBox(
-                            height: 1,
-                            width: 1,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.transparent,
+                            return const SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Color(0xFFfebf10),
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 20.0,),
-                      Center(
-                        child: Container(
-                          width: 150,
-                          height: 35,
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: AnimatedButton(
-                            text: "Check Order",
-                            buttonTextStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            color: const Color(0xFFfebf10),
-                            pressEvent: () {},
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(0),
-                              topRight: Radius.circular(20),
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20.0,),
+                        Center(
+                          child: Container(
+                            width: 150,
+                            height: 35,
+                            padding: const EdgeInsets.only(left: 5, right: 5),
+                            child: AnimatedButton(
+                              text: "Check Order",
+                              buttonTextStyle: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              color: const Color(0xFFfebf10),
+                              pressEvent: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) {
+                                      return DelivererPickupOrder(orderId: orderId,);
+                                    },
+                                  ),
+                                );
+                              },
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(0),
+                                topRight: Radius.circular(20),
+                                bottomLeft: Radius.circular(20),
+                                bottomRight: Radius.circular(20),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

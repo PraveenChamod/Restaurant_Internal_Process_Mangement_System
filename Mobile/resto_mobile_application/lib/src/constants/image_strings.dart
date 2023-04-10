@@ -19,3 +19,4 @@ const String sevenPerson = "assets/Tables/Seven_Person_Table.png";
 const String eightPerson = "assets/Tables/Eight_Person_Table.png";
 
 const String publishableKey = "pk_test_51MbCY3GuiFrtKvgKd8w5qdphJciL87lB1ITs2nFL1FUNQnfIqxPA4hX2A3qrhDd7Gfcsab01gcVNpXlTJs6ArcyF00t5WxYsrg";
+const String mapApiKey = "AIzaSyDZWsWFLf7CMyMGBymJSBIF_0RHrNZcj-E";
