@@ -13,7 +13,7 @@ export const Div = styled.div`
   padding: 2% 0;
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
-    width: 90%;
+    width: 90%; 
     height: 350px;
   }
 `;
