@@ -408,7 +408,7 @@ export const ViewPendingOrders = async(req,res,next)=>{
 export const ViewOrderFoods = async(req,res)=>{
   try {
       const user = req.user;
-      if(user.Role === "Customer"){
+      if(user.Role === "Customer" || user.Role === "Deliverer"){
           const {id} = req.params;
           try {
               const populatedOrder = await Order.findById(id)
@@ -426,6 +426,12 @@ export const ViewOrderFoods = async(req,res)=>{
                 })
                 .exec();
               console.log(populatedOrder);
+              const Name = populatedOrder.Customer.Name;
+              const Email = populatedOrder.Customer.Email;
+              const ContactNumber = populatedOrder.Customer.ContactNumber;
+              const Address = populatedOrder.Customer.Address;
+              const lat = populatedOrder.Customer.lat;
+              const lang = populatedOrder.Customer.lang;
               const food = populatedOrder.Foods.map((item) => {
                 if(item.food !== undefined){
                   return{
@@ -453,6 +459,14 @@ export const ViewOrderFoods = async(req,res)=>{
               res.status(200).json({
                   status:'Success',
                   message:`Foods of Order ${id}`,
+                  OrderId:id,
+                  customerName: Name,
+                  customerEmail:Email,
+                  ContactNumber:ContactNumber,
+                  Address:Address,
+                  lat:lat,
+                  lang:lang,
+                  TotalPrice: populatedOrder.TotalPrice,
                   data:{
                     food
                   }
@@ -531,6 +545,7 @@ export const CheckOrderDetails = async(req, res)=>{
                 console.log(order);
                 let OrderDetails;
                 try {
+
                   const populatedOrder = await Order.findById(order.id)
                     .populate({
                       path: 'Customer',
@@ -600,6 +615,51 @@ export const CheckOrderDetails = async(req, res)=>{
               data: {
                   pendingOrders
               }
+          })
+      }
+      else{
+          res.status(401).json({
+              status: 'Error',
+              message: 'User Have No Authorization to do this action',
+          })
+      }   
+  } catch (error) {
+      res.status(500).json({
+          status: 'Server Error',
+          message: error.message,
+      });
+  }
+}
+
+
+//Updated: Praveen
+// Method : GET
+// End Point : "api/v1/Deliverer/AssignOrder"; 
+// Description : Get Orders that deliverer have to deliver 
+export const CheckDelivererOrderDetails = async(req, res)=>{
+  const user = req.user;
+  try {
+      if(user.Role === "Deliverer"){
+          const findOrder = await Order.find();
+          let AssignedOrderId;
+          for (const order of findOrder) {
+            if(order.Type !== "Outlet Order"){
+              if (order.Status === "Confirm" && order.DeliveryStatus !== "Delivered") {
+                console.log(order);
+                try {             
+                    AssignedOrderId=order.id;                                        
+                  } catch (err) {
+                    console.error(err);
+                    return res.status(500).send('Server Error');
+                  }
+              }
+            }
+          }
+          res.status(201).json({
+              status: 'success',
+              message: 'Received Orders',
+              yourOrderId: AssignedOrderId,
+            
           })
       }
       else{
