@@ -18,6 +18,7 @@ export const RegularButton = styled.button`
         width: 100px;
         height: 30px;
         font-size: 12px;
+        
     }
 `
 export const FormButton = styled.button`

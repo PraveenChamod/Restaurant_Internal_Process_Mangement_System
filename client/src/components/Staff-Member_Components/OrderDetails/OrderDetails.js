@@ -49,7 +49,7 @@ const OrderDetailsComponent = (props) => {
     }
     return (
         <Container>
-            <Header>Order Details</Header>
+            <l.Header>Order Details</l.Header>
             <l.Div>
                 <l.Div2 onSubmit={assignDeliverer}> 
                     <l.Div1>
