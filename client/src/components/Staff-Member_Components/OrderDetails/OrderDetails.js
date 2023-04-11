@@ -49,7 +49,7 @@ const OrderDetailsComponent = (props) => {
     }
     return (
         <Container>
-            <Header>Order Details</Header>
+            <l.Header>Order Details</l.Header>
             <l.Div>
                 <l.Div2 onSubmit={assignDeliverer}> 
                     <l.Div1>
@@ -216,7 +216,7 @@ const OrderDetailsComponent = (props) => {
             </l.Div>
             <l.Div7>
                 <RegularButton>
-                    <Link to="./login" className="btn">
+                    <Link to={props.BackRoutes} className="btn">
                         Back
                     </Link>
                 </RegularButton>

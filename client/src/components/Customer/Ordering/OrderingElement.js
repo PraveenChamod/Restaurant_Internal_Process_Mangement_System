@@ -25,7 +25,7 @@ export const Div = styled.div`
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  margin-top:40px;
+  margin: 40px;
   @media screen and (max-width: 769px) {
     width: 90%;
     height: 350px;
@@ -162,3 +162,9 @@ export const RegularButton = styled.button`
     margin-left:50px;
     margin-right:50px;
 `;
+export const ButtonSection = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: left;
+  
+`

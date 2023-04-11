@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FormButton, RegularButton } from "../shared/SharedElements/Buttons";
 import { Container, Header } from "../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3} from'./FrogotPasswordElements';
-const ForgotPasswordComponent = () => {
+const ForgotPasswordComponent = (props) => {
   
   const[OTP,setOtp] = useState(0);
   const[Email,setEmail] = useState("");
@@ -146,7 +146,7 @@ console.log(OTP);
       </Div>
       <Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to={props.BackRoutes} className="btn">
             Back
           </Link>
         </RegularButton>

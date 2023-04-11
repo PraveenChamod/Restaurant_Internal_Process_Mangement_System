@@ -11,9 +11,10 @@ import 'react-calendar/dist/Calendar.css';
 import Grid from "@mui/material/Grid";
 import useAuth from "../../../Hooks/useAuth";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 
 const TableBooking = (props) => {
@@ -33,6 +34,7 @@ const TableBooking = (props) => {
   const stripe = useStripe();
   const{user} = useAuth();
   const PriceRef = useRef(Price);
+  const [type,setType] = useState('');
 
   const handleClick = async (index) =>{
     setClickedIndex(state => ({
@@ -95,7 +97,7 @@ const TableBooking = (props) => {
   const ReserveTable = async (e)=>{
     e.preventDefault();
     try {
-      const formData = {Customer:user.id,Tables:Tables,Date:date,ArrivalTime:arrivalTime,DepartureTime:departureTime,amount:Price,TableNo:TableNo}
+      const formData = {Customer:user.id,Tables:Tables,Date:date,ArrivalTime:arrivalTime,DepartureTime:departureTime,amount:Price,TableNo:TableNo,Type:type}
       const res = await axios.post('api/v1/TableReservation',formData);
       console.log(res);
     } catch (error) {
@@ -148,7 +150,7 @@ const TableBooking = (props) => {
       setErrorMessage('Error processing payment.');
     }
   };
-  console.log(items.length);
+  console.log(type);
   return (
     <l.Container>
       <l.Div2></l.Div2>
@@ -172,6 +174,30 @@ const TableBooking = (props) => {
             <TimePicker disableClock={true} clearIcon={null} onChange={handlearrivalTime} value={arrivalTime} />
             <l.H1>TO</l.H1>
             <TimePicker disableClock={true} clearIcon={null} onChange={handledepartureTime} value={departureTime} />
+          </l.Div5>
+          <l.Div5>
+          <l.SubHeader>Select Type</l.SubHeader>
+            <FormControl sx={{ m: 1, width: "20ch" }}>
+                <Select
+                    defaultValue={30}
+                    inputProps={{
+                        name: "Email",
+                        id: "uncontrolled-native",
+                    }}
+                    sx={{
+                        color: "white",
+                        '.MuiSvgIcon-root ': {
+                        fill: "white !important",
+                        
+                        }
+                    }}
+                    onChange={e=>setType(e.target.value)}
+                >
+                <MenuItem value="Dine-in" >Dine In</MenuItem>
+                <MenuItem value="Dating" >Dating</MenuItem>
+                <MenuItem value="Special-Events" >Special-Events</MenuItem>
+              </Select>
+            </FormControl>
           </l.Div5>
         </l.Div3>
         <l.Div31>
@@ -202,9 +228,12 @@ const TableBooking = (props) => {
         </l.Div31>
       </l.Div>
       <l.Div6>
-        <l.RegularButton>BACK</l.RegularButton>
-      <l.RegularButton onClick={handleConfirmPayment}>CONFORM</l.RegularButton>
+        <l.RegularButton onClick={handleConfirmPayment}>CONFORM</l.RegularButton>
       </l.Div6>
+      <Link to={props.BackRoutes} className="btn">
+        <l.RegularButton>BACK</l.RegularButton>
+      </Link>
+      <br/>
     </l.Container>
   );
 };

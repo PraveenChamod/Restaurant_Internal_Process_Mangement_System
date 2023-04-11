@@ -1,9 +1,9 @@
 import ForgotPasswordComponent from "../components/FrogotPassword/FrogotPassword";
 
-const FrogotPassword = () => {
+const FrogotPassword = (props) => {
   return ( 
-    <>
-      <ForgotPasswordComponent/>
+    <> 
+      <ForgotPasswordComponent BackRoutes = {props.BackRoutes}/>
     </>
    );
 }

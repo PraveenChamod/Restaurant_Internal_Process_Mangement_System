@@ -147,3 +147,12 @@ export const Payment = styled.div`
     width: 90%;
     margin: 3%;
 `
+export const SubHeader = styled.h3`
+  justify-content: center;
+  padding-bottom: 10px;
+  text-transform:uppercase;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 0px;
+`;

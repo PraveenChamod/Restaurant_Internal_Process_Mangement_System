@@ -35,7 +35,7 @@ const ItemDetails = (props) => {
             </l.FormSection>
             <l.Div3>
                 <RegularButton>
-                <Link to="./login" className="btn">
+                <Link to={props.BackRoutes} className="btn">
                     Back
                 </Link>
                 </RegularButton>

@@ -1,4 +1,4 @@
-import { FormButton } from "../../shared/SharedElements/Buttons";
+import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './CartElements';
 import { useRef, useState } from "react";
@@ -16,7 +16,7 @@ const CartComponent = ({data}) => {
     const [clickedIndex, setClickedIndex] = useState({});
     const[selectItem,setSelectItem] = useState();
     const[OrderItem,setOrderItem] = useState({});
-    
+    const[click,setClick]  = useState(false);
     const[Quantity,setQuantity] = useState(1);
     const quantityRef = useRef(Quantity);
     const[price,setPrice] = useState();
@@ -37,9 +37,27 @@ const CartComponent = ({data}) => {
     const deleteCartItem = async ({cartId,foodId,offerId})=>{
         try {
             const formData = {cartId,foodId,offerId} 
-            const res = await axios.patch('api/v1/FoodItem',formData);
-            console.log(res.data.message);
-            toast.success(res.data.message);
+            await toast.promise(
+                axios.patch('api/v1/FoodItem',formData),
+                {
+                    loading:`Removing from cart`,
+                    success:(data)=>{
+                      console.log({ data });
+                      return ` ${data.data?.message} ` || "Removed";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                  },
+                  {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999'
+                    }
+                  }
+            )
+            setClick(true);
         } catch (error) {
             console.log(error.message);
         }
@@ -160,6 +178,11 @@ const CartComponent = ({data}) => {
                 </l.Right>
             </l.SubSection3>
         </l.SubContainer>
+            <Link to ="/CustomerPlace-Order" className="btn">
+                <RegularButton>
+                    Back
+                </RegularButton>
+            </Link>
         </l.Container>
         </>
      );

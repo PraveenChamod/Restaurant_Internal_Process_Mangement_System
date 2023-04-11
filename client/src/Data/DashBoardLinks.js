@@ -1,12 +1,13 @@
-import { FaHouseUser, FaUser, FaUserMinus, FaUserPlus, FaUsers  , FaBookOpen} from "react-icons/fa";
+import { FaHouseUser, FaUser, FaUserMinus, FaUserPlus, FaUsers  , FaBookOpen,FaEye} from "react-icons/fa";
 import { GiMeal, GiTabletopPlayers, GiHotMeal, GiRoundTable } from 'react-icons/gi';
 import { BiLogOut } from 'react-icons/bi';
 import { IoFastFoodSharp } from 'react-icons/io5';
 import { GoSearch ,GoDiffAdded } from 'react-icons/go';
 import { AiOutlineStock } from 'react-icons/ai';
-import { BsGraphUp } from 'react-icons/bs';
+import { BsFillClipboard2CheckFill, BsGraphUp } from 'react-icons/bs';
 import { HiDocumentReport } from 'react-icons/hi';
-import { MdOutlineAddToPhotos } from "react-icons/md";
+import { MdOutlineAddToPhotos, MdOutlineRateReview,MdLocalOffer,MdTableBar } from "react-icons/md";
+
 let iconStyle = {fontWeight:"600",color:"#fff",fontSize:"1.8rem"};
 
 
@@ -106,12 +107,12 @@ export const Roles = [
             },
             {
                 text:'Add Offers',
-                icon:<FaUsers style={iconStyle}/>,
+                icon:<MdLocalOffer style={iconStyle}/>,
                 link:"/ManagerAdd-Offers"
             },
             {
                 text:'View Offers',
-                icon:<GiHotMeal style={iconStyle}/>,
+                icon:<FaEye style={iconStyle}/>,
                 link:"/ManagerView-Offers"
             },
             {
@@ -146,12 +147,12 @@ export const Roles = [
             },
             {
                 text:'Add Offers',
-                icon:<FaUsers style={iconStyle}/>,
+                icon:<MdLocalOffer style={iconStyle}/>,
                 link:"/Staff-MemberAdd-Offers"
             },
             {
                 text:'View Offers',
-                icon:<GiHotMeal style={iconStyle}/>,
+                icon:<FaEye style={iconStyle}/>,
                 link:"/Staff-MemberView-Offers"
             },
             {
@@ -161,22 +162,22 @@ export const Roles = [
             },
             {
                 text:'View Tables',
-                icon:<GoSearch style={iconStyle}/>,
+                icon:<MdTableBar style={iconStyle}/>,
                 link:"/Staff-MemberView-Tables"
             },
             {   
                 text:'Order Details',
-                icon:<FaUserMinus style={iconStyle}/>,
+                icon:<BsFillClipboard2CheckFill style={iconStyle}/>,
                 link:"/Staff-MemberPendingOrder-Details"
             },
             {
                 text:'Table Reservation Details',
-                icon:<FaUserMinus style={iconStyle}/>,
+                icon:<GiRoundTable style={iconStyle}/>,
                 link:"/Staff-MemberPendingTable-Reservation-Details"
             },
             {
                 text:'Place Order',
-                icon:<FaUserMinus style={iconStyle}/>,
+                icon:<GiMeal style={iconStyle}/>,
                 link:"/Staff-MemberPlace-Order"
             },
             {
@@ -196,7 +197,7 @@ export const Roles = [
             },
             {
                 text:'View Pending Orders',
-                icon:<FaUsers style={iconStyle}/>,
+                icon:<BsFillClipboard2CheckFill style={iconStyle}/>,
                 link:"/DelivererAllOrderDetails"
             },
             {
@@ -246,22 +247,22 @@ export const Roles = [
             },
             {
                 text:'Order Meal',
-                icon:<FaUsers style={iconStyle}/>,
+                icon:<IoFastFoodSharp style={iconStyle}/>,
                 link:"/CustomerPlace-Order"
             },
             {
                 text:'My Orders',
-                icon:<BiLogOut style={iconStyle}/>,
+                icon:<GiMeal style={iconStyle}/>,
                 link:"/CustomerMy-Orders"
             },
             {
                 text:'Reserve Table',
-                icon:<BiLogOut style={iconStyle}/>,
+                icon:<GiRoundTable style={iconStyle}/>,
                 link:"/CustomerTable-Reservation"
             },
             {
                 text:'Add Review',
-                icon:<BiLogOut style={iconStyle}/>,
+                icon:<MdOutlineRateReview style={iconStyle}/>,
                 link:"/CustomerAdd-Review"
             },
             {
