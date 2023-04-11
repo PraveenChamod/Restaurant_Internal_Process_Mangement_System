@@ -29,8 +29,6 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
     return status;
   }
 
-
-
   final List<OrderItems> data = [];
 
   late Future<Map<String, dynamic>> _futureData;
@@ -40,8 +38,8 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
     _futureData = fetchCustomerData();
   }
 
-  late num lat = 0.0;
-  late num lang = 0.0;
+  late double lat = 0.0;
+  late double lang = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +117,7 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
                                     ),
                                     const Text(
                                       'Customer Contact Number:',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
+                                      style: TextStyle(fontSize: 18, color: Colors.white,),
                                     ),
                                     const SizedBox(height: 5.0,),
                                     Text(

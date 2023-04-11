@@ -26,8 +26,8 @@ class _DelivererHomeState extends State<DelivererHome> {
   String customerName = '';
   String customerNumber = '';
   String customerAddress = '';
-  num lat = 0;
-  num lang = 0;
+  double lat = 0.0;
+  double lang = 0.0;
   num totalPrice = 0;
 
   @override
@@ -268,8 +268,8 @@ class OrderDataClass{
   final String customerName;
   final String customerNumber;
   final String customerAddress;
-  final num lat;
-  final num lang;
+  final double lat;
+  final double lang;
   final num totalPrice;
   OrderDataClass({
     required this.orderId,
