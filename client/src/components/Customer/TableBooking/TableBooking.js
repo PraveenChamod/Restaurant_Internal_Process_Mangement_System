@@ -169,6 +169,7 @@ const TableBooking = (props) => {
               locale={"en-US"}
             />
           </l.Div4>
+          <l.Div7>
           <l.Div5>
             <l.H1>PICK TIME</l.H1>
             <TimePicker disableClock={true} clearIcon={null} onChange={handlearrivalTime} value={arrivalTime} />
@@ -199,6 +200,7 @@ const TableBooking = (props) => {
               </Select>
             </FormControl>
           </l.Div5>
+          </l.Div7>
         </l.Div3>
         <l.Div31>
           <l.H1>SELECT TABLE</l.H1>

@@ -7,6 +7,11 @@ export const Container = styled.div`
     align-items: center;
     flex-direction: column;
     background-size: 21.5rem;
+    @media screen and (max-width: 1000px) {
+		display: flex;
+        height: 100%;
+		
+	}
 `
 
 export const Div = styled.div`
@@ -16,7 +21,13 @@ export const Div = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  padding-right: 50px;
+  /* background-color:red; */
+
+  @media screen and (max-width: 1000px) {
+		display: flex;
+        flex-direction: column;
+		
+	}
   `
 export const Div1 = styled.div`
 height: 10%;
@@ -44,10 +55,24 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
+/* background-color:lawngreen; */
+  /* padding-right: 50px; */
+@media screen and (max-width: 1000px) {
+		display: flex;
+        flex-direction: row;
+        width: 100%;
+		
+	}
+@media screen and (max-width: 800px) {
+		display: flex;
+        flex-direction: column;
+        width: 100%;
+		
+	}
 `
 export const Div31 = styled.div`
 height: 88%;
-width: 40%;
+width: 45%;
 background-color: #1a1e21;
   border-radius: 25px;
   box-shadow: 3px 3px 3px #000;
@@ -57,11 +82,17 @@ justify-content: center;
 align-items: center;
 text-align: center;
 padding: 5px;
+
+@media screen and (max-width: 1000px) {
+		margin-bottom:20px;
+        margin-top:20px;
+		
+	}
 `
 
 export const Div4 = styled.div`
 height: 100%;
-width: 60%;
+width: 50%;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -70,7 +101,7 @@ flex-direction: column;
 
 export const Div5 = styled.div`
 height: 100%;
-width: 40%;
+width: 50%;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -84,6 +115,20 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: row;
+`
+export const Div7 = styled.div`
+height:100%;
+width: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction:column;
+@media screen and (max-width: 800px) {
+		display: flex;
+        flex-direction: row;
+        width: 100%;
+		
+	}
 `
 export const H1 = styled.h1`
     font-size: 20px;
@@ -130,6 +175,12 @@ export const RegularButton = styled.button`
     text-transform: uppercase;
     margin-left: 200px;
     margin-right: 200px;
+
+    @media screen and (max-width: 1000px) {
+		margin-bottom:10px;
+        margin-top:10px;
+		
+	}
 `
 
 export const H2 = styled.h1`
