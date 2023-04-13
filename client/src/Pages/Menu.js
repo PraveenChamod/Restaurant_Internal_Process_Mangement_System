@@ -6,7 +6,7 @@ import MenuPage from '../components/Menu/Menu'
 export const Menu = (props) => {
   return (
     <>
-      <MenuCover/>
+      <MenuCover login={props.login}/>
       <MenuPage MenuItems1 = {props.MenuItems}/>
     </>
   )

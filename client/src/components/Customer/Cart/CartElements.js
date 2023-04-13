@@ -161,5 +161,5 @@ export const SelectIcon = styled.div`
 export const Icon = styled.div`
     font-size: 32px;
     color:#FFBF00;
-    width: 20%;
+    width: 10%;
 `

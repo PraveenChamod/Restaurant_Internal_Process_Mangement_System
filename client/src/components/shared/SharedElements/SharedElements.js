@@ -9,6 +9,10 @@ export const Container = styled.div`
     background:url(${Chef}) left bottom no-repeat;
     background-size: 21.5rem;
     margin-bottom: 5%;
+    @media screen and (max-width: 800px){
+      background: none;
+      padding: 5% 0;
+    }
 `
 export const Header = styled.h1`
     justify-content: center;
