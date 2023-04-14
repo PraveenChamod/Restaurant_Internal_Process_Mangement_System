@@ -90,6 +90,7 @@ flutter:
     - assets/images/Delivery_service.png
     - assets/images/Dinning_table.png
     - assets/images/Choose_online.png
+    - assets/images/Delivered_Order.png
   #Application Logo
     - assets/logo/Logo.png
   #Food Images

@@ -6,6 +6,7 @@ const String orderFood = "assets/images/Order_food.png";
 const String deliveryService = "assets/images/Delivery_service.png";
 const String dinningTable = "assets/images/Dinning_table.png";
 const String chooseOnline = "assets/images/Choose_online.png";
+const String deliveredImage = "assets/images/Delivered_Order.png";
 //const String hostName = "localhost";
 const String hostName = "192.168.8.181";
 //Table Images:
