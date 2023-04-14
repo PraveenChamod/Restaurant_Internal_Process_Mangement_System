@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../common_widgets/deliverer_drawer_item_appbar.dart';
@@ -26,14 +29,24 @@ class _DelivererAccountState extends State<DelivererAccount> {
 
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(image == null ) return;
-    final imageTemporary = File(image.path);
+  Future getImage(ImageSource source) async {
+    try{
+      final image = await ImagePicker().pickImage(source: source);
+      if(image == null ) return;
+      final imagePermanent = await saveFilePermanently(image.path);
 
-    setState(() {
-      _image = imageTemporary;
-    });
+      setState(() {
+        _image = imagePermanent;
+      });
+    }on PlatformException catch (e){
+      print('failed to pick Image: $e');
+    }
+  }
+  Future<File> saveFilePermanently(String imagePath) async{
+    final directory = await getApplicationDocumentsDirectory();
+    final name = path.basename(imagePath);
+    final image = File('${directory.path}/$name');
+    return File(imagePath).copy(image.path);
   }
   ///----------------------------------------------------------------------------///
   late Future<Map<String, dynamic>> _futureData;
@@ -78,7 +91,11 @@ class _DelivererAccountState extends State<DelivererAccount> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CircleAvatar(
+                            _image != null
+                                ? ClipRRect(
+                                borderRadius: BorderRadius.circular(70.0),
+                                child: Image.file(_image!, width: 140, height: 140, fit: BoxFit.cover,))
+                                : CircleAvatar(
                               radius: 70,
                               backgroundImage: NetworkImage(imageUrl),
                             ),
@@ -102,7 +119,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                       ),
                                       color: Colors.transparent,
                                       pressEvent: () {
-                                        getImage();
+                                        getImage(ImageSource.gallery);
                                       },
                                     ),
                                   ),
@@ -138,7 +155,9 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                       ),
                                       color: const Color(0xFFfebf10),
                                       pressEvent: () {
-
+                                        _image != null
+                                            ? updateProfilePicture()
+                                            : unSuccessAwesomeDialog(DialogType.warning, 'Firstly you have to select new Image!', "Warning");
                                       },
                                     ),
                                   ),
@@ -338,5 +357,47 @@ class _DelivererAccountState extends State<DelivererAccount> {
         );
       },
     ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
+  }
+
+  void updateProfilePicture() async {
+    File? imageFile = _image;
+    if (imageFile == null) {
+      return;
+    }
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userEmail = pref.getString("LoginEmail");
+    String? userToken = pref.getString("JwtToken");
+    var request = http.MultipartRequest(
+      'PATCH',
+      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    );
+    request.headers.addAll({
+      "Authorization": "Bearer $userToken",
+    });
+    request.files.add(await http.MultipartFile.fromPath(
+      'image',
+      imageFile.path,
+    ));
+    var response = await request.send();
+    if(response.statusCode == 201) {
+      final json = jsonDecode(await response.stream.bytesToString());
+      final msg = json["message"];
+      print(msg);
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(await response.stream.bytesToString());
+      final msg = json["message"];
+      print(msg);
+    }
   }
 }
