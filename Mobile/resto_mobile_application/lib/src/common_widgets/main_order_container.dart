@@ -165,6 +165,7 @@ class MainOrderContainer extends StatelessWidget {
                           builder: (_) {
                             return CustomerOrderDetails(
                               orderId: orderId,
+                              deliveryStatus: deliveryStatus,
                             );
                           },
                         ),

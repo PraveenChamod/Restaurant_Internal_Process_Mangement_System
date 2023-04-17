@@ -2,8 +2,6 @@ import './App.css';
 import {BrowserRouter as Router, Outlet, Route, Routes} from 'react-router-dom'
 import {Home} from './Pages/Home';
 import {Menu} from './Pages/Menu'
-import Navbar from './components/Navbar/Navbar';
-import Footer from './components/Footer/Footer';
 import LoginPg from './Pages/Login';
 import { Fragment, useEffect, useState } from 'react';
 import ScrollToTop from './Hooks/ScrollToTop';
@@ -20,7 +18,6 @@ import ViewStock from './Pages/Manager/ViewStock';
 import ViewItem from './Pages/Manager/ViewItem';
 import StaffMemberUserProfile from './Pages/Staff-Member/UserProfile';
 import AddOffers from './Pages/Manager/AddOffers';
-import TableReservationDetails from './Pages/Staff-Member/TableReservationDetails';
 import CustomerDashBoard from './Pages/Customer/CustomerDashBoard';
 import CustomerUserProfile from './Pages/Customer/UserProfile';
 import Cart from './Pages/Customer/Cart';
@@ -51,6 +48,7 @@ import AdminAddFoods from './Pages/Admin/AddFoods';
 import AdminAddCategories from './Pages/Admin/AddCategories';
 import AdminViewFoods from './Pages/Admin/AdimnViewFoods';
 import AdminViewFood from './Pages/Admin/AdminViewFood';
+import AdminAddDatingTableItems from './Pages/Admin/AddDatingTableItems';
 import ManagerViewUser from './Pages/Manager/ManagerViewUser';
 import ManagerAddTables from './Pages/Manager/ManagerAddTable';
 import ManagerViewTables from './Pages/Manager/ManagerViewTables';
@@ -109,7 +107,7 @@ function App() {
       duration:1000
     });
   }, [])
-
+  console.log(loadStripe);
   useEffect(() => {
     const scrollToTop = ()=>{
       if(window.pageYOffset > 200)
@@ -165,7 +163,7 @@ function App() {
                 <Route path="/" element={<Home ScrollToTop={scrollToTop}/>}/>
                 <Route path="/Menu" element={<Menu MenuItems = {MenuItems}/>}/>
                 <Route path="/login" element={<LoginPg ScrollToTop={scrollToTop}/>}/>
-                <Route path="/FrogotPassword" element={<FrogotPassword/>}/>
+                <Route path="/FrogotPassword" element={<FrogotPassword BackRoutes = '/login'/>}/>
                 <Route path="/ResetPassword/:Email" element={<PasswordReset/>}/>
               </Route>
               <Route element={<WithoutNavAndFooter ScrollToTop = {scrollToTop}/>}>
@@ -183,6 +181,7 @@ function App() {
                 <Route path="/AdminView-Foods" element={<AdminViewFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Food/:id" element={<AdminViewFood/>}/>
                 <Route path="/AdminAdd-Categories" element={<AdminAddCategories BackRoutes={BackRoutes[0].nav}/>}/>
+                <Route path="/AdminAdd-DatingTableItems" element={<AdminAddDatingTableItems BackRoutes={BackRoutes[0].nav}/>}/>
               {/* </Route> */}
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -219,7 +218,7 @@ function App() {
                 <Route path="/Staff-MemberView-Foods" element={<StaffMemberViewFoods BackRoutes={BackRoutes[2].nav} />}/>
                 <Route path="/Staff-MemberView-Tables" element={<StaffMemberViewTables BackRoutes={BackRoutes[2].nav} />}/>
                 <Route path="/Staff-MemberPendingOrder-Details" element={<StaffMemberPendingOrders BackRoutes={BackRoutes[2].nav}/>}/>
-                <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails/>}/>
+                <Route path="/Staff-MemberOrder-Details/:id" element={<StaffMemberOrderDetails BackRoutes = '/Staff-MemberPendingOrder-Details'/>}/>
                 <Route path="/Staff-MemberPendingTable-Reservation-Details" element={<StaffMemberPendingReservations BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberTable-Reservation-Details/:id" element={<StaffMemberTableReservationDetails BackRoutes={BackRoutes[2].nav}/>}/>
                 <Route path="/Staff-MemberMy-Profile" element={<StaffMemberUserProfile route={EditProfileLinks[2]} BackRoutes={BackRoutes[2].nav}/>}/>

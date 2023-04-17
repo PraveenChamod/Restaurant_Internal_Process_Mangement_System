@@ -216,7 +216,7 @@ const OrderDetailsComponent = (props) => {
             </l.Div>
             <l.Div7>
                 <RegularButton>
-                    <Link to="./login" className="btn">
+                    <Link to={props.BackRoutes} className="btn">
                         Back
                     </Link>
                 </RegularButton>

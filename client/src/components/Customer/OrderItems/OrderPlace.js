@@ -1,4 +1,4 @@
-import { FormButton } from "../../shared/SharedElements/Buttons";
+import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './OrderPlaceElements';
 import { useEffect, useRef, useState } from "react";
@@ -206,6 +206,11 @@ const OrderPlace = ({data}) => {
                 </l.Right>
             </l.SubSection3>
         </l.SubContainer>
+            <Link to ='/CustomerMyCart' className="btn">
+                <RegularButton>
+                    Back
+                </RegularButton>
+            </Link>
         </l.Container>
         </>
      );

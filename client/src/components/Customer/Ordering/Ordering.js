@@ -215,13 +215,20 @@ const Ordering = (props) => {
           }
         </l.Div>
         <l.Div>
-        <Link to="/CustomerMyCart" className="btn">
-        <RegularButton>
-            ORDER
-        </RegularButton>
-        </Link>
+            <Link to="/CustomerMyCart" className="btn">
+              <RegularButton>
+                  ORDER
+              </RegularButton>
+            </Link>
         </l.Div>
       </l.Section>
+      <l.ButtonSection>
+        <Link to={props.BackRoutes} className="btn">
+            <RegularButton>
+                Back
+            </RegularButton>
+          </Link>
+      </l.ButtonSection>
     </l.Page>
   );
 };

@@ -3,6 +3,8 @@ import * as l from './MyOrdersElements';
 import img from "../../../Images/restoLogodark.png";
 import { TiTick } from 'react-icons/ti';
 import { BsHourglassSplit } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import { RegularButton } from "../../shared/SharedElements/Buttons";
 const MyOrdersComponent = (props) => {
     console.log(props.data);
     const {user} = useAuth();
@@ -48,60 +50,66 @@ const MyOrdersComponent = (props) => {
                                                     Price : Rs. {cart.TotalPrice}
                                                 </l.Text>
                                                 <l.Text>
-                                                    Status : {cart.Status} <l.Icon1> 
-                                                                                {
-                                                                                    cart.Status === "Confirm" ? <TiTick/> : <BsHourglassSplit/>
-                                                                                }
-                                                                            </l.Icon1>
+                                                    Status : 
+                                                    {cart.Status} 
+                                                        <l.Icon1> 
+                                                            {
+                                                                cart.Status === "Confirm" ? <TiTick/> : <BsHourglassSplit/>
+                                                            }
+                                                        </l.Icon1>
                                                 </l.Text>
                                                 <l.Text>
-                                                    Delivery Status : {cart.DeliveryStatus}  <l.Icon1> 
-                                                                                                {
-                                                                                                    cart.DeliveryStatus === "Delivered" ? <TiTick/> : <BsHourglassSplit/>
-                                                                                                }
-                                                                                            </l.Icon1>
+                                                    Delivery Status : 
+                                                    {cart.DeliveryStatus}  
+                                                        <l.Icon1> 
+                                                            {
+                                                                cart.DeliveryStatus === "Delivered" ? <TiTick/> : <BsHourglassSplit/>
+                                                            }
+                                                        </l.Icon1>
                                                 </l.Text>
                                             </l.SubText>
+                                            <l.Section>
                                                 <l.Text>
                                                     Items
                                                 </l.Text>
-                                            <l.ItemSection>
-                                                
-                                                {
-                                                    cart.food.map(food=>{
-                                                        return(
-                                                            <l.CartSection1>
-                                                                {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                                                    {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                                                </l.SelectIcon> */}
-                                                                <l.ItemsCard1>
-                                                                    <l.FoodImage>
-                                                                        <l.Food src={`http://localhost:5000/${food.Foodid == null ? 'offerimages' : 'Foodimages'}/${food.image}`}/>
-                                                                    </l.FoodImage>
-                                                                    <l.Details>
-                                                                        <l.MainText>
-                                                                            <l.FoodName>
-                                                                                {food.FoodName}
-                                                                            </l.FoodName>
-                                                                        </l.MainText>
-                                                                        <l.SubText>
-                                                                            {/* <l.Text>
-                                                                                {cart.Size}
-                                                                            </l.Text> */}
-                                                                            <l.Text>
-                                                                                Quantity : {food.quantity}
-                                                                            </l.Text>
-                                                                            {/* <l.Text>
-                                                                                Price : {food.quantity * cart.price}
-                                                                            </l.Text> */}
-                                                                        </l.SubText>
-                                                                    </l.Details>
-                                                                </l.ItemsCard1>
-                                                            </l.CartSection1> 
-                                                        )
-                                                    })
-                                                }
-                                        </l.ItemSection>
+                                                <l.ItemSection>
+                                                    
+                                                    {
+                                                        cart.food.map(food=>{
+                                                            return(
+                                                                <l.CartSection1>
+                                                                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
+                                                                    </l.SelectIcon> */}
+                                                                    <l.ItemsCard1>
+                                                                        <l.FoodImage>
+                                                                            <l.Food src={`http://localhost:5000/${food.Foodid == null ? 'offerimages' : 'Foodimages'}/${food.image}`}/>
+                                                                        </l.FoodImage>
+                                                                        <l.Details>
+                                                                            <l.MainText>
+                                                                                <l.FoodName>
+                                                                                    {food.FoodName}
+                                                                                </l.FoodName>
+                                                                            </l.MainText>
+                                                                            <l.SubText>
+                                                                                {/* <l.Text>
+                                                                                    {cart.Size}
+                                                                                </l.Text> */}
+                                                                                <l.Text>
+                                                                                    Quantity : {food.quantity}
+                                                                                </l.Text>
+                                                                                {/* <l.Text>
+                                                                                    Price : {food.quantity * cart.price}
+                                                                                </l.Text> */}
+                                                                            </l.SubText>
+                                                                        </l.Details>
+                                                                    </l.ItemsCard1>
+                                                                </l.CartSection1> 
+                                                            )
+                                                        })
+                                                    }
+                                                </l.ItemSection>
+                                            </l.Section>
                                     </l.ItemsCard>
                                 </l.CartSection>  
                             )
@@ -110,7 +118,13 @@ const MyOrdersComponent = (props) => {
                 </l.Left>
             </l.SubSection3>
         </l.SubContainer>
-        
+        <l.ButtonSection>
+            <Link to={props.BackRoutes} className="btn">
+                <RegularButton>
+                    Back
+                </RegularButton>
+            </Link>
+        </l.ButtonSection>
         </l.Container>
         </>
      );

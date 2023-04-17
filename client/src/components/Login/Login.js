@@ -174,11 +174,11 @@ const Login = (props) => {
                                     <p>Forgot Your Password ?</p>
                                 </Link>
                             </ForgotPWD>
-                            <SocialMedia>
+                            {/* <SocialMedia>
                                 <Icon><FcGoogle/></Icon>
                                 <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
-                            </SocialMedia>
+                            </SocialMedia> */}
                         <Bottom>
                             {!loading && <RegularButton>Login</RegularButton> }
                             {loading && <RegularButton>
@@ -215,11 +215,11 @@ const Login = (props) => {
                                 {/* <LabelSignUp>Confirm Password</LabelSignUp> */}
                                 <InputSignUp type ="password" name="ConfPassword" placeholder="Re-enter the password" value={ConfirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                             </Column>
-                            <SocialMedia>
+                            {/* <SocialMedia>
                                 <Icon><SiFacebook style={{color:'#3b5998'}}/></Icon>
                                 <Icon><FcGoogle/></Icon>
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
-                            </SocialMedia>
+                            </SocialMedia> */}
                         <Bottom>
                         {loading && <RegularButton onClick={props.ScrollToTop}>
                                 <RotatingLines
