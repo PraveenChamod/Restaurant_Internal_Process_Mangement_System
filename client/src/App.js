@@ -48,6 +48,7 @@ import AdminAddFoods from './Pages/Admin/AddFoods';
 import AdminAddCategories from './Pages/Admin/AddCategories';
 import AdminViewFoods from './Pages/Admin/AdimnViewFoods';
 import AdminViewFood from './Pages/Admin/AdminViewFood';
+import AdminAddDatingTableItems from './Pages/Admin/AddDatingTableItems';
 import ManagerViewUser from './Pages/Manager/ManagerViewUser';
 import ManagerAddTables from './Pages/Manager/ManagerAddTable';
 import ManagerViewTables from './Pages/Manager/ManagerViewTables';
@@ -180,6 +181,7 @@ function App() {
                 <Route path="/AdminView-Foods" element={<AdminViewFoods BackRoutes={BackRoutes[0].nav}/>}/>
                 <Route path="/AdminView-Food/:id" element={<AdminViewFood/>}/>
                 <Route path="/AdminAdd-Categories" element={<AdminAddCategories BackRoutes={BackRoutes[0].nav}/>}/>
+                <Route path="/AdminAdd-DatingTableItems" element={<AdminAddDatingTableItems BackRoutes={BackRoutes[0].nav}/>}/>
               {/* </Route> */}
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
