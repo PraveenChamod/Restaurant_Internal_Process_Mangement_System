@@ -55,3 +55,42 @@ export const addDatingTableItems = async(req,res)=>{
         });
     }
 }
+
+// Method : GET
+// End Point : "api/v1/DatingTableItems";
+// Description : Get Dating Table Items
+export const getDatingTableItems = async (req,res)=>{
+
+    try {
+        const user = req.user;
+        if(user.Role === "Manager" || user.Role=== "Admin" || user.Role === "Customer"){
+            const datingTableItems = await DatingTableItemModel.find();
+            if(datingTableItems !== null){
+                res.status(200).json({
+                    status:"Success",
+                    message:"Details of all dating table items",
+                    data:{
+                        datingTableItems
+                    }
+                });
+            }
+            else{
+                res.status(404).json({
+                    status:"Error",
+                    message:"There are no any recordes please add dating table items"
+                });
+            }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:'Only Manager, Admin and customer have access to do this operation'
+            });
+        }
+    } catch (error) {
+        res.status(501).json({
+            status:"Server Error",
+            message:error.message
+        });
+    }
+}
