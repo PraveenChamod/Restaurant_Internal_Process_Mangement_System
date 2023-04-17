@@ -10,9 +10,11 @@ import 'customer_drawer_Items/orders_screen.dart';
 import 'customer_main_page.dart';
 
 class CustomerOrderDetails extends StatefulWidget {
+  final String deliveryStatus;
   final String orderId;
   const CustomerOrderDetails({Key? key,
     required this.orderId,
+    required this.deliveryStatus,
   }) : super(key: key);
 
   @override
@@ -83,27 +85,70 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            SizedBox(height: 5.0,),
-                            Text(
-                              'Michel is picking up your order',
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
+                          children: <Widget>[
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 5.0,),
+                                  widget.deliveryStatus == 'Not Delivered'
+                                      ?
+                                  const Text(
+                                    'Your Order Is On The way',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFFfebf10),
+                                    ),
+                                  )
+                                      :
+                                  const Text(
+                                    'Your Order Is Delivered. Enjoy',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFFfebf10),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5.0,),
+                                  const Divider(
+                                    color: Color(0xFFfebf10),
+                                  ),
+                                  const SizedBox(height: 10.0,),
+                                ],
                               ),
                             ),
-                            SizedBox(height: 5.0,),
-                            Divider(
-                              color: Color(0xFFfebf10),
+                            widget.deliveryStatus == 'Not Delivered'
+                                ?
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                  image: DecorationImage(
+                                    image: AssetImage(deliveryService),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: null,
+                              ),
+                            )
+                                :
+                            Expanded(
+                              flex: 6,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  color: Colors.transparent,
+                                  image: DecorationImage(
+                                    image: AssetImage(deliveredImage),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: null,
+                              ),
                             ),
-                            SizedBox(height: 10.0,),
                           ],
                         ),
                       ),
                     ),
-
-                    /////////////////////////
-
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
@@ -254,7 +299,6 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
     );
     if (response.statusCode == 200) {
       final orderDetails = json.decode(response.body);
-      print(orderDetails['data']['pendingOrders']);
       return OrderFoodDetails.fromJsonList(orderDetails['data']['pendingOrders']);
     } else {
       throw Exception('Failed to load data');

@@ -113,7 +113,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             _image != null
-                                ? Image.file(_image!, width: 80, height: 80, fit: BoxFit.cover,)
+                                ? ClipRRect(
+                                borderRadius: BorderRadius.circular(70.0),
+                                child: Image.file(_image!, width: 140, height: 140, fit: BoxFit.cover,))
                                 : CircleAvatar(
                                     radius: 70,
                                     backgroundImage: NetworkImage(imageUrl),
@@ -136,7 +138,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold,
                                       ),
-                                      //color: const Color(0xFFfebf10),
                                       color: Colors.transparent,
                                       pressEvent: () {
                                         getImage(ImageSource.gallery);
@@ -175,7 +176,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       ),
                                       color: const Color(0xFFfebf10),
                                       pressEvent: () {
-
+                                        _image != null
+                                            ? updateProfilePicture()
+                                            : unSuccessAwesomeDialog(DialogType.warning, 'Firstly you have to select new Image!', "Warning");
                                       },
                                     ),
                                   ),
@@ -427,5 +430,47 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       desc: desc,
       btnOkOnPress: (){},
     ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
+  }
+
+  void updateProfilePicture() async {
+    File? imageFile = _image;
+    if (imageFile == null) {
+      return;
+    }
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userEmail = pref.getString("LoginEmail");
+    String? userToken = pref.getString("JwtToken");
+    var request = http.MultipartRequest(
+      'PATCH',
+      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    );
+    request.headers.addAll({
+      "Authorization": "Bearer $userToken",
+    });
+    request.files.add(await http.MultipartFile.fromPath(
+      'image',
+      imageFile.path,
+    ));
+    var response = await request.send();
+    if(response.statusCode == 201) {
+      final json = jsonDecode(await response.stream.bytesToString());
+      final msg = json["message"];
+      print(msg);
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(await response.stream.bytesToString());
+      final msg = json["message"];
+      print(msg);
+    }
   }
 }

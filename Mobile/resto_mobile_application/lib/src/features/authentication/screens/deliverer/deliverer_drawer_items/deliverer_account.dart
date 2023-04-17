@@ -2,9 +2,12 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart' as path;
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../common_widgets/deliverer_drawer_item_appbar.dart';
@@ -19,16 +22,31 @@ class DelivererAccount extends StatefulWidget {
 
 class _DelivererAccountState extends State<DelivererAccount> {
 
+  //For Get User Input
+  var nameController = TextEditingController();
+  var emailController = TextEditingController();
+  var contactController = TextEditingController();
+
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(image == null ) return;
-    final imageTemporary = File(image.path);
+  Future getImage(ImageSource source) async {
+    try{
+      final image = await ImagePicker().pickImage(source: source);
+      if(image == null ) return;
+      final imagePermanent = await saveFilePermanently(image.path);
 
-    setState(() {
-      _image = imageTemporary;
-    });
+      setState(() {
+        _image = imagePermanent;
+      });
+    }on PlatformException catch (e){
+      print('failed to pick Image: $e');
+    }
+  }
+  Future<File> saveFilePermanently(String imagePath) async{
+    final directory = await getApplicationDocumentsDirectory();
+    final name = path.basename(imagePath);
+    final image = File('${directory.path}/$name');
+    return File(imagePath).copy(image.path);
   }
   ///----------------------------------------------------------------------------///
   late Future<Map<String, dynamic>> _futureData;
@@ -65,10 +83,19 @@ class _DelivererAccountState extends State<DelivererAccount> {
                         final String userEmail = snapshot.data!['user']['Email'];
                         final String userContact = snapshot.data!['user']['ContactNumber'];
                         final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+
+                        nameController = TextEditingController(text: userName);
+                        emailController = TextEditingController(text: userEmail);
+                        contactController = TextEditingController(text: userContact);
+
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CircleAvatar(
+                            _image != null
+                                ? ClipRRect(
+                                borderRadius: BorderRadius.circular(70.0),
+                                child: Image.file(_image!, width: 140, height: 140, fit: BoxFit.cover,))
+                                : CircleAvatar(
                               radius: 70,
                               backgroundImage: NetworkImage(imageUrl),
                             ),
@@ -92,7 +119,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                       ),
                                       color: Colors.transparent,
                                       pressEvent: () {
-                                        getImage();
+                                        getImage(ImageSource.gallery);
                                       },
                                     ),
                                   ),
@@ -128,7 +155,9 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                       ),
                                       color: const Color(0xFFfebf10),
                                       pressEvent: () {
-
+                                        _image != null
+                                            ? updateProfilePicture()
+                                            : unSuccessAwesomeDialog(DialogType.warning, 'Firstly you have to select new Image!', "Warning");
                                       },
                                     ),
                                   ),
@@ -137,7 +166,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userName,
+                              controller: nameController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -169,7 +198,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userEmail,
+                              controller: emailController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -201,7 +230,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
                             ),
                             const SizedBox(height: 10.0,),
                             TextFormField(
-                              initialValue: userContact,
+                              controller: contactController,
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
@@ -246,7 +275,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                   ),
                                   color: const Color(0xFFfebf10),
                                   pressEvent: () {
-
+                                    updateDelivererDetails();
                                   },
                                 ),
                               ),
@@ -282,6 +311,93 @@ class _DelivererAccountState extends State<DelivererAccount> {
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  void updateDelivererDetails() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userEmail = pref.getString("LoginEmail");
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.patch(
+      Uri.parse("http://$hostName:5000/api/v1/User/Profile/$userEmail"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "Name": nameController.text,
+        "Email": emailController.text,
+        "ContactNumber": contactController.text,
+      }),
+    );
+    if(response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      print(msg);
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+    }
+  }
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const DelivererAccount();
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
+  }
+
+  void updateProfilePicture() async {
+    File? imageFile = _image;
+    if (imageFile == null) {
+      return;
+    }
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userEmail = pref.getString("LoginEmail");
+    String? userToken = pref.getString("JwtToken");
+    var request = http.MultipartRequest(
+      'PATCH',
+      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    );
+    request.headers.addAll({
+      "Authorization": "Bearer $userToken",
+    });
+    request.files.add(await http.MultipartFile.fromPath(
+      'image',
+      imageFile.path,
+    ));
+    var response = await request.send();
+    if(response.statusCode == 201) {
+      final json = jsonDecode(await response.stream.bytesToString());
+      final msg = json["message"];
+      print(msg);
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(await response.stream.bytesToString());
+      final msg = json["message"];
+      print(msg);
     }
   }
 }

@@ -64,6 +64,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/Mobile_App_Logo.png"
 
 
 # For information on the generic Dart part of this file, see the
@@ -90,6 +96,7 @@ flutter:
     - assets/images/Delivery_service.png
     - assets/images/Dinning_table.png
     - assets/images/Choose_online.png
+    - assets/images/Delivered_Order.png
   #Application Logo
     - assets/logo/Logo.png
   #Food Images
@@ -113,6 +120,13 @@ flutter:
     - assets/Tables/Six_Person_Table.png
     - assets/Tables/Seven_Person_Table.png
     - assets/Tables/Eight_Person_Table.png
+    - assets/Tables/Main_Table.png
+  #Flower images
+    - assets/Flowers/Mix_Flower_Vase.png
+    - assets/Flowers/Pansy_Flower_Vase.png
+    - assets/Flowers/Rose_Flower_Vase.png
+    - assets/Flowers/Sun_Flower_Vase.png
+    - assets/Flowers/Tulip_Flower_Vase.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
