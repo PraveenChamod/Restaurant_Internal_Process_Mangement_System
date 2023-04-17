@@ -15,8 +15,6 @@ const CartComponent = ({data}) => {
     const[Items,setItem] = useState(data);
     console.log(data);
     const [clickedIndex, setClickedIndex] = useState({});
-    const[selectItem,setSelectItem] = useState();
-    const[OrderItem,setOrderItem] = useState({});
     const[Quantity,setQuantity] = useState(1);
     const quantityRef = useRef(Quantity);
     const[price,setPrice] = useState();
@@ -29,8 +27,6 @@ const CartComponent = ({data}) => {
         ...state, //copy previous state
         [index]: !state[index] //update value by index key
         }));
-        setSelectItem(index);
-        setOrderItem(Items[index]);
     };
     
     //Delete Cart Item
@@ -110,7 +106,7 @@ const CartComponent = ({data}) => {
     }
     // console.log(quantity);
     let Price = 0;
-    data.forEach(element => {
+    Items.forEach(element => {
         Price += (element.quantity * element.price);
         console.log(Price);
     });

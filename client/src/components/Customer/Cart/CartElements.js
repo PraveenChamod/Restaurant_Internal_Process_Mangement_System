@@ -9,11 +9,16 @@ export const SubContainer = styled.div`
     height: fit-content;
     width: 100%;
     margin-top: 5%;
-
+    @media screen and (max-width: 800px){
+        margin-top: 20%;
+    }
 `
 export const SubSection1 = styled.div`
     display: flex;
     justify-content: left;
+    @media screen and (max-width: 800px){
+        align-items: center;
+    }
 `
 export const ProfileImage = styled.div`
     width: 50px;
@@ -29,6 +34,9 @@ export const Image = styled.img`
 export const Name = styled.div`
     font-size: 24px;
     color: #fff;
+    @media screen and (max-width: 800px){
+        font-size: 18px;
+    }
 `   
 export const SubSection2 = styled.div`
     display: flex;
@@ -39,6 +47,10 @@ export const SubSection3 = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 800px){
+        flex-direction: column;
+        width: 100%;
+    }
 `
 export const Left = styled.div`
     display: flex;
@@ -46,6 +58,10 @@ export const Left = styled.div`
     align-items: center;
     width: 60%;
     margin: 3%;
+    @media screen and (max-width: 800px){
+        width: 100%;
+        margin: 0;
+    }
 `
 export const ItemsCard = styled.button`
     &{
@@ -62,6 +78,9 @@ export const ItemsCard = styled.button`
     &:hover{
         cursor: pointer;
     }
+    @media screen and (max-width: 800px){
+        height: fit-content;
+    }
 `
 export const Details = styled.div`
     display: flex;
@@ -74,10 +93,17 @@ export const FoodImage = styled.div`
     height: 90px;
     width: 30%;
     margin: 3%;
+    @media screen and (max-width: 800px){
+        height: 60px;
+    }
 `
 export const Food = styled.img`
      width: 90px;
     height: 90px;
+    @media screen and (max-width: 800px){
+        width: 60px;
+        height: 60px;
+    }
 `
 export const MainText = styled.div`
     color: #fff;
@@ -85,6 +111,9 @@ export const MainText = styled.div`
 export const FoodName = styled.h2`
     font-size: 24px;
     font-weight: 300;
+    @media screen and (max-width: 800px){
+        font-size: 16px;
+    }
 `
 export const SubText = styled.div`
     display: flex;
@@ -93,6 +122,9 @@ export const SubText = styled.div`
 export const Text = styled.p`
     color: #ffffff9d;
     font-size: 18px;
+    @media screen and (max-width: 800px){
+        font-size: 12px;
+    }
 `
 export const Right = styled.div`
     display:flex;
@@ -100,6 +132,10 @@ export const Right = styled.div`
     align-items: center;
     width: 40%;
     margin: 3%;
+    @media screen and (max-width: 800px){
+        width: 100%;
+        margin: 3% 0;
+    }
 `
 export const Description = styled.div`
     display: flex;
@@ -127,6 +163,9 @@ export const ItemTexts = styled.table`
     color: #fff;
     flex-direction: column;
     margin: 3% 5%;
+    @media screen and (max-width: 800px){
+        font-size: 14px;
+    }
 ` 
 export const Label = styled.div`
     width: 50%;
@@ -148,6 +187,9 @@ export const CartSection = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 800px){
+        width: 100%;
+    }
 `
 export const SelectIcon = styled.div`
     &{
@@ -162,4 +204,7 @@ export const Icon = styled.div`
     font-size: 32px;
     color:#FFBF00;
     width: 10%;
+    @media screen and (max-width: 800px){
+        font-size: 18px;
+    }
 `

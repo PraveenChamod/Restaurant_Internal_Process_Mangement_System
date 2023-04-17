@@ -128,9 +128,7 @@ const TableReservationComponent = ({ data }) => {
                     <Div6>
                         <FormControl>
                             <RegularButton>
-                                <Link to="./login" className="btn">
-                                    Confirm Order
-                                </Link>
+                                Confirm Reservation
                             </RegularButton>
                         </FormControl>
                     </Div6>
@@ -138,7 +136,7 @@ const TableReservationComponent = ({ data }) => {
             </Div>
             <Div7>
                 <RegularButton>
-                    <Link to="./login" className="btn">
+                    <Link to="/Staff-MemberPendingTable-Reservation-Details" className="btn">
                         Back
                     </Link>
                 </RegularButton>
