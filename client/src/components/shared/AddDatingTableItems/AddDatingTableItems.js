@@ -10,6 +10,7 @@ import { toast } from "react-hot-toast";
 const AddDatingTableItemsComponent = (props) => {
   const [image, setImage] = useState(null);
   const [ItemName, setItemName] = useState("");
+  const [ItemType, setItemType] = useState("");
   const [ItemPrice, setItemPrice] = useState("");
   const handleUpload = (e) => {
     setImage(e.target.files[0]);
@@ -21,6 +22,7 @@ const AddDatingTableItemsComponent = (props) => {
       const Data = new FormData();
       Data.append("image", image);
       Data.append("ItemName", ItemName);
+      Data.append("ItemType", ItemType);
       Data.append("ItemPrice", ItemPrice);
       console.log(Data);
       await toast.promise(
@@ -54,6 +56,18 @@ const AddDatingTableItemsComponent = (props) => {
         <l.FormSection onSubmit={addDatingTableItem}>
           <l.LeftSide>
             <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
+              <TextField
+                id="standard-basic"
+                label="Item Type"
+                variant="standard"
+                InputLabelProps={{ className: "textFeild_Label" }}
+                sx={{ marginTop: "10%" }}
+                value={ItemType}
+                onChange={(e) => setItemType(e.target.value)}
+                InputProps={{
+                  style: { color: "#fff" },
+                }}
+              />
               <TextField
                 id="standard-basic"
                 label="Item Name"
