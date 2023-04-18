@@ -8,9 +8,9 @@ const TableReservationComponent = ({ data }) => {
     const [customerName,setCustomerName]  = useState(data.CustomerName)
     const [arrivalTime,setArrivalTime] = useState(data.ArrivalTime)
     const [depatureTime,setDepatureTime] = useState(data.DepartureTime)
-    const [ contactNo,setContactNo] = useState(data.CustomerContactNo)
+    const [contactNo,setContactNo] = useState(data.CustomerContactNo)
     const [bookedDate,setBookedDate] = useState(data.Date)
-    const[amount,setAmount] = useState(data.Amount)
+    const [amount,setAmount] = useState(data.Amount) 
     const [tables,setTables] = useState(data.Tables)
         console.log("table data ddd,", data);
     return (
