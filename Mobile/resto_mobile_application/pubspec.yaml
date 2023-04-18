@@ -121,6 +121,7 @@ flutter:
     - assets/Tables/Seven_Person_Table.png
     - assets/Tables/Eight_Person_Table.png
     - assets/Tables/Main_Table.png
+    - assets/Tables/Empty.png
   #Flower images
     - assets/Flowers/Mix_Flower_Vase.png
     - assets/Flowers/Pansy_Flower_Vase.png
