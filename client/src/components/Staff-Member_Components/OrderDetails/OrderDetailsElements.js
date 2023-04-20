@@ -250,7 +250,6 @@ export const ItemsCard = styled.div`
         
 
   }
-    }
     &:hover{
         cursor: pointer;
     }

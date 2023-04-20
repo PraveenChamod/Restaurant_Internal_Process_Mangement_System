@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 import Customer from "../models/Customer.js";
 import TableReservation from "../models/TableReservation.js";
 import Table from "../models/Tables.js";
+import { transporter } from "../util/NotificationUtil.js";
+import path from 'path';
+import ejs from 'ejs';
+
+
+const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
 
 // Method : POST
 // End Point : "api/v1/TableReservation";
@@ -180,6 +186,7 @@ export const SendReservationConfirmation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
+            const {customerName,Address,ContactNo,Tables,totalPrice,customerEmail} = req.body;
             const findReservation = await TableReservation.findById(_id);
             console.log(findReservation);
             // const findTable = await Table.findById(findReservation.Table);
@@ -190,7 +197,55 @@ export const SendReservationConfirmation = async(req,res)=>{
                     const UpdateReservation = await TableReservation.findByIdAndUpdate(findReservation.id,{Status:'Confirm'},{new:true,runValidators:true}).session(session);
                     await session.commitTransaction();
                     session.endSession();
-                    
+                    const data = {
+                        id:_id,
+                        customerName:customerName,
+                        customerAddress:Address,
+                        customerPhone:ContactNo,
+                        reservedTables:Items,
+                        totalPrice:totalPrice
+                      }
+                      const mailOption = {
+                            from : 'resto6430@gmail.com',
+                            to : customerEmail,
+                            subject : 'Table Reservation Confrimation',
+                            attachments:[{
+                                filename : 'logo.png',
+                                path:`${__dirname}/Template/logo.png`,
+                                cid:'logo'
+                            }],
+                        }
+                        ejs.renderFile(`${__dirname}/Template/OrderConfirmationEmail.ejs`,data,(err,renderHTML)=>{
+                            if(err){
+                                console.log(err.message);
+                                res.status(500).json({
+                                    status: "Server Error",
+                                    message: err.message
+                                });
+                            }
+                            else{
+                                mailOption.html = renderHTML;
+                                transporter.sendMail(mailOption,(err,info)=>{
+                                    if (err) {
+                                        console.log(err.message);
+                                        res.status(500).json({
+                                            status: "Server Error",
+                                            message: err.message
+                                        });
+                                    }
+                                    else {
+                                        const token = createToken(createServiceProvider._id,createServiceProvider.Email);
+                                        res.status(201).json({
+                                            status:'Success',
+                                            message:'User added to the system successfully',
+                                            data:{
+                                                token
+                                            }
+                                        });
+                                    }
+                                })
+                            }
+                        })
                     res.status(201).json({
                         status: 'success',
                         message: 'Table Reservation is Confirmed',

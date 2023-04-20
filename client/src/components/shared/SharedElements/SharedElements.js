@@ -3,7 +3,7 @@ import Chef from '../../../Images/Chef.png';
 export const Container = styled.div`
     display: flex;
     justify-content: center;
-    min-height: 100vh;
+    height: 100vh;
     align-items: center;
     flex-direction: column;
     background:url(${Chef}) left bottom no-repeat;
