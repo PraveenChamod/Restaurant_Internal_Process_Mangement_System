@@ -1,4 +1,4 @@
-import { FormControl, TextField } from "@mui/material";
+import { FormControl, TextField, MenuItem, Select } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
@@ -55,8 +55,29 @@ const AddDatingTableItemsComponent = (props) => {
         <Header>Add Dating Table Items</Header>
         <l.FormSection onSubmit={addDatingTableItem}>
           <l.LeftSide>
+          
             <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
-              <TextField
+            <l.SubHeader>Item Type</l.SubHeader>
+            <Select
+                    defaultValue={30}
+                    inputProps={{
+                      style: { color: "#fff" },
+                    }}
+                    sx={{
+                        color: "white",
+                        '.MuiSvgIcon-root ': {
+                        fill: "white !important",
+                        
+                        }
+                    }}
+                    onChange={e=>setItemType(e.target.value)}
+                >
+                <MenuItem value="Flower" >Flower</MenuItem>
+                <MenuItem value="Beverage" >Beverage</MenuItem>
+                <MenuItem value="Candles" >Candles</MenuItem>
+                <MenuItem value="Napkin" >Napkin</MenuItem>
+              </Select>
+              {/* <TextField
                 id="standard-basic"
                 label="Item Type"
                 variant="standard"
@@ -67,7 +88,7 @@ const AddDatingTableItemsComponent = (props) => {
                 InputProps={{
                   style: { color: "#fff" },
                 }}
-              />
+              /> */}
               <TextField
                 id="standard-basic"
                 label="Item Name"
