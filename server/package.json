@@ -33,6 +33,7 @@
     "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
+    "pdf-creator-node": "^2.3.5",
     "shoutout-sdk": "^3.0.4",
     "stripe": "^11.10.0",
     "twilio": "^3.84.0",

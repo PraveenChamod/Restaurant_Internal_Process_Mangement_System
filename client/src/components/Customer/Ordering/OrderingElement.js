@@ -15,6 +15,10 @@ export const Section = styled.div`
     height: 100%;
     align-items: center;
     flex-direction: column;
+    @media screen and (max-width: 800px){
+      margin-top: 20%;
+      width: 100%;
+    }
 `
 
 export const Div = styled.div`
@@ -27,8 +31,9 @@ export const Div = styled.div`
   width: 100%;
   margin: 40px;
   @media screen and (max-width: 769px) {
-    width: 90%;
-    height: 350px;
+    width: 95%;
+    height: 100%;
+    margin: 3% 0;
   }
 `;
 
@@ -44,6 +49,10 @@ export const Div1 = styled.div`
   box-shadow: 3px 3px 3px #000;
   margin: 2%;
   padding-bottom:10px;
+  @media screen and (max-width: 800px){
+    height: 120px;
+    width: 120px;
+  }
 `;
 
 
@@ -102,6 +111,11 @@ export const Button1 = styled.button`
     font-weight: 500;
     margin-right: 25px;
     margin-left: 25px;
+    @media screen and (max-width: 800px){
+      width: 50px;
+      height: 30px;
+      margin: 3%;
+    }
 `;
 
 export const Button2 = styled.button`
@@ -117,11 +131,19 @@ export const Button2 = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 800px){
+      width: 25px;
+      height: 25px;
+    }
 `;
 
 export const Img = styled.img`
   height: 37px;
   width: 65px;
+  @media screen and (max-width: 800px){
+    height: 25px;
+    width: 45px;
+  }
 `;
 
 export const Img1 = styled.img`
@@ -129,11 +151,18 @@ export const Img1 = styled.img`
   /* width: 100px; */
   /* margin-bottom:-10px; */
   margin-top:20px;
+  @media screen and (max-width: 800px){
+    height: 50px;
+    width: 50px;
+  }
 `;
 
 export const P = styled.p`
   font-weight: 700;
   color: white;
+  @media screen and (max-width: 800px){
+    font-size: 12px;
+  }
 `;
 
 export const P1 = styled.p`
@@ -142,6 +171,9 @@ export const P1 = styled.p`
   color: white;
   margin-top : 2px;
   margin-bottom:2px;
+  @media screen and (max-width: 800px){
+    font-size: 10px;
+  }
 `;
 
 export const RegularButton = styled.button`
