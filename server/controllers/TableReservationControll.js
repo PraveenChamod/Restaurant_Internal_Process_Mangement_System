@@ -145,12 +145,14 @@ export const ViewReservation = async(req,res)=>{
                 .exec();
                 const Name = populatedReservation.Customer.Name;
                 const ContactNo = populatedReservation.Customer.ContactNumber;
+                const Email = populatedReservation.Customer.Email;
                 const Tables = populatedReservation.Tables.map(table=>({
                     TableNo:table.table.TableNo
                 }));
                 ReservationDetails = {
                     CustomerName:Name,
                     CustomerContactNo:ContactNo,
+                    Email:Email,
                     Tables,
                     Type:populatedReservation.Type,
                     ArrivalTime:populatedReservation.ArrivalTime,
@@ -186,9 +188,9 @@ export const SendReservationConfirmation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
-            const {customerName,Address,ContactNo,Tables,totalPrice,customerEmail} = req.body;
+            const {customerName,ContactNo,Tables,totalPrice,customerEmail,arrivalTime,depatureTime,type,bookedDate} = req.body;
             const findReservation = await TableReservation.findById(_id);
-            console.log(findReservation);
+            console.log(req.body);
             // const findTable = await Table.findById(findReservation.Table);
             if(findReservation !== null){
                 const session = await mongoose.startSession();
@@ -200,10 +202,14 @@ export const SendReservationConfirmation = async(req,res)=>{
                     const data = {
                         id:_id,
                         customerName:customerName,
-                        customerAddress:Address,
                         customerPhone:ContactNo,
-                        reservedTables:Items,
-                        totalPrice:totalPrice
+                        customerEmail:customerEmail,
+                        reservedTables:Tables,
+                        totalPrice:totalPrice,
+                        depatureTime:depatureTime,
+                        arrivalTime:arrivalTime,
+                        bookedDate:bookedDate,
+                        type:type
                       }
                       const mailOption = {
                             from : 'resto6430@gmail.com',
@@ -215,7 +221,7 @@ export const SendReservationConfirmation = async(req,res)=>{
                                 cid:'logo'
                             }],
                         }
-                        ejs.renderFile(`${__dirname}/Template/OrderConfirmationEmail.ejs`,data,(err,renderHTML)=>{
+                        ejs.renderFile(`${__dirname}/Template/ReservationConfirmation.ejs`,data,(err,renderHTML)=>{
                             if(err){
                                 console.log(err.message);
                                 res.status(500).json({
@@ -231,16 +237,6 @@ export const SendReservationConfirmation = async(req,res)=>{
                                         res.status(500).json({
                                             status: "Server Error",
                                             message: err.message
-                                        });
-                                    }
-                                    else {
-                                        const token = createToken(createServiceProvider._id,createServiceProvider.Email);
-                                        res.status(201).json({
-                                            status:'Success',
-                                            message:'User added to the system successfully',
-                                            data:{
-                                                token
-                                            }
                                         });
                                     }
                                 })

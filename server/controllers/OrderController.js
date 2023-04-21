@@ -551,16 +551,6 @@ export const SendOrderConfrimation = async(req,res)=>{
                                           message: err.message
                                       });
                                   }
-                                  else {
-                                      const token = createToken(createServiceProvider._id,createServiceProvider.Email);
-                                      res.status(201).json({
-                                          status:'Success',
-                                          message:'User added to the system successfully',
-                                          data:{
-                                              token
-                                          }
-                                      });
-                                  }
                               })
                           }
                       })

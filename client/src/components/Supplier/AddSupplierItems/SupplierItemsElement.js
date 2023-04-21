@@ -12,11 +12,11 @@ import styled from "styled-components";
 //     margin-bottom: 5%;
 // `
 
-export const FormSection= styled.form`
+export const FormSection= styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 70rem;
+    width: 65%;
     height: auto;
     background-color: #1a1e21;
     border-radius: 25px;
@@ -33,7 +33,7 @@ export const LeftSide= styled.div`
     margin: 0;
     padding: 0 2%;
 `
-export const RightSide= styled.div`
+export const RightSide= styled.form`
     position: relative;
     display: flex;
     flex-direction: column;

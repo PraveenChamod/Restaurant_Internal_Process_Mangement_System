@@ -8,9 +8,10 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 const TableReservationComponent = ({ data }) => {
     let customerName  = data.CustomerName;
+    let Email = data.Email;
     let arrivalTime= data.ArrivalTime;
     let depatureTime = data.DepartureTime;
-    let  contactNo= data.CustomerContactNo;
+    let contactNo= data.CustomerContactNo;
     let bookedDate = data.Date;
     let amount = data.Amount;
     let tables= data.Tables;
@@ -19,9 +20,10 @@ const TableReservationComponent = ({ data }) => {
 
         const confirmReservation = async (e)=>{
             e.preventDefault()
+            const formData = {customerName:customerName,customerEmail:Email,ContactNo:contactNo,Tables:tables,totalPrice:amount,arrivalTime:arrivalTime,depatureTime:depatureTime,type:type,bookedDate:bookedDate}
             try {
                 await toast.promise(
-                    axios.post(`/api/v1/ReservationConfirmation/${data.id}`),
+                    axios.post(`/api/v1/ReservationConfirmation/${data.id}`,formData),
                     {
                         loading:'Confirming Reservation',
                         success:(data)=>{
