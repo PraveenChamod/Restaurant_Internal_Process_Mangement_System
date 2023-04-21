@@ -12,6 +12,8 @@ import * as l from './AddSupplierOrderElement';
 import { AiFillEye } from "react-icons/ai";
 import { FaPlus, FaTrash } from 'react-icons/fa';
 import Popup from "./Popup";
+import useAuth from "../../../Hooks/useAuth.js";
+import { toast } from 'react-hot-toast';
 
 // const AddSupplierOrder = (props) => {
 //   const [Item, setItem] = useState("");
@@ -86,6 +88,8 @@ import Popup from "./Popup";
 
 
 const AddSupplierOrder = (props) => {
+  const{user} =  useAuth();
+  const Manager = user.id;
   const [selectedItem, setSelectedItem] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [orderItems, setOrderItems] = useState([]);
@@ -120,6 +124,48 @@ const AddSupplierOrder = (props) => {
   };
 
   console.log(orderItems); //all the details of ordered items
+  //----------------------------------------------------
+  let Supplier;
+  let ItemId;
+  let Quantity;
+  let OrderItem = [];
+  
+  const handleOrderItems = (e) => {
+    orderItems.forEach(async (orderitem)=>{
+      Supplier = orderitem.supplierId;
+      ItemId = orderitem.id;
+      Quantity = orderitem.quantity;
+      OrderItem.push({
+        ItemId,
+        Quantity
+      })
+      try{
+        console.log("Manager:"+Manager+" Supplier:"+Supplier+" OrderItem:"+OrderItem);
+        await toast.promise(
+          axios.post('api/v1/SupplierOrder', {Manager:Manager,Supplier:Supplier,Items:OrderItem}),
+          {
+            loading: 'Supply orders are Adding....',
+            success: (orderItems) => {
+              return ` ${orderItems.data?.message} ` || "success";
+            },
+            error: (err) => `${err.response.data.message}`,
+          },
+          {
+            style: {
+              borderRadius: '10px',
+              background: '#333',
+              color: '#fff',
+              fontSize: '1rem',
+              zIndex: '99999999'
+            }
+          }
+        )
+      } catch (error) {
+        console.log(error.message);
+      }
+    })
+  }
+  //----------------------------------------------------
 
   return (
     <Container>
@@ -183,6 +229,7 @@ const AddSupplierOrder = (props) => {
               </l.Tr>
             ))}
           </l.Table>
+          <l.ConfirmButton onClick={() => handleOrderItems()}>Confirm</l.ConfirmButton>
         </l.SubContainer>
       )}
       <l.ButtonSection>
