@@ -179,6 +179,8 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
                 tableNapkinImagePath: 'late',
                 mainTablePrice: datingTablePrice,
                 beverageImagePath: 'late',
+                tableId: datingTableId,
+                tableNumber: datingTableNo,
               )
                   :
               Stack(
