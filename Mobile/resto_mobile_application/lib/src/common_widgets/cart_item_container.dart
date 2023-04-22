@@ -300,7 +300,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         "quantity": qty
       }),
     );
-    if(response.statusCode == 201) {
+    if(response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
       awesomeDialog(DialogType.success, msg, "Success");
@@ -325,7 +325,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         "quantity": qty
       }),
     );
-    if(response.statusCode == 201) {
+    if(response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
       awesomeDialog(DialogType.success, msg, "Success");
@@ -371,13 +371,13 @@ class _CartItemContainerState extends State<CartItemContainer> {
       }),
     );
     if(response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, msg, "Success");
+      //final json = jsonDecode(response.body);
+      //final msg = json["message"];
+      successAwesomeDialog(DialogType.success, 'Removed food item from cart', "Success");
     } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      //final json = jsonDecode(response.body);
+      //final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, 'Failed to remove food item from cart', "Warning");
     }
   }
   //Remove Offer Cart Item
@@ -396,13 +396,13 @@ class _CartItemContainerState extends State<CartItemContainer> {
       }),
     );
     if(response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, msg, "Success");
+      //final json = jsonDecode(response.body);
+      //final msg = json["message"];
+      successAwesomeDialog(DialogType.success, 'Removed food item from cart', "Success");
     } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      //final json = jsonDecode(response.body);
+      //final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, 'Failed to remove food item from cart', "Warning");
     }
   }
   //AwesomeDialog for Remove Item from cart
