@@ -22,22 +22,9 @@ import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { toast } from "react-hot-toast";
 const Ordering = (props) => {
-  console.log(props.data2);
-  const[count,setCount] = useState(0);
   const[search,setSerach] = useState('');
   const[Items,setItems] = useState(props.data1);
   const[Offers,setOffers] = useState(props.data2);
-  const [clickedIndex, setClickedIndex] = useState({});
-  const[selectItem,setSelectItem] = useState({});
-  console.log(Items);
-  //Select Item Independelntly
-  const handleClick = async (index) =>{
-    setClickedIndex(state => ({
-      ...state, //copy previous state
-      [index]: !state[index] //update value by index key
-    }));
-    setSelectItem(Items[index] || Offers[index]);
-  };
 
   //Add items into the cart
   const AddToCart = async (foodId)=>{
@@ -97,14 +84,13 @@ const Ordering = (props) => {
 
   //Add To Cart Option Manage
   const handleAddToCart = async (index) => {
-    handleClick(index);
     const item = Items[index];
     await AddToCart(item.id);
     
   }
 
   const handleAddOfferToCart = async (index) => {
-    handleClick(index);
+
     const item = Offers[index];
     console.log(item.id);
     await AddOfferToCart(item.id);
@@ -135,29 +121,30 @@ const Ordering = (props) => {
     <l.Page>
       <l.Section>
         <Header>SELECT ITEMS</Header>
-
-        <Paper
-        component="form"
-        sx={{ p: '2px 2px', display: 'flex', alignItems: 'center', width: 500 , borderRadius: 20 , height : 35}}
-        >
-        <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        value={search}
-        onChange={handleSearch}
-        />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search" disabled>
-          <SearchIcon />
-        </IconButton>
-        </Paper>
         <l.Div>
-        <l.Button1 ><l.Img src={icon1} alt="buttonpng" /></l.Button1>
-        <l.Button1 ><l.Img src={icon2} alt="buttonpng" /></l.Button1>
-        <l.Button1><l.Img src={icon3} alt="buttonpng" /></l.Button1>
-        <l.Button1><l.Img src={icon4} alt="buttonpng" /></l.Button1>
-        <l.Button1><l.Img src={icon5} alt="buttonpng" /></l.Button1>
-        <l.Button1><l.Img src={icon6} alt="buttonpng" /></l.Button1>
-        <l.Button1><l.Img src={icon7} alt="buttonpng" /></l.Button1>
-        <l.Button1><l.Img src={icon8} alt="buttonpng" /></l.Button1>
+        <Paper
+          component="form"
+          sx={{ p: '2px 2px', display: 'flex', alignItems: 'center', width: 500 , borderRadius: 20 , height : 35}}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            value={search}
+            onChange={handleSearch}
+          />
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search" disabled>
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+        </l.Div>
+        <l.Div>
+          <l.Button1 ><l.Img src={icon1} alt="buttonpng" /></l.Button1>
+          <l.Button1 ><l.Img src={icon2} alt="buttonpng" /></l.Button1>
+          <l.Button1><l.Img src={icon3} alt="buttonpng" /></l.Button1>
+          <l.Button1><l.Img src={icon4} alt="buttonpng" /></l.Button1>
+          <l.Button1><l.Img src={icon5} alt="buttonpng" /></l.Button1>
+          <l.Button1><l.Img src={icon6} alt="buttonpng" /></l.Button1>
+          <l.Button1><l.Img src={icon7} alt="buttonpng" /></l.Button1>
+          <l.Button1><l.Img src={icon8} alt="buttonpng" /></l.Button1>
         </l.Div>
         <l.Div>
           {

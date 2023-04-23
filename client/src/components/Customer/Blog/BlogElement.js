@@ -8,7 +8,7 @@ export const Page = styled.div`
     height: 100vh;
     align-items: center;
     flex-direction: column;
-    background:url(${Img}) bottom no-repeat;
+    margin-bottom: 5%;
 `
 export const Page1 = styled.div`
     display: flex;
@@ -66,3 +66,10 @@ export const Texrarea = styled.textarea`
   font-size: 18px;
   resize: none;
 `;
+
+export const ButtonSection = styled.div`
+  width: 80%;
+  display: flex;
+  justify-content: left;
+  
+`

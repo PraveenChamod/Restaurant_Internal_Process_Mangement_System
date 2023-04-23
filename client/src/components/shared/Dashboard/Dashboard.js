@@ -45,6 +45,16 @@ const Dashboard = (props) => {
     <Div>
       <Container> 
       <SideNavBar>
+        {
+          props.view ? 
+          null
+          :
+          <HeaderContainer>
+            <Header>
+              Welcome
+            </Header>
+          </HeaderContainer>
+        }
         <UserHeader>
           <Title>{props.Navs1.Role}</Title>
           <Name>{user.Name}</Name>
@@ -67,34 +77,37 @@ const Dashboard = (props) => {
           <p>@2023 RESTO | ALL RIGHTS RESERVED</p>
         </Footer>
       </SideNavBar>
-      <Menu>
-        <HeaderContainer>
-          <Header>
-            Welcome
-          </Header>
-        </HeaderContainer>
-        <Cards>
-          {
-            cardData.map(data=>{
-              return(
-                <Card>
-                  <CardIcon>{data.icon}</CardIcon>
-                  <Count>{data.count}</Count>
-                  <Text>{data.text}</Text>
-                </Card>
-              )
-            })
-          }
-        </Cards>
-        <Pictures>
-          <Left>
-            <Image src={leftImage}/>
-          </Left>
-          <Right>
-            <Image src={rightImage}/>
-          </Right>
-        </Pictures>
-      </Menu>
+      {
+        props.view ?
+        <Menu>
+          <HeaderContainer>
+            <Header>
+              Welcome
+            </Header>
+          </HeaderContainer>
+          <Cards>
+            {
+              cardData.map(data=>{
+                return(
+                  <Card>
+                    <CardIcon>{data.icon}</CardIcon>
+                    <Count>{data.count}</Count>
+                    <Text>{data.text}</Text>
+                  </Card>
+                )
+              })
+            }
+          </Cards>
+          <Pictures>
+            <Left>
+              <Image src={leftImage}/>
+            </Left>
+            <Right>
+              <Image src={rightImage}/>
+            </Right>
+          </Pictures>
+        </Menu> : null
+      }
     </Container>
     </Div>
   )

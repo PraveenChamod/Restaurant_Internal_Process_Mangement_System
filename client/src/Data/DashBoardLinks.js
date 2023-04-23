@@ -9,7 +9,7 @@ import { HiDocumentReport } from 'react-icons/hi';
 import { MdOutlineAddToPhotos, MdOutlineRateReview,MdLocalOffer,MdTableBar } from "react-icons/md";
 
 let iconStyle = {fontWeight:"600",color:"#fff",fontSize:"1.8rem"};
-
+let responsiveStyle = {fontSize:"1rem"}
 
 export const Roles = [
     {

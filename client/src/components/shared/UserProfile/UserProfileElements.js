@@ -23,6 +23,7 @@ export const Div = styled.div`
   @media screen and (max-width: 769px) {
     width: 90%;
     height: 350px;
+    padding: 3% 0;
   }
 `
 export const Img = styled.img`
@@ -39,23 +40,6 @@ export const Img = styled.img`
       border-bottom-left-radius: 50%;
       border-top-right-radius: 50%;
     }
-`
-export const FormButton = styled.div`
-    position: relative;
-    background: linear-gradient(to right, #FFBF00, #B26C29);
-    border-radius: 20px;
-    border: none;
-    font-size: 16px;
-    color: #fff;
-    font-style: none;
-    cursor: pointer;
-    width: 100px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    font-weight: 500;
 `
 export const Header = styled.h1`
   justify-content: center;
@@ -79,5 +63,6 @@ export const P = styled.p`
   margin-top :-10px;
   @media screen and (max-width:769px){
     font-size: 100%;
+    margin: 3% 0;
   } 
 `

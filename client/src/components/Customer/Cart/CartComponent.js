@@ -3,20 +3,18 @@ import { Header } from "../../shared/SharedElements/SharedElements";
 import * as l from './CartElements';
 import { useRef, useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
-import { AiFillPlusCircle } from 'react-icons/ai';
+import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import useFetch from "../../../Hooks/useFetch";
 
 const CartComponent = ({data}) => {
     const{user}=useAuth();
     const[Items,setItem] = useState(data);
     console.log(data);
     const [clickedIndex, setClickedIndex] = useState({});
-    const[selectItem,setSelectItem] = useState();
-    const[OrderItem,setOrderItem] = useState({});
-    const[click,setClick]  = useState(false);
     const[Quantity,setQuantity] = useState(1);
     const quantityRef = useRef(Quantity);
     const[price,setPrice] = useState();
@@ -29,8 +27,6 @@ const CartComponent = ({data}) => {
         ...state, //copy previous state
         [index]: !state[index] //update value by index key
         }));
-        setSelectItem(index);
-        setOrderItem(Items[index]);
     };
     
     //Delete Cart Item
@@ -43,7 +39,7 @@ const CartComponent = ({data}) => {
                     loading:`Removing from cart`,
                     success:(data)=>{
                       console.log({ data });
-                      return ` ${data.data?.message} ` || "Removed";
+                      return "Item is Removed";
                     },
                     error: (err) => `${err.response.data.message}`,
                   },
@@ -57,7 +53,7 @@ const CartComponent = ({data}) => {
                     }
                   }
             )
-            setClick(true);
+            
         } catch (error) {
             console.log(error.message);
         }
@@ -67,11 +63,13 @@ const CartComponent = ({data}) => {
         const cartId = item.cartId;
         const foodId = item.Foodid;
         const offerId = item.Offerid;
-        console.log(item);
-        await deleteCartItem({cartId,foodId,offerId});
         handleClick(index);
+        await deleteCartItem({cartId,foodId,offerId});
+        const newJoin = [...Items];
+        newJoin.splice(index, 1);
+        setItem(newJoin);
     }
-    
+    console.log(Items);
     //Increase Quantity
     const AddQuantity = async ({foodId,quantity,offerId})=>{
         try {
@@ -94,9 +92,21 @@ const CartComponent = ({data}) => {
         setItem([...data]); // update the state of the data array
         await AddQuantity({foodId:foodId, quantity: newQuantity,offerId:offerId});
     }
+
+    const decreseQTY = async(index)=>{
+        const item = Items[index];
+        const offerId = item.Offerid;
+        const foodId = item.Foodid;
+        handleClick(index);
+        const newQuantity = item.quantity - 1;
+        setQuantity(newQuantity);
+        item.quantity = newQuantity;
+        setItem([...data]); // update the state of the data array
+        await AddQuantity({foodId:foodId, quantity: newQuantity,offerId:offerId});
+    }
     // console.log(quantity);
     let Price = 0;
-    data.forEach(element => {
+    Items.forEach(element => {
         Price += (element.quantity * element.price);
         console.log(Price);
     });
@@ -119,7 +129,7 @@ const CartComponent = ({data}) => {
             <l.SubSection3>
                 <l.Left> 
                     {
-                        data.map((cart,index)=>{
+                        Items.map((cart,index)=>{
                             console.log(cart);
                             return(
                                 <l.CartSection>
@@ -150,6 +160,9 @@ const CartComponent = ({data}) => {
                                         </l.Details>
                                         <l.Icon onClick={()=>increaseQTY(index)}>
                                             <AiFillPlusCircle/>
+                                        </l.Icon>
+                                        <l.Icon onClick={()=>decreseQTY(index)}>
+                                            <AiFillMinusCircle/>
                                         </l.Icon>
                                         <l.Icon>
                                             <MdDelete onClick={()=>selectOne(index)}/>

@@ -15,8 +15,7 @@ export const FormSection= styled.form`
   @media screen and (max-width: 769px) {
     width: 100%;
     flex-direction:column-reverse;
-   
-
+    padding-top: 2%;
   }
 
 `
@@ -93,7 +92,7 @@ export const Image = styled.img`
   height: 250px;
 
   @media screen and (max-width: 769px) {
-    width: 125px
+    width: 125px;
     height: 125px;
   }
 
