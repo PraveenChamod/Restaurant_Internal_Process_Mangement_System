@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3, Div4, Div5, Div6, Div7, Div8, Div9, FormButton, Hr, SubHeader } from "./TableReservationElelments";
+import {toast} from 'react-hot-toast';
+import axios from "axios";
+
 const TableReservationComponent = ({ data }) => {
     const [customerName,setCustomerName]  = useState(data.CustomerName)
     const [arrivalTime,setArrivalTime] = useState(data.ArrivalTime)
@@ -12,7 +15,38 @@ const TableReservationComponent = ({ data }) => {
     const [bookedDate,setBookedDate] = useState(data.Date)
     const [amount,setAmount] = useState(data.Amount) 
     const [tables,setTables] = useState(data.Tables)
-        console.log("table data ddd,", data);
+        console.log("table data ddd,", data.Tables);
+
+
+
+    const confirmReservation = async (e)=>{
+        e.preventDefault()
+        try {
+            await toast.promise(
+                axios.post(`/api/v1/OrderConfirmation/${data.id}`,{}),
+                {
+                    loading:'Assigning Table....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999'
+                    }
+                }
+            )
+        } catch (error) {
+            
+        }
+    }
+
+
     return (
         <Container>
             <Header>Table Reservation</Header>
@@ -127,10 +161,10 @@ const TableReservationComponent = ({ data }) => {
                 <Div4>
                     <Div6>
                         <FormControl>
-                            <RegularButton>
-                                <Link to="./login" className="btn">
+                            <RegularButton onClick={confirmReservation}>
+                                
                                     Confirm Order
-                                </Link>
+                               
                             </RegularButton>
                         </FormControl>
                     </Div6>

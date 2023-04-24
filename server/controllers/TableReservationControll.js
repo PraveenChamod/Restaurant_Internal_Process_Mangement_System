@@ -180,6 +180,7 @@ export const SendReservationConfirmation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
+            console.log(_id);
             const findReservation = await TableReservation.findById(_id);
             console.log(findReservation);
             // const findTable = await Table.findById(findReservation.Table);
