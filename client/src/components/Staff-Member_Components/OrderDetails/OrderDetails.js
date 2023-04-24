@@ -50,7 +50,7 @@ const OrderDetailsComponent = (props) => {
         }
     }
     return (
-        <Container>
+        <l.Container>
             <l.Header>Order Details</l.Header>
             <l.Div>
                 <l.Div2 onSubmit={assignDeliverer}> 
@@ -157,7 +157,7 @@ const OrderDetailsComponent = (props) => {
                         <l.SubHeader>Select Deliverer</l.SubHeader>
                         <FormControl>
                             <Select
-                                defaultValue={30}
+                                defaultValue={30} 
                                 inputProps={{
                                     name: "Email",
                                     id: "uncontrolled-native",
@@ -223,7 +223,7 @@ const OrderDetailsComponent = (props) => {
                     </Link>
                 </RegularButton>
             </l.Div7>
-        </Container>
+        </l.Container>
     );
 }
 export default OrderDetailsComponent;

@@ -11,6 +11,8 @@ export const SubContainer = styled.div`
 
      @media screen and (max-width: 769px) {
     width: 90%;
+    overflow:scroll;
+
     
   }
 `
@@ -32,7 +34,8 @@ export const Table = styled.table`
     width: 80%;
     @media screen and (max-width: 769px) {
     display:flex;
-    width:auto;
+    width:100%;
+    overflow-x:scroll;
   }
 `
 export const Tr = styled.tr`
