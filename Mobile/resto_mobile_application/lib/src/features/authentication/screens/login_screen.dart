@@ -13,6 +13,7 @@ import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_main_page.dart';
 import 'deliverer/deliverer_home.dart';
+import 'forget_password/gettemail.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
-                                      return const MakeSelection();
+                                      return const GetEmail();
                                     },
                                   ),
                                 );

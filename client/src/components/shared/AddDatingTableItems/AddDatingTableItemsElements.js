@@ -82,3 +82,10 @@ export const ButtonSection1 = styled.div`
     left: -20%;
     top: -2%;
 `
+export const SubHeader = styled.h4`
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+  color: #fff;
+  margin-bottom: 0px;
+`;

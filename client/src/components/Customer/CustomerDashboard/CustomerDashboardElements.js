@@ -6,6 +6,10 @@ export const Container = styled.div`
     justify-content: center;
     align-items: center;
     background:url(${Img}) bottom no-repeat;
+    @media screen and (max-width: 800px){
+        
+        height: 100vh;
+    }
 `
 export const Section = styled.div`
     display: flex;
@@ -13,6 +17,10 @@ export const Section = styled.div`
     align-items: center;
     flex-direction: column;
     margin: 8% 0 0 0;
+    @media screen and (max-width: 800px){
+        width: 100%;
+        margin-top: 20%;
+    }
 `
 export const Profile = styled.div`
     display: flex;
@@ -33,7 +41,9 @@ export const Image = styled.img`
 export const Name = styled.div`
     color: #fff;
     font-size: 28px;
-
+    @media screen and (max-width: 800px){
+        font-size: 18px;
+    }
 `
 export const Options = styled.div`
     margin: 5% 0;
@@ -48,6 +58,9 @@ export const Content = styled.div`
     box-shadow: 3px 3px 3px #000;
     border-radius: 20px;
     background-color: #1A1E21;
+    @media screen and (max-width: 800px){
+        width: 300px;
+    }
 `
 export const ButtonSection = styled.div`
     margin: 2%;
@@ -56,6 +69,9 @@ export const Button = styled(RegularButton)`
     width: 250px;
     display: flex;
     justify-content: center;
+    @media screen and (max-width: 800px){
+        width: 200px;
+    }
 `
 export const Icon = styled.div`
     width: 40%;
@@ -65,4 +81,7 @@ export const Icon = styled.div`
 export const Text = styled.div`
     width: 60%;
     text-align: left;
+    @media screen and (max-width: 800px){
+        font-size: 12px;
+    }
 `

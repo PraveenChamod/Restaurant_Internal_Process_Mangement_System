@@ -38,7 +38,12 @@ export const FormButton = styled.button`
     align-items: center;
     text-transform: uppercase;
     font-weight: 500;
-    
+    @media screen and (max-width: 800px){
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+        
+    }
 `
 export const UploadButton = styled.div`
     height: 40px;
@@ -53,4 +58,10 @@ export const UploadButton = styled.div`
         align-items: center;
         font-weight: 500;
         text-transform: uppercase;
+        @media screen and (max-width: 800px){
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+        
+    }
 `

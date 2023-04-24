@@ -19,8 +19,9 @@ export const addDatingTableItems = async(req,res)=>{
     try {
         const user = req.user;
         if(user.Role === 'Manager' || user.Role === 'Admin'){
-            const {ItemName, ItemPrice} = req.body;
+            const {ItemName, ItemType, ItemPrice} = req.body;
             console.log(ItemName);
+            console.log(ItemType);
             console.log(ItemPrice);
             const SerialNumber =  ItemName.slice(0,2).toUpperCase() + Math.floor(100+98*100);
             const existingDatingTableItem = await DatingTableItemModel.findOne({SerialNo:SerialNumber});
@@ -30,6 +31,7 @@ export const addDatingTableItems = async(req,res)=>{
                 const AddDatingTableItems = await DatingTableItemModel.create({
                     SerialNo:SerialNumber,
                     ItemName:ItemName,
+                    ItemType:ItemType,
                     ItemPrice:ItemPrice,
                     DatingTableItemImage:req.file.filename
                 })

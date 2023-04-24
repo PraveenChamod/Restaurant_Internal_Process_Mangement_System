@@ -4,8 +4,11 @@ const DatingTableItemSchema = mongoose.Schema({
     ItemName:{
         type:String,
     },
-    ItemPrice:{
+    ItemType:{
         type:String,
+    },
+    ItemPrice:{
+        type:Number,
     },
     DatingTableItemImage:{
         type:String,

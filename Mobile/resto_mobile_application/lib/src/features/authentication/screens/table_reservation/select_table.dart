@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:math';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/table_reservation/select_dating_table.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
-import '../../../../common_widgets/date_table_item_container.dart';
 import '../../../../common_widgets/table_item_container.dart';
 import '../../../../constants/image_strings.dart';
 import '../Customer/customer_main_page.dart';
@@ -22,10 +21,27 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
   //For change the tab bar color
   late TabController _tabController;
   final List<SelectTables> data = [];
+  bool datingTableAvailability = false;
+  int datingTablePrice = 0;
+  String datingTableId = '';
+  String datingTableNo = '';
 
   @override
   void initState() {
     super.initState();
+    Future<List<SelectTables>> sampleList = getTables();
+    sampleList.then((list) {
+      for (var item in list) {
+        if(item.numberOfPersons == 2){
+          setState(() {
+            datingTableAvailability = true;
+            datingTablePrice = item.price;
+            datingTableId = item.id;
+            datingTableNo = item.tableNumber;
+          });
+        }
+      }
+    });
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -155,256 +171,61 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
                   ),
                 ],
               ),
+              datingTableAvailability == true
+                  ?
+              SelectDatingTable(
+                flowerVaseImagePath: 'late',
+                candlesImagePath: 'late',
+                tableNapkinImagePath: 'late',
+                mainTablePrice: datingTablePrice,
+                beverageImagePath: 'late',
+                tableId: datingTableId,
+                tableNumber: datingTableNo,
+              )
+                  :
               Stack(
                 children: [
                   const BackgroundImage(),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black38,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      'Customize The Table With Your Own Choice',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Color(0xFFfebf10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black38,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color: const Color(0xFFfebf10),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      child: Center(
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          child: Image.asset(
-                                                            'assets/Tables/Main_Table.png',
-                                                            width: 80,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: ClipRRect(
-                                                        borderRadius: BorderRadius.circular(10),
-                                                        child: Image.asset(
-                                                          'assets/Tables/Main_Table.png',
-                                                          width: 80,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Row(
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      child: Center(
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          child: Image.asset(
-                                                            'assets/Tables/Main_Table.png',
-                                                            width: 80,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Container(
-                                                      child: Center(
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(10),
-                                                          child: Image.asset(
-                                                            'assets/Tables/Main_Table.png',
-                                                            width: 80,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Center(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child: Image.asset(
-                                              'assets/Tables/Main_Table.png',
-                                              width: 200,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black38,
-                                    borderRadius: BorderRadius.circular(10),
-                                    // border: Border.all(
-                                    //   color: const Color(0xFFfebf10),
-                                    // ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: const [
-                                      Expanded(
-                                        child: Text(
-                                          'Total Price:',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: const Color(0xFFfebf10),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          'Rs.450',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: const Color(0xFFfebf10),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.black38,
-                                ),
-                                child: Center(
-                                  child: Container(
-                                    width: 150,
-                                    height: 35,
-                                    padding: const EdgeInsets.only(left: 5, right: 5),
-                                    child: AnimatedButton(
-                                      text: "Book Table",
-                                      buttonTextStyle: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      color: const Color(0xFFfebf10),
-                                      pressEvent: () {},
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(0),
-                                        topRight: Radius.circular(80),
-                                        bottomLeft: Radius.circular(80),
-                                        bottomRight: Radius.circular(80),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black38,
-                            borderRadius: BorderRadius.circular(10),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black38,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: const Color(0xFFfebf10),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              children: const [
-                                DateTableItemContainer(
-                                  imagePath: 'assets/Food Types/Noodles/Noodles.jpg',
-                                  itemPrice: 400,
-                                  itemName: 'Candles',
-                                ),
-                                DateTableItemContainer(
-                                  imagePath: 'assets/Food Types/Noodles/Noodles.jpg',
-                                  itemPrice: 1570,
-                                  itemName: 'Red Vine',
-                                ),
-                              ],
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text(
+                            'Oops! Currently All Dating Tables Are Booked. Try Again Later!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color(0xFFfebf10),
+                              fontSize: 20.0,
                             ),
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-
                 ],
               ),
               Stack(
-                children: [
-                  const BackgroundImage(),
+                children: const [
+                  BackgroundImage(),
 
                 ],
               ),
             ],
           ),
-
         ),
       ),
     );
   }
-  Future<List<dynamic>> getTables() async {
+  Future<List<SelectTables>> getTables() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final response = await http.get(

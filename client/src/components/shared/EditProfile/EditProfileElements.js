@@ -1,4 +1,14 @@
 import styled from "styled-components";
+export const Section = styled.div`
+  width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  @media screen and (max-width: 800px){
+    margin-top: 15%;
+  }
+`
 export const Div = styled.div`
   width: 50%;
   height: 60%;
@@ -12,14 +22,13 @@ export const Div = styled.div`
   padding: 2% 0;
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
-    width: 90%;
-    height: 350px;
+    flex-direction: column-reverse;
+    width: 95%;
   }
 `;
 export const Div1 = styled.form`
   width: 45%;
   height: 100%;
-  background-color: #1a1e21;
   display: flex;
   flex-direction: column;
   padding-left: 10px;
@@ -27,6 +36,9 @@ export const Div1 = styled.form`
   padding-bottom: 10px;
   justify-content: left;
   align-items: left;
+  @media screen and (max-width: 769px) {
+    width: 100%;
+  }
 `;
 
 export const Div2 = styled.div`
@@ -48,6 +60,9 @@ export const Div3 = styled.div`
   height: 8%;
   display: flex;
   flex-direction: column;
+  @media screen and (max-width: 800px){
+    width: 95%
+  }
 `;
 export const Div4 = styled.div`
   margin-top: 15px;

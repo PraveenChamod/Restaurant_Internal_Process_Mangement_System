@@ -116,7 +116,7 @@ const PDFreport = (orders, reportType) => {
             }
           },
           { text: '\n' },
-          { text: `Income: ${orders.reduce((total, order) => total + order.TotalPrice, 0)}`, style: 'header' },
+          { text: `Income: Rs.${orders.reduce((total, order) => total + order.TotalPrice, 0)}`, style: 'header' },
           { text: '\n' },
           { text: `Best Customer: ${maxCustomer}`, style: 'header' },
           { text: '\n' },

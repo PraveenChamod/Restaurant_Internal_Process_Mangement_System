@@ -192,13 +192,15 @@ export const removeFoodFromCart = async (req, res) => {
     try {
         const { cartId, foodId, offerId } = req.body;
         console.log(cartId);
-      const cart = await Cart.updateOne(
-        { _id: cartId },
-        { $pull: { Foods: { food: foodId } || {offer: offerId}} }
-      );
-      res.status(200).json({ success: true, message: "Food item removed from cart",data:{cart} });
+        const cart = await Cart.updateOne(
+            { _id: cartId },
+            { $pull: { Foods: { food: foodId } || {offer: offerId}} }
+        );
+        await viewCart(req,res);
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Failed to remove food item from cart" });
+      res.status(500).json({
+         success: 'Error', 
+         message: "Failed to remove food item from cart" 
+        });
     }
   };

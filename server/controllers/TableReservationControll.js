@@ -2,6 +2,12 @@ import mongoose from "mongoose";
 import Customer from "../models/Customer.js";
 import TableReservation from "../models/TableReservation.js";
 import Table from "../models/Tables.js";
+import { transporter } from "../util/NotificationUtil.js";
+import path from 'path';
+import ejs from 'ejs';
+
+
+const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
 
 // Method : POST
 // End Point : "api/v1/TableReservation";
@@ -139,12 +145,14 @@ export const ViewReservation = async(req,res)=>{
                 .exec();
                 const Name = populatedReservation.Customer.Name;
                 const ContactNo = populatedReservation.Customer.ContactNumber;
+                const Email = populatedReservation.Customer.Email;
                 const Tables = populatedReservation.Tables.map(table=>({
                     TableNo:table.table.TableNo
                 }));
                 ReservationDetails = {
                     CustomerName:Name,
                     CustomerContactNo:ContactNo,
+                    Email:Email,
                     Tables,
                     Type:populatedReservation.Type,
                     ArrivalTime:populatedReservation.ArrivalTime,
@@ -180,9 +188,9 @@ export const SendReservationConfirmation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
-            console.log(_id);
+            const {customerName,ContactNo,Tables,totalPrice,customerEmail,arrivalTime,depatureTime,type,bookedDate} = req.body;
             const findReservation = await TableReservation.findById(_id);
-            console.log(findReservation);
+            console.log(req.body);
             // const findTable = await Table.findById(findReservation.Table);
             if(findReservation !== null){
                 const session = await mongoose.startSession();
@@ -191,7 +199,49 @@ export const SendReservationConfirmation = async(req,res)=>{
                     const UpdateReservation = await TableReservation.findByIdAndUpdate(findReservation.id,{Status:'Confirm'},{new:true,runValidators:true}).session(session);
                     await session.commitTransaction();
                     session.endSession();
-                    
+                    const data = {
+                        id:_id,
+                        customerName:customerName,
+                        customerPhone:ContactNo,
+                        customerEmail:customerEmail,
+                        reservedTables:Tables,
+                        totalPrice:totalPrice,
+                        depatureTime:depatureTime,
+                        arrivalTime:arrivalTime,
+                        bookedDate:bookedDate,
+                        type:type
+                      }
+                      const mailOption = {
+                            from : 'resto6430@gmail.com',
+                            to : customerEmail,
+                            subject : 'Table Reservation Confrimation',
+                            attachments:[{
+                                filename : 'logo.png',
+                                path:`${__dirname}/Template/logo.png`,
+                                cid:'logo'
+                            }],
+                        }
+                        ejs.renderFile(`${__dirname}/Template/ReservationConfirmation.ejs`,data,(err,renderHTML)=>{
+                            if(err){
+                                console.log(err.message);
+                                res.status(500).json({
+                                    status: "Server Error",
+                                    message: err.message
+                                });
+                            }
+                            else{
+                                mailOption.html = renderHTML;
+                                transporter.sendMail(mailOption,(err,info)=>{
+                                    if (err) {
+                                        console.log(err.message);
+                                        res.status(500).json({
+                                            status: "Server Error",
+                                            message: err.message
+                                        });
+                                    }
+                                })
+                            }
+                        })
                     res.status(201).json({
                         status: 'success',
                         message: 'Table Reservation is Confirmed',

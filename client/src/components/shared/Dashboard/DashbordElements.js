@@ -12,7 +12,10 @@ export const Container = styled.div`
     box-shadow: 3px 3px 3px #000;
     border-radius:20px;
     margin: 10% 0;
-   
+    @media screen and (max-width: 800px){
+        width: 80%;
+        margin-top: 20%;
+    }
 `
 export const SideNavBar = styled.div`
     width: 35%;
@@ -23,6 +26,10 @@ export const SideNavBar = styled.div`
     flex-direction: column;
     padding: 4% 0;
     justify-content: center;
+    @media screen and (max-width: 800px){
+     width: 100%;
+     background-color: transparent;
+    }
 `
 export const UserHeader = styled.div`
     display: flex;
@@ -35,27 +42,42 @@ export const Title = styled.div`
     font-size: 30px;
     letter-spacing: 0.25rem;
     font-weight: 500;
+    @media screen and (max-width: 800px){
+        font-size: 18px;
+    }
 `
 export const Name = styled.div`
     font-size: 18px;
     letter-spacing: 0.15rem;
+    @media screen and (max-width: 800px){
+        font-size: 12px;
+    }
 `
 export const HeaderContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
+    @media screen and (max-width: 800px){
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
 `
 export const Header = styled.h2`
     background:linear-gradient(60deg, rgb(178,108,41) 0%, rgb(253,190,16) 100%);
     color: transparent;
     font-size: 4rem;
-        text-transform: uppercase;
-        font-family: "Lato", sans-serif;
-        font-weight: 600;
-        -webkit-background-clip: text;
-        background-clip: text;
-        letter-spacing: 1.5rem;
+    text-transform: uppercase;
+    font-family: "Lato", sans-serif;
+    font-weight: 600;
+    -webkit-background-clip: text;
+    background-clip: text;
+    letter-spacing: 1.5rem;
+    @media screen and (max-width: 800px){
+        font-size: 24px;
+        letter-spacing: 1rem;
+    }
 `
 export const Menu = styled.div`
     display: flex;
@@ -80,6 +102,11 @@ export const Navs = styled.div`
     height: 80%;
     margin-top: 5%;
     padding-left: 20%;
+    @media screen and (max-width: 800px){
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
 `
 export const Nav = styled.div`
     &{
@@ -94,6 +121,14 @@ export const Nav = styled.div`
     &:hover{
         cursor: pointer;
     }
+    @media screen and (max-width: 800px){
+        background:#FDBE10cd;
+        align-items: center;
+        width: 200px;
+        margin: 3% 0;
+        padding: 0 3% ;
+        border-radius: 10px;
+    }
     
 `
 export const Icon = styled.div`
@@ -103,6 +138,10 @@ export const NavText = styled.div`
     width: 80%;
     color: #fff;
     font-size: 18px;
+    @media screen and (max-width: 800px){
+        font-size: 12px;
+        text-align: center;
+    }
 `
 export const Footer = styled.div`
     color: #fff;
