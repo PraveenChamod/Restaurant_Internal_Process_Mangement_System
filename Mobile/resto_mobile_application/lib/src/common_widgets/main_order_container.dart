@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:location/location.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,19 +8,35 @@ import '../constants/image_strings.dart';
 import '../features/authentication/screens/customer/customer_order_details.dart';
 import 'order_item_container.dart';
 
-class MainOrderContainer extends StatelessWidget {
+class MainOrderContainer extends StatefulWidget {
   final String status;
   final String deliveryStatus;
   final String orderId;
   final int totalPrice;
-  MainOrderContainer({Key? key,
+  const MainOrderContainer({Key? key,
     required this.status,
     required this.deliveryStatus,
     required this.totalPrice,
-    required this.orderId,
+    required this.orderId
   }) : super(key: key);
 
+  @override
+  State<MainOrderContainer> createState() => _MainOrderContainerState();
+}
+
+class _MainOrderContainerState extends State<MainOrderContainer> {
+
+  //For get permission for access the device's location
+  final Location _location = Location();
+  Future<PermissionStatus> _requestPermissions() async {
+    final status = await _location.requestPermission();
+    return status;
+  }
+
   final List<OrderFood> data = [];
+
+  late double lat = 0.0;
+  late double lang = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +71,7 @@ class MainOrderContainer extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      status,
+                      widget.status,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Color(0xFFfebf10),
@@ -78,7 +95,7 @@ class MainOrderContainer extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      deliveryStatus,
+                      widget.deliveryStatus,
                       style: const TextStyle(
                         fontSize: 18,
                         color: Color(0xFFfebf10),
@@ -102,7 +119,7 @@ class MainOrderContainer extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      'Rs. $totalPrice',
+                      'Rs. ${widget.totalPrice}',
                       style: const TextStyle(
                         fontSize: 18,
                         color: Color(0xFFfebf10),
@@ -159,17 +176,53 @@ class MainOrderContainer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     color: const Color(0xFFfebf10),
-                    pressEvent: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) {
-                            return CustomerOrderDetails(
-                              orderId: orderId,
-                              deliveryStatus: deliveryStatus,
-                            );
-                          },
-                        ),
-                      );
+                    pressEvent: () async {
+                      final hasPermission = await _location.hasPermission();
+                      if (hasPermission == PermissionStatus.denied) {
+                        final permissionStatus = await _requestPermissions();
+                        if (permissionStatus == PermissionStatus.granted) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) {
+                                return CustomerOrderDetails(
+                                  orderId: widget.orderId,
+                                  deliveryStatus: widget.deliveryStatus,
+                                  lat: lat,
+                                  lang: lang,
+                                );
+                              },
+                            ),
+                          );
+                        }else{
+                          awesomeDialog(DialogType.warning, 'You Need To Allow Permission To Access Device Location', "Warning");
+                        }
+                      } else if (hasPermission == PermissionStatus.granted) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) {
+                              return CustomerOrderDetails(
+                                orderId: widget.orderId,
+                                deliveryStatus: widget.deliveryStatus,
+                                lat: lat,
+                                lang: lang,
+                              );
+                            },
+                          ),
+                        );
+                      }
+
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (_) {
+                      //       return CustomerOrderDetails(
+                      //         orderId: orderId,
+                      //         deliveryStatus: deliveryStatus,
+                      //         lat: lat,
+                      //         lang: lang,
+                      //       );
+                      //     },
+                      //   ),
+                      // );
                     },
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(0),
@@ -186,11 +239,23 @@ class MainOrderContainer extends StatelessWidget {
       ),
     );
   }
+
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
+  }
+
   Future<List<dynamic>> fetchSpecificOrderData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final response = await http.get(
-      Uri.parse('http://$hostName:5000/api/v1/OrderFoods/$orderId'),
+      Uri.parse('http://$hostName:5000/api/v1/OrderFoods/${widget.orderId}'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
@@ -198,6 +263,8 @@ class MainOrderContainer extends StatelessWidget {
     );
     if (response.statusCode == 200) {
       final ordersFoods = json.decode(response.body);
+      lat = ordersFoods['lat'];
+      lang = ordersFoods['lang'];
       return OrderFood.fromJsonList(ordersFoods['data']['food']);
     } else {
       throw Exception('Failed to load data');

@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
@@ -12,9 +14,13 @@ import 'customer_main_page.dart';
 class CustomerOrderDetails extends StatefulWidget {
   final String deliveryStatus;
   final String orderId;
+  final double lat;
+  final double lang;
   const CustomerOrderDetails({Key? key,
     required this.orderId,
     required this.deliveryStatus,
+    required this.lat,
+    required this.lang,
   }) : super(key: key);
 
   @override
@@ -22,10 +28,46 @@ class CustomerOrderDetails extends StatefulWidget {
 }
 
 class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
+
+  @override
+  void initState() {
+    super.initState();
+    destination = LatLng(widget.lat, widget.lang);
+    Future.delayed(const Duration(seconds: 2), () {
+      getPolyPoints();
+    });
+  }
+
+  final Completer<GoogleMapController> _controller = Completer();
+
+  static const LatLng sourceLocation = LatLng(7.240865108809441, 80.2086201656721);
+
+  static LatLng destination = const LatLng(0.0, 0.0);
+
+  List<LatLng> polylineCoordinates = [];
+
   final List<OrderFoodDetails> data = [];
   final List<OrderFood> foodData = [];
   String userName = '';
   String userAddress = '';
+
+  void getPolyPoints() async {
+    PolylinePoints polylinePoints = PolylinePoints();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      "AIzaSyDZWsWFLf7CMyMGBymJSBIF_0RHrNZcj-E",
+      PointLatLng(sourceLocation.latitude, sourceLocation.longitude),
+      PointLatLng(destination.latitude, destination.longitude),
+    );
+    if (result.points.isNotEmpty) {
+      for (PointLatLng point in result.points) {
+        polylineCoordinates.add(
+          LatLng(point.latitude, point.longitude),
+        );
+      }
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,11 +115,10 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
               SingleChildScrollView(
                 child: Column(
                   children: [
-                    ////////////
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
-                        height: 480,
+                        height: 520,
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           color: Colors.black38,
@@ -123,12 +164,35 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                               child: Container(
                                 decoration: const BoxDecoration(
                                   color: Colors.transparent,
-                                  image: DecorationImage(
-                                    image: AssetImage(deliveryService),
-                                    fit: BoxFit.cover,
-                                  ),
                                 ),
-                                child: null,
+                                child: GoogleMap(
+                                  initialCameraPosition: const CameraPosition(
+                                    target: sourceLocation,
+                                    zoom: 12.5,
+                                  ),
+                                  myLocationEnabled: true,
+                                  polylines: {
+                                    Polyline(
+                                      polylineId: const PolylineId("route"),
+                                      points: polylineCoordinates,
+                                      color: Colors.red,
+                                      width: 5,
+                                    ),
+                                  },
+                                  markers: {
+                                    const Marker(
+                                      markerId: MarkerId("source"),
+                                      position: sourceLocation,
+                                    ),
+                                    Marker(
+                                      markerId: const MarkerId("destination"),
+                                      position: destination,
+                                    ),
+                                  },
+                                  onMapCreated: (mapController) {
+                                    _controller.complete(mapController);
+                                  },
+                                ),
                               ),
                             )
                                 :
