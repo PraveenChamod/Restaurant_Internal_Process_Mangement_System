@@ -276,6 +276,16 @@ class _ResetPasswordState extends State<ResetPassword> {
   }
 
   void resetPassword() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final http.Response response = await http.patch(
@@ -291,6 +301,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         "ConfirmPassword": confirmNewPasswordController.text,
       }),
     );
+    Navigator.pop(context);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
