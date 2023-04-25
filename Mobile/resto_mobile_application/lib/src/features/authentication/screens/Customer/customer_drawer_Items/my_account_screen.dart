@@ -377,9 +377,24 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       }),
     );
     if(response.statusCode == 201) {
+      showDialog(
+        context: context,
+        builder: (context){
+          return SizedBox(
+            height: 40,
+            width: 40,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFFfebf10),
+              ),
+            ),
+          );
+        },
+      );
       final json = jsonDecode(response.body);
       final msg = json["message"];
       print(msg);
+      Navigator.of(context).pop();
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
@@ -435,27 +450,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
-    var request = http.MultipartRequest(
-      'PATCH',
-      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    var request = http.MultipartRequest('PATCH', Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
     );
-    request.headers.addAll({
-      "Authorization": "Bearer $userToken",
-    });
-    request.files.add(await http.MultipartFile.fromPath(
-      'image',
-      imageFile.path,
-    ));
+    request.headers.addAll({"Authorization": "Bearer $userToken",});
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,));
     var response = await request.send();
     if(response.statusCode == 201) {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
-      print(msg);
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
-      print(msg);
     }
   }
 }
