@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Invoice</title>
+    <style>
+      body{
+        padding: 5%;
+        color:#1A1E21
+      }
+      header,h1{
+        display: block;
+        text-align: center;
+      }
+      .Container{
+        margin: 3%;
+        background-color: #FDBE102d;
+        padding: 3%;
+      }
+      .Deliverer,.Customer{
+        margin-bottom: 2%;
+      }
+      .items{
+        width: 100%;
+        text-align: center;
+        border: 2px solid #1A1E21;
+      }
+      .items th{
+        border-bottom: 2px solid #1A1E21;
+      }
+      .items td{
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="Container">
+      <header>
+        <img src="cid:logo" class="logo"/>
+      </header>
+      <main>
+        <h1>Reservation Confirmation</h1>
+        <h2>Reservation Id: <%= id %></h2>
+  
+        <h3>Bill To:</h3>
+        <table class="Customer">
+          <tr>
+            <td><b>Name</b></td>
+            <td>:</td>
+            <td><%= customerName %></td>
+          </tr>
+          <tr>
+            <td><b>Contact No</b></td>
+            <td>:</td>
+            <td><%= customerPhone %></td>
+          </tr>
+          <tr>
+            <td><b>Contact No</b></td>
+            <td>:</td>
+            <td><%= customerEmail %></td>
+          </tr>
+        </table>
+        <table class="items">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% reservedTables.forEach((item)=>{ %>
+              <tr>
+                <td><%= item.FoodName %></td>
+                <td><%= item.Category %></td>
+                <td><%= item.quantity%></td>
+                <td>Rs. <%= item.price %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <tfoot>
+          <tr>
+            <td colspan="3"><b>Total:</b></td>
+            <td>Rs. <%= totalPrice %></td>
+          </tr>
+        </tfoot>
+      </main>
+  
+      <div>
+        <h3>Thank you!</h3>
+      </div>
+    </div>
+  </body>
+</html>

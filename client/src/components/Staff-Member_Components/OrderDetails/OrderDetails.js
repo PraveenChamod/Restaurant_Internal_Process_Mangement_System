@@ -10,13 +10,14 @@ import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import * as l from "./OrderDetailsElements";
 const OrderDetailsComponent = (props) => {
     console.log(props.data);
-    const [customerName,setCustomerName] = useState(props.data.customerName)
-    const [address,setAdress] = useState(props.data.Address)
-    const [contactNo,setContactNo] = useState(props.data.ContactNumber)
-    const [paymentMethod,setPaymentMethod] = useState(props.data.food[0].PaymentMethod)
-    const [totalPrice,setTotalPrice] = useState(props.data.TotalPrice)
+    let customerName = props.data.customerName
+    let address = props.data.Address
+    let contactNo = props.data.ContactNumber
+    let paymentMethod = props.data.food[0].PaymentMethod
+    let totalPrice = props.data.TotalPrice
+    let customerEmail = props.data.customerEmail
     const [Email,setEmail] = useState(); 
-
+    let food = props.data.food;
     const[deliverer,setDeliverer] = useState(0);
     const{data,isPending} = useFetch('/api/v1/AvailableDeliverers');
     console.log(Email);
@@ -24,8 +25,9 @@ const OrderDetailsComponent = (props) => {
     const assignDeliverer = async (e)=>{
         e.preventDefault()
         try {
+            const formDate = {Email:Email,customerName:customerName,Address:address,ContactNo:contactNo,paymentMethod:paymentMethod,totalPrice:totalPrice,Items:food,customerEmail:customerEmail}
             await toast.promise(
-                axios.post(`/api/v1/OrderConfirmation/${props.data.OrderId}`,{Email:Email}),
+                axios.post(`/api/v1/OrderConfirmation/${props.data.OrderId}`,formDate),
                 {
                     loading:'Assigning Deliverer....',
                     success:(data)=>{
@@ -48,7 +50,7 @@ const OrderDetailsComponent = (props) => {
         }
     }
     return (
-        <Container>
+        <l.Container>
             <l.Header>Order Details</l.Header>
             <l.Div>
                 <l.Div2 onSubmit={assignDeliverer}> 
@@ -155,7 +157,7 @@ const OrderDetailsComponent = (props) => {
                         <l.SubHeader>Select Deliverer</l.SubHeader>
                         <FormControl>
                             <Select
-                                defaultValue={30}
+                                defaultValue={30} 
                                 inputProps={{
                                     name: "Email",
                                     id: "uncontrolled-native",
@@ -221,7 +223,7 @@ const OrderDetailsComponent = (props) => {
                     </Link>
                 </RegularButton>
             </l.Div7>
-        </Container>
+        </l.Container>
     );
 }
 export default OrderDetailsComponent;

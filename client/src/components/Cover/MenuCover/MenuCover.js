@@ -12,7 +12,7 @@ import {
     CoverContent
 } from './MenuCoverElements';
 import Cover from "../../../Images/MenuCover.jpg";
-const MenuCover = () => {
+const MenuCover = (props) => {
     return ( 
         <Container>
             <CoverImage>
@@ -27,7 +27,7 @@ const MenuCover = () => {
                     <H2>Find Your Favourites</H2>
                 </SubHeading>
                 <ButtonSection>
-                    <Link to="login" className='btn'><Button data-aos={"zoom-in-up"} >Order Now</Button></Link>
+                    <Link to={props.login} className='btn'><Button data-aos={"zoom-in-up"} >Order Now</Button></Link>
                 </ButtonSection>
             </CoverContent>
         </Container>

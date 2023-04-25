@@ -1,9 +1,9 @@
 import Blog from "../../components/Customer/Blog/Blog";
 
-const AddReview = () => {
+const AddReview = (props) => {
     return ( 
         <>
-            <Blog/>
+            <Blog BackRoutes = {props.BackRoutes}/>
         </>
      );
 }

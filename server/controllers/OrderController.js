@@ -4,6 +4,11 @@ import Customer from "../models/Customer.js";
 import Foods from "../models/Foods.js";
 import Order from "../models/Order.js";
 import ServiceProviders from "../models/ServiceProviders.js";
+import path from 'path';
+import ejs from 'ejs';
+import { transporter } from "../util/NotificationUtil.js";
+
+const __dirname = path.dirname(path.dirname(new URL(import.meta.url).pathname)).slice(1);
 
 // Method : POST
 // End Point : "api/v1/OrderItem";
@@ -492,12 +497,13 @@ export const SendOrderConfrimation = async(req,res)=>{
         const user = req.user;
         if(user.Role === "Staff-Member"){
             const {_id} = req.params;
+            const {customerName,Address,Email,ContactNo,Items,paymentMethod,totalPrice,customerEmail} = req.body;
+            console.log(req.body);
             const findOrder = await Order.findById(_id);
             if(findOrder !== null){
                 const session = await mongoose.startSession();
                 try {
                     session.startTransaction();
-                    const {Email} = req.body;
                     const findDeliverer = await ServiceProviders.findOne({Email:Email}).populate('Email');
                     console.log(findDeliverer);
                     const UpdateOrder = await Order.findByIdAndUpdate(findOrder.id,{ServiceProvider:findDeliverer.id,Status:'Confirm'},{new:true,runValidators:true}).session(session);
@@ -505,7 +511,49 @@ export const SendOrderConfrimation = async(req,res)=>{
                     console.log(updateDeliverer);
                     await session.commitTransaction();
                     session.endSession();
-                    
+                    const data = {
+                      id:_id,
+                      customerName:customerName,
+                      customerAddress:Address,
+                      customerPhone:ContactNo,
+                      delivererName:findDeliverer.Name,
+                      delivererPhone:findDeliverer.ContactNumber,
+                      delivererEmail:findDeliverer.Email,
+                      orderedItems:Items,
+                      paymentMethod:paymentMethod,
+                      totalPrice:totalPrice
+                    }
+                    const mailOption = {
+                          from : 'resto6430@gmail.com',
+                          to : customerEmail,
+                          subject : 'Order Confrimation',
+                          attachments:[{
+                              filename : 'logo.png',
+                              path:`${__dirname}/Template/logo.png`,
+                              cid:'logo'
+                          }],
+                      }
+                      ejs.renderFile(`${__dirname}/Template/OrderConfirmationEmail.ejs`,data,(err,renderHTML)=>{
+                          if(err){
+                              console.log(err.message);
+                              res.status(500).json({
+                                  status: "Server Error",
+                                  message: err.message
+                              });
+                          }
+                          else{
+                              mailOption.html = renderHTML;
+                              transporter.sendMail(mailOption,(err,info)=>{
+                                  if (err) {
+                                      console.log(err.message);
+                                      res.status(500).json({
+                                          status: "Server Error",
+                                          message: err.message
+                                      });
+                                  }
+                              })
+                          }
+                      })
                     res.status(201).json({
                         status: 'success',
                         message: 'Order is Confirmed',
@@ -542,7 +590,6 @@ export const CheckOrderDetails = async(req, res)=>{
           for (const order of findOrder) {
             if(order.Type !== "Outlet Order"){
               if (order.Status === "Confirm" && order.DeliveryStatus !== "Delivered") {
-                console.log(order);
                 let OrderDetails;
                 try {
 
@@ -564,6 +611,7 @@ export const CheckOrderDetails = async(req, res)=>{
                       model:'ServiceProvider'
                     })
                     .exec();
+                    console.log(populatedOrder);
                     if(populatedOrder.ServiceProvider.id === deliverer.id){
                         const Name = populatedOrder.Customer.Name;
                         const Email = populatedOrder.Customer.Email;

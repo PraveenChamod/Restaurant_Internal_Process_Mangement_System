@@ -402,8 +402,8 @@ class _TableItemContainerState extends State<TableItemContainer> {
                               tableNumbers,
                               bookTables,
                               '${datetime.year}/${datetime.month}/${datetime.day}',
-                              '${arrivalTime.hour}.${arrivalTime.minute} $arrivalPeriod',
-                              '${departureTime.hour}.${departureTime.minute} $departurePeriod',
+                              '${arrivalTime.hour}:${arrivalTime.minute} $arrivalPeriod',
+                              '${departureTime.hour}:${departureTime.minute} $departurePeriod',
                               widget.price);
                         },
                         borderRadius: const BorderRadius.only(
@@ -445,7 +445,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
         ),
       );
 
-  void orderItems(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+  void reserveDineInTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     String? cusId = pref.getString("LoginId");
@@ -463,6 +463,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
         "ArrivalTime": arrivalTime,
         "DepartureTime": departureTime,
         "amount": amount,
+        "Type": 'Dine-in',
       }),
     );
     if (response.statusCode == 201) {
@@ -541,7 +542,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
     try{
       await Stripe.instance.presentPaymentSheet().then((value) => {
         print('Payment Success'),
-        orderItems(tableNumbers, tables, date, arrivalTime, departureTime, amount),
+        reserveDineInTable(tableNumbers, tables, date, arrivalTime, departureTime, amount),
       });
     }catch(error){
       unSuccessAwesomeDialog(DialogType.warning, 'Payment Unsuccessful Try Again!', "Warning");

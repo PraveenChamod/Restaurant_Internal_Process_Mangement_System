@@ -9,6 +9,7 @@ import {
   H2,
   Input,
   Texrarea,
+  ButtonSection
 } from "./BlogElement";
 import {  RegularButton } from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
@@ -17,7 +18,7 @@ import axios from "axios";
 import useAuth from "../../../Hooks/useAuth";
 import { RotatingLines } from "react-loader-spinner";
 
-const Blog = () => {
+const Blog = (props) => {
   const[Review,setReview] = useState('');
   const[Rate,setRate] = useState('');
 
@@ -83,6 +84,13 @@ const Blog = () => {
           </>
         </Div>
       </Page1>
+      <ButtonSection>
+        <Link to={props.BackRoutes} className="btn">
+            <RegularButton>
+                Back
+            </RegularButton>
+          </Link>
+      </ButtonSection>
     </Page>
   );
 };

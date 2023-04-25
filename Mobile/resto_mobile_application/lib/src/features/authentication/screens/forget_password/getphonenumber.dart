@@ -40,7 +40,7 @@ class _GetPhoneNumberState extends State<GetPhoneNumber> {
                       width: MediaQuery.of(context).size.width/1.25,
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1b1b1d),
+                        color: Colors.black38,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(

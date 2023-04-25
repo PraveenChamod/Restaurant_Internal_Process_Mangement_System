@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
               left: 0,
               child: Center(
                 child: Container(
-                  width: 200,
+                  width: 180,
                   height: 65,
                   padding: const EdgeInsets.all(10.0),
                   child: AnimatedButton(
@@ -74,6 +74,13 @@ class _SplashScreenState extends State<SplashScreen> {
                     pressEvent: () {
                       checkLogin();
                     },
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(0),
+                      topRight: Radius.circular(80),
+                      bottomLeft: Radius.circular(80),
+                      bottomRight: Radius.circular(80),
+                    ),
+
                   ),
                 ),
               ),

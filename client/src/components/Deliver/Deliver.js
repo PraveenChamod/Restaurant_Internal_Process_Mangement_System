@@ -163,7 +163,9 @@ const handleSubmit =  async(e)=>{
                     </l.FormSection>
                 </l.SubSection>
                 <l.ButtonSection1>
-                    <RegularButton>Back</RegularButton>
+                    <Link to = "/DelivererAllOrderDetails" className="btn">
+                        <RegularButton>Back</RegularButton>
+                    </Link>
                 </l.ButtonSection1>
             </Container>
     );

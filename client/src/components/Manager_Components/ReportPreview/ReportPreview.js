@@ -106,7 +106,7 @@ const ReportPreview = (props) => {
                         ))}
                           
                         <l.Tr>
-                            <l.Th colSpan="5">Income :  {sumTotalPrices}</l.Th>
+                            <l.Th colSpan="5">Income :  Rs.{sumTotalPrices}</l.Th>
                         </l.Tr> 
                         <l.Tr>
                             <l.Th colSpan="5">Best customer :  {maxCustomer}</l.Th>

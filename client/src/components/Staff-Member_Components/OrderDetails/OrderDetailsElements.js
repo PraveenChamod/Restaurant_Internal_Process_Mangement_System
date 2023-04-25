@@ -49,7 +49,7 @@ export const Div = styled.div`
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
     width: 90%;
-    /* height: 350px; */
+    height: auto;
   }
 `;
 export const Div1 = styled.div`
@@ -91,6 +91,7 @@ export const Div2 = styled.form`
     flex-direction:column;
     justify-content:center;
     align-items:center;
+    height: auto;
   }
 `;
 
@@ -250,7 +251,6 @@ export const ItemsCard = styled.div`
         
 
   }
-    }
     &:hover{
         cursor: pointer;
     }

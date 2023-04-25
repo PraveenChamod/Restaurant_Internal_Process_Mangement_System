@@ -52,21 +52,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return File(imagePath).copy(image.path);
   }
 
-  // Future<File> saveFilePermanently(String imagePath, String previousPath) async {
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   final name = path.basename(imagePath);
-  //   final image = File('${directory.path}/$name');
-  //
-  //   if(previousPath != null) {
-  //     final previousImage = File(previousPath);
-  //     if(await previousImage.exists()) {
-  //       await previousImage.delete(); // delete the previous file if it exists
-  //     }
-  //   }
-  //
-  //   return File(imagePath).copy(image.path);
-  // }
-
   //For getUserDetails
   late Future<Map<String, dynamic>> _futureData;
   @override

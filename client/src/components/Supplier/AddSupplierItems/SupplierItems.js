@@ -28,7 +28,6 @@ const SupplierItemsComponent = (props) => {
         setItemName('');
         setPrice('');
         setCategory('');
-
         console.log(items);
     };
 
@@ -51,7 +50,7 @@ const SupplierItemsComponent = (props) => {
     })
     console.log(Items);
     const handleAddSupplyItems = async (e) => {
-        
+        e.preventDefault()
         try {
           console.log("Final items"+Items)
           await toast.promise(
@@ -80,9 +79,9 @@ const SupplierItemsComponent = (props) => {
     return ( 
         <Container>
             <Header>ADD SUPPLY ITEM DETAILS</Header>
-            <l.FormSection onSubmit={handleAddSupplyItems}>
+            <l.FormSection >
                 <l.LeftSide>
-                <FormControl sx={{ m: 1, width: "40ch" }} component="fieldset" variant="standard">
+                <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
                     <TextField 
                         id="standard-basic" 
                         label="Item Name" 
@@ -124,7 +123,7 @@ const SupplierItemsComponent = (props) => {
                     <l.AddButton onClick={handleAddItem}>+</l.AddButton>
                 </FormControl>
                 </l.LeftSide>
-                <l.RightSide>
+                <l.RightSide onSubmit={handleAddSupplyItems}>
                 <l.Table>
                     <thead>
                         <l.Tr>
@@ -149,15 +148,15 @@ const SupplierItemsComponent = (props) => {
                         ))}        
                     </tbody>
                 </l.Table>
-                <l.OkButton onClick={() => handleAddSupplyItems()}>OK</l.OkButton>
+                    <l.OkButton>OK</l.OkButton>
                 </l.RightSide>
             </l.FormSection>
             <l.Div3>
-                <RegularButton>
                 <Link to={props.BackRoutes} className="btn">
-                    Back
+                    <RegularButton>
+                        Back
+                    </RegularButton>
                 </Link>
-                </RegularButton>
             </l.Div3>
         </Container>
      );
