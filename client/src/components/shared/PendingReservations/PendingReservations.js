@@ -9,7 +9,7 @@ const PendingReservationComponent = (props) => {
     return (  
         <Container>
             <Header>
-            Pending Reservation
+            Pending Reservation 
             </Header>
             <l.SubContainer>
                 <l.Table>
