@@ -8,8 +8,10 @@ export const Container = styled.div`
     flex-direction: column;
     background-size: 21.5rem;
     @media screen and (max-width: 1000px) {
-		display: flex;
-        height: 100%;
+		  display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
 		
 	}
 `
@@ -37,6 +39,8 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 /* padding-top: 30px; */
+@media screen and (max-width: 1000px) {
+  padding-top: 70px;}
 `
 export const Div2 = styled.div`
 height: 10%;
@@ -86,6 +90,14 @@ padding: 5px;
 @media screen and (max-width: 1000px) {
 		margin-bottom:20px;
         margin-top:20px;
+        width:60%;
+		
+	}
+
+@media screen and (max-width: 800px) {
+		margin-bottom:20px;
+        margin-top:20px;
+        width:80%;
 		
 	}
 `
@@ -97,6 +109,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+
+@media screen and (max-width: 1000px) {
+        width:60%;
+		
+	}
+  @media screen and (max-width: 1000px) {
+        width:80%;
+		
+	}
 `
 
 export const Div5 = styled.div`
