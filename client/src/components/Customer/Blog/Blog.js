@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl";
+import { MenuItem, Select } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
   Page,
@@ -46,7 +47,26 @@ const Blog = () => {
             <H2>WRITE A REVIEW</H2>
             <Texrarea id="review" name="review" value={Review} onChange={e=>setReview(e.target.value)}></Texrarea>
             <H2>RATE US</H2>
-            <Texrarea id="review" name="review" value={Rate} onChange={e=>setRate(e.target.value)}></Texrarea>
+            {/* <Texrarea id="review" name="review" value={Rate} onChange={e=>setRate(e.target.value)}></Texrarea> */}
+            <>
+            <Select
+              sx={{
+                color: "white",
+                '.MuiSvgIcon-root ': {
+                  fill: "white !important"
+                }
+              }}
+
+              value={Rate}
+              onChange={e=>setRate(e.target.value)}
+            >
+              <MenuItem value={1} >1</MenuItem>
+              <MenuItem value={2} >2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+            </Select>
+          </>
           </FormControl>
           <>
             {!loading && <RegularButton>Submit</RegularButton> }

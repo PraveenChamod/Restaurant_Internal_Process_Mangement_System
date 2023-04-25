@@ -24,6 +24,17 @@ const ReviewSchema = mongoose.Schema({
     timestamps: true
 });
 
+// populate the gym  details whenever use find() method
+ReviewSchema.pre(/^find/, function (next) {
+    this.populate({
+      path: "Customer",
+      select:
+        "Name ContactNumber Email ProfileImage",
+    });
+  
+    next();
+  });
+
 const Reviews = mongoose.model('Review',ReviewSchema);
 
 export default Reviews;

@@ -23,6 +23,7 @@ import SupplierItemsRoutes from "./routes/SupplierItemsRoutes.js";
 import morgan from "morgan";
 import PaymentRoute from "./routes/PaymentRoutes.js";
 import { getOffers } from "./controllers/OfferController.js";
+import { GetReviews } from "./controllers/BlogController.js";
 import StocksOrderRoutes from "./routes/StocksOrderRoutes.js";
 
 
@@ -53,6 +54,7 @@ app.use(express.json({extended:true}));
 app.use(express.urlencoded({extended:true}));
 
 app.use('/api/v1/public/offers',getOffers);
+app.use('/api/v1/public/blogs',GetReviews);
 
 app.use(cookieParser());
 
