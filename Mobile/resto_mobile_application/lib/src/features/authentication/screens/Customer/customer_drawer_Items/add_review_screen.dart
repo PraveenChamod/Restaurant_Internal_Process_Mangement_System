@@ -200,6 +200,16 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   }
 
   void addReview(String reviewText, num rateValue) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final http.Response response = await http.post(
@@ -213,6 +223,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         "Rate":rateValue,
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
@@ -241,7 +252,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       },
     ).show();
   }
-
   unSuccessAwesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
       context: context,

@@ -345,7 +345,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
@@ -360,6 +359,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     }
   }
   void updateUserDetails() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
@@ -376,25 +385,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         "Address": addressController.text
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
-      showDialog(
-        context: context,
-        builder: (context){
-          return SizedBox(
-            height: 40,
-            width: 40,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: Color(0xFFfebf10),
-              ),
-            ),
-          );
-        },
-      );
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      print(msg);
-      Navigator.of(context).pop();
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
@@ -443,6 +437,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void updateProfilePicture() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     File? imageFile = _image;
     if (imageFile == null) {
       return;
@@ -455,6 +459,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     request.headers.addAll({"Authorization": "Bearer $userToken",});
     request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,));
     var response = await request.send();
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];

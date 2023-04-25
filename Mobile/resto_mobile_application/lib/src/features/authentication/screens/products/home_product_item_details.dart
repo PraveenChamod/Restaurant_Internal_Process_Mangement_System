@@ -315,6 +315,16 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
     ).show();
   }
   void addOfferToCart(int qty, String offerId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -328,6 +338,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
         "quantity": qty
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
@@ -339,6 +350,16 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
     }
   }
   void addFoodItemToCart(int qty, String foodId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -352,6 +373,7 @@ class _HomeProductItemDetailsState extends State<HomeProductItemDetails> {
         "quantity": qty
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
