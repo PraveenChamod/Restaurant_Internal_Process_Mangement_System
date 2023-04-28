@@ -38,6 +38,12 @@ export const Div = styled.form`
   }
 `;
 
+export const Div2 =styled.div`
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 
 export const H2 =styled.h2`
   color:white;

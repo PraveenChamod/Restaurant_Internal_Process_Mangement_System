@@ -10,16 +10,18 @@ import useFetch from '../Hooks/useFetch'
 
 
 export const Home = (props) => {
-  const{data,isPending} = useFetch('/api/v1/public/offers');
-  console.log(data);
+  const{data:data1,isPending:isPending1} = useFetch('/api/v1/public/offers');
+  const{data:data2,isPending:isPending2} = useFetch('api/v1/public/blogs');
+  console.log(data2);
   return (
     <>
         <Cover ScrollToTop1={props.ScrollToTop}/>
-        {isPending && <Spinner/>}
-        {data && <Deals ScrollToTop1={props.ScrollToTop} data={data}/>}
+        {isPending1 && <Spinner/>}
+        {data1 && <Deals ScrollToTop1={props.ScrollToTop} data={data1}/>}
         <AboutUs/>
         <Services/>
-        <Testimonials/> 
+        {isPending2 && <Spinner/>}
+        {data2 && <Testimonials ScrollToTop1={props.ScrollToTop} data={data2}/>} 
         <ContactUs/>
     </>
   )

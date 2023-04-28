@@ -86,6 +86,7 @@ passport.deserializeUser(deserialize);
 app.use('/images', express.static('images/Users'));
 app.use('/Foodimages', express.static('images/Foods'));
 app.use('/offerimages', express.static('images/Offers'));
+app.use('/blogimages', express.static('images/Users'));
 app.use('/Categoryimages', express.static('images/Categories'));
 app.use('/Datingtableitemimages', express.static('images/DatingTableItems'));
 

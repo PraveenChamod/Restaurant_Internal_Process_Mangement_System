@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Background_Img from "../../Images/Background_Cover.png";
 import styled from "styled-components";
 import "./Testimonial.css";
+import Rating from "@mui/material/Rating";
+import Slider from "react-slick";
 
-const Testimonials = () => {
+const Testimonials = (props) => {
   const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
@@ -72,6 +74,23 @@ const Testimonials = () => {
     }
   `;
 
+  const Div2 = styled.div`
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  `;
+
+const SubSec = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+border-radius: 20px;
+margin-top: 5%;
+@media screen and (max-width: 800px){
+    height: 250px;
+}
+`
   const P = styled.p`
     font-size: 1.1em;
     color: white;
@@ -80,29 +99,20 @@ const Testimonials = () => {
       font-size: 12px;
     }
   `;
-  const [reviews, setReviews] = useState("");
+  const [slideIndex,setSlideIndex] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("api/v1/public/blogs", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await response?.json();
-        if (data) {
-          setReviews(data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  },[]);
+  const[num,setNum] = useState();
 
-  console.log(reviews);
+  const settings = {
+    className:"center",
+    infinite: true,
+    autoplay: true,
+    speed: 500,
+    slidesToShow: 1,
+    centerMode:true,
+    beforeChange : (current,next) => setSlideIndex(next)
+  };
+
 
   return (
     <Container>
@@ -112,24 +122,36 @@ const Testimonials = () => {
           What They Are Saying
         </H2>
       </Sec>
-      <Sec2 data-aos={"zoom-out-up"}>
-        <img
-          alt="person"
-          className="image1"
-          src={`http://localhost:5000/images/Users/${reviews[0]?.Customer?.ProfileImage}`}
-          data-aos="zoom-in-down"
-          data-aos-duration="1500"
-        />
-        <P data-aos={"zoom-in"} data-aos-duration={"2000"}>
-        {reviews[1]?.Review}
-        </P>
-        <img
-          alt="stars"
-          className="image2"
-          src={require("../../Images/Services/stars.png")}
-          data-aos="zoom-in"
-        />
-        <P data-aos="fade-right">{reviews[0]?.Customer?.Name}</P>
+      <Sec2  data-aos={"zoom-out-up"}>
+      <Slider {...settings}>
+        {
+            props.data.map((review,index)=>{
+              return(
+                <SubSec key={index}>
+                    <img
+                    alt="person"
+                    className="image1"
+                    src={`http://localhost:5000/blogimages/${review.Customer.ProfileImage}`}
+                    data-aos="zoom-in-down"
+                    data-aos-duration="1500"
+                  />
+                   <P data-aos={"zoom-in"} data-aos-duration={"2000"}>
+                    {review.Review}
+                   </P>
+                  <Div2>
+                  <Rating
+                    name="read-only"
+                    value={review.Rate}
+                    readOnly
+                    size="large"
+                  />
+                  </Div2>
+                  <P data-aos="fade-right">{review.Customer.Name}</P>                
+                </SubSec>
+              )
+            })
+        }
+        </Slider>  
       </Sec2>
     </Container>
   );
