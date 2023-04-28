@@ -1,6 +1,6 @@
 import { FaHouseUser, FaUser, FaUserMinus, FaUserPlus, FaUsers  , FaBookOpen,FaEye} from "react-icons/fa";
-import { GiMeal, GiTabletopPlayers, GiHotMeal, GiRoundTable } from 'react-icons/gi';
-import { BiLogOut } from 'react-icons/bi';
+import { GiMeal, GiTabletopPlayers, GiHotMeal, GiRoundTable, GiWineBottle } from 'react-icons/gi';
+import { BiCategory, BiLogOut } from 'react-icons/bi';
 import { IoFastFoodSharp } from 'react-icons/io5';
 import { GoSearch ,GoDiffAdded } from 'react-icons/go';
 import { AiOutlineStock } from 'react-icons/ai';
@@ -49,6 +49,16 @@ export const Roles = [
                 text:'View Foods',
                 icon:<IoFastFoodSharp style={iconStyle}/>,
                 link:"/AdminView-Foods"
+            },
+            {
+                text:'Add Categories',
+                icon:<BiCategory style={iconStyle}/>,
+                link:"/AdminAdd-Categories"
+            },
+            {
+                text:'Add Dating Table Items',
+                icon:<GiWineBottle style={iconStyle}/>,
+                link:"/AdminAdd-DatingTableItems"
             },
             {
                 text:'Log Out',
@@ -124,6 +134,16 @@ export const Roles = [
                 text:'View Order',
                 icon:<FaBookOpen style={iconStyle}/>,    
                 link:"/ManagerView-supllierorder"
+            },
+            {
+                text:'Add Categories',
+                icon:<BiCategory style={iconStyle}/>,
+                link:"/ManagerAdd-Categories"
+            },
+            {
+                text:'Add Dating Table Items',
+                icon:<GiWineBottle style={iconStyle}/>,
+                link:"/ManagerAdd-DatingTableItems"
             },
             {
                 text:'Report Generation',

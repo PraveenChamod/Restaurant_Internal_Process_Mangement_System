@@ -1,23 +1,27 @@
 import mongoose  from "mongoose";
 
 const StocksOrderSchema = mongoose.Schema({
-    Items:[
+    Order:[
         {
-            item:{
+            Supplier:{
                 type:mongoose.Schema.ObjectId,
-                ref:'SupplierItem',
+                ref:'ServiceProvider'
             },
-            Quantity:{
-                type:Number,
-                default:1,
-                required:[true,"Must provide the quantity"]
-            },
+            Items:[
+                {
+                    item:{
+                        type:mongoose.Schema.ObjectId,
+                        ref:'SupplierItem',
+                    },
+                    Quantity:{
+                        type:Number,
+                        default:1,
+                        required:[true,"Must provide the quantity"]
+                    },
+                }
+            ],
         }
     ],
-    Supplier:{
-        type:mongoose.Schema.ObjectId,
-        ref:'ServiceProvider'
-    },
     Manager:{
         type:mongoose.Schema.ObjectId,
         ref:'ServiceProvider'

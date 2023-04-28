@@ -1,7 +1,6 @@
 import styled from "styled-components";
-export const Div = styled.form`
+export const Div = styled.div`
   width: 50%;
-  height: fit-content;
   background-color: #1a1e21;
   border-radius: 25px;
   display: flex;
@@ -67,13 +66,33 @@ export const SubContainer = styled.div`
     box-shadow: 3px 3px 3px #000;
     justify-content: center;
     align-items: center;
+    height: 100%;
+`
+export const SubContainer1 = styled.div`
+    display: flex;
+    width: 60%;
+    overflow-x: auto;
+    background: #1a1e21;
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px #000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 2% 0;
 `
 
 export const ButtonSection = styled.div`
     position: relative;
     left: -25%;
     top: 2%;
-
+    margin-bottom: 2%;
+`
+export const ButtonSection1 = styled.div`
+    display: flex;
+    width: 80%;
+    justify-content: left;
+    margin-bottom: 2%;
 `
 
 export const Icon  =styled.div`
@@ -83,4 +102,20 @@ export const Icon  =styled.div`
     &:hover{
         cursor: pointer;
     }
+`
+export const FormDiv = styled.form `
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const SubDiv = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  margin-top: 5%;
 `

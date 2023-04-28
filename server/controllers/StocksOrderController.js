@@ -69,6 +69,7 @@ export const ViewSupplierOrder = async (req,res)=>{
                             model:'SupplierItem'
                         })
                         .exec();
+                        console.log(populatedOrder);
                        if(populatedOrder.Manager.id === user.id){
 
                             const Name = populatedOrder.Supplier.Name;
@@ -80,6 +81,7 @@ export const ViewSupplierOrder = async (req,res)=>{
                                     return item.item.Items.map(stockitem=>{
                                         // console.log(stockitem);
                                         return{
+                                            id:stockitem._id,
                                             ItemName:stockitem.ItemName,
                                             Price:stockitem.Price,
                                             Quantity:item.Quantity
@@ -116,7 +118,6 @@ export const ViewSupplierOrder = async (req,res)=>{
         }
         else if(user.Role === "Supplier"){
             for(const order of orders){
-                
                 try {
                     const populatedOrder = await StocksOrder.findById(order.id)
                         .populate({
@@ -133,10 +134,12 @@ export const ViewSupplierOrder = async (req,res)=>{
                         })
                         .exec();
                         if(populatedOrder.Supplier.id === user.id){
+                           
                             const Name = populatedOrder.Manager.Name;
                             const Email = populatedOrder.Manager.Email;
                             const Status = populatedOrder.Status;
                             const TotalPrice = populatedOrder.TotalPrice;
+                            
                             const item = populatedOrder.Items.flatMap((item)=>{
                                 if(item.id !== undefined){
                                     return item.item.Items.map(stockitem=>{
@@ -165,15 +168,16 @@ export const ViewSupplierOrder = async (req,res)=>{
                     });
                 }
             }
+            res.status(200).json({
+                status: "Success",
+                message: "All Order Details",
+                data: {
+                    placedorders
+                }
+              });
         }
-        else{
-            res.status(401).json({
-                statuts:"Error",
-                message:'User Hasn\'t Authorization'
-            });
-        }
-    } catch (error) {
-        res.status(501).json(error.message);
+    }catch(error) {
+        
     }
 }
 
@@ -310,6 +314,12 @@ export const ViewSupplierOrderById = async(req,res)=>{
                     message:error.message
                 });
             }
+        }
+        else{
+            res.status(401).json({
+                status:"Error",
+                message:"This user dosen't has authorization to do this operation"
+            });
         }
     } catch (error) {
         return res.status(500).json({

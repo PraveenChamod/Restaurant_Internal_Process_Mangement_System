@@ -96,6 +96,7 @@ import WithoutNavAndFooter from './components/Routing/WithoutNavandFooter';
 import WithNavAndFooter from './components/Routing/WithNavandFooter';
 import ViewSupplierOrderDetails from './Pages/Manager/ViewSupplierOrderDetails';
 import SupplierOrderConform from './Pages/Supplier/SupplierOrderConform';
+import ManagerAddDatingItems from './Pages/Manager/ManagerAddDatingTableItems';
 
 function App() {
   
@@ -208,6 +209,7 @@ function App() {
                 <Route path="/ManagerView-supllierorder" element={<ViewSupplierOrder BackRoutes={BackRoutes[1].nav}/>}/>
                 <Route path="/ManagerView-supllierorder-details/:id" element={<ViewSupplierOrderDetails/>}/>
                 <Route path="/ManagerAdd-Categories" element={<ManagerAddCategories BackRoutes={BackRoutes[1].nav}/>}/>
+                <Route path="/ManagerAdd-DatingTableItems" element={<ManagerAddDatingItems BackRoutes={BackRoutes[1].nav}/>}/>
 
               {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Staff-Member ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 
@@ -264,7 +266,7 @@ function App() {
                 <Route path="/SupplierMy-Profile" element={<SupplierUserProfile route={EditProfileLinks[4]} BackRoutes={BackRoutes[5].nav}/>}/>    
                 <Route path="/SupplierEdit-Profile" element={<SupplierEditProfile EditProfileBackRoute={EditProfileBackRoute[3].nav}/>}/> 
                 <Route path="/AddSupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
-                {/* <Route path="/ViewSupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
+                <Route path="/ViewSupplyItems" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/> 
                 {/* <Route path="/ViewSupplyItem/:id" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
                 <Route path="/SupplierMessages" element={<Messages BackRoutes={BackRoutes[5].nav}/>}/> 
                 <Route path="/SupplierConformOrder/:id" element={<SupplierOrderConform/>}/>

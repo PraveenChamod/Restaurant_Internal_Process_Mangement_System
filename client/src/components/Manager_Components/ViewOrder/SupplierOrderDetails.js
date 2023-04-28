@@ -14,8 +14,8 @@ const SupplierOrderDetails = (props) => {
                 <l.SubContainer>
                     <l.Table>
                         <l.Tr>
-                            <l.Th>Item Name</l.Th>
-                            <l.Th>Item Name</l.Th>
+                            <l.Th>Supplier Name</l.Th>
+                            <l.Th>Supplier Email</l.Th>
                             <l.Th>Item Name</l.Th>
                             <l.Th>Unit Price</l.Th>
                             <l.Th>Status</l.Th>
@@ -25,14 +25,14 @@ const SupplierOrderDetails = (props) => {
                             props.data3.map(ItemArray=>{
                                 return(
                                     
-                                    ItemArray.supplierItem.map(row =>{
+                                    ItemArray.item.map(row =>{
                                         return(
                                             <l.Tr key={ItemArray.id}>
                                                 <l.Td >{ItemArray.supplierName}</l.Td>
-                                                <l.Td >{ItemArray.supplierContactNumber}</l.Td>
+                                                <l.Td >{ItemArray.supplierEmail}</l.Td>
                                                 <l.Td>{row.ItemName}</l.Td>
                                                 <l.Td>{row.Price}</l.Td>
-                                                <l.Td>{row.Status}</l.Td>
+                                                <l.Td>{ItemArray.OrderStatus}</l.Td>
                                       
                                                 <Link to={`/ManagerView-supllierorder-details/${row.SupplierItemsId}` } className="btn">
                                                     <l.Icon><AiFillEye/></l.Icon>

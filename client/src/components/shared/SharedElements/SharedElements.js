@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Chef from '../../../Images/Chef.png';
-export const Container = styled.div`
+export const Container = styled.form`
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
     align-items: center;
     flex-direction: column;
     background:url(${Chef}) left bottom no-repeat;

@@ -7,12 +7,14 @@ import * as l from './AddFoodsElements';
 import { FaCamera } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { Oval } from 'react-loader-spinner';
+import useFetch from '../../../Hooks/useFetch';
 const AddFoodsComponent = (props) => {
     const[FoodName,setFoodName] = useState('');
     const[Price,setPrice] = useState('');
     const[Category,setCategory] = useState('');
     const[image,setImage] = useState(null);
-
+    const {data,isPending} = useFetch('api/v1/Categories');
     const addFood = async (e)=>{
         e.preventDefault();
         try {
@@ -84,12 +86,27 @@ const AddFoodsComponent = (props) => {
                             }}
                             onChange={e=>setCategory(e.target.value)}
                             >
-                                <MenuItem value='Burgers'>Burgers</MenuItem>
-                                <MenuItem value='Pizza'>Pizza</MenuItem>
-                                <MenuItem value='Rice'>Rice</MenuItem>
-                                <MenuItem value='Soup'>Soup</MenuItem>
-                                <MenuItem value='Noodles'>Noodles</MenuItem>
-                                <MenuItem value='Beverages'>Beverages</MenuItem>
+                                {
+                                isPending && <Oval
+                                                height={150}
+                                                width={150}
+                                                color="#FFBF00"
+                                                wrapperStyle={{}}
+                                                wrapperClass=""
+                                                visible={true}
+                                                ariaLabel='oval-loading'
+                                                secondaryColor="#FFBF00ed"
+                                                strokeWidth={2}
+                                                strokeWidthSecondary={2}
+                                            />
+                            }
+                            {
+                                data?.data?.categories.map((Category)=>{
+                                    return(
+                                        <MenuItem value={Category.CategoryName} >{Category.CategoryName}</MenuItem>
+                                    )
+                                })
+                            }
                             </Select>
                         </>
                         <TextField 
