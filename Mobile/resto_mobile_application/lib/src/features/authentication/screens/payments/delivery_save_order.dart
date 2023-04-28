@@ -349,6 +349,16 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
 
   //Payment Intent
   Future<void> cardPayment(List<FoodList> foods, String paymentMethod, num totalPrice, String type, String customerId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     String? userEmail = pref.getString("LoginEmail");
@@ -363,6 +373,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
         "receipt_email":userEmail,
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       paymentIntent = json;

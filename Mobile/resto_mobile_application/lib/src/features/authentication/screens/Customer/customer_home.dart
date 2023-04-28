@@ -112,7 +112,6 @@ class _CustomerHomeState extends State<CustomerHome> {
                   "Popular Categories",
                   style: TextStyle(
                     fontSize: 20,
-                    //fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),

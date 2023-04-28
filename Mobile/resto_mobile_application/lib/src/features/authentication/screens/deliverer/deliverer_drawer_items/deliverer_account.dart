@@ -315,6 +315,16 @@ class _DelivererAccountState extends State<DelivererAccount> {
   }
 
   void updateDelivererDetails() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
@@ -330,6 +340,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
         "ContactNumber": contactController.text,
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
@@ -370,6 +381,16 @@ class _DelivererAccountState extends State<DelivererAccount> {
   }
 
   void updateProfilePicture() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     File? imageFile = _image;
     if (imageFile == null) {
       return;
@@ -389,6 +410,7 @@ class _DelivererAccountState extends State<DelivererAccount> {
       imageFile.path,
     ));
     var response = await request.send();
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
