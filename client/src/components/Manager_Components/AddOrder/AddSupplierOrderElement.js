@@ -59,6 +59,7 @@ export const Td = styled.td`
 
 export const SubContainer = styled.div`
     display: flex;
+    flex-direction: column;
     width: 60%;
     overflow-x: auto;
     background: #1a1e21;
@@ -119,3 +120,25 @@ export const SubDiv = styled.div`
   align-items: center;
   margin-top: 5%;
 `
+export const ConfirmButton = styled.button`
+    width: 100px;
+    height: 40px;
+    color:#fff;
+    background: linear-gradient(to right, #FFBF00, #B26C29);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 500;
+    text-transform: uppercase;
+    @media screen and (max-width: 800px){
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+        
+    }
+  `

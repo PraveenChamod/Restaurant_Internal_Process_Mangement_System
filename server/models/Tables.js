@@ -6,7 +6,7 @@ const tableSchema = mongoose.Schema({
         required:[true,"You must have select the table no"],
         unique:true
     },
-    NoOfPersons:{
+    NoOfPersons:{ 
         type:Number,
         required:[true,"You must have provide the maximum number of persons"]
     },

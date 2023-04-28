@@ -52,21 +52,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return File(imagePath).copy(image.path);
   }
 
-  // Future<File> saveFilePermanently(String imagePath, String previousPath) async {
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   final name = path.basename(imagePath);
-  //   final image = File('${directory.path}/$name');
-  //
-  //   if(previousPath != null) {
-  //     final previousImage = File(previousPath);
-  //     if(await previousImage.exists()) {
-  //       await previousImage.delete(); // delete the previous file if it exists
-  //     }
-  //   }
-  //
-  //   return File(imagePath).copy(image.path);
-  // }
-
   //For getUserDetails
   late Future<Map<String, dynamic>> _futureData;
   @override
@@ -360,7 +345,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
-    print("In the getUserDetails() ${userToken!}");
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
@@ -375,6 +359,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     }
   }
   void updateUserDetails() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
@@ -391,10 +385,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         "Address": addressController.text
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      print(msg);
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
@@ -443,6 +437,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   }
 
   void updateProfilePicture() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     File? imageFile = _image;
     if (imageFile == null) {
       return;
@@ -450,27 +454,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
-    var request = http.MultipartRequest(
-      'PATCH',
-      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    var request = http.MultipartRequest('PATCH', Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
     );
-    request.headers.addAll({
-      "Authorization": "Bearer $userToken",
-    });
-    request.files.add(await http.MultipartFile.fromPath(
-      'image',
-      imageFile.path,
-    ));
+    request.headers.addAll({"Authorization": "Bearer $userToken",});
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,));
     var response = await request.send();
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
-      print(msg);
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
-      print(msg);
     }
   }
 }

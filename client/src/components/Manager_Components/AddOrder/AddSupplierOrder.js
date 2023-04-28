@@ -49,7 +49,7 @@ const AddSupplierOrder = (props) => {
     const newOrderItems = orderItems.filter((item) => item.id !== itemId);
     setOrderItems(newOrderItems);
   };
-
+  console.log(orderItems);
   orderItems.forEach(stockitem=>{
     item = stockitem.id;
     Quantity = stockitem.quantity;

@@ -287,6 +287,16 @@ class _CartItemContainerState extends State<CartItemContainer> {
     ).show();
   }
   void updateFoodToCart(int qty, String foodId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -300,6 +310,7 @@ class _CartItemContainerState extends State<CartItemContainer> {
         "quantity": qty
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
@@ -312,6 +323,16 @@ class _CartItemContainerState extends State<CartItemContainer> {
   }
 
   void updateOfferToCart(int qty, String offerId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -325,9 +346,11 @@ class _CartItemContainerState extends State<CartItemContainer> {
         "quantity": qty
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
+
       awesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
@@ -357,6 +380,16 @@ class _CartItemContainerState extends State<CartItemContainer> {
 
   //Remove Food Cart Item
   void removeFoodFromCart(String cartId, String foodId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
@@ -370,18 +403,25 @@ class _CartItemContainerState extends State<CartItemContainer> {
         "foodId": foodId
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, msg, "Success");
+      successAwesomeDialog(DialogType.success, 'Removed food item from cart', "Success");
     } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      unSuccessAwesomeDialog(DialogType.warning, 'Failed to remove food item from cart', "Warning");
     }
   }
   //Remove Offer Cart Item
   void removeOfferFromCart(String cartId, String offerId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
@@ -395,14 +435,11 @@ class _CartItemContainerState extends State<CartItemContainer> {
         "offerId": offerId
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 200) {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, msg, "Success");
+      successAwesomeDialog(DialogType.success, 'Removed food item from cart', "Success");
     } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      unSuccessAwesomeDialog(DialogType.warning, 'Failed to remove food item from cart', "Warning");
     }
   }
   //AwesomeDialog for Remove Item from cart

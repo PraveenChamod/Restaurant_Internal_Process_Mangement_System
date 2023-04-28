@@ -5,7 +5,7 @@ import SupplierItem from "../models/SupplierItem.js";
 
 // Method : POST
 // End Point : "api/v1/SupplierOrder";
-// Description : Add Supplier Order Item
+// Description : Add Order to supplier for supply
 export const addSupplierOrder = async(req,res)=>{
     try {
         const user = req.user;
@@ -51,7 +51,7 @@ export const ViewSupplierOrder = async (req,res)=>{
         let placedorders = [];
         let orderDetails;
         const orders = await StocksOrder.find();
-        if(user.Role === "Manager"){
+        if(user.Role === "Manager" || user.Role === "Supplier"){
             for(const order of orders){
                 console.log(order);
                 try {

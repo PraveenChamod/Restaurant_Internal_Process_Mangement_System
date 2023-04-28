@@ -446,6 +446,16 @@ class _TableItemContainerState extends State<TableItemContainer> {
       );
 
   void reserveDineInTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     String? cusId = pref.getString("LoginId");
@@ -466,6 +476,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
         "Type": 'Dine-in',
       }),
     );
+    Navigator.pop(context);
     if (response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final orderDetails = json["data"];
@@ -511,6 +522,16 @@ class _TableItemContainerState extends State<TableItemContainer> {
 
   //Payment Intent
   Future<void> cardPayment(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     String? userEmail = pref.getString("LoginEmail");
@@ -525,6 +546,7 @@ class _TableItemContainerState extends State<TableItemContainer> {
         "receipt_email":userEmail,
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       paymentIntent = json;
