@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../features/authentication/screens/Customer/customer_main_page.dart';
 import '../features/authentication/screens/Products/product_cart.dart';
 
 class MenuItemAppBar extends StatelessWidget implements PreferredSizeWidget{

@@ -86,14 +86,12 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
                             future: _futureData,
                             builder: (context, snapshot){
                               if(snapshot.hasData){
-
                                 final String name = snapshot.data!['customerName'];
                                 final String number = snapshot.data!['ContactNumber'];
                                 final String address = snapshot.data!['Address'];
                                 final int price = snapshot.data!['TotalPrice'];
                                 lat = snapshot.data!['lat'];
                                 lang = snapshot.data!['lang'];
-
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
