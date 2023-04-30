@@ -16,54 +16,57 @@ import {
   Image,
   ImageSection,
   Icon,
-  ImageSubSec
+  ImageSubSec,
 } from "./CustomerProfileElement";
-import { RegularButton, UploadButton } from "../../shared/SharedElements/Buttons";
+import {
+  RegularButton,
+  UploadButton,
+} from "../../shared/SharedElements/Buttons";
 import { Header } from "../../shared/SharedElements/SharedElements";
 import axios from "axios";
 import useAuth from "../../../Hooks/useAuth";
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera } from "react-icons/fa";
 import { Oval } from "react-loader-spinner";
 import useFetch from "../../../Hooks/useFetch";
 const CustomerProfile = (props) => {
-  const[Imagename,setImage] = useState();
+  const [Imagename, setImage] = useState();
 
-  const{loadUser,loading,user}=useAuth();
-  
-  const[Name,setName] = useState(props.user.Name);
-  const[ContactNumber,setContactNumber] = useState(props.user.ContactNumber);
-  const[Email,setEmail] = useState(props.user.Email);
-  const[Address,setAddress] = useState(props.user.Address);
-  
-  const updateProfile = async (e)=>{
+  const { loadUser, loading, user } = useAuth();
+
+  const [Name, setName] = useState(props.user.Name);
+  const [ContactNumber, setContactNumber] = useState(props.user.ContactNumber);
+  const [Email, setEmail] = useState(props.user.Email);
+  const [Address, setAddress] = useState(props.user.Address);
+
+  const updateProfile = async (e) => {
     e.preventDefault();
     try {
-      const Data = {Name,Email,ContactNumber,Address}
-      const res = await axios.patch(`api/v1/User/Profile/${user?.Email}`,Data);
-      if(res.status == 200 || res.status == 201){
+      const Data = { Name, Email, ContactNumber, Address };
+      const res = await axios.patch(`api/v1/User/Profile/${user?.Email}`, Data);
+      if (res.status == 200 || res.status == 201) {
         console.log(res);
         loadUser();
       }
     } catch (error) {
       console.log(error.message);
     }
-  }
+  };
 
-  const uploadImage = async (e)=>{
+  const uploadImage = async (e) => {
     e.preventDefault();
     try {
       const formdata = new FormData();
-      formdata.append('image',Imagename);
-      const res = await axios.patch('api/v1/Auth/ProfilePicture',formdata);
+      formdata.append("image", Imagename);
+      const res = await axios.patch("api/v1/Auth/ProfilePicture", formdata);
       console.log(res);
       loadUser();
     } catch (error) {
-      console.log(error.message);      
+      console.log(error.message);
     }
-  }
-  const handleUpload = (e)=>{
+  };
+  const handleUpload = (e) => {
     setImage(e.target.files[0]);
-  }
+  };
   console.log(Imagename);
   return (
     <Page>
@@ -74,34 +77,40 @@ const CustomerProfile = (props) => {
             <Div2>
               <ImageSection>
                 <ImageSubSec>
-                  {
-                      loading && <Oval
-                                    height={150}
-                                    width={150}
-                                    color="#FFBF00"
-                                    wrapperStyle={{}}
-                                    wrapperClass=""
-                                    visible={true}
-                                    ariaLabel='oval-loading'
-                                    secondaryColor="#FFBF00ed"
-                                    strokeWidth={2}
-                                    strokeWidthSecondary={2}
-                                />
-                    }
-                    {!loading && user && <Image
-                        className="image1"
-                        src={`http://localhost:5000/images/${user?.ProfileImage}`}
-                      />
-                    }
+                  {loading && (
+                    <Oval
+                      height={150}
+                      width={150}
+                      color="#FFBF00"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={true}
+                      ariaLabel="oval-loading"
+                      secondaryColor="#FFBF00ed"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
+                  )}
+                  {!loading && user && (
+                    <Image
+                      className="image1"
+                      src={`http://localhost:5000/images/${user?.ProfileImage}`}
+                    />
+                  )}
                 </ImageSubSec>
-                  <Icon for="file">
-                    <FaCamera/>
-                      <input type='file' id='file' accept="image/*" onChange={handleUpload}/>
-                  </Icon>
-                </ImageSection>
+                <Icon for="file">
+                  <FaCamera />
+                  <input
+                    type="file"
+                    id="file"
+                    accept="image/*"
+                    onChange={handleUpload}
+                  />
+                </Icon>
+              </ImageSection>
               <Div4>
                 <RegularButton onClick={uploadImage}>Upload</RegularButton>
-                <br/>
+                <br />
                 <RemoveButton>
                   <Link to="./login" className="btn">
                     REMOVE
@@ -118,7 +127,7 @@ const CustomerProfile = (props) => {
                   name="name"
                   placeholder="JOHNNY ANN"
                   value={Name}
-                  onChange={e=>setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                 ></Input>
                 <H2>CONTACT NUMBER</H2>
                 <Input
@@ -127,12 +136,10 @@ const CustomerProfile = (props) => {
                   name="phonenumber"
                   placeholder="0774134764"
                   value={ContactNumber}
-                  onChange={e=>setContactNumber(e.target.value)}
+                  onChange={(e) => setContactNumber(e.target.value)}
                 ></Input>
               </FormControl>
-              <RegularButton>
-                  UPDATE PROFILE
-              </RegularButton>
+              <RegularButton>UPDATE PROFILE</RegularButton>
             </Div3>
           </Div1>
           <Div1>
@@ -144,7 +151,7 @@ const CustomerProfile = (props) => {
                 name="email"
                 placeholder="JHNNANN123@GMAIL.COM"
                 value={Email}
-                onChange={e=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               ></Input>
               <br />
               <H2>ADDRESS</H2>
@@ -154,7 +161,7 @@ const CustomerProfile = (props) => {
                 name="address"
                 placeholder="ADDRESS"
                 value={Address}
-                onChange={e=>setAddress(e.target.value)}
+                onChange={(e) => setAddress(e.target.value)}
               ></Input>
             </FormControl>
           </Div1>

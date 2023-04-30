@@ -1,26 +1,26 @@
 .image {
-    margin-top: 90px;
-    width: 600px;
-    height: 200px;
+  margin-top: 90px;
+  width: 600px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.imag {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+}
+@media screen and (max-width: 800px) {
+  .image {
+    width: 150px;
+    height: 100px;
     object-fit: cover;
+    margin: 0;
   }
 
   .imag {
-    width: 400px;
-    height: 300px;
+    width: 150px;
+    height: 100px;
     object-fit: cover;
   }
-  @media screen and (max-width: 800px) {
-    .image {
-      width: 150px;
-      height: 100px;
-      object-fit: cover;
-      margin: 0;
-    }
-  
-    .imag {
-      width: 150px;
-      height: 100px;
-      object-fit: cover;
-    }
-  }
+}

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_cart.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/Products/product_items.dart';
@@ -8,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/menu_item_appbar.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../constants/image_strings.dart';
 class ProductDetails extends StatefulWidget {
   final int choice;
@@ -48,7 +46,6 @@ class _ProductDetailsState extends State<ProductDetails> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -224,9 +221,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         color: const Color(0xFFfebf10),
                                         pressEvent: () {
                                           if(totalCount != 0){
-                                            successAwesomeDialog(DialogType.info, '${widget.itemName} x $totalCount will add to the Cart.', "Inform", totalCount, widget.itemId, widget.choice);
+                                            successAwesomeDialog(
+                                                DialogType.info,
+                                                '${widget.itemName} x $totalCount will add to the Cart.',
+                                                "Inform", totalCount, widget.itemId, widget.choice
+                                            );
                                           }else{
-                                            unSuccessAwesomeDialog(DialogType.warning, 'Please add the item count', "Warning");
+                                            unSuccessAwesomeDialog(
+                                                DialogType.warning,
+                                                'Please add the item count',
+                                                "Warning"
+                                            );
                                           }
                                         },
                                         borderRadius: const BorderRadius.only(
@@ -322,6 +327,16 @@ class _ProductDetailsState extends State<ProductDetails> {
     ).show();
   }
   void addToCart(int qty, String foodId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     var response = await http.post(
@@ -335,6 +350,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         "quantity": qty
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];

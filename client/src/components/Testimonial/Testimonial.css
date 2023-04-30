@@ -1,25 +1,26 @@
 .image1 {
-    height: 150px;
-    /* transform: scale(0.2); */
-    border-radius: 50%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  height: 150px;
+  /* transform: scale(0.2); */
+  border-radius: 50%;
+  width: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.image2 {
+  transform: scale(0.7);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (max-width: 800px) {
+  .image1 {
+    width: 100px;
+    height: 100px;
+  }
   .image2 {
-    transform: scale(0.7);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100px;
+    height: 30px;
   }
-  @media screen and (max-width:800px){
-    .image1 {
-      width: 100px;
-      height: 100px;
-    }
-    .image2 {
-      width: 100px;
-      height: 30px;
-    }
-  }
+}

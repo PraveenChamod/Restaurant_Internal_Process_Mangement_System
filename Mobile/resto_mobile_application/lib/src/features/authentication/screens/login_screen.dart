@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/make_selction.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
@@ -13,6 +12,7 @@ import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_main_page.dart';
 import 'deliverer/deliverer_home.dart';
+import 'forget_password/gettemail.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             const BackgroundImage(),
             SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              //keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -54,7 +54,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: MediaQuery.of(context).size.width / 1.25,
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1b1b1d),
+                        //color: const Color(0xFF1b1b1d),
+                        color: Colors.black38,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
@@ -167,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (_) {
-                                      return const MakeSelection();
+                                      return const GetEmail();
                                     },
                                   ),
                                 );
@@ -189,8 +190,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 color: const Color(0xFFfebf10),
                                 pressEvent: () {
-                                  print(Email);
-                                  print(Password);
                                   login();
                                 },
                               ),
@@ -284,6 +283,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
   void login() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     String id = '';
     String email = '';
     String  jwtToken = '';
@@ -298,6 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
           "Password": passController.text
         }),
       );
+      Navigator.pop(context);
       if(response.statusCode == 200) {
         String jwtToken = response.body;
         jwtToken = jwtToken.replaceAll('"', '');
@@ -333,19 +343,23 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   void pageRoute(String id, String email, String token) async {
     //const This is the part of store value or token shared preference
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("LoginId", id);
     await pref.setString("LoginEmail", email);
     await pref.setString("JwtToken", token);
     String? ID = pref.getString("LoginId");
-    print("Shared Id: ${ID!}");
-    String? UserEmail = pref.getString("LoginEmail");
-    print("Shared Email: $UserEmail");
+    String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
-    print("Shared Token: $userToken");
-
-
-    //Check the logged User's Role By using GET Method
     final response = await http.get(
       Uri.parse('http://$hostName:5000/api/v1/Auth/Profile'),
       headers: <String, String>{
@@ -355,15 +369,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (response.statusCode == 201) {
       final loggedUser =  jsonDecode(response.body);
-      print(loggedUser['user']['Name']);
-      print(loggedUser['user']['Role']);
       String loggedUserRole = loggedUser['user']['Role'];
       await pref.setString("LoginUserRole", loggedUserRole);
       String? role = pref.getString("LoginUserRole");
-      print("Shared Role: ${role!}");
     } else {
       throw Exception('Failed to load data');
     }
+    Navigator.pop(context);
     String? role = pref.getString("LoginUserRole");
     role == 'Customer'
       ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage(choice: 2,)))

@@ -1,111 +1,155 @@
-import React from 'react';
-import Background_Img from '../../Images/Background_Cover.png';
+import React, { useState } from "react";
+import Background_Img from "../../Images/Background_Cover.png";
 import styled from "styled-components";
-import './Testimonial.css';
+import "./Testimonial.css";
+import Rating from "@mui/material/Rating";
+import Slider from "react-slick";
 
-const Testimonials = () => {
-
-    const Container = styled.div`
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        height: 90vh;
-        /* position: relative;
+const Testimonials = (props) => {
+  const Container = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 90vh;
+    /* position: relative;
         z-index: 1; */
-        background: 
-            url(${Background_Img}) right center no-repeat;
-        background-size: auto 100%;
-        margin: 5% 0;
-        @media screen and (max-width:900px){
-            background-color: red;
-            height: auto;
-            background: none;
-            flex-direction: column;
-            align-items: center;
-            justif-content: center;
-            padding: 0;
-        }
-    `
-        const H1 = styled.div`
-        letter-spacing: 0.1em;
-        font-size: 2em;
-        color: #B26C29;
-        position: relative;
-        text-align: center;
-        margin: 1rem auto;
-        @media screen and (max-width:800px){
-            font-size: 1em;
-        }
-    `
-        const H2 = styled.h1`
-        letter-spacing: 0.2em;
-        font-size: 40px;
-        font-weight: 500;
-        color: #fff;
-        text-align: center;
-        @media screen and (max-width:800px){
-            font-size: 1.2em;
+    background: url(${Background_Img}) right center no-repeat;
+    background-size: auto 100%;
+    margin: 5% 0;
+    @media screen and (max-width: 900px) {
+      background-color: red;
+      height: auto;
+      background: none;
+      flex-direction: column;
+      align-items: center;
+      justif-content: center;
+      padding: 0;
     }
-    `
-        const Sec = styled.div`
-        flex-basis: 100%;
-        margin: 5px 5px;
-        width: 100%;   
-        `
-        const Sec2 = styled.div`
-            border-radius: 25px;
-            background: #1A1E21;
-            width: 900px;
-            height: 380px;
-            margin: 10px 10px 10px 10px;
-            padding : 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 3px 3px 3px #000;
-            @media screen and (max-width:900px){
-                width: 80%;
-                height: 50%;
-                background: none;
-                flex-direction: column;
-                align-items: center;
-                justif-content: center;
-                padding: 2% 5%;
-            }
-            `
+  `;
+  const H1 = styled.div`
+    letter-spacing: 0.1em;
+    font-size: 2em;
+    color: #b26c29;
+    position: relative;
+    text-align: center;
+    margin: 1rem auto;
+    @media screen and (max-width: 800px) {
+      font-size: 1em;
+    }
+  `;
+  const H2 = styled.h1`
+    letter-spacing: 0.2em;
+    font-size: 40px;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    @media screen and (max-width: 800px) {
+      font-size: 1.2em;
+    }
+  `;
+  const Sec = styled.div`
+    flex-basis: 100%;
+    margin: 5px 5px;
+    width: 100%;
+  `;
+  const Sec2 = styled.div`
+    border-radius: 25px;
+    background: #1a1e21;
+    width: 900px;
+    height: 380px;
+    margin: 10px 10px 10px 10px;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 3px 3px 3px #000;
+    @media screen and (max-width: 900px) {
+      width: 80%;
+      height: 50%;
+      background: none;
+      flex-direction: column;
+      align-items: center;
+      justif-content: center;
+      padding: 2% 5%;
+    }
+  `;
 
-    const P = styled.p`
-        font-size: 1.1em;
-        color : white ;
-        text-align: center;
-        @media screen and (max-width:900px){
-            font-size: 12px;
-        }
-    `
+  const Div2 = styled.div`
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  `;
 
+  const SubSec = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-top: 5%;
+    @media screen and (max-width: 800px) {
+      height: 250px;
+    }
+  `;
+  const P = styled.p`
+    font-size: 1.1em;
+    color: white;
+    text-align: center;
+    @media screen and (max-width: 900px) {
+      font-size: 12px;
+    }
+  `;
+  const [slideIndex, setSlideIndex] = useState(0);
 
-    return ( 
-        <Container>
-            <Sec>
-                <H1 data-aos={"zoom-in"}>Testimonial</H1>
-                <H2 data-aos={"zoom-in-up"}
-                    data-aos-duration={"1500"}>What They Are Saying</H2>
-            </Sec>
-            <Sec2 data-aos={"zoom-out-up"} >
-                <img alt="person"  className='image1' src={require('../../Images/Services/person.jpg')} data-aos="zoom-in-down"
-                    data-aos-duration="1500"/>
-                <P data-aos={"zoom-in"}
-                    data-aos-duration={"2000"}>IT SPORTSMAN EARNESTLY YE PRESERVED AN ON. MOMENT LED FAMILY SOONER CANNOT HER WINDOW PULLED ANY. OR RAILLERY 
-                    IF IMPROVED LANDLORD TO SPEAKING HASTENED DIFFERED HE. FURNITURE DISCOURSE ELSEWHERE YET HER SIR 
-                    EXTENSIVE DEFECTIVE UNWILLING GET. WHY RESOLUTION ONE MOTIONLESS YOU HIM THOROUGHLY. NOISE IS ROUND TO 
+  const settings = {
+    className: "center",
+    infinite: true,
+    autoplay: true,
+    speed: 500,
+    slidesToShow: 1,
+    centerMode: true,
+    arrows: false,
+  };
+
+  return (
+    <Container>
+      <Sec>
+        <H1 data-aos={"zoom-in"}>Testimonial</H1>
+        <H2 data-aos={"zoom-in-up"} data-aos-duration={"1500"}>
+          What They Are Saying
+        </H2>
+      </Sec>
+      <Sec2 data-aos={"zoom-out-up"}>
+        <Slider {...settings}>
+          {props.data.map((review, index) => {
+            return (
+              <SubSec key={index}>
+                <img
+                  alt="person"
+                  className="image1"
+                  src={`http://localhost:5000/blogimages/${review.Customer.ProfileImage}`}
+                  data-aos="zoom-in-down"
+                  data-aos-duration="1500"
+                />
+                <P data-aos={"zoom-in"} data-aos-duration={"2000"}>
+                  {review.Review}
                 </P>
-                <img alt="stars"  className='image2' src={require('../../Images/Services/stars.png')} data-aos="zoom-in"/>
-                <P data-aos="fade-right">JENNY</P>
-                
-            </Sec2>
+                <Div2>
+                  <Rating
+                    name="read-only"
+                    value={review.Rate}
+                    readOnly
+                    size="large"
+                  />
+                </Div2>
+                <P data-aos="fade-right">{review.Customer.Name}</P>
+              </SubSec>
+            );
+          })}
+        </Slider>
+      </Sec2>
+    </Container>
+  );
+};
 
-        </Container>
-     );
-}
- 
 export default Testimonials;

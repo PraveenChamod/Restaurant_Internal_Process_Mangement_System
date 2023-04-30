@@ -1,105 +1,105 @@
 import mongoose from "mongoose";
 import validator from "validator";
-const customerSchema = mongoose.Schema({
-    Name:{
-        type:String,
-        required:[true,"Customer must have a name"]
+const customerSchema = mongoose.Schema(
+  {
+    Name: {
+      type: String,
+      required: [true, "Customer must have a name"],
     },
-    Password:{
-        type:String,
-        required:[true,"Customer must have enter the password"],
-        minlength:8,
-        unique:true,
+    Password: {
+      type: String,
+      required: [true, "Customer must have enter the password"],
+      minlength: 8,
+      unique: true,
     },
-    ConfirmPassword:{
-        type:String,
-        required:[true,"Customer must confirm the password"],
-        select: false,
-        validate:{
-            validator:function(pwd){
-                return this.Password === pwd
-            },
-            message:"Password doesn't match"
-        }
-    },
-    ContactNumber:{
-        type:String,
-        required:[true,"Customer must provide his/her contact number"],
-        minlength:10
-    },
-    Email:{
-        type:String,
-        required:[true,"Customer must have to enter the email"],
-        unique:true,
-        validate:{
-            validator:function(val){
-                return validator.isEmail(val)
-            },
-            message:"Please enter the valid email"
+    ConfirmPassword: {
+      type: String,
+      required: [true, "Customer must confirm the password"],
+      select: false,
+      validate: {
+        validator: function (pwd) {
+          return this.Password === pwd;
         },
+        message: "Password doesn't match",
+      },
     },
-    Role:{
-        type:String,
-        default: 'Customer',
-        enum:{
-            values:['Customer'],
-            message: "Cannot allow to  change the role of customer to any other role."
+    ContactNumber: {
+      type: String,
+      minlength: 10,
+    },
+    Email: {
+      type: String,
+      required: [true, "Customer must have to enter the email"],
+      unique: true,
+      validate: {
+        validator: function (val) {
+          return validator.isEmail(val);
         },
-        immutable:true
+        message: "Please enter the valid email",
+      },
     },
-    ProfileImage:{
-        type:String,
+    Role: {
+      type: String,
+      default: "Customer",
+      enum: {
+        values: ["Customer"],
+        message:
+          "Cannot allow to  change the role of customer to any other role.",
+      },
+      immutable: true,
     },
-    verified:{
-        type:Boolean
+    ProfileImage: {
+      type: String,
     },
-    provider:{
-        type:String
+    verified: {
+      type: Boolean,
     },
-    Address:{
-        type:String,
+    provider: {
+      type: String,
     },
-    OTP:{
-        type:Number
+    Address: {
+      type: String,
     },
-    OTP_Expire:{
-        type:Date
+    OTP: {
+      type: Number,
     },
-    lat:{
-        type:Number
+    OTP_Expire: {
+      type: Date,
     },
-    lang:{
-        type:Number
+    lat: {
+      type: Number,
+    },
+    lang: {
+      type: Number,
     },
     cart: [
-        {
-            item: { type: mongoose.Schema.ObjectId, ref: 'Foods', require: true},
-            unit: { type: Number, require: true}
-        }
+      {
+        item: { type: mongoose.Schema.ObjectId, ref: "Foods", require: true },
+        unit: { type: Number, require: true },
+      },
     ],
     // orders: [{
     //     type: mongoose.Schema.ObjectId,
     //     ref: 'Order'
     // }],
-    OrderFoods:{
-        type:Boolean,
-        default:false
-    }
-
-},
-{
-    toJSON: { 
-        virtuals: true,
-        // transform(doc,ret){
-        //     delete ret.Password;
-        //     delete ret.ConfirmPassword
-        // }    
+    OrderFoods: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  {
+    toJSON: {
+      virtuals: true,
+      // transform(doc,ret){
+      //     delete ret.Password;
+      //     delete ret.ConfirmPassword
+      // }
     },
     toObject: { virtuals: true },
-    timestamps: true
-});
-    
+    timestamps: true,
+  }
+);
 
-const Customer = mongoose.model('Customer',customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
 
 export default Customer;

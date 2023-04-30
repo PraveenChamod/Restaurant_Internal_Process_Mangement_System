@@ -49,7 +49,8 @@ class _LoginScreenState extends State<SignupScreen> {
                       width: MediaQuery.of(context).size.width/1.25,
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1b1b1d),
+                        //color: const Color(0xFF1b1b1d),
+                        color: Colors.black38,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
@@ -270,6 +271,16 @@ class _LoginScreenState extends State<SignupScreen> {
     );
   }
   void signup() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     final http.Response response = await http.post(
       Uri.parse("http://$hostName:5000/api/v1/customer/AddCustomer"),
       headers: <String, String>{
@@ -283,6 +294,7 @@ class _LoginScreenState extends State<SignupScreen> {
         "ContactNumber": contactController.text
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 200) {
       awesomeDialog(DialogType.success, "You successfully registered to the system. Now you can Login", "Success");//Successfully User registered.
     }else{

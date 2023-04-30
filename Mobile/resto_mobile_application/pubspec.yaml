@@ -39,7 +39,6 @@ dependencies:
   social_login_buttons: ^1.0.7
   fl_country_code_picker: ^0.0.4
   http: ^0.13.5
-  shared_preferences: ^2.0.18
   snippet_coder_utils: ^1.0.13
   api_cache_manager: ^1.0.2
   jwt_decoder: ^2.0.1
@@ -48,12 +47,29 @@ dependencies:
   image_picker: ^0.8.7
   path_provider: ^2.0.13
   path: ^1.8.2
+  flutter_rating_bar: ^4.0.1
+  animated_icon_button: ^1.0.2
+  shared_preferences: ^2.1.0
+  flutter_stripe: ^9.0.0+1
+  flutter_native_splash: ^2.2.19
+  flutter_polyline_points: ^1.0.0
+  google_maps_flutter: ^2.2.5
+  location: ^4.4.0
+  flutter_svg: ^2.0.4
+  permission_handler: ^10.2.0
+  geocoding: ^2.1.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/Mobile_App_Logo.png"
 
 
 # For information on the generic Dart part of this file, see the
@@ -80,6 +96,7 @@ flutter:
     - assets/images/Delivery_service.png
     - assets/images/Dinning_table.png
     - assets/images/Choose_online.png
+    - assets/images/Delivered_Order.png
   #Application Logo
     - assets/logo/Logo.png
   #Food Images
@@ -94,6 +111,23 @@ flutter:
     - assets/Food Types/Noodles/Noodles.jpg
   #Default User
     - assets/images/Default_User.png
+  #Table Images
+    - assets/Tables/One_Person_Table.png
+    - assets/Tables/Two_Person_Table.png
+    - assets/Tables/Three_Person_Table.png
+    - assets/Tables/Four_Person_Table.png
+    - assets/Tables/Five_Person_Table.png
+    - assets/Tables/Six_Person_Table.png
+    - assets/Tables/Seven_Person_Table.png
+    - assets/Tables/Eight_Person_Table.png
+    - assets/Tables/Main_Table.png
+    - assets/Tables/Empty.png
+  #Flower images
+    - assets/Flowers/Mix_Flower_Vase.png
+    - assets/Flowers/Pansy_Flower_Vase.png
+    - assets/Flowers/Rose_Flower_Vase.png
+    - assets/Flowers/Sun_Flower_Vase.png
+    - assets/Flowers/Tulip_Flower_Vase.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

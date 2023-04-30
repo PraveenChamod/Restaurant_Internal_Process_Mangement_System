@@ -52,15 +52,29 @@ class _CustomerCartState extends State<CustomerCart> {
                             mainAxisExtent: 140,
                           ),
                           itemBuilder: (BuildContext context, int index) {
-                            return CartItemContainer(
-                              cartItemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].cartFoodImagePath}',
-                              cartItemName: snapshot.data![index].cartFoodName,
-                              cartItemQty: snapshot.data![index].quantity,
-                              totalPrice: snapshot.data![index].totalPrice,
-                              cartId: snapshot.data![index].cartId,
-                              cartItemId: snapshot.data![index].foodId,
-                              choice: widget.choice,
-                            );
+                            if(snapshot.data![index].foodId != null){
+                              return CartItemContainer(
+                                cartItemImagePath: 'http://$hostName:5000/Foodimages/${snapshot.data![index].cartFoodImagePath}',
+                                cartItemName: snapshot.data![index].cartFoodName,
+                                cartItemQty: snapshot.data![index].quantity,
+                                totalPrice: snapshot.data![index].totalPrice,
+                                cartId: snapshot.data![index].cartId,
+                                cartItemId: snapshot.data![index].foodId,
+                                choice: widget.choice,
+                                cartItemType: 'food',
+                              );
+                            }else{
+                              return CartItemContainer(
+                                cartItemImagePath: 'http://$hostName:5000/offerimages/${snapshot.data![index].cartFoodImagePath}',
+                                cartItemName: snapshot.data![index].cartFoodName,
+                                cartItemQty: snapshot.data![index].quantity,
+                                totalPrice: snapshot.data![index].totalPrice,
+                                cartId: snapshot.data![index].cartId,
+                                cartItemId: snapshot.data![index].offerId,
+                                choice: widget.choice,
+                                cartItemType: 'offer',
+                              );
+                            }
                           },
                         );
                       }else if (snapshot.hasError) {
@@ -129,8 +143,8 @@ class _CustomerCartState extends State<CustomerCart> {
                               return Text('${snapshot.error}');
                             }
                             return const SizedBox(
-                              height: 40,
-                              width: 40,
+                              height: 1,
+                              width: 1,
                               child: Center(
                                 child: CircularProgressIndicator(
                                   color: Colors.transparent,
@@ -267,7 +281,8 @@ class CartItems{
   final String cartFoodImagePath;
   final String cartFoodName;
   final String cartId;
-  final String foodId;
+  final String? foodId;
+  final String? offerId;
   final int quantity;
   final int totalPrice;
   CartItems({
@@ -277,6 +292,7 @@ class CartItems{
     required this.quantity,
     required this.cartId,
     required this.foodId,
+    required this.offerId,
   });
   factory CartItems.fromJson(Map<String, dynamic> json){
     return CartItems(
@@ -286,6 +302,7 @@ class CartItems{
       quantity: json['quantity'],
       cartId: json['cartId'],
       foodId: json['Foodid'],
+      offerId: json['Offerid'],
     );
   }
   static List<CartItems> fromJsonList(dynamic jsonList){

@@ -174,9 +174,6 @@ class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
       ),
     );
   }
-  //Function for get logged user Details
-  // Method : GET
-  // End Point : "api/v1/Auth/Profile";
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");

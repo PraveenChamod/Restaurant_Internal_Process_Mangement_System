@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import 'orders_screen.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
@@ -24,7 +23,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const OrdersScreen();
+                    return OrdersScreen();
                   },
                 ),
               );
