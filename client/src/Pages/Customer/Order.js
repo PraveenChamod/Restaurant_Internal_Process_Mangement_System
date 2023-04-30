@@ -4,15 +4,21 @@ import Spinner from "../../components/shared/Spinner/Spinner";
 import useFetch from "../../Hooks/useFetch";
 
 const Order = (props) => {
-    const {data:food,isPending:isPending1} = useFetch('api/v1/Foods') ;
-    const {data:offer,isPending:isPending2} = useFetch('api/v1/Offers');
-    console.log(food?.data?.foods);
-    return ( 
-        <div>
-            {isPending1 && isPending2 && <Spinner/>}
-            {food && offer && <Ordering data1={food?.data?.foods} data2={offer} BackRoutes = {props.BackRoutes}/>}
-        </div>
-     );
-}
- 
+  const { data: food, isPending: isPending1 } = useFetch("api/v1/Foods");
+  const { data: offer, isPending: isPending2 } = useFetch("api/v1/Offers");
+  console.log(food?.data?.foods);
+  return (
+    <div>
+      {isPending1 && isPending2 && <Spinner />}
+      {food && offer && (
+        <Ordering
+          data1={food?.data?.foods}
+          data2={offer}
+          BackRoutes={props.BackRoutes}
+        />
+      )}
+    </div>
+  );
+};
+
 export default Order;

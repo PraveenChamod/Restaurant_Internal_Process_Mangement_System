@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Div = styled.div`
   width: 50%;
   /* height: 50%; */
-  background-color: #1a1e21;  
+  background-color: #1a1e21;
   border-radius: 25px;
   display: flex;
   justify-content: center;
@@ -13,7 +13,7 @@ export const Div = styled.div`
   padding: 2% 0;
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
-    width: 90%; 
+    width: 90%;
     height: 350px;
   }
 `;
@@ -143,7 +143,7 @@ export const Div9 = styled.div`
 export const SubHeader = styled.h3`
   justify-content: center;
   padding-bottom: 10px;
-  text-transform:uppercase;
+  text-transform: uppercase;
   align-items: center;
   text-align: center;
   background: linear-gradient(
@@ -158,23 +158,22 @@ export const SubHeader = styled.h3`
   margin-bottom: 0px;
 `;
 export const FormButton = styled.button`
-    position: relative;
-    background: linear-gradient(to right, #FFBF00, #B26C29);
-    border-radius: 20px;
-    border: none;
-    font-size: 16px;
-    color: #fff;
-    font-style: none;
-    cursor: pointer;
-    width: 200px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    font-weight: 500;
+  position: relative;
+  background: linear-gradient(to right, #ffbf00, #b26c29);
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  font-style: none;
+  cursor: pointer;
+  width: 200px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: 500;
 `;
 export const Hr = styled.hr`
-width:100%;
-
-`
+  width: 100%;
+`;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Chef from '../../../Images/Chef.png';
+import Chef from "../../../Images/Chef.png";
 
 export const Div = styled.form`
   width: 50%;

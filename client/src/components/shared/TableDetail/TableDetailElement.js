@@ -51,11 +51,11 @@ export const Div2 = styled.div`
 `;
 
 export const Sec = styled.div`
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const Div3 = styled.div`
   margin-top: 15px;
   width: 50%;
@@ -76,9 +76,9 @@ export const Searchbar = styled.input`
 `;
 
 export const TextFeild = styled.input`
-    margin: 2%;
-    width: 100%;
-    height: 30px;
-    border-radius: 30px;
-    padding: 1% 5%;
-`
+  margin: 2%;
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  padding: 1% 5%;
+`;

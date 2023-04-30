@@ -1,8 +1,5 @@
 const DeliveryTracking = () => {
-    return ( 
-        <>
-        </>
-     );
-}
- 
+  return <></>;
+};
+
 export default DeliveryTracking;

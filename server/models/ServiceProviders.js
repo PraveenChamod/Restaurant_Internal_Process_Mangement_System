@@ -1,65 +1,71 @@
 import mongoose from "mongoose";
 import validator from "validator";
 
-const serviceProvidersSchema = mongoose.Schema({
-    Order:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Order',
+const serviceProvidersSchema = mongoose.Schema(
+  {
+    Order: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Order",
     },
-    Name:{
-        type:String,
+    Name: {
+      type: String,
     },
-    Password:{
-        type:String,
-        required:[true,"User must have to enter the password"],
-        minlength: 8,
-        unique:true,
+    Password: {
+      type: String,
+      required: [true, "User must have to enter the password"],
+      minlength: 8,
+      unique: true,
     },
-    ContactNumber:{
-        type:String,
-        maxlength:10,
+    ContactNumber: {
+      type: String,
+      maxlength: 10,
     },
-    ConfirmPassword:{
-        type:String,
-        select: false,
-        validate:{
-            validator:function(pwd){
-                return this.Password === pwd
-            },
-            message:"Password doesn't match"
-        }
-    },
-    Email:{
-        type:String,
-        required:[true,"User must have to enter the email"],
-        unique:true,
-        validate:{
-            validator:function(val){
-                return validator.isEmail(val)
-            },
-            message:"Please enter the valid email"
+    ConfirmPassword: {
+      type: String,
+      select: false,
+      validate: {
+        validator: function (pwd) {
+          return this.Password === pwd;
         },
-        immutable:true
+        message: "Password doesn't match",
+      },
     },
-    Role:{
-        type:String,
-        required:true,
-        enum:{
-            values:['Manager','Staff-Member','Deliverer','Supplier','Admin'],
-            message:"User role must be one of : ['Manager','Staff-Member','Deliverer','Supplier','Admin']"
+    Email: {
+      type: String,
+      required: [true, "User must have to enter the email"],
+      unique: true,
+      validate: {
+        validator: function (val) {
+          return validator.isEmail(val);
         },
-        immutable:true
+        message: "Please enter the valid email",
+      },
+      immutable: true,
     },
-    ProfileImage:{
-        type:String,
+    Role: {
+      type: String,
+      required: true,
+      enum: {
+        values: ["Manager", "Staff-Member", "Deliverer", "Supplier", "Admin"],
+        message:
+          "User role must be one of : ['Manager','Staff-Member','Deliverer','Supplier','Admin']",
+      },
+      immutable: true,
     },
-    
-    },{
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true },
-        timestamps: true
-    });
+    ProfileImage: {
+      type: String,
+    },
+  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+    timestamps: true,
+  }
+);
 
-    const ServiceProviders = mongoose.model('ServiceProvider', serviceProvidersSchema);
+const ServiceProviders = mongoose.model(
+  "ServiceProvider",
+  serviceProvidersSchema
+);
 
- export default ServiceProviders;
+export default ServiceProviders;

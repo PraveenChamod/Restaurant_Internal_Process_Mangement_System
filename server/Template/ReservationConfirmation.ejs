@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <title>Invoice</title>
     <style>
-      body{
+      body {
         padding: 5%;
-        color:#1A1E21
+        color: #1a1e21;
       }
-      header,h1{
+      header,
+      h1 {
         display: block;
         text-align: center;
       }
-      .Container{
+      .Container {
         margin: 3%;
-        background-color: #FDBE102d;
+        background-color: #fdbe102d;
         padding: 3%;
       }
-      .Deliverer,.Customer{
+      .Deliverer,
+      .Customer {
         margin-bottom: 2%;
       }
-      .items{
+      .items {
         width: 100%;
         text-align: center;
-        border: 2px solid #1A1E21;
+        border: 2px solid #1a1e21;
       }
-      .items th{
-        border-bottom: 2px solid #1A1E21;
+      .items th {
+        border-bottom: 2px solid #1a1e21;
       }
-      .items td{
+      .items td {
         padding: 5px;
       }
     </style>
@@ -36,12 +38,12 @@
   <body>
     <div class="Container">
       <header>
-        <img src="cid:logo" class="logo"/>
+        <img src="cid:logo" class="logo" />
       </header>
       <main>
         <h1>Reservation Confirmation</h1>
         <h2>Reservation Id: <%= id %></h2>
-  
+
         <h3>Bill To:</h3>
         <table class="Customer">
           <tr>
@@ -71,12 +73,12 @@
           </thead>
           <tbody>
             <% reservedTables.forEach((item)=>{ %>
-              <tr>
-                <td><%= item.FoodName %></td>
-                <td><%= item.Category %></td>
-                <td><%= item.quantity%></td>
-                <td>Rs. <%= item.price %></td>
-              </tr>
+            <tr>
+              <td><%= item.FoodName %></td>
+              <td><%= item.Category %></td>
+              <td><%= item.quantity%></td>
+              <td>Rs. <%= item.price %></td>
+            </tr>
             <% }); %>
           </tbody>
         </table>
@@ -87,7 +89,7 @@
           </tr>
         </tfoot>
       </main>
-  
+
       <div>
         <h3>Thank you!</h3>
       </div>

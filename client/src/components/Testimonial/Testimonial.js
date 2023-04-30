@@ -80,17 +80,17 @@ const Testimonials = (props) => {
     text-align: center;
   `;
 
-const SubSec = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
-border-radius: 20px;
-margin-top: 5%;
-@media screen and (max-width: 800px){
-    height: 250px;
-}
-`
+  const SubSec = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-top: 5%;
+    @media screen and (max-width: 800px) {
+      height: 250px;
+    }
+  `;
   const P = styled.p`
     font-size: 1.1em;
     color: white;
@@ -99,20 +99,17 @@ margin-top: 5%;
       font-size: 12px;
     }
   `;
-  const [slideIndex,setSlideIndex] = useState(0);
-
-  const[num,setNum] = useState();
+  const [slideIndex, setSlideIndex] = useState(0);
 
   const settings = {
-    className:"center",
+    className: "center",
     infinite: true,
     autoplay: true,
     speed: 500,
     slidesToShow: 1,
-    centerMode:true,
-    beforeChange : (current,next) => setSlideIndex(next)
+    centerMode: true,
+    arrows: false,
   };
-
 
   return (
     <Container>
@@ -122,36 +119,34 @@ margin-top: 5%;
           What They Are Saying
         </H2>
       </Sec>
-      <Sec2  data-aos={"zoom-out-up"}>
-      <Slider {...settings}>
-        {
-            props.data.map((review,index)=>{
-              return(
-                <SubSec key={index}>
-                    <img
-                    alt="person"
-                    className="image1"
-                    src={`http://localhost:5000/blogimages/${review.Customer.ProfileImage}`}
-                    data-aos="zoom-in-down"
-                    data-aos-duration="1500"
-                  />
-                   <P data-aos={"zoom-in"} data-aos-duration={"2000"}>
-                    {review.Review}
-                   </P>
-                  <Div2>
+      <Sec2 data-aos={"zoom-out-up"}>
+        <Slider {...settings}>
+          {props.data.map((review, index) => {
+            return (
+              <SubSec key={index}>
+                <img
+                  alt="person"
+                  className="image1"
+                  src={`http://localhost:5000/blogimages/${review.Customer.ProfileImage}`}
+                  data-aos="zoom-in-down"
+                  data-aos-duration="1500"
+                />
+                <P data-aos={"zoom-in"} data-aos-duration={"2000"}>
+                  {review.Review}
+                </P>
+                <Div2>
                   <Rating
                     name="read-only"
                     value={review.Rate}
                     readOnly
                     size="large"
                   />
-                  </Div2>
-                  <P data-aos="fade-right">{review.Customer.Name}</P>                
-                </SubSec>
-              )
-            })
-        }
-        </Slider>  
+                </Div2>
+                <P data-aos="fade-right">{review.Customer.Name}</P>
+              </SubSec>
+            );
+          })}
+        </Slider>
       </Sec2>
     </Container>
   );
