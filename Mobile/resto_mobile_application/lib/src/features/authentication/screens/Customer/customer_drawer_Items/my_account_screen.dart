@@ -33,7 +33,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     try{
       final image = await ImagePicker().pickImage(source: source);
       if(image == null ) return;
-      //final imageTemporary = File(image.path);
       final imagePermanent = await saveFilePermanently(image.path);
 
       setState(() {
@@ -88,7 +87,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                         final String userContact = snapshot.data!['user']['ContactNumber'];
                         final String userAddress = snapshot.data!['user']['Address'];
                         final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
-                        //const String imageUrl = 'http://$hostName:5000/images/1678795960196_praveen.png';
 
                         nameController = TextEditingController(text: userName);
                         emailController = TextEditingController(text: userEmail);
