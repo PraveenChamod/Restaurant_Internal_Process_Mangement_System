@@ -150,7 +150,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             leading: const Icon(
               Icons.help,
             ),
-            title: const Text('Help Center'),
+            title: const Text('Help & FAQs'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

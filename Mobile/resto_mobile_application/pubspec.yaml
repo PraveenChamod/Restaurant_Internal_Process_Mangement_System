@@ -97,6 +97,9 @@ flutter:
     - assets/images/Dinning_table.png
     - assets/images/Choose_online.png
     - assets/images/Delivered_Order.png
+  #Developers Images
+    - assets/images/Praveen_Chamod.png
+    - assets/images/Kasuni_Nihara.png
   #Application Logo
     - assets/logo/Logo.png
   #Food Images
