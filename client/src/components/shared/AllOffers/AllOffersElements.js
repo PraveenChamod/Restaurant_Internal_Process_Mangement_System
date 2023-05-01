@@ -21,10 +21,9 @@ export const ButtonSection = styled.div`
     position: relative;
     left: -25%;
     top: 2%;
-
+    margin-top: 3%;
 `
 export const Table = styled.table`
-    border: 2px solid #fff;
     color: #fff;
     margin: 3%;
     border-radius: 10px;
@@ -35,7 +34,7 @@ export const Table = styled.table`
 `
 export const Tr = styled.tr`
     border: 2px solid #fff;
-    text-align: center;
+    text-align: left;
 
     @media screen and (max-width: 769px) {
         font-size:90%;
@@ -74,6 +73,9 @@ export const Td = styled.td`
    
 `
 export const Icon  =styled.div`
+    &{
+        color: #FFBF00;
+    }
     &:hover{
         cursor: pointer;
     }

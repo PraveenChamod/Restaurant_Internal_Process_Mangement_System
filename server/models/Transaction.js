@@ -1,24 +1,26 @@
 import mongoose from "mongoose";
-const TransactionSchema = mongoose.Schema({
+const TransactionSchema = mongoose.Schema(
+  {
     createdAt: {
-        type: Date,
-        default: Date.now()
+      type: Date,
+      default: Date.now(),
     },
     paid: {
-        type: Boolean,
-        default: true
+      type: Boolean,
+      default: true,
     },
-    Order:{
-        type:mongoose.Schema.ObjectId,
-        ref:'Order',
-    }
-},
-{
+    Order: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Order",
+    },
+  },
+  {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-    timestamps: true
-})
+    timestamps: true,
+  }
+);
 
-const Transaction = mongoose.model('Transaction',TransactionSchema)
+const Transaction = mongoose.model("Transaction", TransactionSchema);
 
 export default Transaction;

@@ -23,7 +23,7 @@ export const Div1 = styled.div`
   align-items: flex-end;
 `;
 export const Div2 = styled.div`
-    justify-content: right;
+  justify-content: right;
   align-items: flex-end;
 `;
 export const Div3 = styled.div`

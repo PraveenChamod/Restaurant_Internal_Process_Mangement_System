@@ -2,7 +2,7 @@ import styled from "styled-components";
 export const Div = styled.div`
   display: flex;
   justify-content: center;
-  background-color: #1A1E21;
+  background-color: #1a1e21;
   border-radius: 20px;
   padding: 2%;
   width: 40%;
@@ -25,9 +25,4 @@ export const Div2 = styled.div`
   width: 100%;
 `;
 
-export const Div3 = styled.div`
-  
-`;
-
-
-
+export const Div3 = styled.div``;

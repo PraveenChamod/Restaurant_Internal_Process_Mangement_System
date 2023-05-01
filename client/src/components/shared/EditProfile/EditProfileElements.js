@@ -1,18 +1,18 @@
 import styled from "styled-components";
 export const Section = styled.div`
   width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  @media screen and (max-width: 800px){
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 800px) {
     margin-top: 15%;
   }
-`
+`;
 export const Div = styled.div`
   width: 50%;
   height: 60%;
-  background-color: #1a1e21;  
+  background-color: #1a1e21;
   border-radius: 25px;
   display: flex;
   justify-content: center;
@@ -60,8 +60,8 @@ export const Div3 = styled.div`
   height: 8%;
   display: flex;
   flex-direction: column;
-  @media screen and (max-width: 800px){
-    width: 95%
+  @media screen and (max-width: 800px) {
+    width: 95%;
   }
 `;
 export const Div4 = styled.div`
@@ -80,10 +80,10 @@ export const ImageSection = styled.div`
   margin: 5%;
   flex-direction: column;
   align-items: flex-end;
-`
+`;
 export const UpdateButton = styled.button`
   position: relative;
-  background: linear-gradient(to right, #FFBF00, #B26C29);
+  background: linear-gradient(to right, #ffbf00, #b26c29);
   border-radius: 20px;
   border: none;
   font-size: 16px;
@@ -110,29 +110,29 @@ export const ImageSubSec = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
 export const Icon = styled.label`
-  &{
+  & {
     width: fit-content;
-  height: fit-content;
-  border-radius: 50px;
-  background-color:#FFBF00;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  padding: 5%;
-  position: relative;
-  top:-25%;
-  left: -15%;
-  color: #fff;
+    height: fit-content;
+    border-radius: 50px;
+    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    padding: 5%;
+    position: relative;
+    top: -25%;
+    left: -15%;
+    color: #fff;
   }
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
-`
+`;
 
 export const Image = styled.img`
   width: 160px;
   height: 160px;
-`
+`;

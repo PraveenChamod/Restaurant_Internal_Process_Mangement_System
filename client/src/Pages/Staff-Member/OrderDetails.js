@@ -4,16 +4,20 @@ import OrderDetailsComponent from "../../components/Staff-Member_Components/Orde
 import useFetch from "../../Hooks/useFetch";
 
 const StaffMemberOrderDetails = (props) => {
-    const {id} = useParams(); 
-    const{data,isPending} = useFetch(`/api/v1/Order/${id}`);
-    console.log(data?.data?.pendingOrders[0]);
-    return ( 
-        <>
-        {isPending && <Spinner/>}
-        {data &&  <OrderDetailsComponent data={data?.data?.pendingOrders[0]} BackRoutes = {props.BackRoutes}/>}
-        </>
-
-    );
-}
+  const { id } = useParams();
+  const { data, isPending } = useFetch(`/api/v1/Order/${id}`);
+  console.log(data?.data?.pendingOrders[0]);
+  return (
+    <>
+      {isPending && <Spinner />}
+      {data && (
+        <OrderDetailsComponent
+          data={data?.data?.pendingOrders[0]}
+          BackRoutes={props.BackRoutes}
+        />
+      )}
+    </>
+  );
+};
 
 export default StaffMemberOrderDetails;

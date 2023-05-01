@@ -1,15 +1,14 @@
 import styled from "styled-components";
-import Img1 from "../../../Images/restoLogodark.png"
+import Img1 from "../../../Images/restoLogodark.png";
 
 export const UserProfileContainer = styled.div`
-display: flex;
-justify-content: center;
-height: 100vh;
-align-items: center;
-flex-direction: column;
-background-size: 10rem;
-
-`
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background-size: 10rem;
+`;
 export const Div = styled.div`
   width: 50%;
   height: 60%;
@@ -25,22 +24,22 @@ export const Div = styled.div`
     height: 350px;
     padding: 3% 0;
   }
-`
+`;
 export const Img = styled.img`
-    width: 200px;
-    height: 200px;
-    margin-top:10px;
-    border-top-right-radius: 50%;
-    border-top-left-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin-top: 10px;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  @media screen and (max-width: 200px) {
     border-bottom-right-radius: 50%;
+    border-top-left-radius: 50%;
     border-bottom-left-radius: 50%;
-    @media screen and (max-width:200px){
-      border-bottom-right-radius: 50%;
-      border-top-left-radius: 50%;
-      border-bottom-left-radius: 50%;
-      border-top-right-radius: 50%;
-    }
-`
+    border-top-right-radius: 50%;
+  }
+`;
 export const Header = styled.h1`
   justify-content: center;
   align-items: center;
@@ -56,13 +55,20 @@ export const Header = styled.h1`
   background-clip: text;
   letter-spacing: 1rem;
   margin-bottom: 5px;
-`
+`;
 export const P = styled.p`
   color: #fff;
   font-size: 20px;
-  margin-top :-10px;
-  @media screen and (max-width:769px){
+  margin-top: -10px;
+  @media screen and (max-width: 769px) {
     font-size: 100%;
     margin: 3% 0;
-  } 
-`
+  }
+`;
+export const ButtonSection = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-top: 2%;
+`;

@@ -1,117 +1,118 @@
-.container{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 100vh;
-    z-index: 1;
-    background-image: url('../../Images/Background_Cover.png');
-    background-repeat: no-repeat;
-    background-position: right center;
-    background-size: auto 100%;
-    justify-content:center;
-    align-items: center;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  background-image: url("../../Images/Background_Cover.png");
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: auto 100%;
+  justify-content: center;
+  align-items: center;
 }
 
-.foodImage{
-    width: 35%;
-    position: relative;
-    top: 8%;
-    left: -5%;
-    margin: 0 2% ;
-    /* background-color: blue; */
+.foodImage {
+  width: 35%;
+  position: relative;
+  top: 8%;
+  left: -5%;
+  margin: 0 2%;
+  /* background-color: blue; */
 }
 
-.descriptionBox{
-    width: 55%;
-    position: relative;
-    left: 3%;
-    /* background-color: red; */
+.descriptionBox {
+  width: 55%;
+  position: relative;
+  left: 3%;
+  /* background-color: red; */
 }
 
-.imgBurger{
-    width: 45rem;
-    height: 45rem;
+.imgBurger {
+  width: 45rem;
+  height: 45rem;
 }
 
-.title{
-    font-size: 60px;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: 0.2rem;
+.title {
+  font-size: 60px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.2rem;
 }
 
-.description{
-    font-size: 18px;
-    width: 90%;
-    color: #fff;
-}
-
-.loginBtn{
-    position: relative;
-    background: linear-gradient(to right, #FFBF00, #B26C29);
-    border-radius: 20px;
-    border: none;
-    font-size: large;
-    color: #fff;
-    font-style: none;
-    cursor: pointer;
-    width: 150px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.loginBtn a {
-    text-decoration: none;
+.description {
+  font-size: 18px;
+  width: 90%;
   color: #fff;
 }
 
-@media screen and (max-width: 800px){
-    .container{
-        background-position: right;
-        width: 100%;
-        margin: 0;
-        background-size: 70% 100%;
-        overflow-x: hidden;
-    }
+.loginBtn {
+  position: relative;
+  background: linear-gradient(to right, #ffbf00, #b26c29);
+  border-radius: 20px;
+  border: none;
+  font-size: large;
+  color: #fff;
+  font-style: none;
+  cursor: pointer;
+  width: 150px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginBtn a {
+  text-decoration: none;
+  color: #fff;
+}
 
-    .foodImage, .descriptionBox{
-        width: 100%;
-    }
+@media screen and (max-width: 800px) {
+  .container {
+    background-position: right;
+    width: 100%;
+    margin: 0;
+    background-size: 70% 100%;
+    overflow-x: hidden;
+  }
 
-    .foodImage{
-        width: 350px;
-        height: 350px;
-        margin: 0;
-        padding: 0;
-    }
+  .foodImage,
+  .descriptionBox {
+    width: 100%;
+  }
 
-    .descriptionBox{
-        height: auto;
-        padding: 10px 0;
-        width: 100%;
-    }
+  .foodImage {
+    width: 350px;
+    height: 350px;
+    margin: 0;
+    padding: 0;
+  }
 
-    .imgBurger{
-        margin: 0;
-        width: 350px;
-        height: 350px;
-        padding: 0;
-    }
+  .descriptionBox {
+    height: auto;
+    padding: 10px 0;
+    width: 100%;
+  }
 
-    .title{
-        font-size: 24px;
-        padding: 0;
-        margin: 0;
-    }
+  .imgBurger {
+    margin: 0;
+    width: 350px;
+    height: 350px;
+    padding: 0;
+  }
 
-    .description{
-        font-size: 12px;
-        padding: 0;
-    }
-    .loginBtn{
-        width: 100px;
-        height: 30px;
-        font-size: 12px;
-    }
+  .title {
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .description {
+    font-size: 12px;
+    padding: 0;
+  }
+  .loginBtn {
+    width: 100px;
+    height: 30px;
+    font-size: 12px;
+  }
 }

@@ -50,11 +50,11 @@ export const Div2 = styled.div`
 `;
 
 export const Sec = styled.div`
-    width: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 export const Div3 = styled.div`
   margin-top: 15px;
   width: 50%;
@@ -75,42 +75,40 @@ export const Searchbar = styled.input`
 `;
 
 export const TextFeild = styled.input`
-    margin: 2%;
-    width: 100%;
-    height: 30px;
-    border-radius: 30px;
-    padding: 1% 5%;
-`
+  margin: 2%;
+  width: 100%;
+  height: 30px;
+  border-radius: 30px;
+  padding: 1% 5%;
+`;
 export const Text = styled.div`
-    color: #fff;
-    display: flex;
-    justify-content: left;
-    text-align: left;
-    width: 100%;
-    font-size: 18px;
-    font-weight: 600;
-`
+  color: #fff;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+`;
 export const TextSection = styled.div`
   display: flex;
   flex-direction: column;
   width: 500px;
   justify-content: center;
   align-items: center;
-`
+`;
 export const RadioButtonSection = styled.div`
   display: flex;
   justify-content: center;
   width: 500px;
   align-items: center;
-`
+`;
 export const Label = styled.div`
-    width: 100%;;
-    text-align: left;
-    margin: 3% 0;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 600;
-`
-export const Radio = styled.input`
-
-`
+  width: 100%;
+  text-align: left;
+  margin: 3% 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+`;
+export const Radio = styled.input``;

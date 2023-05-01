@@ -3,14 +3,13 @@ import AddSupplierOrder from "../../components/Manager_Components/AddOrder/AddSu
 import Spinner from "../../components/shared/Spinner/Spinner";
 
 const SupplierOrder = (props) => {
-    const {data,isPending}= useFetch('api/v1/SupplierItemsDetails');
-    return ( 
-        <>
-            {isPending && <Spinner/>}
-            {data && <AddSupplierOrder data3={data} BackRoutes={props.BackRoutes}/>}
-        </>
-     );
-}
- 
-export default SupplierOrder;
+  const { data, isPending } = useFetch("api/v1/SupplierItemsDetails");
+  return (
+    <>
+      {isPending && <Spinner />}
+      {data && <AddSupplierOrder data3={data} BackRoutes={props.BackRoutes} />}
+    </>
+  );
+};
 
+export default SupplierOrder;
