@@ -96,9 +96,9 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                 borderRadius: BorderRadius.circular(70.0),
                                 child: Image.file(_image!, width: 140, height: 140, fit: BoxFit.cover,))
                                 : CircleAvatar(
-                              radius: 70,
-                              backgroundImage: NetworkImage(imageUrl),
-                            ),
+                                    radius: 70,
+                                    backgroundImage: NetworkImage(imageUrl),
+                                  ),
                             const SizedBox(height: 10.0,),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -398,17 +398,10 @@ class _DelivererAccountState extends State<DelivererAccount> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
-    var request = http.MultipartRequest(
-      'PATCH',
-      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    var request = http.MultipartRequest('PATCH', Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
     );
-    request.headers.addAll({
-      "Authorization": "Bearer $userToken",
-    });
-    request.files.add(await http.MultipartFile.fromPath(
-      'image',
-      imageFile.path,
-    ));
+    request.headers.addAll({"Authorization": "Bearer $userToken",});
+    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,));
     var response = await request.send();
     Navigator.pop(context);
     if(response.statusCode == 201) {
@@ -419,7 +412,6 @@ class _DelivererAccountState extends State<DelivererAccount> {
     } else {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
-      print(msg);
     }
   }
 }
