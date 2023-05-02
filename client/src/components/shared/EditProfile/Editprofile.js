@@ -34,7 +34,7 @@ const EditProfileComponent = (props) => {
     try {
       const Data = { Name, Email, ContactNumber };
       await toast.promise(
-        axios.patch(`api/v1/User/Profile/${user?.Email}`, Data),
+        props.axiosInstance.patch(`api/v1/User/Profile/${user?.Email}`, Data),
         {
           loading: `Updating Profile....`,
           success: (data) => {
@@ -64,7 +64,7 @@ const EditProfileComponent = (props) => {
       const formdata = new FormData();
       formdata.append("image", Imagename);
       await toast.promise(
-        axios.patch("api/v1/Auth/ProfilePicture", formdata),
+        props.axiosInstance.patch("api/v1/Auth/ProfilePicture", formdata),
         {
           loading: `Updating Profile....`,
           success: (data) => {

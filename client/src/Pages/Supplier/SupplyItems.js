@@ -3,7 +3,10 @@ import SupplierItemsComponent from "../../components/Supplier/AddSupplierItems/S
 const SupplierItems = (props) => {
   return (
     <>
-      <SupplierItemsComponent BackRoutes={props.BackRoutes} />
+      <SupplierItemsComponent
+        BackRoutes={props.BackRoutes}
+        axiosInstance={props.axiosInstance}
+      />
     </>
   );
 };

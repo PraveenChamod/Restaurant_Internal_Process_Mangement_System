@@ -15,6 +15,7 @@ const Order = (props) => {
           data1={food?.data?.foods}
           data2={offer}
           BackRoutes={props.BackRoutes}
+          axiosInstance={props.axiosInstance}
         />
       )}
     </div>

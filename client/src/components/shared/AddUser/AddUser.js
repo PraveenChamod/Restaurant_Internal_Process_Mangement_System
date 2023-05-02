@@ -7,7 +7,6 @@ import "./AddUser.css";
 import { Div, Div1, Div3 } from "./AddUserElements";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
-import axios from "axios";
 import { toast } from "react-hot-toast";
 import useAuth from "../../../Hooks/useAuth";
 
@@ -22,7 +21,7 @@ const AddUserComponent = (props) => {
       e.preventDefault();
       const formData = { Email, Role };
       await toast.promise(
-        axios.post("api/v1/User/ServiceProviderRegister", formData),
+        props.axiosInstance.post("api/v1/User/ServiceProviderRegister", formData),
         {
           loading: "Adding User.....",
           success: (data) => {
@@ -74,7 +73,7 @@ const AddUserComponent = (props) => {
               onChange={(e) => setRole(e.target.value)}
             >
               <MenuItem value={"Deliverer"}>Deliverer</MenuItem>
-              <MenuItem value={"Manager"}>Manager</MenuItem>
+              {user.Role == "Manager" ? <MenuItem value={"Manager"}>Manager</MenuItem> : null}
               <MenuItem value={"Supplier"}>Supplier</MenuItem>
               <MenuItem value={"Staff-Member"}>Staff-Member</MenuItem>
             </Select>

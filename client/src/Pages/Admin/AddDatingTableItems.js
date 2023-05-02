@@ -3,7 +3,10 @@ import AddDatingTableItemsComponent from "../../components/shared/AddDatingTable
 const AdminAddDatingTableItems = (props) => {
   return (
     <>
-      <AddDatingTableItemsComponent BackRoutes={props.BackRoutes} />
+      <AddDatingTableItemsComponent
+        BackRoutes={props.BackRoutes}
+        axiosInstance={props.axiosInstance}
+      />
     </>
   );
 };

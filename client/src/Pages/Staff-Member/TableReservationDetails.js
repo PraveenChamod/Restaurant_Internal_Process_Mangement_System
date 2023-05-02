@@ -14,6 +14,7 @@ const StaffMemberTableReservationDetails = (props) => {
         <TableReservationComponent
           data={data?.data?.ReservationDetails}
           BackRoutes={props.BackRoutes}
+          axiosInstance={props.axiosInstance}
         />
       )}
     </>

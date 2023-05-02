@@ -30,7 +30,7 @@ const Ordering = (props) => {
   const AddToCart = async (foodId) => {
     try {
       await toast.promise(
-        axios.post("api/v1/CartItem", { foodId: foodId }),
+        props.axiosInstance.post("api/v1/CartItem", { foodId: foodId }),
         {
           loading: ` Adding to the cart`,
           success: (data) => {
@@ -58,7 +58,7 @@ const Ordering = (props) => {
     try {
       console.log(offerId);
       await toast.promise(
-        axios.post("api/v1/CartItem", { offerId: offerId }),
+        props.axiosInstance.post("api/v1/CartItem", { offerId: offerId }),
         {
           loading: `Adding to the cart`,
           success: (data) => {

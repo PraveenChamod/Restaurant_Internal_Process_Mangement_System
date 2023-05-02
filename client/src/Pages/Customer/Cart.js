@@ -7,7 +7,7 @@ const Cart = (props) => {
   return (
     <>
       {isPending && <Spinner />}
-      {data && <CartComponent data={data} cartData1={props.cartData} />}
+      {data && <CartComponent data={data} cartData1={props.cartData} axiosInstance={props.axiosInstance} />}
     </>
   );
 };

@@ -13,6 +13,7 @@ const CustomerUserProfile = (props) => {
           user={user}
           isPending={isPending}
           BackRoutes={props.BackRoutes}
+          axiosInstance={props.axiosInstance}
         />
       )}
     </>

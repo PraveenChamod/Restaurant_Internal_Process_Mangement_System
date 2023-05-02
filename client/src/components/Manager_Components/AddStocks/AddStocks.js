@@ -27,7 +27,7 @@ const AddStocks = (props) => {
         WholeSalePrice,
       };
       console.log(formData);
-      const res = await axios.post("api/v1/Item", formData);
+      const res = await props.axiosInstance.post("api/v1/Item", formData);
       console.log(res);
     } catch (error) {
       console.log(error.message);

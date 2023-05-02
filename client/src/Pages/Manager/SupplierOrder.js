@@ -7,7 +7,7 @@ const SupplierOrder = (props) => {
   return (
     <>
       {isPending && <Spinner />}
-      {data && <AddSupplierOrder data3={data} BackRoutes={props.BackRoutes} />}
+      {data && <AddSupplierOrder data3={data} BackRoutes={props.BackRoutes} axiosInstance={props.axiosInstance}/>}
     </>
   );
 };
