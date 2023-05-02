@@ -1,16 +1,57 @@
 import { useState } from "react";
+import React from "react";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from "./FoodDetailElements";
-const FoodDetail = (props) => {
+import { toast } from 'react-hot-toast';
+import axios from "axios";
+import { Link } from "react-router-dom";
+const FoodDetailComponent = (props) => {
+    console.log(props.BackRoutes);
     const[FoodName,setName] = useState(props.food.FoodName);
     const[Category,setCategory] = useState(props.food.Category);
     const[Price,setPrice] = useState(props.food.Price);
     const[Status,setStatus] = useState(props.food.Status);
+    
+    const update = async (e)=>{
+        e.preventDefault();
+        try {
+            const Data = new FormData();
+            Data.append("FoodName",FoodName);
+            Data.append("Category", Category);
+            Data.append("Price", Price);
+            Data.append("Status", Status);
+            console.log(Data);
+            await toast.promise(
+                axios.patch('api/v1/Food/:id',Data),
+                {
+                    loading:'Food is Updating....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999',
+                    },
+                }
+
+            )
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+    
     return ( 
     <Container>
       <Header>Food Details</Header>
-      <l.Div>
+      <l.Div onSubmit={update}>
         <l.Div1>
             <l.TextSection>
                 <l.Text>
@@ -58,24 +99,30 @@ const FoodDetail = (props) => {
         </l.Div1>
         <l.Div2>
             <l.Sec>
-                <FormButton>
-                    Delete
-                </FormButton>
+            <FormButton>
+              <Link className="btn">
+                Delete
+              </Link>
+            </FormButton>
             </l.Sec>
             <l.Sec>
                 <FormButton>
+                    <Link to = "./login" className="btn">
                     Update
+                    </Link>
                 </FormButton>
             </l.Sec>
         </l.Div2>
       </l.Div>
       <l.Div3>
-        <RegularButton>
+      <RegularButton>
+          <Link to= "./FoodDetails" className="btn">
             Back
-        </RegularButton>
+          </Link>
+        </RegularButton>  
       </l.Div3>
     </Container>
      );
 }
- 
-export default FoodDetail;
+
+export default FoodDetailComponent;

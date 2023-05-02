@@ -7,7 +7,7 @@ import { AiFillEye } from 'react-icons/ai';
 import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 const FoodDetails = (props) => {
-    console.log(props.data1);
+   console.log(props.data1);
     const {user} = useAuth();
     return ( 
         <Container>
