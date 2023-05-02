@@ -12,7 +12,6 @@ const TableReservation = (props) => {
         <TableBooking
           data={data?.data?.availableTables}
           BackRoutes={props.BackRoutes}
-          axiosInstance={props.axiosInstance}
         />
       )}
     </>

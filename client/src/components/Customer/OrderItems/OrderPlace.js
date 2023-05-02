@@ -11,7 +11,7 @@ import img from "../../../Images/restoLogodark.png";
 import { toast } from "react-hot-toast";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
-const OrderPlace = ({ data, axiosInstance }) => {
+const OrderPlace = ({ data }) => {
   const { user } = useAuth();
   const Customer = user.id;
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -60,7 +60,7 @@ const OrderPlace = ({ data, axiosInstance }) => {
         Type: "Online Order",
       };
       console.log(formData);
-      const res = await axiosInstance.post("api/v1/OrderItem", formData);
+      const res = await axios.post("api/v1/OrderItem", formData);
       toast.success("Order Placed Successfully");
       setTimeout(() => {
         navigate("/CustomerPlace-Order");
@@ -75,7 +75,7 @@ const OrderPlace = ({ data, axiosInstance }) => {
   useEffect(() => {
     const fetchClientSecret = async () => {
       console.log(TotalPrice);
-      const data = await axiosInstance.post("api/v1/Payment", {
+      const data = await axios.post("api/v1/Payment", {
         amount: TotalPrice,
         receipt_email: user.Email,
       });

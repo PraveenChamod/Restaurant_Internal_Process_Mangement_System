@@ -73,7 +73,7 @@ const TableBooking = (props) => {
     setClick(true);
     setSelectItem(Item[index]);
     const fetchClientSecret = async () => {
-      const data = await props.axiosInstance.post("api/v1/Payment", {
+      const data = await axios.post("api/v1/Payment", {
         amount: PriceRef.current,
         receipt_email: user.Email,
       });

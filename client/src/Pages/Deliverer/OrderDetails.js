@@ -3,7 +3,7 @@ import DeliverComponent from "../../components/Deliver/Deliver";
 import Spinner from "../../components/shared/Spinner/Spinner";
 import useFetch from "../../Hooks/useFetch";
 
-const DeliveryOrderDetails = (props) => {
+const DeliveryOrderDetails = () => {
   const { id } = useParams();
   console.log(id);
   const { data, isPending } = useFetch(`/api/v1/Order/${id}`);
@@ -11,12 +11,7 @@ const DeliveryOrderDetails = (props) => {
   return (
     <>
       {isPending && <Spinner />}
-      {data && (
-        <DeliverComponent
-          data={pendingOrders}
-          axiosInstance={props.axiosInstance}
-        />
-      )}
+      {data && <DeliverComponent data={pendingOrders} />}
     </>
   );
 };

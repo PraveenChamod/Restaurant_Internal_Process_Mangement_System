@@ -36,7 +36,7 @@ const Blog = (props) => {
     try {
       const formData = { Review, Rate };
       await toast.promise(
-        props.axiosInstance.post("api/v1/Blogs", formData),
+        axios.post("api/v1/Blogs", formData),
         {
           loading: `Adding Review`,
           success: (data) => {

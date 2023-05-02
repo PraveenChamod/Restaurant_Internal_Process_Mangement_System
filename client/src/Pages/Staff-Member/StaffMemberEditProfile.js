@@ -5,7 +5,6 @@ const StaffMemberEditProfile = (props) => {
     <EditProfileComponent
       BackRoutes={props.BackRoutes}
       EditProfileBackRoute={props.EditProfileBackRoute}
-      axiosInstance={props.axiosInstance}
     />
   );
 };

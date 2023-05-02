@@ -101,7 +101,6 @@ import AdminViewTableDetails from "./Pages/Admin/AdminViewTable";
 import ChatBot from "./components/ChatBot/ChatBot";
 import Preloader from "./components/Preloader/Preloader";
 import Kommunicate from '@kommunicate/kommunicate-chatbot-plugin';
-import axios from "axios";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -110,11 +109,6 @@ function App() {
   const stripePromise = loadStripe(
     "pk_test_51MbCY3GuiFrtKvgKd8w5qdphJciL87lB1ITs2nFL1FUNQnfIqxPA4hX2A3qrhDd7Gfcsab01gcVNpXlTJs6ArcyF00t5WxYsrg"
   );
-
-const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API,
-})
-
   useEffect(() => {
     Aos.init({
       disable: "mobile",
@@ -159,7 +153,7 @@ const axiosInstance = axios.create({
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 6000);
+    }, 4000);
   }, []);
 
   return (
@@ -189,7 +183,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/FrogotPassword"
-                  element={<FrogotPassword BackRoutes="/login" axiosInstance={axiosInstance}/>}
+                  element={<FrogotPassword BackRoutes="/login" />}
                 />
                 <Route
                   path="/ResetPassword/:Email"
@@ -210,7 +204,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/AdminAdd-User"
-                  element={<AdminAddUser BackRoutes={BackRoutes[0].nav} axiosInstance={axiosInstance} />}
+                  element={<AdminAddUser BackRoutes={BackRoutes[0].nav} />}
                 />
                 <Route
                   path="/AdminView-User"
@@ -229,14 +223,13 @@ const axiosInstance = axios.create({
                   path="/AdminEdit-Profile"
                   element={
                     <AdminEditProfile
-                      EditProfileBackRoute={EditProfileBackRoute[0].nav} 
-                      axiosInstance={axiosInstance}
+                      EditProfileBackRoute={EditProfileBackRoute[0].nav}
                     />
                   }
                 />
                 <Route
                   path="/AdminAdd-Table"
-                  element={<AdminAddTables BackRoutes={BackRoutes[0].nav} axiosInstance={axiosInstance}/>}
+                  element={<AdminAddTables BackRoutes={BackRoutes[0].nav} />}
                 />
                 <Route
                   path="/AdminView-Tables"
@@ -248,7 +241,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/AdminAdd-Foods"
-                  element={<AdminAddFoods BackRoutes={BackRoutes[0].nav} axiosInstance={axiosInstance}/>}
+                  element={<AdminAddFoods BackRoutes={BackRoutes[0].nav} />}
                 />
                 <Route
                   path="/AdminView-Foods"
@@ -258,13 +251,13 @@ const axiosInstance = axios.create({
                 <Route
                   path="/AdminAdd-Categories"
                   element={
-                    <AdminAddCategories BackRoutes={BackRoutes[0].nav} axiosInstance={axiosInstance}/>
+                    <AdminAddCategories BackRoutes={BackRoutes[0].nav} />
                   }
                 />
                 <Route
                   path="/AdminAdd-DatingTableItems"
                   element={
-                    <AdminAddDatingTableItems BackRoutes={BackRoutes[0].nav} axiosInstance={axiosInstance}/>
+                    <AdminAddDatingTableItems BackRoutes={BackRoutes[0].nav} />
                   }
                 />
                 {/* </Route> */}
@@ -283,7 +276,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/ManagerAdd-User"
-                  element={<AddOutletStaff BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>}
+                  element={<AddOutletStaff BackRoutes={BackRoutes[1].nav} />}
                 />
                 <Route
                   path="/ManagerView-User"
@@ -303,7 +296,6 @@ const axiosInstance = axios.create({
                   element={
                     <ManagerEditProfile
                       EditProfileBackRoute={EditProfileBackRoute[1].nav}
-                      axiosInstance={axiosInstance}
                     />
                   }
                 />
@@ -317,7 +309,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/ManagerAddStock"
-                  element={<AddStockItem BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>}
+                  element={<AddStockItem BackRoutes={BackRoutes[1].nav} />}
                 />
                 <Route
                   path="/ManagerViewStock"
@@ -329,7 +321,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/ManagerAdd-Table"
-                  element={<ManagerAddTables BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>}
+                  element={<ManagerAddTables BackRoutes={BackRoutes[1].nav} />}
                 />
                 <Route
                   path="/ManagerView-Tables"
@@ -341,11 +333,11 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/ManagerAdd-Foods"
-                  element={<ManagerAddFoods BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>}
+                  element={<ManagerAddFoods BackRoutes={BackRoutes[1].nav} />}
                 />
                 <Route
                   path="/ManagerAdd-Offers"
-                  element={<AddOffers BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>}
+                  element={<AddOffers BackRoutes={BackRoutes[1].nav} />}
                 />
                 <Route
                   path="/ManagerView-Foods"
@@ -365,7 +357,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/ManagerAdd-supllierorder"
-                  element={<SupplierOrder BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>}
+                  element={<SupplierOrder BackRoutes={BackRoutes[1].nav} />}
                 />
                 <Route
                   path="/ManagerView-supllierorder"
@@ -378,13 +370,13 @@ const axiosInstance = axios.create({
                 <Route
                   path="/ManagerAdd-Categories"
                   element={
-                    <ManagerAddCategories BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>
+                    <ManagerAddCategories BackRoutes={BackRoutes[1].nav} />
                   }
                 />
                 <Route
                   path="/ManagerAdd-DatingTableItems"
                   element={
-                    <ManagerAddDatingItems BackRoutes={BackRoutes[1].nav} axiosInstance={axiosInstance}/>
+                    <ManagerAddDatingItems BackRoutes={BackRoutes[1].nav} />
                   }
                 />
 
@@ -404,7 +396,7 @@ const axiosInstance = axios.create({
                 <Route
                   path="/Staff-MemberAdd-Offers"
                   element={
-                    <StaffMemberAddOffers BackRoutes={BackRoutes[2].nav} axiosInstance={axiosInstance}/>
+                    <StaffMemberAddOffers BackRoutes={BackRoutes[2].nav} />
                   }
                 />
                 <Route
@@ -440,7 +432,7 @@ const axiosInstance = axios.create({
                 <Route
                   path="/Staff-MemberOrder-Details/:id"
                   element={
-                    <StaffMemberOrderDetails BackRoutes="/Staff-MemberPendingOrder-Details" axiosInstance={axiosInstance}/>
+                    <StaffMemberOrderDetails BackRoutes="/Staff-MemberPendingOrder-Details" />
                   }
                 />
                 <Route
@@ -456,7 +448,6 @@ const axiosInstance = axios.create({
                   element={
                     <StaffMemberTableReservationDetails
                       BackRoutes={BackRoutes[2].nav}
-                      axiosInstance={axiosInstance}
                     />
                   }
                 />
@@ -474,14 +465,13 @@ const axiosInstance = axios.create({
                   element={
                     <StaffMemberEditProfile
                       EditProfileBackRoute={EditProfileBackRoute[2].nav}
-                      axiosInstance={axiosInstance}
                     />
                   }
                 />
                 <Route
                   path="/Staff-MemberPlace-Order"
                   element={
-                    <StaffMemberPlaceOrder BackRoutes={BackRoutes[2].nav} axiosInstance={axiosInstance}/>
+                    <StaffMemberPlaceOrder BackRoutes={BackRoutes[2].nav} />
                   }
                 />
 
@@ -494,18 +484,18 @@ const axiosInstance = axios.create({
                 <Route
                   path="/CustomerMy-Profile"
                   element={
-                    <CustomerUserProfile BackRoutes={BackRoutes[3].nav} axiosInstance={axiosInstance}/>
+                    <CustomerUserProfile BackRoutes={BackRoutes[3].nav} />
                   }
                 />
                 <Route
                   path="/CustomerPlace-Order"
-                  element={<Order BackRoutes={BackRoutes[3].nav} axiosInstance={axiosInstance}/>}
+                  element={<Order BackRoutes={BackRoutes[3].nav} />}
                 />
                 <Route path="/CustomerPay" element={<ProductDisplay />} />
                 <Route
                   path="/CustomerMyCart"
                   element={
-                    <Cart cartData={CartData} BackRoutes={BackRoutes[3].nav} axiosInstance={axiosInstance}/>
+                    <Cart cartData={CartData} BackRoutes={BackRoutes[3].nav} />
                   }
                 />
                 {/* <Route path="/CustomerMy-Orders" element={<MyOrders/>}/>    */}
@@ -513,13 +503,13 @@ const axiosInstance = axios.create({
                   path="/CustomerTable-Reservation"
                   element={
                     <Elements stripe={stripePromise}>
-                      <TableReservation BackRoutes={BackRoutes[3].nav} axiosInstance={axiosInstance}/>
+                      <TableReservation BackRoutes={BackRoutes[3].nav} />
                     </Elements>
                   }
                 />
                 <Route
                   path="/CustomerAdd-Review"
-                  element={<AddReview BackRoutes={BackRoutes[3].nav} axiosInstance={axiosInstance}/>}
+                  element={<AddReview BackRoutes={BackRoutes[3].nav} />}
                 />
                 <Route
                   path="/CustomerDelivery-Tracking"
@@ -529,7 +519,7 @@ const axiosInstance = axios.create({
                   path="/CustomerOrdering"
                   element={
                     <Elements stripe={stripePromise}>
-                      <OrderItems axiosInstance={axiosInstance}/>
+                      <OrderItems />
                     </Elements>
                   }
                 />
@@ -569,7 +559,6 @@ const axiosInstance = axios.create({
                   element={
                     <DelivererEditProfile
                       EditProfileBackRoute={EditProfileBackRoute[3].nav}
-                      axiosInstance={axiosInstance}
                     />
                   }
                 />
@@ -579,7 +568,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/DelivererOrderDetails/:id"
-                  element={<DeliveryOrderDetails axiosInstance={axiosInstance}/>}
+                  element={<DeliveryOrderDetails />}
                 />
                 <Route path="/DelivererMap/:id" element={<Map />} />
 
@@ -610,13 +599,12 @@ const axiosInstance = axios.create({
                   element={
                     <SupplierEditProfile
                       EditProfileBackRoute={EditProfileBackRoute[4].nav}
-                      axiosInstance={axiosInstance}
                     />
                   }
                 />
                 <Route
                   path="/AddSupplyItems"
-                  element={<SupplierItems BackRoutes={BackRoutes[5].nav} axiosInstance={axiosInstance}/>}
+                  element={<SupplierItems BackRoutes={BackRoutes[5].nav} />}
                 />
                 <Route
                   path="/ViewSupplyItems"
@@ -629,7 +617,7 @@ const axiosInstance = axios.create({
                 />
                 <Route
                   path="/SupplierConformOrder/:id"
-                  element={<SupplierOrderConform axiosInstance={axiosInstance}/>}
+                  element={<SupplierOrderConform />}
                 />
               </Route>
             </Routes>

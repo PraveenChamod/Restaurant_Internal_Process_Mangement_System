@@ -22,7 +22,7 @@ const DeliverComponent = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await props.axiosInstance.post(
+      const res = await axios.post(
         `/api/v1/Deliverer/ConfirmDelivery/${props.data.OrderId}`
       );
       console.log(res);

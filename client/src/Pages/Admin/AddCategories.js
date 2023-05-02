@@ -3,7 +3,7 @@ import AddFoodsCategoriesComponent from "../../components/shared/AddCategories/A
 const AdminAddCategories = (props) => {
   return (
     <>
-      <AddFoodsCategoriesComponent BackRoutes={props.BackRoutes} axiosInstance={props.axiosInstance}/>
+      <AddFoodsCategoriesComponent BackRoutes={props.BackRoutes} />
     </>
   );
 };

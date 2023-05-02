@@ -35,7 +35,7 @@ const AddFoodsComponent = (props) => {
       Data.append("Category", Category);
       console.log(Data);
       await toast.promise(
-        props.axiosInstance.post("api/v1/Food", Data),
+        axios.post("api/v1/Food", Data),
         {
           loading: "Food is Adding....",
           success: (data) => {
