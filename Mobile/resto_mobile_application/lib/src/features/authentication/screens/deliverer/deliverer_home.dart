@@ -39,24 +39,6 @@ class _DelivererHomeState extends State<DelivererHome> {
           foregroundColor: const Color(0xFFfebf10),
           elevation: 0,
           title: const Text('Deliverer'),
-          actions:  <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 20.0),
-              child: IconButton(
-                onPressed: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (_){
-                  //       return const CustomerSearch();
-                  //     },
-                  //   ),
-                  // );
-                },
-                icon: const Icon(Icons.search),
-              ),
-              //child: Icon(Icons.search),
-            ),
-          ],
           backgroundColor: const Color(0xFF161b1d),
           centerTitle: true,
         ),

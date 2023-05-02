@@ -54,33 +54,69 @@ class _MainFeaturesState extends State<MainFeatures> {
         ),
         child: Column(
           children: <Widget>[
-            const Spacer(),
-            Image(
-              image: AssetImage(widget.image),
-              width: 130,
-            ),
-            const Spacer(),
-            Text(
-              widget.title,
-              style: const TextStyle(
-                fontSize: 20,
-                color: Colors.white,
+            Expanded(
+              flex: 5,
+              child: Image(
+                image: AssetImage(widget.image),
+                width: 130,
               ),
             ),
-            Text(
-              widget.text,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.white70,
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
               ),
             ),
-            const Icon(
-              Icons.add_circle,
-              color: Color(0xFFfebf10),
-              size: 24.0,
+            Expanded(
+              flex: 1,
+              child: Text(
+                widget.text,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.white70,
+                ),
+              ),
             ),
-            const Spacer(),
+            const Expanded(
+              flex: 1,
+              child: Icon(
+                Icons.add_circle,
+                color: Color(0xFFfebf10),
+                size: 24.0,
+              ),
+            ),
+            // const Spacer(),
+            // Image(
+            //   image: AssetImage(widget.image),
+            //   width: 130,
+            // ),
+            // const Spacer(),
+            // Text(
+            //   widget.title,
+            //   style: const TextStyle(
+            //     fontSize: 20,
+            //     color: Colors.white,
+            //   ),
+            // ),
+            // Text(
+            //   widget.text,
+            //   textAlign: TextAlign.center,
+            //   style: const TextStyle(
+            //     fontSize: 15,
+            //     color: Colors.white70,
+            //   ),
+            // ),
+            // const Icon(
+            //   Icons.add_circle,
+            //   color: Color(0xFFfebf10),
+            //   size: 24.0,
+            // ),
+            // const Spacer(),
           ],
         ),
       ),

@@ -54,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: MediaQuery.of(context).size.width / 1.25,
                       padding: const EdgeInsets.all(20.0),
                       decoration: BoxDecoration(
-                        //color: const Color(0xFF1b1b1d),
                         color: Colors.black38,
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -283,20 +282,20 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
   void login() async {
-    showDialog(
-      context: context,
-      builder: (context){
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFFfebf10),
-          ),
-        );
-      },
-    );
     String id = '';
     String email = '';
     String  jwtToken = '';
     if (passController.text.isNotEmpty && emailController.text.isNotEmpty){
+      showDialog(
+        context: context,
+        builder: (context){
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFFfebf10),
+            ),
+          );
+        },
+      );
       var response = await http.post(
         Uri.parse("http://$hostName:5000/api/v1/Auth/LoginUser"),
         headers: <String, String>{
