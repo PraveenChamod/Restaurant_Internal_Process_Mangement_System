@@ -3,7 +3,6 @@ import React from "react";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from "./FoodDetailElements";
-<<<<<<< HEAD
 import { toast } from 'react-hot-toast';
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -50,17 +49,6 @@ const FoodDetailComponent = (props) => {
     };
     
     return ( 
-=======
-import { Link } from "react-router-dom";
-import useAuth from "../../../Hooks/useAuth";
-const FoodDetail = (props) => {
-  const [FoodName, setName] = useState(props.food.FoodName);
-  const [Category, setCategory] = useState(props.food.Category);
-  const [Price, setPrice] = useState(props.food.Price);
-  const [Status, setStatus] = useState(props.food.Status);
-  const { user } = useAuth();
-  return (
->>>>>>> 128acc57749faf3812f21cb75b3f066233e9b3a2
     <Container>
       <Header>Food Details</Header>
       <l.Div onSubmit={update}>
@@ -119,7 +107,6 @@ const FoodDetail = (props) => {
           </l.RadioButtonSection>
         </l.Div1>
         <l.Div2>
-<<<<<<< HEAD
             <l.Sec>
             <FormButton>
               <Link className="btn">
@@ -148,26 +135,3 @@ const FoodDetail = (props) => {
 }
 
 export default FoodDetailComponent;
-=======
-          <l.Sec>
-            <FormButton>Delete</FormButton>
-          </l.Sec>
-          <l.Sec>
-            <FormButton>Update</FormButton>
-          </l.Sec>
-        </l.Div2>
-      </l.Div>
-      <l.Div3>
-        <Link
-          to={user.Role == "Admin" ? "/AdminView-Foods" : "/ManagerView-Foods"}
-          className="btn"
-        >
-          <RegularButton>Back</RegularButton>
-        </Link>
-      </l.Div3>
-    </Container>
-  );
-};
-
-export default FoodDetail;
->>>>>>> 128acc57749faf3812f21cb75b3f066233e9b3a2
