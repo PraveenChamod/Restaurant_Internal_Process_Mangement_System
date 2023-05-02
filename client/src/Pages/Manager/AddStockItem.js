@@ -3,7 +3,10 @@ import AddStockComponent from "../../components/Manager_Components/AddStocks/Add
 const AddStockItem = (props) => {
   return (
     <>
-      <AddStockComponent BackRoutes={props.BackRoutes} />
+      <AddStockComponent
+        BackRoutes={props.BackRoutes}
+        axiosInstance={props.axiosInstance}
+      />
     </>
   );
 };

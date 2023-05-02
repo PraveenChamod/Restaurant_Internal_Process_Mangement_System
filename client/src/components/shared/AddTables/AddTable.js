@@ -16,7 +16,7 @@ const AddTableComponent = (props) => {
     try {
       const formData = { TableNo, NoOfPersons, price };
       await toast.promise(
-        axios.post("api/v1/Table", formData),
+        props.axiosInstance.post("api/v1/Table", formData),
         {
           loading: "Table is Adding....",
           success: (data) => {

@@ -30,7 +30,7 @@ import {
 } from "./TableReservationElelments";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-const TableReservationComponent = ({ data }) => {
+const TableReservationComponent = ({ data,axiosInstance }) => {
   let customerName = data.CustomerName;
   let Email = data.Email;
   let arrivalTime = data.ArrivalTime;
@@ -57,7 +57,7 @@ const TableReservationComponent = ({ data }) => {
     };
     try {
       await toast.promise(
-        axios.post(`/api/v1/ReservationConfirmation/${data.id}`, formData),
+        axiosInstance.post(`/api/v1/ReservationConfirmation/${data.id}`, formData),
         {
           loading: "Confirming Reservation",
           success: (data) => {

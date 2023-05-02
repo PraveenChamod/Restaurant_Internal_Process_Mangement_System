@@ -23,7 +23,9 @@ const AuthState = (props) => {
     error: null,
     google: null,
   };
-
+  const axiosInstance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API,
+  })
   const setEssentialCookie = (user) => {
     const data = {
       user: {
@@ -71,7 +73,7 @@ const AuthState = (props) => {
   const logout = async () => {
     dispatch({ type: SET_LOADING });
     try {
-      const res = await axios.get("api/v1/Auth/logout");
+      const res = await axiosInstance.get("api/v1/Auth/logout");
       console.log(res);
       dispatch({ type: LOGOUT });
       console.log({ logout: res });
@@ -84,7 +86,7 @@ const AuthState = (props) => {
   const loadUser = async () => {
     dispatch({ type: SET_LOADING });
     try {
-      const res = await axios.get("api/v1/Auth/Profile");
+      const res = await axiosInstance.get("api/v1/Auth/Profile");
       Cookies.set("userCookie", "logged-in", { expires: 2 / 24 });
       console.log(res);
       dispatch({
@@ -100,7 +102,7 @@ const AuthState = (props) => {
 
   const logingUser = async (formData) => {
     dispatch({ type: SET_LOADING });
-    const res = await axios.post("api/v1/Auth/LoginUser", formData);
+    const res = await axiosInstance.post("api/v1/Auth/LoginUser", formData);
     Cookies.set("userCookie", "logged-in", { expires: 2 / 24 });
     console.log(res.data);
     dispatch({
@@ -112,7 +114,7 @@ const AuthState = (props) => {
   const RegisterUser = async (formData) => {
     dispatch({ type: SET_LOADING });
     try {
-      const res = await axios.post("api/v1/User/CustomerRegister", formData);
+      const res = await axiosInstance.post("api/v1/User/CustomerRegister", formData);
       console.log(res);
       dispatch({
         type: REGISTER_SUCCESS,

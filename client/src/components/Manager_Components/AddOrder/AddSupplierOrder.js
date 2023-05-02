@@ -102,7 +102,7 @@ for (let supplierId in suppliers) {
       };
       console.log(formData);
       await toast.promise(
-        axios.post("api/v1/SupplierOrder", formData),
+        props.axiosInstance.post("api/v1/SupplierOrder", formData),
         {
           loading: "Order is Placing....",
           success: (data) => {

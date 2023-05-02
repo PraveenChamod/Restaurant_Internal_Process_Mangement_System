@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import useAuth from "../../../Hooks/useAuth";
 
 const SupplierItemsComponent = (props) => {
@@ -59,7 +58,7 @@ const SupplierItemsComponent = (props) => {
     try {
       console.log("Final items" + Items);
       await toast.promise(
-        axios.post("api/v1/SupplierItems", {
+        props.axiosInstance.post("api/v1/SupplierItems", {
           Items: Items,
           Supplier: Supplier,
         }),

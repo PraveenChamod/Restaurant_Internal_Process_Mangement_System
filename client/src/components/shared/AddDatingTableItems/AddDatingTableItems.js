@@ -26,7 +26,7 @@ const AddDatingTableItemsComponent = (props) => {
       Data.append("ItemPrice", ItemPrice);
       console.log(Data);
       await toast.promise(
-        axios.post("api/v1/DatingTableItem", Data),
+        props.axiosInstance.post("api/v1/DatingTableItem", Data),
         {
           loading: "Item is Adding....",
           success: (data) => {

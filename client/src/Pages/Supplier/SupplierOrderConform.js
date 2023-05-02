@@ -3,7 +3,7 @@ import Spinner from "../../components/shared/Spinner/Spinner";
 import OrderConform from "../../components/Supplier/ViewOrder/OrderConform";
 import useFetch from "../../Hooks/useFetch";
 
-const SupplierOrderConform = () => {
+const SupplierOrderConform = (props) => {
   const { id } = useParams();
   console.log(id);
   const { data, isPending } = useFetch(`/api/v1/stockorderbyid/${id}`);
@@ -11,7 +11,7 @@ const SupplierOrderConform = () => {
   return (
     <>
       {isPending && <Spinner />}
-      {data2 && <OrderConform data2={data2} />}
+      {data2 && <OrderConform data2={data2} axiosInstance={props.axiosInstance}/>}
     </>
   );
 };
