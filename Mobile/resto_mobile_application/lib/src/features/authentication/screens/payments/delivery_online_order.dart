@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
-import '../Customer/customer_cart.dart';
 import '../Customer/customer_main_page.dart';
 import '../Products/product_cart.dart';
 import 'delivery_save_order.dart';
@@ -456,6 +455,16 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
   }
 
   void updateUserDetails() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
@@ -472,6 +481,7 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
         "Address": addressController.text
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];

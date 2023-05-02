@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/forget_password/reset_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common_widgets/background_image.dart';
 import '../../../../constants/image_strings.dart';
 import '../login_screen.dart';
-
+import 'package:http/http.dart' as http;
 class GetEmail extends StatefulWidget {
   const GetEmail({Key? key}) : super(key: key);
 
@@ -16,7 +21,26 @@ class _GetEmailState extends State<GetEmail> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF161b1d),
+        appBar: AppBar(
+          foregroundColor: const Color(0xFFfebf10),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_){
+                    return const LoginScreen();
+                  },
+                ),
+              );
+            },
+            icon: const Icon(Icons.chevron_left),
+          ),
+          title: const Text('Generate OTP'),
+          backgroundColor: const Color(0xFF161b1d),
+          centerTitle: true,
+        ),
         body: Stack(
           children: [
             const BackgroundImage(),
@@ -33,11 +57,10 @@ class _GetEmailState extends State<GetEmail> {
                   const SizedBox(height: 20,),
                   Center(
                     child: Container(
-                      height: MediaQuery.of(context).size.height/2,
-                      width: MediaQuery.of(context).size.width/1.25,
-                      padding: const EdgeInsets.all(20.0),
+                      margin: const EdgeInsets.all(30.0),
+                      padding: const EdgeInsets.all(30.0),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF1b1b1d),
+                        color: Colors.black38,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Column(
@@ -67,59 +90,77 @@ class _GetEmailState extends State<GetEmail> {
                             textInputAction: TextInputAction.done,
                             maxLines: 1,
                             keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                              labelText: 'Enter Email Address',
-                              border: InputBorder.none,
-                              labelStyle: TextStyle(color: Colors.white70),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Color(0xFFFFFF33)),
-                              ),
-                            ),
                             style: const TextStyle(
-                              color: Colors.white,
+                              fontSize: 15,
+                              color: Color(0xFFfebf10),
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: InputDecoration(
+                              labelText: 'Enter Email Address',
+                              labelStyle: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                              ),
+                              suffixIcon: const Icon(
+                                Icons.email,
+                                color: Color(0xFFfebf10),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 20,),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.all(5.0),
-                              fixedSize: const Size(150, 30),
-                              backgroundColor: const Color.fromRGBO(254, 191, 16, 10),
-                              elevation: 15,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                            ),
-                            //After user pressed the Button, onPressed section check the countryCode value and inform user by using snackBar.
-                            onPressed: () {
-                              if(emailAddressController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Please enter a Email Address",),
-                                  ),
-                                );
-                              }else {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_){
-                                      return const LoginScreen();
-                                    },
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Text(
-                              'Next',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                          Center(
+                            child: Container(
+                              width: 150,
+                              height: 35,
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: AnimatedButton(
+                                text: "Send OTP",
+                                buttonTextStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                color: const Color(0xFFfebf10),
+                                pressEvent: () {
+                                  if(emailAddressController.text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text("Please enter a Email Address",),
+                                      ),
+                                    );
+                                  }else {
+                                    //getOTP();
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return const ResetPassword();
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(0),
+                                  topRight: Radius.circular(80),
+                                  bottomLeft: Radius.circular(80),
+                                  bottomRight: Radius.circular(80),
+                                ),
                               ),
                             ),
                           ),
+                          const SizedBox(height: 20,),
                         ],
                       ),
                     ),
@@ -131,5 +172,49 @@ class _GetEmailState extends State<GetEmail> {
         ),
       ),
     );
+  }
+  void getOTP() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    final http.Response response = await http.post(
+      Uri.parse("http://$hostName:5000/api/v1/Auth/OTP"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "Email": emailAddressController.text,
+      }),
+    );
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      successAwesomeDialog(DialogType.success, msg, "Success");
+
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+    }
+  }
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {},
+    ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {},
+    ).show();
   }
 }

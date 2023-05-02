@@ -1,31 +1,43 @@
-
-import { Div, Div1, Div2, Option, P, UserProfileContainer, ImageSection, Img, FormButton, Header } from "./UserProfileElements";
+import {
+  Div,
+  Div1,
+  Div2,
+  Option,
+  P,
+  UserProfileContainer,
+  ImageSection,
+  Img,
+  Header,
+  ButtonSection,
+} from "./UserProfileElements";
 import LoginImage from "../../../Images/Services/person.jpg";
-
 
 import { Link } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-
+import { FormButton, RegularButton } from "../SharedElements/Buttons";
 
 const UserProfileComponent = (props) => {
-    const { logout,user,loadUser,loading } = useAuth();
-    console.log(user);
-    return ( 
-        <UserProfileContainer>
-            <Div>
-                 <Img src={`http://localhost:5000/images/${user?.ProfileImage}`}></Img>
-                    <Header>
-                        Welcome
-                    </Header>
-                        <P>Hi {user?.Name}</P>
-                    <FormButton>
-                        <Link to={props.route1.Route} className="btn">
-                            Edit
-                        </Link>
-                    </FormButton>
-            </Div>
-        </UserProfileContainer>
-     );
-}
- 
+  const { logout, user, loadUser, loading } = useAuth();
+  console.log(user);
+  return (
+    <UserProfileContainer>
+      <Div>
+        <Img src={`http://localhost:5000/images/${user?.ProfileImage}`}></Img>
+        <Header>Welcome</Header>
+        <P>Hi {user?.Name}</P>
+        <FormButton>
+          <Link to={props.route1.Route} className="btn">
+            Edit
+          </Link>
+        </FormButton>
+      </Div>
+      <ButtonSection>
+        <Link to={props.BackRoutes} className="btn">
+          <RegularButton>Back</RegularButton>
+        </Link>
+      </ButtonSection>
+    </UserProfileContainer>
+  );
+};
+
 export default UserProfileComponent;

@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../constants/image_strings.dart';
 import '../home_screen.dart';
-import 'customer_drawer_Items/favourites_screen.dart';
+import 'customer_drawer_Items/add_review_screen.dart';
 import 'customer_drawer_Items/help_center_screen.dart';
 import 'customer_drawer_Items/my_account_screen.dart';
 import 'customer_drawer_Items/orders_screen.dart';
@@ -105,7 +105,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const OrdersScreen();
+                    return OrdersScreen();
                   },
                 ),
               );
@@ -113,14 +113,14 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
           ),
           ListTile(
             leading: const Icon(
-              Icons.favorite,
+              Icons.reviews,
             ),
-            title: const Text('Favourites'),
+            title: const Text('Add Review'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return const FavouritesScreen();
+                    return FavouritesScreen();
                   },
                 ),
               );
@@ -150,7 +150,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             leading: const Icon(
               Icons.help,
             ),
-            title: const Text('Help Center'),
+            title: const Text('Help & FAQs'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

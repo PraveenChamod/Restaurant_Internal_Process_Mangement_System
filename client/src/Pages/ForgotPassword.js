@@ -1,11 +1,11 @@
 import ForgotPasswordComponent from "../components/FrogotPassword/FrogotPassword";
 
-const FrogotPassword = () => {
-  return ( 
+const FrogotPassword = (props) => {
+  return (
     <>
-      <ForgotPasswordComponent/>
+      <ForgotPasswordComponent BackRoutes={props.BackRoutes} />
     </>
-   );
-}
- 
+  );
+};
+
 export default FrogotPassword;

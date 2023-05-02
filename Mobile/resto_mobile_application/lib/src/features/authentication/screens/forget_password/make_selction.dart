@@ -12,7 +12,7 @@ class MakeSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: const Color(0xFF161b1d),
           body: Stack(
             children: [
               const BackgroundImage(),
