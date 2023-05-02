@@ -36,7 +36,7 @@ const OrderDetailsComponent = (props) => {
         customerEmail: customerEmail,
       };
       await toast.promise(
-        props.axiosInstance.post(`/api/v1/OrderConfirmation/${props.data.OrderId}`, formDate),
+        axios.post(`/api/v1/OrderConfirmation/${props.data.OrderId}`, formDate),
         {
           loading: "Assigning Deliverer....",
           success: (data) => {

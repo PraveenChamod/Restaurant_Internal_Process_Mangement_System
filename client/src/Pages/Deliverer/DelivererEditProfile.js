@@ -2,10 +2,7 @@ import EditProfileComponent from "../../components/shared/EditProfile/Editprofil
 
 const DelivererEditProfile = (props) => {
   return (
-    <EditProfileComponent
-      EditProfileBackRoute={props.EditProfileBackRoute}
-      axiosInstance={props.axiosInstance}
-    />
+    <EditProfileComponent EditProfileBackRoute={props.EditProfileBackRoute} />
   );
 };
 

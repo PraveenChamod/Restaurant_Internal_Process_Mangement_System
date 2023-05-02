@@ -5,16 +5,14 @@ const useFetch = (url) => {
   // axios cancel token
   // const CancelToken = axios.CancelToken();
   // const source = CancelToken.source()
-  const axiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API,
-  })
+
   const [data, setData] = useState(null);
   const [isPending, setIspending] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axiosInstance.get(url);
+        const res = await axios.get(url);
         console.log(res);
         if (res.status === 200 || res.status === 201) {
           setData(res.data);

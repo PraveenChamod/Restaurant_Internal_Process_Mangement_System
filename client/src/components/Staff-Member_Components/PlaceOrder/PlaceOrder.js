@@ -118,7 +118,7 @@ const PlaceOrderComponent = (props) => {
     try {
       const formData = { Name, ContactNumber, Foods, TotalPrice };
       await toast.promise(
-        props.axiosInstance.post("api/v1/staffmemberorderItem", formData),
+        axios.post("api/v1/staffmemberorderItem", formData),
         {
           loading: "Order is Placing....",
           success: (data) => {

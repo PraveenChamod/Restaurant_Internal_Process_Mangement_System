@@ -16,7 +16,7 @@ const ForgotPasswordComponent = (props) => {
     e.preventDefault();
     try {
       await toast.promise(
-        props.axiosInstance.post("api/v1/Auth/OTP", { Email: Email }),
+        axios.post("api/v1/Auth/OTP", { Email: Email }),
         {
           loading: `Sending OTP....`,
           success: (data) => {
@@ -46,7 +46,7 @@ const ForgotPasswordComponent = (props) => {
     e.preventDefault();
     try {
       await toast.promise(
-        props.axiosInstance.patch("api/v1/Auth/Forgotpassword", formData),
+        axios.patch("api/v1/Auth/Forgotpassword", formData),
         {
           loading: `Loading.....`,
           success: (data) => {

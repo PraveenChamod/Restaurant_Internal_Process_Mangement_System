@@ -14,7 +14,6 @@ const StaffMemberOrderDetails = (props) => {
         <OrderDetailsComponent
           data={data?.data?.pendingOrders[0]}
           BackRoutes={props.BackRoutes}
-          axiosInstance={props.axiosInstance}
         />
       )}
     </>

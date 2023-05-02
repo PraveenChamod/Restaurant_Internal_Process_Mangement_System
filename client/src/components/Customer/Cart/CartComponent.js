@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useFetch from "../../../Hooks/useFetch";
 
-const CartComponent = ({ data,axiosInstance }) => {
+const CartComponent = ({ data }) => {
   const { user } = useAuth();
   const [Items, setItem] = useState(data);
   console.log(data);
@@ -34,7 +34,7 @@ const CartComponent = ({ data,axiosInstance }) => {
     try {
       const formData = { cartId, foodId, offerId };
       await toast.promise(
-        axiosInstance.patch("api/v1/FoodItem", formData),
+        axios.patch("api/v1/FoodItem", formData),
         {
           loading: `Removing from cart`,
           success: (data) => {
@@ -73,7 +73,7 @@ const CartComponent = ({ data,axiosInstance }) => {
   const AddQuantity = async ({ foodId, quantity, offerId }) => {
     try {
       const formData = { foodId, quantity, offerId };
-      const res = await axiosInstance.post("api/v1/CartItem", formData);
+      const res = await axios.post("api/v1/CartItem", formData);
       console.log(res);
     } catch (error) {
       console.log(error.message);

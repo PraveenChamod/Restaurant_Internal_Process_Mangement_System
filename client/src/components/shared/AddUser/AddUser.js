@@ -7,6 +7,7 @@ import "./AddUser.css";
 import { Div, Div1, Div3 } from "./AddUserElements";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
+import axios from "axios";
 import { toast } from "react-hot-toast";
 import useAuth from "../../../Hooks/useAuth";
 
@@ -21,7 +22,7 @@ const AddUserComponent = (props) => {
       e.preventDefault();
       const formData = { Email, Role };
       await toast.promise(
-        props.axiosInstance.post("api/v1/User/ServiceProviderRegister", formData),
+        axios.post("api/v1/User/ServiceProviderRegister", formData),
         {
           loading: "Adding User.....",
           success: (data) => {
