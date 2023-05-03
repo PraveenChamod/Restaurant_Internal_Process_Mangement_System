@@ -148,6 +148,69 @@ export const RegisterServiceProviders = async (req, res) => {
           if (user !== null) {
             res.json("Manager is already exist in the system");
           }
+          else{
+            const createServiceProvider = await ServiceProviders.create({
+              Password: encryptedPassword,
+              Email: Email,
+              Role: Role,
+            });
+            //send Email
+            if (createServiceProvider.Role !== "Customer") {
+              const mailOption = {
+                from: "resto6430@gmail.com",
+                to: Email,
+                subject: "Registration Confrimation",
+                attachments: [
+                  {
+                    filename: "logo.png",
+                    path: `${__dirname}/Template/logo.png`,
+                    cid: "logo",
+                  },
+                  {
+                    filename: "welcome_vector.png",
+                    path: `${__dirname}/Template/welcome_vector.png`,
+                    cid: "welcome",
+                  },
+                ],
+              };
+              ejs.renderFile(
+                `${__dirname}/Template/Email.ejs`,
+                { Email: Email },
+                (err, renderHTML) => {
+                  if (err) {
+                    console.log(err.message);
+                    res.status(500).json({
+                      status: "Server Error",
+                      message: err.message,
+                    });
+                  } else {
+                    mailOption.html = renderHTML;
+                    transporter.sendMail(mailOption, (err, info) => {
+                      if (err) {
+                        console.log(err.message);
+                        res.status(500).json({
+                          status: "Server Error",
+                          message: err.message,
+                        });
+                      } else {
+                        const token = createToken(
+                          createServiceProvider._id,
+                          createServiceProvider.Email
+                        );
+                        res.status(201).json({
+                          status: "Success",
+                          message: "User added to the system successfully",
+                          data: {
+                            token,
+                          },
+                        });
+                      }
+                    });
+                  }
+                }
+              );
+            }
+          }
         } else {
           const createServiceProvider = await ServiceProviders.create({
             Password: encryptedPassword,

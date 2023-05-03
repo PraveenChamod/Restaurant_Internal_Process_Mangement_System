@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import app from "../server/app.js";
 const mongodb =
-  "mongodb+srv://RESTAURANT_MANAGEMENT_SYSTEM:expg17KEpe9pz8iJ@cluster0.nlnqgmw.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://acfernando1999:kWWz3JNo6H4vjEpq@cluster0.new0xcj.mongodb.net/?retryWrites=true&w=majority";
 
 const PORT =  5000;
 
