@@ -25,7 +25,10 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor:MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white,
+      backgroundColor:
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
       width: MediaQuery.of(context).size.width/1.5,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -125,7 +128,11 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               );
             },
           ),
-          const Divider(),
+          Divider(
+            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
+          ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Text('Configurations',),
