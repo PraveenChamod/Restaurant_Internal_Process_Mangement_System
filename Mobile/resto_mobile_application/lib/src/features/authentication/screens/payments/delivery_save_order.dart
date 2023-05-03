@@ -320,7 +320,9 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
       final json = jsonDecode(response.body);
       final orderDetails = json["data"];
       final msg = json["message"];
-      successAwesomeDialog(DialogType.success, 'Your Order Is Placed Successfully.', "Success");
+      if(widget.paymentMethod != 'Card Payments'){
+        successAwesomeDialog(DialogType.success, 'Your Order Is Placed Successfully.', "Success");
+      }
     }else{
       final json = jsonDecode(response.body);
       final msg = json["message"];
@@ -384,7 +386,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: paymentIntent!['clientSecret'],
-        style: ThemeMode.dark,
+        style: ThemeMode.system,
         merchantDisplayName: 'Resto_Mobile_App',)).then((value) => {}
     );
     //Display the payment sheet

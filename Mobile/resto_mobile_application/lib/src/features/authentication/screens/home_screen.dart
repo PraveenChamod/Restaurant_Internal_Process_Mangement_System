@@ -101,53 +101,66 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   const SizedBox(height: 20,),
-                  Container(
-                    width: 230,
-                    height: 50,
-                    padding: const EdgeInsets.all(5.0),
-                    child: AnimatedButton(
-                      //borderRadius: BorderRadius.circular(10.0),
-                      text: "Login To Resto",
-                      buttonTextStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  Center(
+                    child: Container(
+                      width: 200,
+                      height: 60,
+                      padding: const EdgeInsets.all(10.0),
+                      child: AnimatedButton(
+                        text: "Login To Resto",
+                        buttonTextStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                        color: const Color(0xFFfebf10),
+                        pressEvent: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_){
+                                return const LoginScreen();
+                              },
+                            ),
+                          );
+                        },
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(80),
+                          bottomLeft: Radius.circular(80),
+                          bottomRight: Radius.circular(80),
+                        ),
+
                       ),
-                      color: const Color(0xFFfebf10),
-                      pressEvent: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_){
-                              return const LoginScreen();
-                            },
-                          ),
-                        );
-                      },
                     ),
                   ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    width: 230,
-                    height: 50,
-                    padding: const EdgeInsets.all(5.0),
-                    child: AnimatedButton(
-                      //borderRadius: BorderRadius.circular(10.0),
-                      text: "Create Account",
-                      buttonTextStyle: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                  Center(
+                    child: Container(
+                      width: 200,
+                      height: 60,
+                      padding: const EdgeInsets.all(10.0),
+                      child: AnimatedButton(
+                        text: "Create Account",
+                        buttonTextStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                        ),
+                        color: const Color(0xFFfebf10),
+                        pressEvent: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_){
+                                return const SignupScreen();
+                              },
+                            ),
+                          );
+                        },
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(80),
+                          bottomLeft: Radius.circular(80),
+                          bottomRight: Radius.circular(80),
+                        ),
+
                       ),
-                      color: const Color(0xFFfebf10),
-                      pressEvent: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_){
-                              return const SignupScreen();
-                            },
-                          ),
-                        );
-                      },
                     ),
                   ),
                 ],
