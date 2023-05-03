@@ -1,13 +1,21 @@
 import styled from "styled-components";
+export const Section = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 60%;
+  background-color: #1a1e21;
+  border-radius: 25px;
+  box-shadow: 3px 3px 3px #000;
+  margin: 0;
+`
 export const FormSection = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50rem;
+  width: 100%;
   height: 30rem;
-  background-color: #1a1e21;
-  border-radius: 25px;
-  box-shadow: 3px 3px 3px #000;
   margin: 0;
 `;
 export const LeftSide = styled.div`
@@ -32,9 +40,14 @@ export const RightSide = styled.div`
 `;
 export const Div3 = styled.div`
   margin-top: 15px;
-  width: 50%;
+  width: 60%;
   height: 8%;
   display: flex;
   flex-direction: column;
-  padding-left: 30px;
 `;
+export const ButtonSection = styled.div`
+  display: flex;
+  justify-content: right;
+  width: 94%;
+  margin: 0 0 2% 0;
+`

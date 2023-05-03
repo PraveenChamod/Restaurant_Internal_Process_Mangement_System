@@ -299,3 +299,21 @@ export const Section = styled.div`
     width: 100%;
   }
 `;
+export const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  line-height: 0;
+  height: 500px;
+  margin-bottom: 3%;
+`
+export const Image1 = styled.img`
+  width:700px;
+  height: 500px;
+  line-height: 0;
+`
+export const Text1 = styled.h1`
+  color: #fff;
+` 

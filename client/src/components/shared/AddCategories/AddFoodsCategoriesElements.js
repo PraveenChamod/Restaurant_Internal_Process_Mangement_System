@@ -3,7 +3,7 @@ export const FormSection = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50rem;
+  width: 100%;
   height: 30rem;
   background-color: #1a1e21;
   border-radius: 25px;
@@ -24,6 +24,7 @@ export const SubSection = styled.div`
   align-items: center;
   flex-direction: column;
   margin-top: 5%;
+  width: 50%;
 `;
 export const RightSide = styled.div`
   display: flex;
@@ -79,6 +80,6 @@ export const ButtonSection = styled.div`
 `;
 export const ButtonSection1 = styled.div`
   position: relative;
-  left: -20%;
+  width: 50%;
   top: -2%;
 `;

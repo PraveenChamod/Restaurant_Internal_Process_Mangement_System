@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { Link } from "react-router-dom";
-import { MenuItem, Select } from "@mui/material";
+import { InputLabel, MenuItem, Select } from "@mui/material";
 import "./AddUser.css";
 import { Div, Div1, Div3 } from "./AddUserElements";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
@@ -62,8 +62,18 @@ const AddUserComponent = (props) => {
               style: { color: "#fff" },
             }}
           />
-          <>
+          <FormControl variant="standard">
+          <InputLabel
+                  sx={{ color: "white" }}
+                  id="demo-simple-select-standard-label"
+                >
+                  Role
+                </InputLabel>
             <Select
+              className="MuiInputLabel-root"
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              label="Role"
               sx={{
                 color: "white",
                 ".MuiSvgIcon-root ": {
@@ -74,11 +84,11 @@ const AddUserComponent = (props) => {
               onChange={(e) => setRole(e.target.value)}
             >
               <MenuItem value={"Deliverer"}>Deliverer</MenuItem>
-              {user.Role == "Manager" ? <MenuItem value={"Manager"}>Manager</MenuItem> : null}
+              {user.Role == "Manager" ? null : <MenuItem value={"Manager"}>Manager</MenuItem>}
               <MenuItem value={"Supplier"}>Supplier</MenuItem>
               <MenuItem value={"Staff-Member"}>Staff-Member</MenuItem>
             </Select>
-          </>
+          </FormControl>
           <Div1>
             <div style={{ margin: "3%" }}>
               <FormButton>Add</FormButton>

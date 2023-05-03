@@ -107,6 +107,7 @@ export const FormDiv = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 3%;
 `;
 export const SubDiv = styled.div`
   width: 100%;

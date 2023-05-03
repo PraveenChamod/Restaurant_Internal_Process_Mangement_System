@@ -18,9 +18,8 @@ export const GridContainer = styled.div`
 `;
 export const ButtonSection = styled.div`
   position: relative;
-  left: -25%;
+  width: 60%;
   top: 2%;
-  margin-top: 3%;
 `;
 export const Table = styled.table`
   color: #fff;

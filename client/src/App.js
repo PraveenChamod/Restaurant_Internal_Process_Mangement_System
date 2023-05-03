@@ -284,7 +284,7 @@ function App() {
                   element={
                     <ManagerUserProfile
                       route={EditProfileLinks[1]}
-                      BackRoutes={BackRoutes[1]}
+                      BackRoutes={BackRoutes[1].nav}
                     />
                   }
                 />
@@ -607,14 +607,9 @@ function App() {
                   path="/ViewSupplyItems"
                   element={<SupplierItems BackRoutes={BackRoutes[5].nav} />}
                 />
-                {/* <Route path="/ViewSupplyItem/:id" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
                 <Route
                   path="/SupplierMessages"
                   element={<Messages BackRoutes={BackRoutes[5].nav} />}
-                />
-                <Route
-                  path="/SupplierConformOrder/:id"
-                  element={<SupplierOrderConform />}
                 />
               </Route>
             </Routes>

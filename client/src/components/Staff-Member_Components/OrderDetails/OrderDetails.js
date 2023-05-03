@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { Oval } from "react-loader-spinner";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../../Hooks/useFetch";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
@@ -22,6 +22,7 @@ const OrderDetailsComponent = (props) => {
   const { data, isPending } = useFetch("/api/v1/AvailableDeliverers");
   console.log(Email);
 
+  const navigate = useNavigate();
   const assignDeliverer = async (e) => {
     e.preventDefault();
     try {
@@ -54,6 +55,9 @@ const OrderDetailsComponent = (props) => {
           },
         }
       );
+      setTimeout(() => {
+        navigate("/Staff-MemberPendingOrder-Details")
+      }, 2000);
     } catch (error) {
       console.log(error.message);
     }

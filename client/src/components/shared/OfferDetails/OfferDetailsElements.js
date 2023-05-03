@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Div = styled.div`
+export const Div = styled.form`
   width: 50%;
   height: fit-content;
   background-color: #1a1e21;
@@ -62,7 +62,6 @@ export const Div3 = styled.div`
   height: 8%;
   display: flex;
   flex-direction: column;
-  padding-left: 30px;
 `;
 
 export const Searchbar = styled.input`

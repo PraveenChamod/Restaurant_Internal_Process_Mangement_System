@@ -185,6 +185,7 @@ export const updateFood = async (req, res) => {
       user.Role === "Admin"
     ) {
       const { id } = req.params;
+      console.log(req.body);
       const Food = await Foods.findByIdAndUpdate(
         id,
         {
@@ -192,6 +193,7 @@ export const updateFood = async (req, res) => {
         },
         { new: true }
       );
+      console.log(Food);
       if (!Food) {
         res.status(404).json("No such food item to update");
       } else {
@@ -212,7 +214,7 @@ export const updateFood = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "Server Error",
-      message: "This user not authorized for this operation",
+      message: error.message,
     });
   }
 };

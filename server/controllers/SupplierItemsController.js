@@ -121,7 +121,7 @@ export const ViewAllSupplierItems = async (req, res) => {
 export const ViewAllSupplierItemsById = async (req, res) => {
   try {
     const user = req.user;
-    if (user.Role === "Manager") {
+    if (user.Role === "Manager" || user.Role === "Supplier") {
       const { id } = req.params;
       let SupplierItems = [];
       let SupplierItemDetails;

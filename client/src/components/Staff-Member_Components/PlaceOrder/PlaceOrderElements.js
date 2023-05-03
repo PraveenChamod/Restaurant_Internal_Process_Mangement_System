@@ -74,8 +74,9 @@ export const ButtonSection = styled.div`
 
 export const ButtonSection1 = styled.div`
   position: relative;
-  left: -23%;
-  top: -2%;
+  width: 58em;
+  top: -3%;
+  margin-bottom: 5%;
 `;
 export const ItemsCard = styled.div`
   & {
@@ -177,4 +178,22 @@ export const Icon = styled.div`
     cursor: pointer;
     transform: scale(1.2);
   }
+`;
+export const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  line-height: 0;
+  height: 280px;
+  margin-bottom: 3%;
+`;
+export const Image1 = styled.img`
+  width: 400px;
+  height: 280px;
+  line-height: 0;
+`;
+export const Text2 = styled.h2`
+  color: #fff;
 `;

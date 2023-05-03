@@ -1,8 +1,9 @@
 {
+  
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://resto-f3zu.onrender.com/",
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.10.5",
@@ -61,6 +62,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -86,6 +89,7 @@
   "devDependencies": {
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "gh-pages": "^5.0.0",
     "stream-browserify": "^3.0.0",
     "util": "^0.12.5"
   },

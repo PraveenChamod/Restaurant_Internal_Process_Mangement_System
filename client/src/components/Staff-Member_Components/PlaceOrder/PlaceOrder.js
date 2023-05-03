@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
+import notfound from "../../../Images/notFound/NoResults.png";
 const PlaceOrderComponent = (props) => {
   const [clickedIndex, setClickedIndex] = useState({});
   const [selectItem, setSelectItem] = useState();
@@ -289,61 +290,65 @@ const PlaceOrderComponent = (props) => {
           </l.Div1>
           <l.Div2>
             <l.ItemSection>
-              {join.map((data, index) => {
-                console.log(data.FoodName);
-                return (
-                  <l.CartSection>
-                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                                    {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                                </l.SelectIcon> */}
-                    <l.ItemsCard>
-                      <l.FoodImage>
-                        <l.Food
-                          src={`http://localhost:5000/${
-                            data.FoodName == null
-                              ? `offerimages/${data.OfferImage}`
-                              : `Foodimages/${data.FoodImage}`
-                          }`}
-                        />
-                      </l.FoodImage>
-                      <l.Details>
-                        <l.MainText>
-                          <l.FoodName>
-                            {data.FoodName || data.OfferName}
-                          </l.FoodName>
-                        </l.MainText>
-                        <l.SubText>
-                          {/* <l.Text>
+              {join.length == 0 ? (
+                <l.NotFound>
+                  <l.Image1 src={notfound} />
+                  <l.Text2>No Items Selected</l.Text2>
+                </l.NotFound>
+              ) : (
+                join.map((data, index) => {
+                  console.log(data.FoodName);
+                  return (
+                    <l.CartSection>
+                      <l.ItemsCard>
+                        <l.FoodImage>
+                          <l.Food
+                            src={`http://localhost:5000/${
+                              data.FoodName == null
+                                ? `offerimages/${data.OfferImage}`
+                                : `Foodimages/${data.FoodImage}`
+                            }`}
+                          />
+                        </l.FoodImage>
+                        <l.Details>
+                          <l.MainText>
+                            <l.FoodName>
+                              {data.FoodName || data.OfferName}
+                            </l.FoodName>
+                          </l.MainText>
+                          <l.SubText>
+                            {/* <l.Text>
                                                                 {cart.Size}
                                                             </l.Text> */}
-                          <l.Text>Category : {data.Category}</l.Text>
-                          <l.Text>
-                            Price :{" "}
-                            {(data.Price || data.SpecialPrice) *
-                              quantity[index] ||
-                              data.Price ||
-                              data.SpecialPrice}
-                          </l.Text>
-                          {quantity[index] && (
-                            <l.Text>Quantity : {quantity[index]}</l.Text>
-                          )}
-                        </l.SubText>
-                      </l.Details>
-                      <l.IconSection>
-                        <l.Icon onClick={() => decreseQTY(index, data)}>
-                          <AiFillMinusCircle />
-                        </l.Icon>
-                        <l.Icon onClick={() => increaseQTY(index, data)}>
-                          <AiFillPlusCircle />
-                        </l.Icon>
-                        <l.Icon onClick={() => removeItem(index, data)}>
-                          <MdDelete />
-                        </l.Icon>
-                      </l.IconSection>
-                    </l.ItemsCard>
-                  </l.CartSection>
-                );
-              })}
+                            <l.Text>Category : {data.Category}</l.Text>
+                            <l.Text>
+                              Price :{" "}
+                              {(data.Price || data.SpecialPrice) *
+                                quantity[index] ||
+                                data.Price ||
+                                data.SpecialPrice}
+                            </l.Text>
+                            {quantity[index] && (
+                              <l.Text>Quantity : {quantity[index]}</l.Text>
+                            )}
+                          </l.SubText>
+                        </l.Details>
+                        <l.IconSection>
+                          <l.Icon onClick={() => decreseQTY(index, data)}>
+                            <AiFillMinusCircle />
+                          </l.Icon>
+                          <l.Icon onClick={() => increaseQTY(index, data)}>
+                            <AiFillPlusCircle />
+                          </l.Icon>
+                          <l.Icon onClick={() => removeItem(index, data)}>
+                            <MdDelete />
+                          </l.Icon>
+                        </l.IconSection>
+                      </l.ItemsCard>
+                    </l.CartSection>
+                  );
+                })
+              )}
             </l.ItemSection>
 
             {/* fff */}
