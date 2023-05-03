@@ -16,7 +16,8 @@ class CustomerOrderDetails extends StatefulWidget {
   final String orderId;
   final double lat;
   final double lang;
-  const CustomerOrderDetails({Key? key,
+  const CustomerOrderDetails({
+    Key? key,
     required this.orderId,
     required this.deliveryStatus,
     required this.lat,
@@ -28,7 +29,6 @@ class CustomerOrderDetails extends StatefulWidget {
 }
 
 class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
-
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,9 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
 
   final Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng sourceLocation = LatLng(7.240865108809441, 80.2086201656721);
+  static const LatLng sourceLocation = LatLng(7.240865108809441, 80.2086201656721);//Perera & Sons in Ambepussa as a restaurant
+
+  //static const LatLng sourceLocation = LatLng(5.939840972427677, 80.57604608201353);//University as a Restaurant
 
   static LatLng destination = const LatLng(0.0, 0.0);
 
@@ -71,149 +73,137 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-          backgroundColor: const Color(0xFF161b1d),
-          appBar: AppBar(
-            foregroundColor: const Color(0xFFfebf10),
-            elevation: 0,
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_){
-                      return OrdersScreen();
-                    },
-                  ),
-                );
-              },
-              icon: const Icon(Icons.chevron_left),
-            ),
-            title: const Text('Your Order'),
-            actions:  <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const CustomerMainPage(choice: 2,);
-                        },
-                      ),
-                    );
+      child: Scaffold(
+        backgroundColor: const Color(0xFF161b1d),
+        appBar: AppBar(
+          foregroundColor: const Color(0xFFfebf10),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) {
+                    return OrdersScreen();
                   },
-                  icon: const Icon(Icons.home),
                 ),
-              ),
-            ],
-            backgroundColor: const Color(0xFF161b1d),
-            centerTitle: true,
+              );
+            },
+            icon: const Icon(Icons.chevron_left),
           ),
-          body: Stack(
-            children: [
-              const BackgroundImage(),
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
+          title: const Text('Your Order'),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) {
+                        return const CustomerMainPage(
+                          choice: 2,
+                        );
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.home),
+              ),
+            ),
+          ],
+          backgroundColor: const Color(0xFF161b1d),
+          centerTitle: true,
+        ),
+        body: Stack(
+          children: [
+            const BackgroundImage(),
+            Column(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0, top: 5.0, right: 15.0, bottom: 5.0),
+                    child: Center(
                       child: Container(
-                        height: 520,
+                        width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           color: Colors.black38,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              flex: 1,
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 5.0,),
-                                  widget.deliveryStatus == 'Not Delivered'
-                                      ?
-                                  const Text(
-                                    'Your Order Is On The way',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Color(0xFFfebf10),
-                                    ),
-                                  )
-                                      :
-                                  const Text(
-                                    'Your Order Is Delivered. Enjoy',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Color(0xFFfebf10),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 5.0,),
-                                  const Divider(
-                                    color: Color(0xFFfebf10),
-                                  ),
-                                  const SizedBox(height: 10.0,),
-                                ],
-                              ),
-                            ),
-                            widget.deliveryStatus == 'Not Delivered'
-                                ?
-                            Expanded(
-                              flex: 6,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.transparent,
+                        child: widget.deliveryStatus == 'Not Delivered'
+                            ? const Text(
+                                'Your Order Is On The way',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFFfebf10),
                                 ),
-                                child: GoogleMap(
-                                  initialCameraPosition: const CameraPosition(
-                                    target: sourceLocation,
-                                    zoom: 12.5,
-                                  ),
-                                  myLocationEnabled: true,
-                                  polylines: {
-                                    Polyline(
-                                      polylineId: const PolylineId("route"),
-                                      points: polylineCoordinates,
-                                      color: Colors.red,
-                                      width: 5,
-                                    ),
-                                  },
-                                  markers: {
-                                    const Marker(
-                                      markerId: MarkerId("source"),
-                                      position: sourceLocation,
-                                    ),
-                                    Marker(
-                                      markerId: const MarkerId("destination"),
-                                      position: destination,
-                                    ),
-                                  },
-                                  onMapCreated: (mapController) {
-                                    _controller.complete(mapController);
-                                  },
+                              )
+                            : const Text(
+                                'Your Order Is Delivered. Enjoy',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color(0xFFfebf10),
                                 ),
                               ),
-                            )
-                                :
-                            Expanded(
-                              flex: 6,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.transparent,
-                                  image: DecorationImage(
-                                    image: AssetImage(deliveredImage),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                child: null,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ),
-                    Padding(
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
+                    child: widget.deliveryStatus == 'Not Delivered'
+                        ? Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.transparent,
+                            ),
+                            child: GoogleMap(
+                              initialCameraPosition: const CameraPosition(
+                                target: sourceLocation,
+                                zoom: 12.5,
+                              ),
+                              myLocationEnabled: true,
+                              polylines: {
+                                Polyline(
+                                  polylineId: const PolylineId("route"),
+                                  points: polylineCoordinates,
+                                  color: Colors.red,
+                                  width: 5,
+                                ),
+                              },
+                              markers: {
+                                const Marker(
+                                  markerId: MarkerId("source"),
+                                  position: sourceLocation,
+                                ),
+                                Marker(
+                                  markerId: const MarkerId("destination"),
+                                  position: destination,
+                                ),
+                              },
+                              onMapCreated: (mapController) {
+                                _controller.complete(mapController);
+                              },
+                            ),
+                          )
+                        : Container(
+                            decoration: const BoxDecoration(
+                              color: Colors.transparent,
+                              image: DecorationImage(
+                                image: AssetImage(deliveredImage),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: null,
+                          ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: SingleChildScrollView(
+                    child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Container(
                         height: 480,
@@ -229,7 +219,7 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                             const Text(
                               'Delivery Details',
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                             ),
@@ -245,9 +235,9 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         const Text(
-                                          'Address:',
+                                          'Name:',
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             color: Colors.white70,
                                           ),
                                         ),
@@ -255,15 +245,15 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                                         Text(
                                           userName,
                                           style: const TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             color: Color(0xFFfebf10),
                                           ),
                                         ),
                                         const SizedBox(height: 5.0,),
                                         const Text(
-                                          'Name:',
+                                          'Address:',
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             color: Colors.white70,
                                           ),
                                         ),
@@ -271,7 +261,7 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                                         Text(
                                           userAddress,
                                           style: const TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             color: Color(0xFFfebf10),
                                           ),
                                         ),
@@ -300,7 +290,7 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                             const Text(
                               'Order Summary',
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 20,
                                 color: Colors.white,
                               ),
                             ),
@@ -342,12 +332,111 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+                // Padding(
+                //   padding: const EdgeInsets.all(15.0),
+                //   child: Container(
+                //     height: 520,
+                //     padding: const EdgeInsets.all(15.0),
+                //     decoration: BoxDecoration(
+                //       color: Colors.black38,
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //     child: Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: <Widget>[
+                //         Expanded(
+                //           flex: 1,
+                //           child: Column(
+                //             children: [
+                //               const SizedBox(height: 5.0,),
+                //               widget.deliveryStatus == 'Not Delivered'
+                //                   ?
+                //               const Text(
+                //                 'Your Order Is On The way',
+                //                 style: TextStyle(
+                //                   fontSize: 18,
+                //                   color: Color(0xFFfebf10),
+                //                 ),
+                //               )
+                //                   :
+                //               const Text(
+                //                 'Your Order Is Delivered. Enjoy',
+                //                 style: TextStyle(
+                //                   fontSize: 18,
+                //                   color: Color(0xFFfebf10),
+                //                 ),
+                //               ),
+                //               const SizedBox(height: 5.0,),
+                //               const Divider(
+                //                 color: Color(0xFFfebf10),
+                //               ),
+                //               const SizedBox(height: 10.0,),
+                //             ],
+                //           ),
+                //         ),
+                //         widget.deliveryStatus == 'Not Delivered'
+                //             ?
+                //         Expanded(
+                //           flex: 6,
+                //           child: Container(
+                //             decoration: const BoxDecoration(
+                //               color: Colors.transparent,
+                //             ),
+                //             child: GoogleMap(
+                //               initialCameraPosition: const CameraPosition(
+                //                 target: sourceLocation,
+                //                 zoom: 12.5,
+                //               ),
+                //               myLocationEnabled: true,
+                //               polylines: {
+                //                 Polyline(
+                //                   polylineId: const PolylineId("route"),
+                //                   points: polylineCoordinates,
+                //                   color: Colors.red,
+                //                   width: 5,
+                //                 ),
+                //               },
+                //               markers: {
+                //                 const Marker(
+                //                   markerId: MarkerId("source"),
+                //                   position: sourceLocation,
+                //                 ),
+                //                 Marker(
+                //                   markerId: const MarkerId("destination"),
+                //                   position: destination,
+                //                 ),
+                //               },
+                //               onMapCreated: (mapController) {
+                //                 _controller.complete(mapController);
+                //               },
+                //             ),
+                //           ),
+                //         )
+                //             :
+                //         Expanded(
+                //           flex: 6,
+                //           child: Container(
+                //             decoration: const BoxDecoration(
+                //               color: Colors.transparent,
+                //               image: DecorationImage(
+                //                 image: AssetImage(deliveredImage),
+                //                 fit: BoxFit.cover,
+                //               ),
+                //             ),
+                //             child: null,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ],
         ),
+      ),
     );
   }
 
@@ -363,11 +452,13 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
     );
     if (response.statusCode == 200) {
       final orderDetails = json.decode(response.body);
-      return OrderFoodDetails.fromJsonList(orderDetails['data']['pendingOrders']);
+      return OrderFoodDetails.fromJsonList(
+          orderDetails['data']['pendingOrders']);
     } else {
       throw Exception('Failed to load data');
     }
   }
+
   Future<List<dynamic>> fetchSpecificOrderData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
@@ -387,7 +478,7 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
   }
 }
 
-class OrderFoodDetails{
+class OrderFoodDetails {
   final String userName;
   final String userAddress;
   OrderFoodDetails({
@@ -400,17 +491,20 @@ class OrderFoodDetails{
       userAddress: json['Address'],
     );
   }
-  static List<OrderFoodDetails> fromJsonList(dynamic jsonList){
+  static List<OrderFoodDetails> fromJsonList(dynamic jsonList) {
     final cartOrderFoodDetailsList = <OrderFoodDetails>[];
     if (jsonList is List<dynamic>) {
       for (final json in jsonList) {
-        cartOrderFoodDetailsList.add(OrderFoodDetails.fromJson(json),);
+        cartOrderFoodDetailsList.add(
+          OrderFoodDetails.fromJson(json),
+        );
       }
     }
     return cartOrderFoodDetailsList;
   }
 }
-class OrderFood{
+
+class OrderFood {
   final String foodName;
   final int qty;
   OrderFood({
@@ -423,11 +517,13 @@ class OrderFood{
       qty: json['quantity'],
     );
   }
-  static List<OrderFood> fromJsonList(dynamic jsonList){
+  static List<OrderFood> fromJsonList(dynamic jsonList) {
     final cartOrderFoodList = <OrderFood>[];
     if (jsonList is List<dynamic>) {
       for (final json in jsonList) {
-        cartOrderFoodList.add(OrderFood.fromJson(json),);
+        cartOrderFoodList.add(
+          OrderFood.fromJson(json),
+        );
       }
     }
     return cartOrderFoodList;
