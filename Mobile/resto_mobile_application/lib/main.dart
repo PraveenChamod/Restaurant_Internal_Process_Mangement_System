@@ -53,11 +53,10 @@ class _MyAppState extends State<MyApp> {
     ]);
     return MaterialApp(
       scrollBehavior: AppScrollBehavior(),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       home: const SplashScreen(),
     );

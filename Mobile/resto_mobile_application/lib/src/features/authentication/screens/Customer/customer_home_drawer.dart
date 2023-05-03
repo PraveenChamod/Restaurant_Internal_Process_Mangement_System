@@ -25,11 +25,10 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor:MediaQuery.of(context).platformBrightness == Brightness.dark ? Colors.black : Colors.white,
       width: MediaQuery.of(context).size.width/1.5,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-            topRight: Radius.circular(20),
             bottomRight: Radius.circular(20)),
       ),
       child: ListView(
@@ -120,7 +119,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (_){
-                    return FavouritesScreen();
+                    return const FavouritesScreen();
                   },
                 ),
               );
@@ -187,9 +186,6 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
       ),
     );
   }
-  //Function for get logged user Details
-  // Method : GET
-  // End Point : "api/v1/Auth/Profile";
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
