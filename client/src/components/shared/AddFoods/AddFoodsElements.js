@@ -79,6 +79,6 @@ export const ButtonSection = styled.div`
 `;
 export const ButtonSection1 = styled.div`
   position: relative;
-  left: -20%;
-  top: -2%;
+  width: 50rem;
+  top: -3%;
 `;

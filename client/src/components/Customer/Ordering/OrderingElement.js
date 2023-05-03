@@ -198,3 +198,17 @@ export const ButtonSection = styled.div`
   display: flex;
   justify-content: left;
 `;
+export const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+`
+export const Image = styled.img`
+  width:500px;
+  height: 350px;
+`
+export const Text = styled.h1`
+  color: #fff;
+` 

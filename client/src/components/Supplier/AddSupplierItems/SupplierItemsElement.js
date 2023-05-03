@@ -44,11 +44,11 @@ export const RightSide = styled.form`
 `;
 export const Div3 = styled.div`
   margin-top: 15px;
-  width: 50%;
+  width: 60%;
   height: 8%;
   display: flex;
   flex-direction: column;
-  padding-left: 30px;
+  
 `;
 
 export const AddButton = styled.button`

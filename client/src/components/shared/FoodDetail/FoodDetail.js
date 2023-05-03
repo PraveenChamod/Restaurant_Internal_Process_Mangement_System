@@ -3,52 +3,48 @@ import React from "react";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from "./FoodDetailElements";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 const FoodDetailComponent = (props) => {
-    console.log(props.BackRoutes);
-    const[FoodName,setName] = useState(props.food.FoodName);
-    const[Category,setCategory] = useState(props.food.Category);
-    const[Price,setPrice] = useState(props.food.Price);
-    const[Status,setStatus] = useState(props.food.Status);
-    
-    const update = async (e)=>{
-        e.preventDefault();
-        try {
-            const Data = new FormData();
-            Data.append("FoodName",FoodName);
-            Data.append("Category", Category);
-            Data.append("Price", Price);
-            Data.append("Status", Status);
-            console.log(Data);
-            await toast.promise(
-                axios.patch('api/v1/Food/:id',Data),
-                {
-                    loading:'Food is Updating....',
-                    success:(data)=>{
-                        return ` ${data.data?.message} ` || "success";
-                    },
-                    error: (err) => `${err.response.data.message}`,
-                },
-                {
-                    style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                        fontSize:'1rem',
-                        zIndex:'99999999',
-                    },
-                }
-
-            )
-
-        } catch (error) {
-            console.log(error.message);
+  console.log(props.BackRoutes);
+  const [FoodName, setName] = useState(props.food.FoodName);
+  const [Category, setCategory] = useState(props.food.Category);
+  const [Price, setPrice] = useState(props.food.Price);
+  const [Status, setStatus] = useState(props.food.Status);
+  const { user } = useAuth();
+  const { id } = useParams();
+  console.log(id);
+  const update = async (e) => {
+    e.preventDefault();
+    try {
+      const Data = { FoodName, Category, Price, Status };
+      console.log(Data);
+      await toast.promise(
+        axios.patch(`/api/v1/Food/${id}`, Data),
+        {
+          loading: "Food is Updating....",
+          success: (data) => {
+            return ` ${data.data?.message} ` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
         }
-    };
-    
-    return ( 
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  return (
     <Container>
       <Header>Food Details</Header>
       <l.Div onSubmit={update}>
@@ -79,7 +75,7 @@ const FoodDetailComponent = (props) => {
             <l.TextFeild
               type="text"
               placeholder="Price"
-              value={"Rs." + Price}
+              value={Price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </l.TextSection>
@@ -107,31 +103,25 @@ const FoodDetailComponent = (props) => {
           </l.RadioButtonSection>
         </l.Div1>
         <l.Div2>
-            <l.Sec>
-            <FormButton>
-              <Link className="btn">
-                Delete
-              </Link>
-            </FormButton>
-            </l.Sec>
-            <l.Sec>
-                <FormButton>
-                    <Link to = "./login" className="btn">
-                    Update
-                    </Link>
-                </FormButton>
-            </l.Sec>
+          <l.Sec>
+            <FormButton type="submit">Update</FormButton>
+          </l.Sec>
         </l.Div2>
       </l.Div>
       <l.Div3>
-      <RegularButton>
-          <Link to= "./FoodDetails" className="btn">
+        <RegularButton>
+          <Link
+            to={
+              user.Role === "Admin" ? "/AdminView-Foods" : "/ManagerView-Foods"
+            }
+            className="btn"
+          >
             Back
           </Link>
-        </RegularButton>  
+        </RegularButton>
       </l.Div3>
     </Container>
-     );
-}
+  );
+};
 
 export default FoodDetailComponent;

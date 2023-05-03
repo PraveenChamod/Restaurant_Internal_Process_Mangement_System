@@ -18,7 +18,6 @@ const ViewStocksComponent = (props) => {
               <l.Th>Category</l.Th>
               <l.Th>Qty</l.Th>
               <l.Th>Price</l.Th>
-              <l.Th>Supplier ID</l.Th>
               <l.Th></l.Th>
             </l.Tr>
           </thead>
@@ -29,9 +28,7 @@ const ViewStocksComponent = (props) => {
                 <l.Td>{item.Category}</l.Td>
                 <l.Td>{item.Quantity}</l.Td>
                 <l.Td>{item.WholeSalePrice}</l.Td>
-                <l.Td>{item.id}</l.Td>
-                {user.Role === "Manager" ? (
-                  <Link
+                <Link
                     to={`/ManagerViewItem/${item.SerialNo}`}
                     className="btn"
                   >
@@ -39,7 +36,6 @@ const ViewStocksComponent = (props) => {
                       <AiFillEye />
                     </l.Icon>
                   </Link>
-                ) : null}
               </l.Tr>
             ))}
           </tbody>

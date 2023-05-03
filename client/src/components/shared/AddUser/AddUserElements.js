@@ -33,7 +33,7 @@ export const Div3 = styled.div`
   height: 8%;
   display: flex;
   flex-direction: column;
-  padding-left: 30px;
+  
 `;
 
 export const Div4 = styled.div`

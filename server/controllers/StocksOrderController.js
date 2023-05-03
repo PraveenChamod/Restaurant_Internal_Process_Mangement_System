@@ -2,6 +2,14 @@ import mongoose from "mongoose";
 import ServiceProviders from "../models/ServiceProviders.js";
 import StocksOrder from "../models/StockOrder.js";
 import SupplierItem from "../models/SupplierItem.js";
+import { transporter } from "../util/NotificationUtil.js";
+import path from "path";
+import ejs from "ejs";
+
+const __dirname = path
+  .dirname(path.dirname(new URL(import.meta.url).pathname))
+  .slice(1);
+
 
 // Method : POST
 // End Point : "api/v1/SupplierOrder";
@@ -141,6 +149,8 @@ export const ViewSupplierOrder = async (req, res) => {
               const Name = populatedOrder.Manager.Name;
               const Email = populatedOrder.Manager.Email;
               const Status = populatedOrder.Status;
+              const ContactNumber = populatedOrder.Manager.ContactNumber
+              const Image = populatedOrder.Manager.ProfileImage;
               const TotalPrice = populatedOrder.TotalPrice;
               for (const order of order1.Items) {
                 console.log(order);
@@ -162,6 +172,8 @@ export const ViewSupplierOrder = async (req, res) => {
                 orderId: order.id,
                 managerName: Name,
                 managerEmail: Email,
+                managerImage : Image,
+                managerContactNumber:ContactNumber,
                 OrderStatus: Status,
                 Item,
               };
@@ -215,28 +227,72 @@ export const ViewSupplierOrder = async (req, res) => {
 //     }
 //  }
 
-// Method : POST
-// End Point : "api/v1/stockorderconfirmation/:id'"
+// Method : PATCH
+// End Point : "api/v1/stockorderconfirmation'"
 // Description : Confirm Stock Order
 export const ConfirmStockOrder = async (req, res) => {
   try {
     const user = req.user;
     if (user.Role === "Supplier") {
-      const { id } = req.params;
-      const findOrder = await StocksOrder.findById(id);
-
-      if (findOrder !== null) {
-        const session = await mongoose.startSession();
+      const {id,Name,Email,ContactNumber,Items,totalPrice} = req.body;
+      console.log(req.body);
+      const session = await mongoose.startSession();
         try {
           session.startTransaction();
           const UpdateOrder = await StocksOrder.findByIdAndUpdate(
-            findOrder.id,
+            id,
             { Status: "Confirm" },
             { new: true, runValidators: true }
           ).session(session);
           await session.commitTransaction();
           session.endSession();
-
+          const data = {
+            id:id,
+            ManagerName: Name,
+            ManagerEmail: Email,
+            ManagerPhone: ContactNumber,
+            SupplierName: user.Name,
+            SupplierPhone: user.ContactNumber,
+            SupplierEmail: user.Email,
+            orderedItems: Items,
+            totalPrice: totalPrice,
+          };
+          const mailOption = {
+            from: "resto6430@gmail.com",
+            to: Email,
+            subject: "Order Confrimation",
+            attachments: [
+              {
+                filename: "logo.png",
+                path: `${__dirname}/Template/logo.png`,
+                cid: "logo",
+              },
+            ],
+          };
+          ejs.renderFile(
+            `${__dirname}/Template/StockOrderConfirmation.ejs`,
+            data,
+            (err, renderHTML) => {
+              if (err) {
+                console.log(err.message);
+                res.status(500).json({
+                  status: "Server Error",
+                  message: err.message,
+                });
+              } else {
+                mailOption.html = renderHTML;
+                transporter.sendMail(mailOption, (err, info) => {
+                  if (err) {
+                    console.log(err.message);
+                    res.status(500).json({
+                      status: "Server Error",
+                      message: err.message,
+                    });
+                  }
+                });
+              }
+            }
+          );
           res.status(201).json({
             status: "success",
             message: "Order is Confirmed",
@@ -250,7 +306,9 @@ export const ConfirmStockOrder = async (req, res) => {
             message: error.message,
           });
         }
-      }
+    }
+    else{
+      res.status(501).json("This user not authorized for this operation");
     }
   } catch (error) {
     return res.status(500).json({

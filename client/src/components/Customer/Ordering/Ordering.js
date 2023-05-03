@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import * as l from "./OrderingElement";
 import { Header } from "../../shared/SharedElements/SharedElements";
-
+import notfound from '../../../Images/notFound/NoResults.png';
 import icon1 from "../../../Images/OrderIcon/OrderIcon1.png";
 import icon2 from "../../../Images/OrderIcon/OrderIcon2.png";
 import icon3 from "../../../Images/OrderIcon/OrderIcon3.png";
@@ -180,35 +180,40 @@ const Ordering = (props) => {
         <l.Div>
           {Items && Items.length > 0 ? (
             Items.map((data, index) => {
-              return (
-                <l.Div1 key={data.id}>
-                  <l.Div2>
-                    <l.Img1
-                      src={`http://localhost:5000/Foodimages/${data.FoodImage}`}
-                      alt="buttonpng"
-                    ></l.Img1>
-                    <l.P>{data.FoodName}</l.P>
-                  </l.Div2>
-                  <l.Div3>
-                    <l.Div4>
-                      <l.P1>Reguler</l.P1>
-                      <l.P1>{"Rs." + data.Price}</l.P1>
-                    </l.Div4>
-                    <l.Div5
-                      onClick={() => {
-                        handleAddToCart(index);
-                      }}
-                    >
-                      <l.Button2>
-                        <FaShoppingCart />
-                      </l.Button2>
-                    </l.Div5>
-                  </l.Div3>
-                </l.Div1>
-              );
+              if(data.Status != "Not Available"){
+                return (
+                  <l.Div1 key={data.id}>
+                    <l.Div2>
+                      <l.Img1
+                        src={`http://localhost:5000/Foodimages/${data.FoodImage}`}
+                        alt="buttonpng"
+                      ></l.Img1>
+                      <l.P>{data.FoodName}</l.P>
+                    </l.Div2>
+                    <l.Div3>
+                      <l.Div4>
+                        <l.P1>Reguler</l.P1>
+                        <l.P1>{"Rs." + data.Price}</l.P1>
+                      </l.Div4>
+                      <l.Div5
+                        onClick={() => {
+                          handleAddToCart(index);
+                        }}
+                      >
+                        <l.Button2>
+                          <FaShoppingCart />
+                        </l.Button2>
+                      </l.Div5>
+                    </l.Div3>
+                  </l.Div1>
+                ); 
+              }
             })
           ) : (
-            <h1>No Result Found</h1>
+            <l.NotFound>
+              <l.Image src={notfound}/>
+              <l.Text>No Results Found</l.Text>
+            </l.NotFound>
           )}
         </l.Div>
         <Header>Today's Special</Header>
@@ -243,7 +248,10 @@ const Ordering = (props) => {
               );
             })
           ) : (
-            <h1>No Result Found</h1>
+            <l.NotFound>
+              <l.Image src={notfound}/>
+              <l.Text>No Results Found</l.Text>
+            </l.NotFound>
           )}
         </l.Div>
         <l.Div>

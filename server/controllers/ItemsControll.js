@@ -24,7 +24,13 @@ export const addItems = async (req, res) => {
           Quantity: Quantity,
           UnitPrice: UnitPrice,
         });
-        res.json(createItem);
+        res.status(200).json({
+          status:'Success',
+          message:'Stock Item Added',
+          data:{
+            createItem
+          }
+        });
       }
     } else {
       res.status(401).json("Only Manager has access to do this operation");

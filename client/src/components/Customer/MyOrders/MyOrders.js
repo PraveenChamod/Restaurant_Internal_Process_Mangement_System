@@ -5,6 +5,7 @@ import { TiTick } from "react-icons/ti";
 import { BsHourglassSplit } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
+import notfound from "../../../Images/notFound/NoResults.png";
 const MyOrdersComponent = (props) => {
   console.log(props.data);
   const { user } = useAuth();
@@ -31,81 +32,88 @@ const MyOrdersComponent = (props) => {
             </l.LogoSection>
           </l.SubSection1>
           <l.SubSection3>
-            <l.Left>
-              {props.data.map((cart) => {
-                return (
-                  <l.CartSection>
-                    <l.ItemsCard>
-                      <l.SubText>
-                        <l.Text>Order Id : {cart.OrderId}</l.Text>
-                        <l.Text>Price : Rs. {cart.TotalPrice}</l.Text>
-                        <l.Text>
-                          Status :{cart.Status}
-                          <l.Icon1>
-                            {cart.Status === "Confirm" ? (
-                              <TiTick />
-                            ) : (
-                              <BsHourglassSplit />
-                            )}
-                          </l.Icon1>
-                        </l.Text>
-                        <l.Text>
-                          Delivery Status :{cart.DeliveryStatus}
-                          <l.Icon1>
-                            {cart.DeliveryStatus === "Delivered" ? (
-                              <TiTick />
-                            ) : (
-                              <BsHourglassSplit />
-                            )}
-                          </l.Icon1>
-                        </l.Text>
-                      </l.SubText>
-                      <l.Section>
-                        <l.Text>Items</l.Text>
-                        <l.ItemSection>
-                          {cart.food.map((food) => {
-                            return (
-                              <l.CartSection1>
-                                {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+            {props.data.length === 0 ? (
+              <l.NotFound>
+                <l.Image1 src={notfound} />
+                <l.Text1>No Results Found</l.Text1>
+              </l.NotFound>
+            ) : (
+              <l.Left>
+                {props.data.map((cart) => {
+                  return (
+                    <l.CartSection>
+                      <l.ItemsCard>
+                        <l.SubText>
+                          <l.Text>Order Id : {cart.OrderId}</l.Text>
+                          <l.Text>Price : Rs. {cart.TotalPrice}</l.Text>
+                          <l.Text>
+                            Status :{cart.Status}
+                            <l.Icon1>
+                              {cart.Status === "Confirm" ? (
+                                <TiTick />
+                              ) : (
+                                <BsHourglassSplit />
+                              )}
+                            </l.Icon1>
+                          </l.Text>
+                          <l.Text>
+                            Delivery Status :{cart.DeliveryStatus}
+                            <l.Icon1>
+                              {cart.DeliveryStatus === "Delivered" ? (
+                                <TiTick />
+                              ) : (
+                                <BsHourglassSplit />
+                              )}
+                            </l.Icon1>
+                          </l.Text>
+                        </l.SubText>
+                        <l.Section>
+                          <l.Text>Items</l.Text>
+                          <l.ItemSection>
+                            {cart.food.map((food) => {
+                              return (
+                                <l.CartSection1>
+                                  {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
                                                                         {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
                                                                     </l.SelectIcon> */}
-                                <l.ItemsCard1>
-                                  <l.FoodImage>
-                                    <l.Food
-                                      src={`http://localhost:5000/${
-                                        food.Foodid == null
-                                          ? "offerimages"
-                                          : "Foodimages"
-                                      }/${food.image}`}
-                                    />
-                                  </l.FoodImage>
-                                  <l.Details>
-                                    <l.MainText>
-                                      <l.FoodName>{food.FoodName}</l.FoodName>
-                                    </l.MainText>
-                                    <l.SubText>
-                                      {/* <l.Text>
+                                  <l.ItemsCard1>
+                                    <l.FoodImage>
+                                      <l.Food
+                                        src={`http://localhost:5000/${
+                                          food.Foodid == null
+                                            ? "offerimages"
+                                            : "Foodimages"
+                                        }/${food.image}`}
+                                      />
+                                    </l.FoodImage>
+                                    <l.Details>
+                                      <l.MainText>
+                                        <l.FoodName>{food.FoodName}</l.FoodName>
+                                      </l.MainText>
+                                      <l.SubText>
+                                        {/* <l.Text>
                                                                                     {cart.Size}
                                                                                 </l.Text> */}
-                                      <l.Text>
-                                        Quantity : {food.quantity}
-                                      </l.Text>
-                                      {/* <l.Text>
+                                        <l.Text>
+                                          Quantity : {food.quantity}
+                                        </l.Text>
+                                        {/* <l.Text>
                                                                                     Price : {food.quantity * cart.price}
                                                                                 </l.Text> */}
-                                    </l.SubText>
-                                  </l.Details>
-                                </l.ItemsCard1>
-                              </l.CartSection1>
-                            );
-                          })}
-                        </l.ItemSection>
-                      </l.Section>
-                    </l.ItemsCard>
-                  </l.CartSection>
-                );
-              })}
-            </l.Left>
+                                      </l.SubText>
+                                    </l.Details>
+                                  </l.ItemsCard1>
+                                </l.CartSection1>
+                              );
+                            })}
+                          </l.ItemSection>
+                        </l.Section>
+                      </l.ItemsCard>
+                    </l.CartSection>
+                  );
+                })}
+              </l.Left>
+            )}
           </l.SubSection3>
         </l.SubContainer>
         <l.ButtonSection>
