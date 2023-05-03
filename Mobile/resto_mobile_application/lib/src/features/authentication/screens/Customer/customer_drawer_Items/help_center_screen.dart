@@ -34,37 +34,6 @@ class HelpCenterScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
                             Text(
-                              'FAQs:',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFFfebf10),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              '1. What payment options are available on the app?',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white
-                              ),
-                            ),
-                            Text(
-                              'You can use card payment option and cash on delivery option.',
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white70
-                              ),
-                            ),
-                            Divider(
-                              color: Color(0xFFfebf10),
-                            ),
-                            Text(
                               'Guidelines:',
                               style: TextStyle(
                                 fontSize: 18,
@@ -78,9 +47,9 @@ class HelpCenterScreen extends StatelessWidget {
                             Text(
                               'Online Ordering:',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
                               ),
                             ),
                             Text(
@@ -139,11 +108,71 @@ class HelpCenterScreen extends StatelessWidget {
                               color: Color(0xFFfebf10),
                             ),
                             Text(
-                              'Troubleshooting Tips:',
+                              'FAQs:',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFFfebf10),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              '1. What payment options are available on the app?',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            ),
+                            Text(
+                              'You can use card payment option and cash on delivery option.',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              '2. Is there an option for delivery or pickup orders?',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            ),
+                            Text(
+                              'Yes. There are delivery service available in 24 hours.',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              '3. How do I contact customer support through the app?',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            ),
+                            Text(
+                              'You chat with our agent and find the best solution for your problem.',
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white70
                               ),
                             ),
                           ],
@@ -239,7 +268,7 @@ class HelpCenterScreen extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.circular(50.0),
                                                 child: Image.asset(
-                                                  mainDeveloper,
+                                                  coDeveloper4,
                                                   width: 100,
                                                   height: 80,
                                                   fit: BoxFit.cover,
@@ -328,7 +357,7 @@ class HelpCenterScreen extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.circular(50.0),
                                                 child: Image.asset(
-                                                  mainDeveloper,
+                                                  coDeveloper5,
                                                   width: 100,
                                                   height: 80,
                                                   fit: BoxFit.cover,
@@ -376,7 +405,7 @@ class HelpCenterScreen extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.circular(50.0),
                                                 child: Image.asset(
-                                                  mainDeveloper,
+                                                  coDeveloper3,
                                                   width: 100,
                                                   height: 80,
                                                   fit: BoxFit.cover,
@@ -417,7 +446,7 @@ class HelpCenterScreen extends StatelessWidget {
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.circular(50.0),
                                                 child: Image.asset(
-                                                  mainDeveloper,
+                                                  coDeveloper2,
                                                   width: 100,
                                                   height: 80,
                                                   fit: BoxFit.cover,

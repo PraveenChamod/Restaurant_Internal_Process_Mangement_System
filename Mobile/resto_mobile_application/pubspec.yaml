@@ -100,6 +100,10 @@ flutter:
   #Developers Images
     - assets/images/Praveen_Chamod.png
     - assets/images/Kasuni_Nihara.png
+    - assets/images/Chamodya.png
+    - assets/images/Dilmith.png
+    - assets/images/Aravinda.png
+    - assets/images/Dhanushka.png
   #Application Logo
     - assets/logo/Logo.png
   #Food Images
