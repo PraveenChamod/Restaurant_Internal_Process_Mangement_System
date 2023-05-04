@@ -76,7 +76,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                   const Text(
                                     'Rate Us',
                                     style: TextStyle(
-                                      fontSize: 23,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFFfebf10),
                                     ),
@@ -142,7 +142,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                   const Text(
                                     'Write A Review',
                                     style: TextStyle(
-                                      fontSize: 23,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFFfebf10),
                                     ),
