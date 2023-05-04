@@ -22,6 +22,7 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
   final List<SpecialEvents> eventData = [];
 
   String tableId = '';
+  String tableNumberStr = '';
   String tableNumber = '';
   String personCount = '';
 
@@ -656,7 +657,8 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                                               color: const Color(0xFFfebf10),
                                               pressEvent: () {
                                                 setState(() {
-                                                  tableNumber = 'Table No: ${snapshot.data![index].tableNumber}';
+                                                  tableNumberStr = 'Table No: ${snapshot.data![index].tableNumber}';
+                                                  tableNumber = snapshot.data![index].tableNumber;
                                                   tableId = snapshot.data![index].id;
                                                   personCount = 'No. Of Persons: ${snapshot.data![index].numberOfPersons}';
                                                   tablePriceStr = 'Price: Rs. ${snapshot.data![index].price}';
@@ -702,135 +704,131 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                 color: Colors.black38,
                 child: Column(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20.0,),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  const Center(
-                                    child: Text(
-                                      'Special Event:',
-                                      style: TextStyle(
-                                        color: Color(0xFFfebf10),
-                                        fontSize: 17.0,
-                                      ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0,),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
+                                const Center(
+                                  child: Text(
+                                    'Special Event:',
+                                    style: TextStyle(
+                                      color: Color(0xFFfebf10),
+                                      fontSize: 17.0,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5.0,
+                                ),
+                                const SizedBox(
+                                  height: 5.0,
+                                ),
+                                Text(
+                                  eventName,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                  Text(
-                                    eventName,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
+                                ),
+                                Text(
+                                  packageType,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                  Text(
-                                    packageType,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
+                                ),
+                                Text(
+                                  eventPriceStr,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                  Text(
-                                    eventPriceStr,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20.0,),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  const Center(
-                                    child: Text(
-                                      'Table Details:',
-                                      style: TextStyle(
-                                        color: Color(0xFFfebf10),
-                                        fontSize: 17.0,
-                                      ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20.0,),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
+                                const Center(
+                                  child: Text(
+                                    'Table Details:',
+                                    style: TextStyle(
+                                      color: Color(0xFFfebf10),
+                                      fontSize: 17.0,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 5.0,
+                                ),
+                                const SizedBox(
+                                  height: 5.0,
+                                ),
+                                Text(
+                                  tableNumberStr,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                  Text(
-                                    tableNumber,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
+                                ),
+                                Text(
+                                  personCount,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                  Text(
-                                    personCount,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
+                                ),
+                                Text(
+                                  tablePriceStr,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
                                   ),
-                                  Text(
-                                    tablePriceStr,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: Container(
-                          width: 150,
-                          height: 35,
-                          padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
-                          child: AnimatedButton(
-                            text: "Book Table",
-                            buttonTextStyle: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            color: const Color(0xFFfebf10),
-                            pressEvent: () {
-                              setState(() {
-                                totalPrice = eventPrice + tablePrice;
-                              });
-                              openBottomSheet();
-                              addDataToList(tableId, tableNumber);
-                              print(totalPrice);
-
-                            },
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(0),
-                              topRight: Radius.circular(80),
-                              bottomLeft: Radius.circular(80),
-                              bottomRight: Radius.circular(80),
-                            ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    Center(
+                      child: Container(
+                        width: 150,
+                        height: 35,
+                        padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
+                        child: AnimatedButton(
+                          text: "Book Table",
+                          buttonTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          color: const Color(0xFFfebf10),
+                          pressEvent: () {
+                            setState(() {
+                              totalPrice = eventPrice + tablePrice;
+                            });
+                            openBottomSheet();
+                            addDataToList(tableId, tableNumber);
+                            print(totalPrice);
+                          },
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(80),
+                            bottomLeft: Radius.circular(80),
+                            bottomRight: Radius.circular(80),
                           ),
                         ),
                       ),
@@ -1031,6 +1029,11 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                         ),
                         color: const Color(0xFFfebf10),
                         pressEvent: () {
+                          print(tableNumbers);
+                          print(bookTables);
+                          print(totalPrice);
+
+
                           cardPayment(
                               tableNumbers,
                               bookTables,
@@ -1278,6 +1281,40 @@ class SpecialEvents{
     return specialEventList;
   }
 }
+
+class SelectTables{
+  final String id;
+  final String tableNumber;
+  final int numberOfPersons;
+  final int price;
+  final String status;
+  SelectTables({
+    required this.tableNumber,
+    required this.numberOfPersons,
+    required this.price,
+    required this.status,
+    required this.id,
+  });
+  factory SelectTables.fromJson(Map<String, dynamic> json) {
+    return SelectTables(
+      tableNumber: json['TableNo'],
+      numberOfPersons: json['NoOfPersons'],
+      price: json['price'],
+      status: json['Status'],
+      id: json['id'],
+    );
+  }
+  static List<SelectTables> fromJsonList(dynamic jsonList){
+    final selectTablesList = <SelectTables>[];
+    if (jsonList is List<dynamic>) {
+      for (final json in jsonList) {
+        selectTablesList.add(SelectTables.fromJson(json),);
+      }
+    }
+    return selectTablesList;
+  }
+}
+
 
 class TableIdList {
   final String tableIdentity;
