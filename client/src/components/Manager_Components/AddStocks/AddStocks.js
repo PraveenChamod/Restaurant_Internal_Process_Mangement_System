@@ -8,13 +8,13 @@ import { Page, Div, Div1, Div2, Div3, H1 } from "./AddStocksElements";
 import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const AddStocks = (props) => {
   const [ItemName, setItemName] = useState("");
   const [Category, setCategory] = useState("");
   const [Quantity, setQuantity] = useState("");
   const [UnitPrice, setUnitPrice] = useState("");
-  const [WholeSalePrice, setWholeSalePrice] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -24,11 +24,26 @@ const AddStocks = (props) => {
         Category,
         Quantity,
         UnitPrice,
-        WholeSalePrice,
       };
-      console.log(formData);
-      const res = await axios.post("api/v1/Item", formData);
-      console.log(res);
+      await toast.promise(
+        axios.post("api/v1/Item", formData),
+        {
+          loading: "Item is Adding....",
+          success: (data) => {
+            return ` ${data.data?.message} ` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }
@@ -99,24 +114,12 @@ const AddStocks = (props) => {
           />
           <TextField
             id="standard-basic"
-            label="Price"
+            label="Unit Price"
             variant="standard"
             InputLabelProps={{ className: "textFeild_Label" }}
             sx={{ marginBottom: "5%" }}
             value={UnitPrice}
             onChange={(e) => setUnitPrice(e.target.value)}
-            InputProps={{
-              style: { color: "#fff" },
-            }}
-          />
-          <TextField
-            id="standard-basic"
-            label="Whole Sale Price"
-            variant="standard"
-            InputLabelProps={{ className: "textFeild_Label" }}
-            sx={{ marginBottom: "0" }}
-            value={WholeSalePrice}
-            onChange={(e) => setWholeSalePrice(e.target.value)}
             InputProps={{
               style: { color: "#fff" },
             }}

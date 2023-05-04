@@ -98,12 +98,14 @@ import ViewSupplierOrderDetails from "./Pages/Manager/ViewSupplierOrderDetails";
 import SupplierOrderConform from "./Pages/Supplier/SupplierOrderConform";
 import ManagerAddDatingItems from "./Pages/Manager/ManagerAddDatingTableItems";
 import AdminViewTableDetails from "./Pages/Admin/AdminViewTable";
+import ChatBot from "./components/ChatBot/ChatBot";
+import Preloader from "./components/Preloader/Preloader";
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const stripePromise = loadStripe(
     "pk_test_51MbCY3GuiFrtKvgKd8w5qdphJciL87lB1ITs2nFL1FUNQnfIqxPA4hX2A3qrhDd7Gfcsab01gcVNpXlTJs6ArcyF00t5WxYsrg"
   );
-
   useEffect(() => {
     Aos.init({
       disable: "mobile",
@@ -141,16 +143,26 @@ function App() {
       }
     };
     window.addEventListener("resize", resize);
+
+    
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 4000);
+  }, []);
 
   return (
     <div>
-      <AuthState>
+      {
+        isLoading ? <Preloader/> :
+        <AuthState>
         <Fragment>
           <div className="App">
             <Toaster position="top-center" reverseOrder={false} />
             <ScrollToTop />
-
+            
             <Routes>
               <Route element={<WithNavAndFooter ScrollToTop={scrollToTop} />}>
                 <Route path="/" element={<Home ScrollToTop={scrollToTop} />} />
@@ -158,7 +170,6 @@ function App() {
                   path="/Menu"
                   element={<Menu MenuItems={MenuItems} login="/login" />}
                 />
-                
               </Route>
               <Route
                 element={<WithoutNavAndFooter ScrollToTop={scrollToTop} />}
@@ -273,7 +284,7 @@ function App() {
                   element={
                     <ManagerUserProfile
                       route={EditProfileLinks[1]}
-                      BackRoutes={BackRoutes[1]}
+                      BackRoutes={BackRoutes[1].nav}
                     />
                   }
                 />
@@ -596,20 +607,16 @@ function App() {
                   path="/ViewSupplyItems"
                   element={<SupplierItems BackRoutes={BackRoutes[5].nav} />}
                 />
-                {/* <Route path="/ViewSupplyItem/:id" element={<SupplierItems BackRoutes={BackRoutes[5].nav}/>}/>  */}
                 <Route
                   path="/SupplierMessages"
                   element={<Messages BackRoutes={BackRoutes[5].nav} />}
-                />
-                <Route
-                  path="/SupplierConformOrder/:id"
-                  element={<SupplierOrderConform />}
                 />
               </Route>
             </Routes>
           </div>
         </Fragment>
       </AuthState>
+      }
     </div>
   );
 }

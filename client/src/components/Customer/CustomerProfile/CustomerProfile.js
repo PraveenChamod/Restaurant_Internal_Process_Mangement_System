@@ -112,9 +112,7 @@ const CustomerProfile = (props) => {
                 <RegularButton onClick={uploadImage}>Upload</RegularButton>
                 <br />
                 <RemoveButton>
-                  <Link to="./login" className="btn">
                     REMOVE
-                  </Link>
                 </RemoveButton>
               </Div4>
             </Div2>

@@ -10,7 +10,7 @@ import {
   tableSortLabelClasses,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
 import {
@@ -40,8 +40,8 @@ const TableReservationComponent = ({ data }) => {
   let amount = data.Amount;
   let tables = data.Tables;
   let type = data.Type;
-  console.log("table data ddd,", data);
 
+  const navigate = useNavigate();
   const confirmReservation = async (e) => {
     e.preventDefault();
     const formData = {
@@ -75,6 +75,9 @@ const TableReservationComponent = ({ data }) => {
           },
         }
       );
+      setTimeout(() => {
+        navigate("/Staff-MemberPendingTable-Reservation-Details")
+      }, 2000);
     } catch (error) {
       console.log(error.message);
     }

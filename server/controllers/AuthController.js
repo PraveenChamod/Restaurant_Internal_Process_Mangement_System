@@ -5,14 +5,12 @@ import {
   GenerateSalt,
   validatePassword,
 } from "../util/PasswordUtility.js";
-import jwt from "jsonwebtoken";
 import multer from "multer";
 import ServiceProviders from "../models/ServiceProviders.js";
 import Customer from "../models/Customer.js";
 import path from "path";
 import ejs from "ejs";
 import { transporter } from "../util/NotificationUtil.js";
-import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 const imageStorage = multer.diskStorage({

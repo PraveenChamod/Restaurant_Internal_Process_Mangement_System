@@ -9,7 +9,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import useFetch from "../../../Hooks/useFetch";
-
+import notfound from '../../../Images/notFound/NoResults.png';
 const CartComponent = ({ data }) => {
   const { user } = useAuth();
   const [Items, setItem] = useState(data);
@@ -117,7 +117,7 @@ const CartComponent = ({ data }) => {
     Price += element.quantity * element.price;
     console.log(Price);
   });
-
+  console.log(Items.length);
   return (
     <>
       <l.Container>
@@ -135,54 +135,60 @@ const CartComponent = ({ data }) => {
           </l.SubSection2>
           <l.SubSection3>
             <l.Left>
-              {Items.map((cart, index) => {
-                console.log(cart);
-                return (
-                  <l.CartSection>
-                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                    </l.SelectIcon> */}
-                    <l.ItemsCard>
-                      <l.FoodImage>
-                        <l.Food
-                          src={`http://localhost:5000/${
-                            cart.Foodid == null ? "offerimages" : "Foodimages"
-                          }/${cart.image}`}
-                        />
-                      </l.FoodImage>
-                      <l.Details>
-                        <l.MainText>
-                          <l.FoodName>{cart.name}</l.FoodName>
-                        </l.MainText>
-                        <l.SubText>
-                          {/* <l.Text>
-                                                    {cart.Size}
-                                                </l.Text> */}
-                          <l.Text>
-                            Quantity :{" "}
-                            {clickedIndex[index] ? Quantity : cart.quantity}
-                          </l.Text>
-                          <l.Text>
-                            Price :{" "}
-                            {clickedIndex[index]
-                              ? Quantity * cart.price
-                              : cart.quantity * cart.price}
-                          </l.Text>
-                        </l.SubText>
-                      </l.Details>
-                      <l.Icon onClick={() => increaseQTY(index)}>
-                        <AiFillPlusCircle />
-                      </l.Icon>
-                      <l.Icon onClick={() => decreseQTY(index)}>
-                        <AiFillMinusCircle />
-                      </l.Icon>
-                      <l.Icon>
-                        <MdDelete onClick={() => selectOne(index)} />
-                      </l.Icon>
-                    </l.ItemsCard>
-                  </l.CartSection>
-                );
-              })}
+              {Items.length == 0 ?
+                <l.NotFound>
+                  <l.Image1 src={notfound} />
+                  <l.Text1>No Results Found</l.Text1>
+                </l.NotFound> : 
+                Items.map((cart, index) => {
+                  console.log(cart);
+                  return (
+                    <l.CartSection>
+                      {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                      {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
+                                  </l.SelectIcon> */}
+                      <l.ItemsCard>
+                        <l.FoodImage>
+                          <l.Food
+                            src={`http://localhost:5000/${
+                              cart.Foodid == null ? "offerimages" : "Foodimages"
+                            }/${cart.image}`}
+                          />
+                        </l.FoodImage>
+                        <l.Details>
+                          <l.MainText>
+                            <l.FoodName>{cart.name}</l.FoodName>
+                          </l.MainText>
+                          <l.SubText>
+                            {/* <l.Text>
+                                                  {cart.Size}
+                                              </l.Text> */}
+                            <l.Text>
+                              Quantity :{" "}
+                              {clickedIndex[index] ? Quantity : cart.quantity}
+                            </l.Text>
+                            <l.Text>
+                              Price :{" "}
+                              {clickedIndex[index]
+                                ? Quantity * cart.price
+                                : cart.quantity * cart.price}
+                            </l.Text>
+                          </l.SubText>
+                        </l.Details>
+                        <l.Icon onClick={() => increaseQTY(index)}>
+                          <AiFillPlusCircle />
+                        </l.Icon>
+                        <l.Icon onClick={() => decreseQTY(index)}>
+                          <AiFillMinusCircle />
+                        </l.Icon>
+                        <l.Icon>
+                          <MdDelete onClick={() => selectOne(index)} />
+                        </l.Icon>
+                      </l.ItemsCard>
+                    </l.CartSection>
+                  );
+                })
+              }
             </l.Left>
             <l.Right>
               <l.Description>

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
 import * as l from "./OfferDetailsElements";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 const OfferDetails = (props) => {
   console.log(props.offer);
   const [OfferName, setOfferName] = useState(props.offer.OfferName);
@@ -11,10 +13,43 @@ const OfferDetails = (props) => {
   const [Category, setCategory] = useState(props.offer.Category);
   const [Status, setStatus] = useState(props.offer.Status);
   const { user } = useAuth();
+
+  const {id} = useParams();
+    console.log(id);
+    const update = async (e)=>{
+        e.preventDefault();
+        try {
+            const Data = {OfferName,Category,SpecialPrice,Status}
+            console.log(Data);
+            await toast.promise(
+                axios.patch(`/api/v1/Offer/${id}`,Data),
+                {
+                    loading:'Offer is Updating....',
+                    success:(data)=>{
+                        return ` ${data.data?.message} ` || "success";
+                    },
+                    error: (err) => `${err.response.data.message}`,
+                },
+                {
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                        fontSize:'1rem',
+                        zIndex:'99999999',
+                    },
+                }
+
+            )
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
   return (
     <Container>
       <Header>Food Details</Header>
-      <l.Div>
+      <l.Div onSubmit={update}>
         <l.Div1>
           <l.Img
             src={`http://localhost:5000/offerimages/${props.offer.OfferImage}`}
@@ -42,8 +77,8 @@ const OfferDetails = (props) => {
             <l.TextFeild
               type="text"
               placeholder="Price"
-              value={"Rs." + SpecialPrice}
-              onChange={(e) => setSpecialPrice(e.target.value)}
+              value={SpecialPrice}
+              onChange={(e) => setSpecialPrice( e.target.value)}
             />
           </l.TextSection>
           <l.RadioButtonSection>
@@ -70,9 +105,6 @@ const OfferDetails = (props) => {
           </l.RadioButtonSection>
         </l.Div1>
         <l.Div2>
-          <l.Sec>
-            <FormButton>Delete</FormButton>
-          </l.Sec>
           <l.Sec>
             <FormButton>Update</FormButton>
           </l.Sec>

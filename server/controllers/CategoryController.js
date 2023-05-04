@@ -64,7 +64,8 @@ export const getCategories = async (req, res) => {
     if (
       user.Role === "Manager" ||
       user.Role === "Admin" ||
-      user.Role === "Customer"
+      user.Role === "Customer" ||
+      user.Role === "Staff-Member"
     ) {
       const categories = await CategoryModel.find();
       if (categories !== null) {

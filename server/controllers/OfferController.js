@@ -75,20 +75,20 @@ export const updateOffer = async (req, res) => {
   try {
     const user = req.user;
     if (user.Role === "Staff-Member" || user.Role === "Manager") {
-      const { SerialNo } = req.params;
-      const offer = await Offers.findOneAndUpdate(
-        { SerialNo: SerialNo },
+      const { id } = req.params;
+      const offer = await Offers.findByIdAndUpdate(
+        id,
         {
           ...req.body,
         },
         { new: true }
-      ).populate("SerialNo");
+      );
       if (!offer) {
         res.status(404).json("No such offer to update");
       }
       res.status(200).json({
         status: "Success",
-        message: `${offer.SerialNo} is updated `,
+        message: `${offer.OfferName} is updated `,
         data: {
           offer,
         },

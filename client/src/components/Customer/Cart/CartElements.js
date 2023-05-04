@@ -206,3 +206,21 @@ export const Icon = styled.div`
     font-size: 18px;
   }
 `;
+
+export const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  line-height: 0;
+  height: 350px;
+`
+export const Image1 = styled.img`
+  width:500px;
+  height: 350px;
+  line-height: 0;
+`
+export const Text1 = styled.h1`
+  color: #fff;
+` 

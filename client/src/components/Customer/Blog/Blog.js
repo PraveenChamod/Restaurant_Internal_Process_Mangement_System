@@ -19,6 +19,7 @@ import axios from "axios";
 import useAuth from "../../../Hooks/useAuth";
 import { RotatingLines } from "react-loader-spinner";
 import Rating from "@mui/material/Rating";
+import { toast } from "react-hot-toast";
 
 const Blog = (props) => {
   const [Review, setReview] = useState("");
@@ -34,8 +35,26 @@ const Blog = (props) => {
     e.preventDefault();
     try {
       const formData = { Review, Rate };
-      const res = await axios.post("api/v1/Blogs", formData);
-      console.log(res);
+      await toast.promise(
+        axios.post("api/v1/Blogs", formData),
+        {
+          loading: `Adding Review`,
+          success: (data) => {
+            console.log({ data });
+            return data.message || "Successfull";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }

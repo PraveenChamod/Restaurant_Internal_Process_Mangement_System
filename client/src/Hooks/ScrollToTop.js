@@ -8,7 +8,7 @@ const ScrollToTop = () => {
     & {
       position: fixed;
       bottom: 20px;
-      right: 20px;
+      right: 7%;
       font-size: 20px;
       cursor: pointer;
       border: none;
