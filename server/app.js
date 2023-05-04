@@ -16,6 +16,7 @@ import ItemsRoutes from "./routes/ItemsRoutes.js";
 import FoodRoutes from "./routes/FoodsRoutes.js";
 import CategoryRoutes from "./routes/CategoryRoutes.js";
 import DatingTableItemRoutes from "./routes/DatingTableItemRoutes.js";
+import SpecialEventRoutes from "./routes/SpecialEventRoutes.js";
 import BlogRoutes from "./routes/BlogRoutes.js";
 import TableRoutes from "./routes/TableRoutes.js";
 import OfferRoutes from "./routes/OfferRoutes.js";
@@ -105,6 +106,8 @@ app.use("/api/v1/", requireAuth, FoodRoutes);
 app.use("/api/v1/", requireAuth, CategoryRoutes);
 
 app.use("/api/v1/", requireAuth, DatingTableItemRoutes);
+
+app.use("/api/v1/", requireAuth, SpecialEventRoutes);
 
 app.use("/api/v1/", requireAuth, BlogRoutes);
 

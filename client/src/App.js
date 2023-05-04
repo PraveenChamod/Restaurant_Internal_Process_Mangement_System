@@ -54,6 +54,7 @@ import AdminAddCategories from "./Pages/Admin/AddCategories";
 import AdminViewFoods from "./Pages/Admin/AdimnViewFoods";
 import AdminViewFood from "./Pages/Admin/AdminViewFood";
 import AdminAddDatingTableItems from "./Pages/Admin/AddDatingTableItems";
+import AdminAddSpecialEvent from "./Pages/Admin/AddSpecialEvent";
 import ManagerViewUser from "./Pages/Manager/ManagerViewUser";
 import ManagerAddTables from "./Pages/Manager/ManagerAddTable";
 import ManagerViewTables from "./Pages/Manager/ManagerViewTables";
@@ -63,6 +64,7 @@ import ManagerViewFood from "./Pages/Manager/ManagerViewFood";
 import ManagerViewOffers from "./Pages/Manager/ViewOffers";
 import ManagerViewOffer from "./Pages/Manager/ViewOffer";
 import ManagerAddCategories from "./Pages/Manager/AddCategories";
+import ManagerAddSpecialEvent from "./Pages/Manager/AddSpecialEvent";
 import StaffMemberAddOffers from "./Pages/Staff-Member/AddOffers";
 import StaffMemberViewOffers from "./Pages/Staff-Member/ViewOffers";
 import StaffMemberViewOffer from "./Pages/Staff-Member/ViewOffer";
@@ -257,6 +259,12 @@ function App() {
                     <AdminAddDatingTableItems BackRoutes={BackRoutes[0].nav} />
                   }
                 />
+                <Route
+                  path="/AdminAdd-SpecialEvent"
+                  element={
+                    <AdminAddSpecialEvent BackRoutes={BackRoutes[0].nav} />
+                  }
+                />
                 {/* </Route> */}
                 {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
 
@@ -374,6 +382,12 @@ function App() {
                   path="/ManagerAdd-DatingTableItems"
                   element={
                     <ManagerAddDatingItems BackRoutes={BackRoutes[1].nav} />
+                  }
+                />
+                <Route
+                  path="/ManagerAdd-SpecialEvent"
+                  element={
+                    <ManagerAddSpecialEvent BackRoutes={BackRoutes[1].nav} />
                   }
                 />
 
