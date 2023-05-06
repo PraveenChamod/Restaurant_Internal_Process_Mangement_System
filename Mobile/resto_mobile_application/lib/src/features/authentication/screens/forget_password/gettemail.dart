@@ -94,7 +94,8 @@ class _GetEmailState extends State<GetEmail> {
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(
                                 fontSize: 15,
-                                color: Color(0xFFfebf10),
+                                //color: Color(0xFFfebf10),
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                               decoration: InputDecoration(
@@ -143,14 +144,7 @@ class _GetEmailState extends State<GetEmail> {
                                         ),
                                       );
                                     }else {
-                                      //getOTP();
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_) {
-                                            return const ResetPassword();
-                                          },
-                                        ),
-                                      );
+                                      getOTP();
                                     }
                                   },
                                   borderRadius: const BorderRadius.only(
@@ -207,7 +201,15 @@ class _GetEmailState extends State<GetEmail> {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const ResetPassword();
+            },
+          ),
+        );
+      },
     ).show();
   }
   unSuccessAwesomeDialog(DialogType type, String desc, String title) {

@@ -456,9 +456,6 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                         decoration: BoxDecoration(
                           color: Colors.black38,
                           borderRadius: BorderRadius.circular(10),
-                          // border: Border.all(
-                          //   color: const Color(0xFFfebf10),
-                          // ),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
