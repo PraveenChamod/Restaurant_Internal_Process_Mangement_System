@@ -10,7 +10,8 @@ import 'customer_support.dart';
 class CustomerMainPage extends StatefulWidget {
   final int choice;
   const CustomerMainPage({Key? key,
-    required this.choice}) : super(key: key);
+    required this.choice
+  }) : super(key: key);
 
   @override
   State<CustomerMainPage> createState() => _CustomerMainPageState();
@@ -45,6 +46,7 @@ class _CustomerMainPageState extends State<CustomerMainPage> {
         backgroundColor: const Color(0xFF161b1d),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
+          backgroundColor: const Color(0xFF161b1d),
           iconSize: 25.0,
           items: const [
             BottomNavigationBarItem(
@@ -53,24 +55,25 @@ class _CustomerMainPageState extends State<CustomerMainPage> {
                 color: Color(0xFFfebf10),
               ),
               label: 'Home',
-              backgroundColor: Color(0xFF161b1d),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.support_agent,
-                color: Color(0xFFfebf10),
-              ),
-              label: 'Support',
               backgroundColor: Color.fromRGBO(22, 26, 29, 100),
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.notifications,
+                //Icons.support_agent,
+                Icons.lunch_dining,
                 color: Color(0xFFfebf10),
               ),
-              label: 'Notification',
+              label: 'Orders',
               backgroundColor: Color.fromRGBO(22, 26, 29, 100),
             ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(
+            //     Icons.notifications,
+            //     color: Color(0xFFfebf10),
+            //   ),
+            //   label: 'Notification',
+            //   backgroundColor: Color.fromRGBO(22, 26, 29, 100),
+            // ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.shopping_cart,
@@ -86,6 +89,7 @@ class _CustomerMainPageState extends State<CustomerMainPage> {
             });
           },
           selectedItemColor: const Color(0xFFfebf10),
+          showUnselectedLabels: false,
         ),
       ),
     );
