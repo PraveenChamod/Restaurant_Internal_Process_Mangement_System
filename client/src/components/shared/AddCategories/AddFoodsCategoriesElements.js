@@ -75,6 +75,9 @@ export const Icon = styled.label`
   }
 `;
 export const ButtonSection = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: right;
   position: relative;
   margin-top: 5%;
 `;

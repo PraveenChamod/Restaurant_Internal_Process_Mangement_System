@@ -26,6 +26,11 @@ const offerSchema = mongoose.Schema(
     },
     Status: {
       type: String,
+      enum:{
+        values:["Available","Not Available"]
+      },
+      required: true,
+      default: "Available",
     },
   },
   {

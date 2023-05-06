@@ -7,7 +7,6 @@ export const SubContainer = styled.div`
   box-shadow: 3px 3px 3px #000;
   justify-content: center;
   align-items: center;
-    height: 500px;
   @media screen and (max-width: 769px) {
     width: 90%;
   }
@@ -26,7 +25,7 @@ export const Table = styled.table`
   margin: 3%;
   border-radius: 10px;
   width: 80%;
-  height: 300px;
+  height: fit-content;
   @media screen and (max-width: 769px) {
     /* border:none; */
   }
@@ -34,6 +33,7 @@ export const Table = styled.table`
 export const Tr = styled.tr`
   border: 2px solid #fff;
   text-align: left;
+  height: 30px;
   @media screen and (max-width: 769px) {
     font-size: 90%;
 

@@ -129,12 +129,11 @@ const AddStocks = (props) => {
           <Div2>
             <FormButton>Add</FormButton>
           </Div2>
-
+          <Div2>
           <FormButton>
-            <Link to="./login" className="btn">
               Reset
-            </Link>
           </FormButton>
+          </Div2>
         </Div1>
       </Div>
       <Div3>

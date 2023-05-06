@@ -96,3 +96,49 @@ export const getCategories = async (req, res) => {
     });
   }
 };
+
+// Method : PATCH
+// End Point : "api/v1/Category/:id";
+// Description : Update Category
+export const updateCategory = async (req, res) => {
+  try {
+    const user = req.user;
+    if (
+      user.Role === "Manager" ||
+      user.Role === "Staff-Member" ||
+      user.Role === "Admin"
+    ) {
+      const {CategoryName,Status,image} = req.body;
+      const category = await CategoryModel.findOneAndUpdate(
+        {CategoryName},
+        {
+          CategoryName:CategoryName,
+          CategoryImage:req.file ? req.file.filename : image,
+          Status:Status
+        },
+        { new: true }
+      );
+      if (!category) {
+        res.status(404).json("No such category to update");
+      } else {
+        res.status(200).json({
+          status: "Success",
+          message: `${category.CategoryName} is updated `,
+          data: {
+            category,
+          },
+        });
+      }
+    } else {
+      res.status(401).json({
+        staus: "Error",
+        message: "This user not authorized for this operation",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Server Error",
+      message: error.message,
+    });
+  }
+};

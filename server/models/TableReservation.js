@@ -38,6 +38,9 @@ const TableReservationSchema = mongoose.Schema(
     },
     Status: {
       type: String,
+      enum:{
+        values:["Pending","Confirm"]
+      },
       required: true,
       default: "Pending",
     },

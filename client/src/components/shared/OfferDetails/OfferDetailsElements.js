@@ -42,6 +42,46 @@ export const Div1 = styled.div`
   height: 80%;
   width: 60%;
 `;
+export const ImageSection = styled.div`
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+  margin-bottom: 5%;
+`;
+export const ImageSubSec = styled.div`
+  width: 250px;
+  height: 250px;
+  margin: 5%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const Image = styled.img`
+  width: 250px;
+  border-radius: 20px;
+  height: 250px;
+`;
+export const Icon = styled.label`
+  & {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 50px;
+    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    padding: 5%;
+    position: relative;
+    top: -25%;
+    left: 0%;
+    color: #fff;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
 export const Div2 = styled.div`
   display: flex;
   justify-content: center;

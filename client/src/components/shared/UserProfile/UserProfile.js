@@ -25,11 +25,11 @@ const UserProfileComponent = (props) => {
         <Img src={`http://localhost:5000/images/${user?.ProfileImage}`}></Img>
         <Header>Welcome</Header>
         <P>Hi {user?.Name}</P>
-        <FormButton>
+        <RegularButton>
           <Link to={props.route1.Route} className="btn">
             Edit
           </Link>
-        </FormButton>
+        </RegularButton>
       </Div>
       <ButtonSection>
         <Link to={props.BackRoutes} className="btn">

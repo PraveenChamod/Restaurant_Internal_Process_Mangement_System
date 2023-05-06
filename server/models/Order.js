@@ -57,8 +57,11 @@ const OrderSchema = mongoose.Schema(
     },
     Status: {
       type: String,
-      default: "Pending",
+      enum:{
+        values:["Pending","Confirm"]
+      },
       required: true,
+      default: "Pending",
     },
   },
   {

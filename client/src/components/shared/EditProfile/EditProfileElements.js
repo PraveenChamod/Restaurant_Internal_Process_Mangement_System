@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Header } from "../SharedElements/SharedElements";
 export const Section = styled.div`
   width: 100%;
   display: flex;
@@ -10,15 +11,11 @@ export const Section = styled.div`
   }
 `;
 export const Div = styled.div`
-  width: 50%;
-  height: 60%;
-  background-color: #1a1e21;
-  border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  box-shadow: 3px 3px 3px #000;
+  width: 100%;
   padding: 2% 0;
   /* margin-top: 10%; */
   @media screen and (max-width: 769px) {
@@ -26,14 +23,29 @@ export const Div = styled.div`
     width: 95%;
   }
 `;
+export const SubSec = styled.div`
+  width: 50%;
+  background-color: #1a1e21;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 3px 3px 3px #000;
+  height: fit-content;
+`
+export const Header1 = styled(Header)`
+  font-size: 18px;
+  letter-spacing: 0.5rem;
+`
 export const Div1 = styled.form`
-  width: 45%;
   height: 100%;
   display: flex;
   flex-direction: column;
   padding-left: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-right: 10%;
   justify-content: left;
   align-items: left;
   @media screen and (max-width: 769px) {
@@ -42,15 +54,11 @@ export const Div1 = styled.form`
 `;
 
 export const Div2 = styled.div`
-  width: 45%;
-  height: 100%;
-  background-color: #1a1e21;
   display: flex;
   flex-direction: column;
   padding-left: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  justify-content: center;
+  margin-left: 10%;
+  justify-content: right;
   align-items: center;
 `;
 
@@ -66,8 +74,8 @@ export const Div3 = styled.div`
 `;
 export const Div4 = styled.div`
   margin-top: 15px;
-  width: 100%;
-  height: 8%;
+  width: 80%;
+  height: 12%;
   display: flex;
   flex-direction: column;
   justify-content: center;

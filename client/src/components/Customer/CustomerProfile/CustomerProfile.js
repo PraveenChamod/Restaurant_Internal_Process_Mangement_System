@@ -17,8 +17,10 @@ import {
   ImageSection,
   Icon,
   ImageSubSec,
+  Header1
 } from "./CustomerProfileElement";
 import {
+  FormButton,
   RegularButton,
   UploadButton,
 } from "../../shared/SharedElements/Buttons";
@@ -28,6 +30,7 @@ import useAuth from "../../../Hooks/useAuth";
 import { FaCamera } from "react-icons/fa";
 import { Oval } from "react-loader-spinner";
 import useFetch from "../../../Hooks/useFetch";
+import { toast } from "react-hot-toast";
 const CustomerProfile = (props) => {
   const [Imagename, setImage] = useState();
 
@@ -37,16 +40,35 @@ const CustomerProfile = (props) => {
   const [ContactNumber, setContactNumber] = useState(props.user.ContactNumber);
   const [Email, setEmail] = useState(props.user.Email);
   const [Address, setAddress] = useState(props.user.Address);
+  const [CurrentPassword,setCurrentPassword] = useState("");
+  const[NewPassword,setNewPassword] = useState("");
+  const[ConfirmPassword,setConfirmPassword] = useState("");
 
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
       const Data = { Name, Email, ContactNumber, Address };
-      const res = await axios.patch(`api/v1/User/Profile/${user?.Email}`, Data);
-      if (res.status == 200 || res.status == 201) {
-        console.log(res);
-        loadUser();
-      }
+      await toast.promise(
+        axios.patch(`api/v1/User/Profile/${user?.Email}`, Data),
+        {
+          loading: `Updating Profile Details...`,
+          success: (data) => {
+            console.log({ data });
+            loadUser();
+            return "Profile Updated Successfully";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
+        }
+      )
     } catch (error) {
       console.log(error.message);
     }
@@ -67,7 +89,35 @@ const CustomerProfile = (props) => {
   const handleUpload = (e) => {
     setImage(e.target.files[0]);
   };
-  console.log(Imagename);
+  
+  const ResetPassword = async (e)=>{
+    e.preventDefault();
+    try {
+      const data = {CurrentPassword, NewPassword, ConfirmPassword}
+      await toast.promise(
+        axios.patch('api/v1/Auth/resetpassword', data),
+        {
+          loading: `Updating Password....`,
+          success: (data) => {
+            loadUser();
+            return `${data.data?.message}` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
+        }
+      )
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
   return (
     <Page>
       <Page1>
@@ -137,7 +187,7 @@ const CustomerProfile = (props) => {
                   onChange={(e) => setContactNumber(e.target.value)}
                 ></Input>
               </FormControl>
-              <RegularButton>UPDATE PROFILE</RegularButton>
+              <FormButton>UPDATE PROFILE</FormButton>
             </Div3>
           </Div1>
           <Div1>
@@ -151,7 +201,6 @@ const CustomerProfile = (props) => {
                 value={Email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Input>
-              <br />
               <H2>ADDRESS</H2>
               <Input
                 type="text"
@@ -162,6 +211,37 @@ const CustomerProfile = (props) => {
                 onChange={(e) => setAddress(e.target.value)}
               ></Input>
             </FormControl>
+            <FormControl sx={{ m: 1, width: "50ch" }}>
+              <Header1>Password Reset</Header1>
+            <H2>Current Password</H2>
+              <Input
+                type="password"
+                id="currentPassword"
+                name="currentPassword"
+                placeholder="Enter Current Password"
+                value={CurrentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+              />
+              <H2>New Password</H2>
+              <Input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                placeholder="Enter New Password"
+                value={NewPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+              <H2>Confirm Password</H2>
+              <Input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Re-enter Password"
+                value={ConfirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </FormControl>
+            <FormButton onClick={ResetPassword}>Reset Password</FormButton>
           </Div1>
         </Div>
       </Page1>

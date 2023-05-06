@@ -83,23 +83,56 @@ export const RegisterCustomer = async (req, res) => {
         from: "resto6430@gmail.com",
         to: Email,
         subject: "Registration Confrimation",
-        text: `Hi ${Name} Welcome to Resto. You successfully registered to the system.`,
+        attachments: [
+          {
+            filename: "logo.png",
+            path: `${__dirname}/Template/logo.png`,
+            cid: "logo",
+          },
+          {
+            filename: "welcome_vector.png",
+            path: `${__dirname}/Template/welcome_vector.png`,
+            cid: "welcome",
+          },
+        ],
       };
 
-      transporter.sendMail(mailOption, (err, info) => {
-        if (err) {
-          console.log(err.message);
-        } else {
-          console.log(info.response);
+      ejs.renderFile(
+        `${__dirname}/Template/RegisterEmailForCustomers.ejs`,
+        { Email: Email },
+        (err, renderHTML) => {
+          if (err) {
+            console.log(err.message);
+            res.status(500).json({
+              status: "Server Error",
+              message: err.message,
+            });
+          } else {
+            mailOption.html = renderHTML;
+            transporter.sendMail(mailOption, (err, info) => {
+              if (err) {
+                console.log(err.message);
+                res.status(500).json({
+                  status: "Server Error",
+                  message: err.message,
+                });
+              } else {
+                const token = createToken(
+                  createCustomer._id,
+                  createCustomer.Email
+                );
+                res.status(201).json({
+                  status: "Success",
+                  message: "Registration Successfull",
+                  data: {
+                    token,
+                  },
+                });
+              }
+            });
+          }
         }
-      });
-
-      const token = createToken(createCustomer._id, createCustomer.Email);
-      res.status(200).json({
-        status: "success",
-        message: "Customer Registerd Successfully",
-        token,
-      });
+      );
     } else {
       return res.json({
         status: "Error",
@@ -456,21 +489,20 @@ export const updateUserProfile = async (req, res) => {
     const user = req.user;
     if (user.Role === "Admin" || user.Role === "Manager") {
       const { Email } = req.params;
-      const findUser = await User.findOne({ Email: Email });
-      const { Name, ContactNumber, Role } = req.body;
+      const findUser = await ServiceProviders.findOne({ Email: Email });
       console.log(findUser);
       if (!mongoose.Types.ObjectId.isValid) {
         return res.status(404).send(`The id ${id} is not valied`);
       }
       if (findUser !== null) {
-        const user = {
-          Name: Name,
-          ContactNumber: ContactNumber,
-          Email: Email,
-          Role: Role,
-        };
-        await User.findByIdAndUpdate(findUser._id, user, { new: true });
-        res.json(user);
+        const update = await ServiceProviders.findByIdAndUpdate(findUser._id, {...req.body}, { new: true });
+        res.status(200).json({
+          status:"Success",
+          message:`Updation Successfull`,
+          data:{
+            update
+          }
+        });
       }
     } else {
       res.status(401).json({

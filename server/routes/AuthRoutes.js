@@ -21,7 +21,7 @@ AuthRoutes.route("/ProfilePicture").patch(requireAuth, UploadProfileImage);
 
 AuthRoutes.route("/logout").get(LogoutUser);
 
-AuthRoutes.route("/ResetPassword/:Email").patch(PasswordReset);
+AuthRoutes.route("/resetpassword").patch(requireAuth,PasswordReset);
 
 AuthRoutes.route("/OTP").post(sendOTP);
 

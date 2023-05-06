@@ -39,9 +39,13 @@ export const Div1 = styled.div`
   align-items: center;
   flex-direction: row;
   margin-top: 10px;
+  width: 30%;
 `;
 export const Div2 = styled.div`
-  margin-right: 70px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 10%;
 `;
 export const Div3 = styled.div`
   margin-top: 15px;
@@ -60,3 +64,23 @@ export const Searchbar = styled.input`
   font-size: 12px;
   box-shadow: 3px 3px 3px #000;
 `;
+export const RadioButtonSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const RadioButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5%;
+`;
+export const Label = styled.div`
+  width: 100%;
+  text-align: left;
+  margin: 3% 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+`;
+export const Radio = styled.input``;
