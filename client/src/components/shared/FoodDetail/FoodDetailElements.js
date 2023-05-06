@@ -41,14 +41,47 @@ export const Div1 = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const Img = styled.img`
-  width: 300px;
-  height: 200px;
-  border-radius: 5%;
-  margin-bottom: 2%;
-  @media screen and (max-width: 200px) {
+export const ImageSection = styled.div`
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+  margin-bottom: 5%;
+`;
+export const ImageSubSec = styled.div`
+  width: 250px;
+  height: 250px;
+  margin: 5%;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const Image = styled.img`
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+`;
+export const Icon = styled.label`
+  & {
+    width: fit-content;
+    height: fit-content;
+    border-radius: 50px;
+    background-color: #ffbf00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    padding: 5%;
+    position: relative;
+    top: -25%;
+    left: 0%;
+    color: #fff;
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
+
 export const Div2 = styled.div`
   display: flex;
   justify-content: center;
@@ -58,7 +91,7 @@ export const Div2 = styled.div`
 `;
 
 export const Sec = styled.div`
-  width: 50%;
+  width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;

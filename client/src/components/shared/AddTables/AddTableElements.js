@@ -19,12 +19,15 @@ export const Div = styled.form`
 
 export const Div1 = styled.div`
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: flex-end;
+  width: 100%;
 `;
 export const Div2 = styled.div`
-  justify-content: right;
+  justify-content: center;
   align-items: flex-end;
+  width: 20%;
+  display: flex;
 `;
 export const Div3 = styled.div`
   margin-top: 15px;

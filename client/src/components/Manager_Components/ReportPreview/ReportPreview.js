@@ -133,7 +133,7 @@ const ReportPreview = (props) => {
       </l.FormSection>
       <l.Div3>
         <RegularButton>
-          <Link to="./login" className="btn">
+          <Link to="/ManagerReport-Generation" className="btn">
             Back
           </Link>
         </RegularButton>

@@ -7,7 +7,7 @@ export const SubSection = styled.div`
   flex-direction: column;
   margin-top: 10%;
   width: fit-content;
-
+  
   @media screen and (max-width: 769px) {
     /* width: 90%; */
   }

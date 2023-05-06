@@ -6,54 +6,78 @@ import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import { FaCamera } from "react-icons/fa";
 const OfferDetails = (props) => {
   console.log(props.offer);
   const [OfferName, setOfferName] = useState(props.offer.OfferName);
   const [SpecialPrice, setSpecialPrice] = useState(props.offer.SpecialPrice);
   const [Category, setCategory] = useState(props.offer.Category);
   const [Status, setStatus] = useState(props.offer.Status);
+  const [image, setImage] = useState(props.offer.OfferImage);
+  const [click, setClick] = useState(false);
   const { user } = useAuth();
+  const { id } = useParams();
 
-  const {id} = useParams();
-    console.log(id);
-    const update = async (e)=>{
-        e.preventDefault();
-        try {
-            const Data = {OfferName,Category,SpecialPrice,Status}
-            console.log(Data);
-            await toast.promise(
-                axios.patch(`/api/v1/Offer/${id}`,Data),
-                {
-                    loading:'Offer is Updating....',
-                    success:(data)=>{
-                        return ` ${data.data?.message} ` || "success";
-                    },
-                    error: (err) => `${err.response.data.message}`,
-                },
-                {
-                    style: {
-                        borderRadius: '10px',
-                        background: '#333',
-                        color: '#fff',
-                        fontSize:'1rem',
-                        zIndex:'99999999',
-                    },
-                }
-
-            )
-
-        } catch (error) {
-            console.log(error.message);
+  const update = async (e) => {
+    e.preventDefault();
+    try {
+      const Data = new FormData();
+      Data.append("image", image);
+      Data.append("OfferName", OfferName);
+      Data.append("SpecialPrice", SpecialPrice);
+      Data.append("Category", Category);
+      Data.append("Status", Status);
+      console.log(Data);
+      await toast.promise(
+        axios.patch(`/api/v1/Offer/${id}`, Data),
+        {
+          loading: "Offer is Updating....",
+          success: (data) => {
+            return ` ${data.data?.message} ` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
         }
-    };
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const handleUpload = (e) => {
+    setImage(e.target.files[0]);
+    setClick(true);
+  };
   return (
     <Container>
       <Header>Food Details</Header>
       <l.Div onSubmit={update}>
         <l.Div1>
-          <l.Img
-            src={`http://localhost:5000/offerimages/${props.offer.OfferImage}`}
-          ></l.Img>
+          <l.ImageSection>
+            <l.ImageSubSec>
+              {click ? (
+                <l.Image src={URL.createObjectURL(image)} />
+              ) : (
+                <l.Image src={`http://localhost:5000/offerimages/${image}`} />
+              )}
+            </l.ImageSubSec>
+            <l.Icon>
+              <FaCamera />
+              <input
+                type="file"
+                id="file"
+                accept="image/*"
+                onChange={handleUpload}
+              />
+            </l.Icon>
+          </l.ImageSection>
           <l.TextSection>
             <l.Text>Offer Name</l.Text>
             <l.TextFeild
@@ -78,7 +102,7 @@ const OfferDetails = (props) => {
               type="text"
               placeholder="Price"
               value={SpecialPrice}
-              onChange={(e) => setSpecialPrice( e.target.value)}
+              onChange={(e) => setSpecialPrice(e.target.value)}
             />
           </l.TextSection>
           <l.RadioButtonSection>

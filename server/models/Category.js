@@ -11,6 +11,13 @@ const CategorySchema = mongoose.Schema(
     SerialNo: {
       type: String,
     },
+    Status: {
+      type: String,
+      enum: {
+        values: ["Available", "Not Available"],
+      },
+      default: "Available",
+    },
   },
   {
     toJSON: { virtuals: true },

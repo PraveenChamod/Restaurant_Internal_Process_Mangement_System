@@ -102,6 +102,9 @@ import ManagerAddDatingItems from "./Pages/Manager/ManagerAddDatingTableItems";
 import AdminViewTableDetails from "./Pages/Admin/AdminViewTable";
 import ChatBot from "./components/ChatBot/ChatBot";
 import Preloader from "./components/Preloader/Preloader";
+import AdminCategoryDetails from "./Pages/Admin/CategoryDetails";
+import StaffMemberCategoryDetails from "./Pages/Staff-Member/CategoryDetails";
+import ManagerCategoryDetails from "./Pages/Manager/CategoryDetails";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -265,6 +268,12 @@ function App() {
                     <AdminAddSpecialEvent BackRoutes={BackRoutes[0].nav} />
                   }
                 />
+                <Route
+                  path="/AdminEditCategory"
+                  element={
+                    <AdminCategoryDetails BackRoutes={BackRoutes[0].nav} />
+                  }
+                />
                 {/* </Route> */}
                 {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Manager ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
 
@@ -379,6 +388,12 @@ function App() {
                   }
                 />
                 <Route
+                  path="/ManagerEditCategory"
+                  element={
+                    <ManagerCategoryDetails BackRoutes={BackRoutes[1].nav} />
+                  }
+                />
+                <Route
                   path="/ManagerAdd-DatingTableItems"
                   element={
                     <ManagerAddDatingItems BackRoutes={BackRoutes[1].nav} />
@@ -460,6 +475,12 @@ function App() {
                     <StaffMemberTableReservationDetails
                       BackRoutes={BackRoutes[2].nav}
                     />
+                  }
+                />
+                <Route
+                  path="/StaffMemberEditCategory"
+                  element={
+                    <StaffMemberCategoryDetails BackRoutes={BackRoutes[2].nav} />
                   }
                 />
                 <Route

@@ -189,18 +189,8 @@ const Login = (props) => {
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia> */}
               <Bottom>
-                {!loading && <RegularButton>Login</RegularButton>}
-                {loading && (
-                  <RegularButton>
-                    <RotatingLines
-                      strokeColor="#fff"
-                      strokeWidth="2"
-                      animationDuration="1"
-                      width="20"
-                      visible={true}
-                    />
-                  </RegularButton>
-                )}
+              <RegularButton>Login</RegularButton>
+                
                 <Option>
                   <p>
                     Dosen't have an account ?{" "}
@@ -269,22 +259,9 @@ const Login = (props) => {
                                 <Icon><AiFillTwitterCircle style={{color:'#00acee'}}/></Icon>
                             </SocialMedia> */}
               <Bottom>
-                {loading && (
-                  <RegularButton onClick={props.ScrollToTop}>
-                    <RotatingLines
-                      strokeColor="#fff"
-                      strokeWidth="2"
-                      animationDuration="1"
-                      width="20"
-                      visible={true}
-                    />
-                  </RegularButton>
-                )}
-                {!loading && (
                   <RegularButton onClick={props.ScrollToTop}>
                     Sign Up
                   </RegularButton>
-                )}
                 <Option>
                   <p>
                     Already have an account ?{" "}

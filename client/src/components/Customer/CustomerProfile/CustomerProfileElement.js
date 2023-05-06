@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Img from "../../../Images/Bolgbg.png";
 import Img1 from "../../../Images/restoLogodark.png";
+import { Header } from "../../shared/SharedElements/SharedElements";
 
 export const Page = styled.div`
   display: flex;
@@ -25,9 +26,11 @@ export const Div = styled.form`
   display: flex;
   flex-direction: row;
   width: 65%;
-  height: 65%;
+  height: 90%;
   background: #1a1e21;
   border-radius: 25px;
+  margin-bottom: 3%;
+  padding-bottom: 2%;
   box-shadow: 3px 3px 3px #000;
   @media screen and (max-width: 769px) {
     width: 90%;
@@ -118,11 +121,16 @@ export const H2 = styled.h2`
   font-size: 20px;
 `;
 
+export const Header1 = styled(Header)`
+  font-size: 18px;
+  letter-spacing: 0.5rem;
+`
+
 export const Input = styled.input`
   padding: 5px;
   border-radius: 25px;
   margin: 5px;
-  margin-bottom: 10px;
+ 
   background: rgba(26, 30, 33, 0.6);
   border-color: white;
   font-size: 15px;

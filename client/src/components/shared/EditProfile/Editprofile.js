@@ -1,4 +1,4 @@
-import { FormControl, TextField } from "@mui/material";
+import { FormControl, IconButton, Input, InputAdornment, InputLabel, TextField } from "@mui/material";
 import { Link } from "react-router-dom";
 import { FormButton, RegularButton } from "../SharedElements/Buttons";
 import { Container, Header } from "../SharedElements/SharedElements";
@@ -13,6 +13,9 @@ import {
   ImageSubSec,
   Image,
   Section,
+  DivNew,
+  SubSec,
+  Header1
 } from "./EditProfileElements";
 import LoginImage from "../../../Images/Services/person.jpg";
 import useAuth from "../../../Hooks/useAuth";
@@ -21,6 +24,9 @@ import axios from "axios";
 import { Oval } from "react-loader-spinner";
 import { FaCamera } from "react-icons/fa";
 import { toast } from "react-hot-toast";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 const EditProfileComponent = (props) => {
   console.log(props.EditProfileBackRoute);
   const { logout, user, loadUser, loading } = useAuth();
@@ -28,7 +34,20 @@ const EditProfileComponent = (props) => {
   const [Name, setName] = useState(user?.Name);
   const [ContactNumber, setContactNumber] = useState(user?.ContactNumber);
   const [Imagename, setImage] = useState();
+  const [CurrentPassword,setCurrentPassword] = useState("");
+  const[NewPassword,setNewPassword] = useState("");
+  const[ConfirmPassword,setConfirmPassword] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const handleClickShowCurrentPassword = () => setShowCurrentPassword((show) => !show);
+  const handleClickShowNewPassword = () => setShowNewPassword((show) => !show);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
 
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
@@ -90,10 +109,41 @@ const EditProfileComponent = (props) => {
   const handleUpload = (e) => {
     setImage(e.target.files[0]);
   };
+
+  const ResetPassword = async (e)=>{
+    e.preventDefault();
+    try {
+      const data = {CurrentPassword, NewPassword, ConfirmPassword}
+      console.log(data);
+      await toast.promise(
+        axios.patch('api/v1/Auth/resetpassword', data),
+        {
+          loading: `Updating Password....`,
+          success: (data) => {
+            loadUser();
+            return `${data.data?.message}` || "success";
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
+        }
+      )
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
   return (
     <Container>
       <Section>
         <Header>My Profile</Header>
+        <SubSec>
         <Div>
           <Div1 onSubmit={updateProfile}>
             <FormControl sx={{ m: 1, width: "35ch" }} variant="standard">
@@ -182,6 +232,75 @@ const EditProfileComponent = (props) => {
             </Div4>
           </Div2>
         </Div>
+        <Div>
+        <Div1>
+          <Header1>Password Reset</Header1>
+              <FormControl  variant="standard" sx={{  position:"relative", top:"-1ch", "& input": {  color: "#fff"} }}>
+              <InputLabel htmlFor="standard-adornment-password">Current Password</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={showCurrentPassword ? 'text' : 'password'}
+                value={CurrentPassword}
+                onChange={(e)=>setCurrentPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end" >
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowCurrentPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showCurrentPassword ? <Visibility sx={{color:"#fff"}}/> : <VisibilityOff sx={{color:"#fff"}} />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              </FormControl>
+              <FormControl variant="standard" sx={{ "& input": {  color: "#fff"} }}>
+              <InputLabel htmlFor="standard-adornment-password">New Password</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={showNewPassword ? 'text' : 'password'}
+                value={NewPassword}
+                onChange={(e)=>setNewPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowNewPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showNewPassword ? <Visibility sx={{color:"#fff"}}/> : <VisibilityOff sx={{color:"#fff"}} />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              </FormControl>
+          </Div1>
+          <Div2>
+            <FormControl sx={{ m: 1, marginBottom:"2ch",  "& input": {  color: "#fff"} }} variant="standard">
+              <InputLabel htmlFor="standard-adornment-password">Confirm Password</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={showConfirmPassword ? 'text' : 'password'}
+                value={ConfirmPassword}
+                onChange={(e)=>setConfirmPassword(e.target.value)}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showConfirmPassword ? <Visibility sx={{color:"#fff"}}/> : <VisibilityOff sx={{color:"#fff"}} />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              </FormControl>
+              <FormButton onClick={ResetPassword}>Reset Password</FormButton>
+          </Div2>
+        </Div>
+        </SubSec>
       </Section>
       <Div3>
         <RegularButton>

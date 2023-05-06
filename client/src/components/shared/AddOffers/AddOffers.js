@@ -38,7 +38,7 @@ const AddOffersComponent = (props) => {
       await toast.promise(
         axios.post("api/v1/Offer", Data),
         {
-          loading: "Food is Adding....",
+          loading: "Offer is Adding....",
           success: (data) => {
             return ` ${data.data?.message} ` || "success";
           },

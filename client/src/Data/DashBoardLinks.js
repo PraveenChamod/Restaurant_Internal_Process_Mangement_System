@@ -6,6 +6,7 @@ import {
   FaUsers,
   FaBookOpen,
   FaEye,
+  FaRegEdit,
 } from "react-icons/fa";
 import {
   GiMeal,
@@ -74,6 +75,11 @@ export const Roles = [
         text: "Add Categories",
         icon: <BiCategory style={iconStyle} />,
         link: "/AdminAdd-Categories",
+      },
+      {
+        text: "View/Update Category",
+        icon: <FaRegEdit style={iconStyle} />,
+        link:"/AdminEditCategory"
       },
       {
         text: "Add Dating Table Items",
@@ -161,6 +167,11 @@ export const Roles = [
         link: "/ManagerAdd-Categories",
       },
       {
+        text: "View/Update Category",
+        icon: <FaRegEdit style={iconStyle} />,
+        link:"/ManagerEditCategory"
+      },
+      {
         text: "Add Dating Table Items",
         icon: <GiWineBottle style={iconStyle} />,
         link: "/ManagerAdd-DatingTableItems",
@@ -219,6 +230,11 @@ export const Roles = [
         text: "Place Order",
         icon: <GiMeal style={iconStyle} />,
         link: "/Staff-MemberPlace-Order",
+      },
+      {
+        text: "View/Update Category",
+        icon: <FaRegEdit style={iconStyle} />,
+        link:"/StaffMemberEditCategory"
       },
       {
         text: "Log Out",
