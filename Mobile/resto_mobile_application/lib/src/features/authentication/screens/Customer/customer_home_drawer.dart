@@ -18,6 +18,8 @@ class CustomerHomeDrawer extends StatefulWidget {
 
 class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
   late Future<Map<String, dynamic>> _futureData;
+  String userImagePath = '';
+  String imageUrl = '';
   @override
   void initState() {
     super.initState();
@@ -47,18 +49,18 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                 future: _futureData,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    final String userImagePath = snapshot.data!['user']['ProfileImage'];
+                    if(snapshot.data!['user']['ProfileImage'] != null){
+                      userImagePath = snapshot.data!['user']['ProfileImage'];
+                      imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                    }
+                    userImagePath = 'No';
                     final String userName = snapshot.data!['user']['Name'];
                     final String userEmail = snapshot.data!['user']['Email'];
-                    final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // CircleAvatar(
-                        //   radius: 40,
-                        //   backgroundImage: NetworkImage(imageUrl),
-                        // ),
-                        userImagePath == null
+                        userImagePath == 'No'
                             ? const CircleAvatar(
                                 radius: 40,
                                 backgroundImage: AssetImage(
