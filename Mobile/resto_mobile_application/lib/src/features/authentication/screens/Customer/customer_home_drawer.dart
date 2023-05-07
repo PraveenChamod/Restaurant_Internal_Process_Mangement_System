@@ -7,7 +7,6 @@ import '../home_screen.dart';
 import 'customer_drawer_Items/add_review_screen.dart';
 import 'customer_drawer_Items/help_center_screen.dart';
 import 'customer_drawer_Items/my_account_screen.dart';
-import 'customer_drawer_Items/orders_screen.dart';
 import 'customer_drawer_Items/settings_screen.dart';
 
 class CustomerHomeDrawer extends StatefulWidget {
@@ -110,21 +109,6 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                 MaterialPageRoute(
                   builder: (_) {
                     return const MyAccountScreen();
-                  },
-                ),
-              );
-            },
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.delivery_dining,
-            ),
-            title: const Text('Orders'),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) {
-                    return OrdersScreen();
                   },
                 ),
               );
