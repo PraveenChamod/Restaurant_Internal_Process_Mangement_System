@@ -26,7 +26,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   var contactController = TextEditingController();
   var addressController = TextEditingController();
 
-  String userImagePath = '';
+  String userImagePath = 'No';
   String imageUrl = '';
   String userName = '';
   String userAddress = '';
@@ -91,7 +91,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           userImagePath = snapshot.data!['user']['ProfileImage'];
                           imageUrl = 'http://$hostName:5000/images/$userImagePath';
                         }
-                        userImagePath = 'No';
                         if (snapshot.data!['user']['Name'] != null) {
                           userName = snapshot.data!['user']['Name'];
                         }

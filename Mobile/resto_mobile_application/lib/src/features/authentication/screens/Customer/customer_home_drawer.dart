@@ -17,7 +17,7 @@ class CustomerHomeDrawer extends StatefulWidget {
 
 class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
   late Future<Map<String, dynamic>> _futureData;
-  String userImagePath = '';
+  String userImagePath = 'No';
   String imageUrl = '';
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                       userImagePath = snapshot.data!['user']['ProfileImage'];
                       imageUrl = 'http://$hostName:5000/images/$userImagePath';
                     }
-                    userImagePath = 'No';
+                    print('UserImage Path: $userImagePath');
                     final String userName = snapshot.data!['user']['Name'];
                     final String userEmail = snapshot.data!['user']['Email'];
 

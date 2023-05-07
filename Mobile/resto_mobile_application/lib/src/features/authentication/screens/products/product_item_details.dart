@@ -203,73 +203,42 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Expanded(
                           child: Container(
                             color: Colors.black38,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Center(
-                                    child: Container(
-                                      width: 150,
-                                      height: 35,
-                                      padding: const EdgeInsets.only(left: 5, right: 5),
-                                      child: AnimatedButton(
-                                        text: "Add To Cart",
-                                        buttonTextStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        color: const Color(0xFFfebf10),
-                                        pressEvent: () {
-                                          if(totalCount != 0){
-                                            successAwesomeDialog(
-                                                DialogType.info,
-                                                '${widget.itemName} x $totalCount will add to the Cart.',
-                                                "Inform", totalCount, widget.itemId, widget.choice
-                                            );
-                                          }else{
-                                            unSuccessAwesomeDialog(
-                                                DialogType.warning,
-                                                'Please add the item count',
-                                                "Warning"
-                                            );
-                                          }
-                                        },
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(0),
-                                          topRight: Radius.circular(80),
-                                          bottomLeft: Radius.circular(80),
-                                          bottomRight: Radius.circular(80),
-                                        ),
-                                      ),
-                                    ),
+                            child: Center(
+                              child: Container(
+                                width: 150,
+                                height: 35,
+                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                child: AnimatedButton(
+                                  text: "Add To Cart",
+                                  buttonTextStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  color: const Color(0xFFfebf10),
+                                  pressEvent: () {
+                                    if(totalCount != 0){
+                                      successAwesomeDialog(
+                                          DialogType.info,
+                                          '${widget.itemName} x $totalCount will add to the Cart.',
+                                          "Inform", totalCount, widget.itemId, widget.choice
+                                      );
+                                    }else{
+                                      unSuccessAwesomeDialog(
+                                          DialogType.warning,
+                                          'Please add the item count',
+                                          "Warning"
+                                      );
+                                    }
+                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(80),
+                                    bottomLeft: Radius.circular(80),
+                                    bottomRight: Radius.circular(80),
                                   ),
                                 ),
-                                Expanded(
-                                  child: Center(
-                                    child: Container(
-                                      width: 150,
-                                      height: 35,
-                                      padding: const EdgeInsets.only(left: 5, right: 5),
-                                      child: AnimatedButton(
-                                        text: "Buy Now",
-                                        buttonTextStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        color: const Color(0xFFfebf10),
-                                        pressEvent: () {},
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(0),
-                                          topRight: Radius.circular(80),
-                                          bottomLeft: Radius.circular(80),
-                                          bottomRight: Radius.circular(80),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ),
