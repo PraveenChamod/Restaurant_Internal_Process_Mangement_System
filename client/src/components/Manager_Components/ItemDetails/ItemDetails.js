@@ -73,7 +73,7 @@ const ItemDetails = (props) => {
               />
               <TextField
                 id="standard-basic"
-                label="Available Stock"
+                label="Total Price"
                 variant="standard"
                 InputLabelProps={{ className: "textFeild_Label" }}
                 sx={{ marginBottom: "10%" }}

@@ -43,9 +43,6 @@ const TableDetail = (props) => {
         </l.Div1>
         <l.Div2>
           <l.Sec>
-            <FormButton>Delete</FormButton>
-          </l.Sec>
-          <l.Sec>
             <FormButton>Update</FormButton>
           </l.Sec>
         </l.Div2>

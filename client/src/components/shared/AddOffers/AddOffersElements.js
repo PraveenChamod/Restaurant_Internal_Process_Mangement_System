@@ -121,6 +121,9 @@ export const Icon = styled.label`
 export const ButtonSection = styled.div`
     position: relative;
     margin-top: 5%;
+    width: 40%;
+    display: flex;
+    justify-content: right;
     @media screen and (max-width: 769px) {
     margin-top:20px;
   }

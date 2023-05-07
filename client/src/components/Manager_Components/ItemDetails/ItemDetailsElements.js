@@ -47,6 +47,7 @@ export const Div3 = styled.div`
 `;
 export const ButtonSection = styled.div`
   display: flex;
-  justify-content: right;
-  width: 40%;
+  justify-content: center;
+  height: 20%;
+  width: 20%;
 `
