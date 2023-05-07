@@ -15,24 +15,27 @@ class CustomerHomeDrawer extends StatefulWidget {
   @override
   State<CustomerHomeDrawer> createState() => _CustomerHomeDrawerState();
 }
+
 class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
   late Future<Map<String, dynamic>> _futureData;
+  String userImagePath = '';
+  String imageUrl = '';
   @override
   void initState() {
     super.initState();
     _futureData = getUserDetails();
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor:
-      MediaQuery.of(context).platformBrightness == Brightness.dark
-          ? Colors.black
-          : Colors.white,
-      width: MediaQuery.of(context).size.width/1.5,
+          MediaQuery.of(context).platformBrightness == Brightness.dark
+              ? Colors.black
+              : Colors.white,
+      width: MediaQuery.of(context).size.width / 1.5,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(20)),
+        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20)),
       ),
       child: ListView(
         padding: EdgeInsets.zero,
@@ -44,20 +47,32 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             child: Center(
               child: FutureBuilder<Map<String, dynamic>>(
                 future: _futureData,
-                builder: (context, snapshot){
-                  if(snapshot.hasData){
-                    final String userImagePath = snapshot.data!['user']['ProfileImage'];
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if(snapshot.data!['user']['ProfileImage'] != null){
+                      userImagePath = snapshot.data!['user']['ProfileImage'];
+                      imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                    }
+                    userImagePath = 'No';
                     final String userName = snapshot.data!['user']['Name'];
                     final String userEmail = snapshot.data!['user']['Email'];
-                    final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children:  [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: NetworkImage(imageUrl),
+                      children: [
+                        userImagePath == 'No'
+                            ? const CircleAvatar(
+                                radius: 40,
+                                backgroundImage: AssetImage(
+                                    'assets/images/Default_User.png'),
+                              )
+                            : CircleAvatar(
+                                radius: 40,
+                                backgroundImage: NetworkImage(imageUrl),
+                              ),
+                        const SizedBox(
+                          height: 10.0,
                         ),
-                        const SizedBox(height: 10.0,),
                         Text(
                           userName,
                           style: const TextStyle(
@@ -65,7 +80,9 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                             color: Colors.white70,
                           ),
                         ),
-                        const SizedBox(height: 10.0,),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
                         Text(
                           userEmail,
                           style: const TextStyle(
@@ -75,7 +92,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
                         ),
                       ],
                     );
-                  }else if (snapshot.hasError) {
+                  } else if (snapshot.hasError) {
                     return Text('${snapshot.error}');
                   }
                   return const CircularProgressIndicator();
@@ -91,7 +108,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_){
+                  builder: (_) {
                     return const MyAccountScreen();
                   },
                 ),
@@ -106,7 +123,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_){
+                  builder: (_) {
                     return OrdersScreen();
                   },
                 ),
@@ -121,7 +138,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_){
+                  builder: (_) {
                     return const FavouritesScreen();
                   },
                 ),
@@ -135,7 +152,9 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text('Configurations',),
+            child: Text(
+              'Configurations',
+            ),
           ),
           ListTile(
             leading: const Icon(
@@ -145,7 +164,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_){
+                  builder: (_) {
                     return const SettingsScreen();
                   },
                 ),
@@ -160,7 +179,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (_){
+                  builder: (_) {
                     return const HelpCenterScreen();
                   },
                 ),
@@ -180,6 +199,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
       ),
     );
   }
+
   //Function for logout and Remove the SharedPreferences information about logged user.
   void logout() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
@@ -193,6 +213,7 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
       ),
     );
   }
+
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
