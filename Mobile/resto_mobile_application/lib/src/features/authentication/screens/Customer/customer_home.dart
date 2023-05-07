@@ -495,7 +495,7 @@ class OfferFoodTile extends StatelessWidget {
                         child: Text(
                           offerFoodSpecialIngredient,
                           style: const TextStyle(
-                            color: Colors.white70,
+                            color: Color(0xFFfebf10),
                             fontSize: 15.0,
                           ),
                         ),
