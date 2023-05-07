@@ -136,6 +136,9 @@ export const ButtonSection = styled.div`
   top: 1%;
   margin-bottom: 2%;
 `;
+export const ButtonSection1 = styled.div`
+  width: 30%;
+`
 export const Text = styled.h2`
   color: #fff;
   

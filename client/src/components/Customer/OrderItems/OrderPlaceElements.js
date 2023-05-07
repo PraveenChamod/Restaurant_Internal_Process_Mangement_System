@@ -125,7 +125,7 @@ export const ItemsCard = styled.button`
 `;
 export const Details = styled.div`
   display: flex;
-  width: 60%;
+  width: 100%;
   flex-direction: column;
   line-height: 0.1rem;
   text-align: left;
@@ -148,10 +148,11 @@ export const Food = styled.img`
   }
 `;
 export const MainText = styled.div`
+  width: 100%;
   color: #fff;
 `;
 export const FoodName = styled.h2`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 300;
   @media screen and (max-width: 800px) {
     font-size: 14px;
@@ -239,10 +240,10 @@ export const ButtonSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width:50%;
 `;
 export const CartSection = styled.div`
-  width: 70%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

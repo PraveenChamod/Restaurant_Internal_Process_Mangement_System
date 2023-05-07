@@ -101,9 +101,9 @@ const OrderDetails = (props) => {
                     </l.ItemCart>
                   );
                 })}
-                <l.ButtonSection>
+                <l.ButtonSection1>
                   <FormButton>Confirm</FormButton>
-                </l.ButtonSection>
+                </l.ButtonSection1>
               </>
             ) : (
               <l.ItemCart1>

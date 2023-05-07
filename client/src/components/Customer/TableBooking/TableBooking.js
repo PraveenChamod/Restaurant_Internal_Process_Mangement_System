@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { FormControl, MenuItem, Select } from "@mui/material";
+import notfound from '../../../Images/notFound/NoResults.png';
 
 const TableBooking = (props) => {
   const [click, setClick] = useState(false);
@@ -95,25 +96,7 @@ const TableBooking = (props) => {
     TableNo.push(tableNo);
   });
   console.log(TableNo);
-  const ReserveTable = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = {
-        Customer: user.id,
-        Tables: Tables,
-        Date: date,
-        ArrivalTime: arrivalTime,
-        DepartureTime: departureTime,
-        amount: Price,
-        TableNo: TableNo,
-        Type: type,
-      };
-      const res = await axios.post("api/v1/TableReservation", formData);
-      console.log(res);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
   const navigate = useNavigate();
 
   const handleConfirmPayment = async (event) => {
@@ -138,11 +121,23 @@ const TableBooking = (props) => {
         console.log(error);
         setErrorMessage("Error processing payment.");
       } else {
+        const formData = {
+          Customer: user.id,
+          Tables: Tables,
+          Date: date,
+          ArrivalTime: arrivalTime,
+          DepartureTime: departureTime,
+          amount: Price,
+          TableNo: TableNo,
+          Type: type,
+        };
         await toast.promise(
-          ReserveTable(event),
+          axios.post("api/v1/TableReservation", formData),
           {
-            success: () => {
-              return "Table Reservation is Succeeded";
+            loading: `Booking Table...`,
+            success: (data) => {
+              console.log({ data });
+              return data?.data?.message;
             },
             error: (err) => `${err.response.data.message}`,
           },
@@ -225,7 +220,16 @@ const TableBooking = (props) => {
         </l.Div3>
         <l.Div31>
           <l.H1>SELECT TABLE</l.H1>
-          <Box sx={{ flexGrow: 1, width: "90%", overflow:'auto', height:'300px'}}>
+          {
+            props.data.length !== 0 ?
+            <Box
+            sx={{
+              flexGrow: 1,
+              width: "90%",
+              overflow: "auto",
+              height: "300px",
+            }}
+          >
             <Grid container spacing={0}>
               {props.data.map((table, index) => {
                 return (
@@ -258,6 +262,12 @@ const TableBooking = (props) => {
               })}
             </Grid>
           </Box>
+          :
+          <l.NotFound>
+          <l.Image1 src={notfound} />
+          <l.Text1>There are no available tables 😕!</l.Text1>
+        </l.NotFound>
+          }
           <l.Payment>
             <CardElement />
           </l.Payment>

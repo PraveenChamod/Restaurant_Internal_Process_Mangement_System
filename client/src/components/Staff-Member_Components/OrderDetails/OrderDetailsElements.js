@@ -15,7 +15,6 @@ export const Header = styled.h1`
   text-transform: uppercase;
   align-items: center;
   text-align: center;
-  margin-top: 20%;
   background: linear-gradient(
     60deg,
     rgb(178, 108, 41) 0%,
@@ -51,7 +50,7 @@ export const Div = styled.div`
 export const Div1 = styled.div`
   margin-top: 10px;
   width: 50%;
-  height: 100%;
+
   background-color: #1a1e21;
   display: flex;
   flex-direction: column;
@@ -69,7 +68,6 @@ export const Div1 = styled.div`
 export const Div2 = styled.form`
   margin-top: 0px;
   width: 90%;
-  height: 60%;
   background-color: #1a1e21;
   display: flex;
   flex-direction: row;

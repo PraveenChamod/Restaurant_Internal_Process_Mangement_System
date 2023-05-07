@@ -105,6 +105,7 @@ import Preloader from "./components/Preloader/Preloader";
 import AdminCategoryDetails from "./Pages/Admin/CategoryDetails";
 import StaffMemberCategoryDetails from "./Pages/Staff-Member/CategoryDetails";
 import ManagerCategoryDetails from "./Pages/Manager/CategoryDetails";
+import AddSupplierItems from "./Pages/Supplier/AddSupplierItems";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -636,7 +637,7 @@ function App() {
                 />
                 <Route
                   path="/AddSupplyItems"
-                  element={<SupplierItems BackRoutes={BackRoutes[5].nav} />}
+                  element={<AddSupplierItems BackRoutes={BackRoutes[5].nav} />}
                 />
                 <Route
                   path="/ViewSupplyItems"
