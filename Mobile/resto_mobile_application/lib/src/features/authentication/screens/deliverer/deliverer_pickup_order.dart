@@ -40,6 +40,8 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
 
   late double lat = 0.0;
   late double lang = 0.0;
+  String paymentMethod = '';
+  int totalPrice = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -90,8 +92,10 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
                                 final String number = snapshot.data!['ContactNumber'];
                                 final String address = snapshot.data!['Address'];
                                 final int price = snapshot.data!['TotalPrice'];
+                                totalPrice = snapshot.data!['TotalPrice'];
                                 lat = snapshot.data!['lat'];
                                 lang = snapshot.data!['lang'];
+                                paymentMethod = snapshot.data!['PaymentMethod'];
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -230,99 +234,62 @@ class _DelivererPickupOrderState extends State<DelivererPickupOrder> {
                   flex: 1,
                   child: Container(
                     color: Colors.black38,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Container(
-                              width: 150,
-                              height: 35,
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: AnimatedButton(
-                                text: "Show Map",
-                                buttonTextStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                color: const Color(0xFFfebf10),
-                                pressEvent: () async {
-                                  final hasPermission = await _location.hasPermission();
-                                  if (hasPermission == PermissionStatus.denied) {
-                                    final permissionStatus = await _requestPermissions();
-                                    if (permissionStatus == PermissionStatus.granted) {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (_){
-                                            return DelivererMap(
-                                              orderId: widget.orderId,
-                                              lat: lat,
-                                              lang: lang,
-                                            );
-                                          },
-                                        ),
+                    child: Center(
+                      child: Container(
+                        width: 150,
+                        height: 35,
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: AnimatedButton(
+                          text: "Find Route",
+                          buttonTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          color: const Color(0xFFfebf10),
+                          pressEvent: () async {
+                            final hasPermission = await _location.hasPermission();
+                            if (hasPermission == PermissionStatus.denied) {
+                              final permissionStatus = await _requestPermissions();
+                              if (permissionStatus == PermissionStatus.granted) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_){
+                                      return DelivererMap(
+                                        orderId: widget.orderId,
+                                        lat: lat,
+                                        lang: lang, 
+                                        totalPrice: totalPrice, paymentType: paymentMethod,
                                       );
-                                    }else{
-                                      awesomeDialog(DialogType.warning, 'You Need To Allow Permission To Access Device Location', "Warning");
-                                    }
-                                  } else if (hasPermission == PermissionStatus.granted) {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_){
-                                          return DelivererMap(
-                                            orderId: widget.orderId,
-                                            lat: lat,
-                                            lang: lang,
-                                          );
-                                        },
-                                      ),
+                                    },
+                                  ),
+                                );
+                              }else{
+                                awesomeDialog(DialogType.warning, 'You Need To Allow Permission To Access Device Location', "Warning");
+                              }
+                            } else if (hasPermission == PermissionStatus.granted) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_){
+                                    return DelivererMap(
+                                      orderId: widget.orderId,
+                                      lat: lat,
+                                      lang: lang, totalPrice: totalPrice,
+                                      paymentType: paymentMethod,
                                     );
-                                  }
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
+                                  },
                                 ),
-                              ),
-                            ),
+                              );
+                            }
+                          },
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
                           ),
                         ),
-                        Expanded(
-                          child: Center(
-                            child: Container(
-                              width: 150,
-                              height: 35,
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: AnimatedButton(
-                                text: "Reject Order",
-                                buttonTextStyle: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                color: const Color(0xFFfebf10),
-                                pressEvent: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_){
-                                        return const DelivererHome();
-                                      },
-                                    ),
-                                  );
-                                },
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

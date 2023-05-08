@@ -27,6 +27,11 @@ class _DelivererAccountState extends State<DelivererAccount> {
   var emailController = TextEditingController();
   var contactController = TextEditingController();
 
+  String userImagePath = 'No';
+  String imageUrl = '';
+  String userName = 'Enter Your Name';
+  String userContact = 'Enter Your Contact No.';
+
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
   Future getImage(ImageSource source) async {
@@ -78,16 +83,20 @@ class _DelivererAccountState extends State<DelivererAccount> {
                     future: _futureData,
                     builder: (context, snapshot){
                       if(snapshot.hasData){
-                        final String userImagePath = snapshot.data!['user']['ProfileImage'];
-                        final String userName = snapshot.data!['user']['Name'];
+                        if (snapshot.data!['user']['ProfileImage'] != null) {
+                          userImagePath = snapshot.data!['user']['ProfileImage'];
+                          imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                        }
+                        if (snapshot.data!['user']['Name'] != null) {
+                          userName = snapshot.data!['user']['Name'];
+                        }
+                        if (snapshot.data!['user']['ContactNumber'] != null) {
+                          userContact = snapshot.data!['user']['ContactNumber'];
+                        }
                         final String userEmail = snapshot.data!['user']['Email'];
-                        final String userContact = snapshot.data!['user']['ContactNumber'];
-                        final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
-
                         nameController = TextEditingController(text: userName);
                         emailController = TextEditingController(text: userEmail);
                         contactController = TextEditingController(text: userContact);
-
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -95,10 +104,9 @@ class _DelivererAccountState extends State<DelivererAccount> {
                                 ? ClipRRect(
                                 borderRadius: BorderRadius.circular(70.0),
                                 child: Image.file(_image!, width: 140, height: 140, fit: BoxFit.cover,))
-                                : CircleAvatar(
-                                    radius: 70,
-                                    backgroundImage: NetworkImage(imageUrl),
-                                  ),
+                                : userImagePath == 'No'
+                                ? const CircleAvatar(radius: 70, backgroundImage: AssetImage('assets/images/Default_User.png'),)
+                                : CircleAvatar(radius: 70, backgroundImage: NetworkImage(imageUrl),),
                             const SizedBox(height: 10.0,),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
