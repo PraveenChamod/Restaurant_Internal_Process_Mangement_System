@@ -28,8 +28,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
 
   String userImagePath = 'No';
   String imageUrl = '';
-  String userName = '';
-  String userAddress = '';
+  String userAddress = 'Enter Your Address';
 
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
@@ -91,14 +90,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           userImagePath = snapshot.data!['user']['ProfileImage'];
                           imageUrl = 'http://$hostName:5000/images/$userImagePath';
                         }
-                        if (snapshot.data!['user']['Name'] != null) {
-                          userName = snapshot.data!['user']['Name'];
-                        }
-                        userName = 'Enter Your Name';
                         if (snapshot.data!['user']['Address'] != null) {
                           userAddress = snapshot.data!['user']['Address'];
                         }
-                        userAddress = 'Enter Your Address';
+                        final String userName = snapshot.data!['user']['Name'];
                         final String userEmail = snapshot.data!['user']['Email'];
                         final String userContact = snapshot.data!['user']['ContactNumber'];
 

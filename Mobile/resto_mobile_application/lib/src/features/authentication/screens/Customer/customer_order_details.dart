@@ -78,18 +78,6 @@ class _CustomerOrderDetailsState extends State<CustomerOrderDetails> {
         appBar: AppBar(
           foregroundColor: const Color(0xFFfebf10),
           elevation: 0,
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) {
-                    return OrdersScreen();
-                  },
-                ),
-              );
-            },
-            icon: const Icon(Icons.chevron_left),
-          ),
           title: const Text('Your Order'),
           actions: <Widget>[
             Padding(
