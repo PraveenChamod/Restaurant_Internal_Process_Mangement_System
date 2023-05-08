@@ -58,6 +58,8 @@ dependencies:
   flutter_svg: ^2.0.4
   permission_handler: ^10.2.0
   geocoding: ^2.1.0
+  qr_flutter: ^4.0.0
+  qr_code_scanner: ^1.0.1
 
 
 dev_dependencies:
