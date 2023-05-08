@@ -4,14 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../../common_widgets/background_image.dart';
+import '../deliverer_complete_order.dart';
 import '../deliverer_pickup_order.dart';
 
 class DelivererMap extends StatefulWidget {
   final String orderId;
   final double lat;
   final double lang;
+  final int totalPrice;
+  final String paymentType;
   const DelivererMap(
-      {Key? key, required this.orderId, required this.lat, required this.lang})
+      {Key? key,
+        required this.orderId,
+        required this.lat,
+        required this.lang,
+        required this.totalPrice,
+        required this.paymentType})
       : super(key: key);
 
   @override
@@ -125,15 +133,27 @@ class _DelivererMapState extends State<DelivererMap> {
                         height: 35,
                         padding: const EdgeInsets.only(left: 5, right: 5),
                         child: AnimatedButton(
-                          text: "Completed",
+                          text: "Complete Order",
                           buttonTextStyle: const TextStyle(
                             color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            //fontWeight: FontWeight.bold,
                           ),
                           color: const Color(0xFFfebf10),
                           pressEvent: () {
-                            //getPolyPoints();
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_){
+                                  return DelivererCompleteOrder(
+                                    orderId: widget.orderId,
+                                    lat: widget.lat,
+                                    lang: widget.lang,
+                                    totalPrice: widget.totalPrice,
+                                    paymentType: widget.paymentType,
+                                  );
+                                },
+                              ),
+                            );
                           },
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(0),

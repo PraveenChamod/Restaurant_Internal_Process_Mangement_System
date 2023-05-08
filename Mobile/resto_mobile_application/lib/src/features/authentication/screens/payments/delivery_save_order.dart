@@ -300,6 +300,16 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
   }
 
   void orderItems(List<FoodList> foods, String paymentMethod, num totalPrice, String type, String customerId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final http.Response response = await http.post(
@@ -316,6 +326,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
         "Customer":customerId
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final orderDetails = json["data"];
