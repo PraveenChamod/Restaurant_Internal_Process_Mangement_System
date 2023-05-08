@@ -106,6 +106,8 @@ import AdminCategoryDetails from "./Pages/Admin/CategoryDetails";
 import StaffMemberCategoryDetails from "./Pages/Staff-Member/CategoryDetails";
 import ManagerCategoryDetails from "./Pages/Manager/CategoryDetails";
 import AddSupplierItems from "./Pages/Supplier/AddSupplierItems";
+import AddReservationPackages from "./Pages/Admin/AddPakages";
+import PackageDetails from "./Pages/Staff-Member/PackageDetails";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -241,6 +243,10 @@ function App() {
                 <Route
                   path="/AdminView-Table/:id"
                   element={<AdminViewTableDetails />}
+                />
+                <Route
+                  path="/AdminAddPackages"
+                  element={<AddReservationPackages BackRoutes={BackRoutes[0].nav}/>}
                 />
                 <Route
                   path="/AdminAdd-Foods"
@@ -448,6 +454,12 @@ function App() {
                   path="/Staff-MemberView-Tables"
                   element={
                     <StaffMemberViewTables BackRoutes={BackRoutes[2].nav} />
+                  }
+                />
+                <Route
+                  path="/Staff-MemberPackageDetails"
+                  element={
+                    <PackageDetails BackRoutes={BackRoutes[2].nav} />
                   }
                 />
                 <Route

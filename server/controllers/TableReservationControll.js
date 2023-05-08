@@ -87,6 +87,14 @@ export const ViewPendingReservations = async (req, res) => {
                 path: "Tables.table",
                 model: "Table",
               })
+              .populate({
+                path:"Items",
+                model:"TableItem"
+              })
+              .populate({
+                path:"Package",
+                model:"Package"
+              })
               .exec();
             const Name = populatedReservation.Customer.Name;
             const ContactNo = populatedReservation.Customer.ContactNumber;
@@ -142,6 +150,9 @@ export const ViewReservation = async (req, res) => {
     if (user.Role === "Staff-Member") {
       const { _id } = req.params;
       let ReservationDetails;
+      let Items;
+      let Package;
+      let eventName;
       try {
         const populatedReservation = await TableReservation.findById(_id)
           .populate({
@@ -152,6 +163,14 @@ export const ViewReservation = async (req, res) => {
             path: "Tables.table",
             model: "Table",
           })
+          .populate({
+            path:"Items",
+            model:"TableItem"
+          })
+          .populate({
+            path:"Package",
+            model:"Package"
+          })
           .exec();
         const Name = populatedReservation.Customer.Name;
         const ContactNo = populatedReservation.Customer.ContactNumber;
@@ -159,11 +178,28 @@ export const ViewReservation = async (req, res) => {
         const Tables = populatedReservation.Tables.map((table) => ({
           TableNo: table.table.TableNo,
         }));
+        if(populatedReservation.Items != undefined){
+          Items = populatedReservation.Items.map(item=>({
+            ItemName:item.ItemName,
+            ItemImage:item.TableItemImage
+          }))
+        }
+        if(populatedReservation.Package != undefined){
+          populatedReservation.Package.map(selectedpackage=>{
+            Package = {
+              packageName : selectedpackage.Name,
+            }
+          });
+          eventName = populatedReservation.eventName;
+        } 
         ReservationDetails = {
           CustomerName: Name,
           CustomerContactNo: ContactNo,
           Email: Email,
           Tables,
+          eventName,
+          Package,
+          Items,
           Type: populatedReservation.Type,
           ArrivalTime: populatedReservation.ArrivalTime,
           DepartureTime: populatedReservation.DepartureTime,
@@ -238,7 +274,7 @@ export const SendReservationConfirmation = async (req, res) => {
           const mailOption = {
             from: "resto6430@gmail.com",
             to: customerEmail,
-            subject: "Table Reservation Confrimation",
+            subject: "Table Reservation Confirmation",
             attachments: [
               {
                 filename: "logo.png",

@@ -13,23 +13,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RegularButton } from "../../shared/SharedElements/Buttons";
 import { Container, Header } from "../../shared/SharedElements/SharedElements";
-import {
-  Div,
-  Div1,
-  Div2,
-  Div3,
-  Div4,
-  Div5,
-  Div6,
-  Div7,
-  Div8,
-  Div9,
-  FormButton,
-  Hr,
-  SubHeader,
-} from "./TableReservationElelments";
+import * as l from "./TableReservationElelments";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import notfound from "../../../Images/notFound/NoResults.png";
+
 const TableReservationComponent = ({ data }) => {
   let customerName = data.CustomerName;
   let Email = data.Email;
@@ -40,7 +28,7 @@ const TableReservationComponent = ({ data }) => {
   let amount = data.Amount;
   let tables = data.Tables;
   let type = data.Type;
-
+  console.log(data.Package.packageName);
   const navigate = useNavigate();
   const confirmReservation = async (e) => {
     e.preventDefault();
@@ -76,7 +64,7 @@ const TableReservationComponent = ({ data }) => {
         }
       );
       setTimeout(() => {
-        navigate("/Staff-MemberPendingTable-Reservation-Details")
+        navigate("/Staff-MemberPendingTable-Reservation-Details");
       }, 2000);
     } catch (error) {
       console.log(error.message);
@@ -85,9 +73,9 @@ const TableReservationComponent = ({ data }) => {
   return (
     <Container>
       <Header>Table Reservation</Header>
-      <Div>
-        <Div2>
-          <Div1>
+      <l.Div>
+        <l.Div2>
+          <l.Div1>
             <FormControl>
               <TextField
                 id="standard-basic"
@@ -133,9 +121,64 @@ const TableReservationComponent = ({ data }) => {
                 sx={{ marginBottom: "10%" }}
                 value={type}
               />
+              {type == "Dating" ? (
+                <l.ItemSection>
+                  {data.Items.length == 0 ? (
+                    <l.NotFound>
+                      <l.Image1 src={notfound} />
+                      <l.Text2>No Items Selected</l.Text2>
+                    </l.NotFound>
+                  ) : (
+                    data.Items.map((data, index) => {
+                      console.log(data);
+                      return (
+                        <l.CartSection>
+                          <l.ItemsCard>
+                            <l.FoodImage>
+                              <l.Food
+                                src={`http://localhost:5000/tableitemimages/${data.ItemImage}`}
+                              />
+                            </l.FoodImage>
+                            <l.Details>
+                              <l.MainText>
+                                <l.FoodName>{data.ItemName}</l.FoodName>
+                              </l.MainText>
+                            </l.Details>
+                          </l.ItemsCard>
+                        </l.CartSection>
+                      );
+                    })
+                  )}
+                </l.ItemSection>
+              ) : type == "Special-Events" ? (
+                <>
+                  <TextField
+                    id="standard-basic"
+                    label="Event Name"
+                    variant="standard"
+                    InputLabelProps={{ className: "textFeild_Label" }}
+                    InputProps={{
+                      style: { color: "#fff" },
+                    }}
+                    sx={{ marginBottom: "10%" }}
+                    value={data.eventName}
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="Package"
+                    variant="standard"
+                    InputLabelProps={{ className: "textFeild_Label" }}
+                    InputProps={{
+                      style: { color: "#fff" },
+                    }}
+                    sx={{ marginBottom: "10%" }}
+                    value={data.Package.packageName}
+                  />
+                </>
+              ) : null}
             </FormControl>
-          </Div1>
-          <Div1>
+          </l.Div1>
+          <l.Div1>
             <TextField
               id="standard-basic"
               label="Contact No."
@@ -189,19 +232,19 @@ const TableReservationComponent = ({ data }) => {
                 })}
               </CardContent>
             </Card>
-          </Div1>
-        </Div2>
-        <Div4>
-          <Div6>
+          </l.Div1>
+        </l.Div2>
+        <l.Div4>
+          <l.Div6>
             <FormControl>
               <RegularButton onClick={confirmReservation}>
                 Confirm Reservation
               </RegularButton>
             </FormControl>
-          </Div6>
-        </Div4>
-      </Div>
-      <Div7>
+          </l.Div6>
+        </l.Div4>
+      </l.Div>
+      <l.Div7>
         <RegularButton>
           <Link
             to="/Staff-MemberPendingTable-Reservation-Details"
@@ -210,7 +253,7 @@ const TableReservationComponent = ({ data }) => {
             Back
           </Link>
         </RegularButton>
-      </Div7>
+      </l.Div7>
     </Container>
   );
 };

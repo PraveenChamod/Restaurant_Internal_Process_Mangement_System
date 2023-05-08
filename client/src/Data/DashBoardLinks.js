@@ -7,6 +7,7 @@ import {
   FaBookOpen,
   FaEye,
   FaRegEdit,
+  FaBoxOpen
 } from "react-icons/fa";
 import {
   GiMeal,
@@ -14,6 +15,7 @@ import {
   GiHotMeal,
   GiRoundTable,
   GiWineBottle,
+  GiBoxUnpacking
 } from "react-icons/gi";
 import { BiCategory, BiLogOut } from "react-icons/bi";
 import { IoFastFoodSharp } from "react-icons/io5";
@@ -60,6 +62,11 @@ export const Roles = [
         text: "View Tables",
         icon: <GoSearch style={iconStyle} />,
         link: "/AdminView-Tables",
+      },
+      {
+        text: "Add Package",
+        icon: <FaBoxOpen style={iconStyle} />,
+        link: "/AdminAddPackages",
       },
       {
         text: "Add Foods",
@@ -230,6 +237,11 @@ export const Roles = [
         text: "Place Order",
         icon: <GiMeal style={iconStyle} />,
         link: "/Staff-MemberPlace-Order",
+      },
+      {
+        text: "View/Update Packages",
+        icon: <GiBoxUnpacking style={iconStyle} />,
+        link: "/Staff-MemberPackageDetails",
       },
       {
         text: "View/Update Category",
