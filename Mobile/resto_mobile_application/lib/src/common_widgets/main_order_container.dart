@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../constants/image_strings.dart';
+import '../features/authentication/screens/customer/customer_generate_QR.dart';
 import '../features/authentication/screens/customer/customer_order_details.dart';
 import 'order_item_container.dart';
 
@@ -163,75 +164,101 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                 ),
               ),
               const SizedBox(height: 10.0,),
-              Center(
-                child: Container(
-                  width: 150,
-                  height: 35,
-                  padding: const EdgeInsets.only(left: 5, right: 5),
-                  child: AnimatedButton(
-                    text: "Get Details",
-                    buttonTextStyle: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    color: const Color(0xFFfebf10),
-                    pressEvent: () async {
-                      final hasPermission = await _location.hasPermission();
-                      if (hasPermission == PermissionStatus.denied) {
-                        final permissionStatus = await _requestPermissions();
-                        if (permissionStatus == PermissionStatus.granted) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) {
-                                return CustomerOrderDetails(
-                                  orderId: widget.orderId,
-                                  deliveryStatus: widget.deliveryStatus,
-                                  lat: lat,
-                                  lang: lang,
-                                );
-                              },
-                            ),
-                          );
-                        }else{
-                          awesomeDialog(DialogType.warning, 'You Need To Allow Permission To Access Device Location', "Warning");
-                        }
-                      } else if (hasPermission == PermissionStatus.granted) {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) {
-                              return CustomerOrderDetails(
-                                orderId: widget.orderId,
-                                deliveryStatus: widget.deliveryStatus,
-                                lat: lat,
-                                lang: lang,
-                              );
-                            },
+              Row(
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: Container(
+                        width: 150,
+                        height: 35,
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: AnimatedButton(
+                          text: "Track Order",
+                          buttonTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                      }
-
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (_) {
-                      //       return CustomerOrderDetails(
-                      //         orderId: orderId,
-                      //         deliveryStatus: deliveryStatus,
-                      //         lat: lat,
-                      //         lang: lang,
-                      //       );
-                      //     },
-                      //   ),
-                      // );
-                    },
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(0),
-                      topRight: Radius.circular(80),
-                      bottomLeft: Radius.circular(80),
-                      bottomRight: Radius.circular(80),
+                          color: const Color(0xFFfebf10),
+                          pressEvent: () async {
+                            final hasPermission = await _location.hasPermission();
+                            if (hasPermission == PermissionStatus.denied) {
+                              final permissionStatus = await _requestPermissions();
+                              if (permissionStatus == PermissionStatus.granted) {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) {
+                                      return CustomerOrderDetails(
+                                        orderId: widget.orderId,
+                                        deliveryStatus: widget.deliveryStatus,
+                                        lat: lat,
+                                        lang: lang,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }else{
+                                awesomeDialog(DialogType.warning, 'You Need To Allow Permission To Access Device Location', "Warning");
+                              }
+                            } else if (hasPermission == PermissionStatus.granted) {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) {
+                                    return CustomerOrderDetails(
+                                      orderId: widget.orderId,
+                                      deliveryStatus: widget.deliveryStatus,
+                                      lat: lat,
+                                      lang: lang,
+                                    );
+                                  },
+                                ),
+                              );
+                            }
+                          },
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(80),
+                            bottomLeft: Radius.circular(80),
+                            bottomRight: Radius.circular(80),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: Center(
+                      child: Container(
+                        width: 150,
+                        height: 35,
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                        child: AnimatedButton(
+                          text: "Generate QR",
+                          buttonTextStyle: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          color: const Color(0xFFfebf10),
+                          pressEvent: () async {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) {
+                                  return CustomerGenerateQR(orderId: widget.orderId, totalPrice: widget.totalPrice,);
+                                },
+                              ),
+                            );
+                          },
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(0),
+                            topRight: Radius.circular(80),
+                            bottomLeft: Radius.circular(80),
+                            bottomRight: Radius.circular(80),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
