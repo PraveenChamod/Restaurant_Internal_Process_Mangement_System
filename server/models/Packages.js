@@ -16,7 +16,10 @@ const PackagesSchema = mongoose.Schema(
     ],
     Price:{
         type:Number,
-        required:[true,"Please enter the price"]
+        //required:[true,"Please enter the price"]
+    },
+    Type:{
+      type:String
     },
     Status: {
         type: String,

@@ -52,7 +52,7 @@ const AddDatingTableItemsComponent = (props) => {
   return (
     <Container>
       <l.SubSection>
-        <Header>Add Dating Table Items</Header>
+        <Header>Add Table Items</Header>
         <l.FormSection onSubmit={addDatingTableItem}>
           <l.LeftSide>
             <FormControl sx={{ m: 1, width: "40ch" }} variant="standard">
@@ -74,6 +74,7 @@ const AddDatingTableItemsComponent = (props) => {
                 <MenuItem value="Beverage">Beverage</MenuItem>
                 <MenuItem value="Candles">Candles</MenuItem>
                 <MenuItem value="Napkin">Napkin</MenuItem>
+                <MenuItem value="Special Event">Special Event</MenuItem>
               </Select>
               {/* <TextField
                 id="standard-basic"

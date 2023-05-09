@@ -12,6 +12,7 @@ import axios from "axios";
 const AddPackages = (props) => {
     const[Name,setName] = useState("");
     const[Price,setPrice] = useState();
+    const[Type,setType] = useState("");
     const [join, setJoin] = useState([]);
 
       const removeItem = (index, item) => {
@@ -37,7 +38,7 @@ const AddPackages = (props) => {
       const AddPackage = async (e) => {
         e.preventDefault();
         try {
-          const formData = { Name, Price, Items };
+          const formData = { Name, Price, Items, Type };
           await toast.promise(
             axios.post("api/v1/packages", formData),
             {
@@ -93,6 +94,18 @@ const AddPackages = (props) => {
               value={Price}
               onChange={(e) => setPrice(e.target.value)}
             />
+            <TextField
+              InputProps={{
+                style: { color: "#fff" },
+              }}
+              id="standard-basic"
+              label="Package Type"
+              variant="standard"
+              InputLabelProps={{ className: "textFeild_Label" }}
+              sx={{ marginBottom: "10%" }}
+              value={Type}
+              onChange={(e) => setType(e.target.value)}
+            />
             <InputLabel id="ItemList" sx={{ color: "#fff" }}>
               Item List
             </InputLabel>
@@ -113,33 +126,36 @@ const AddPackages = (props) => {
                 }}
               >
                 {props.data.map((data) => {
-                  return (
-                    <MenuItem
-                      value={data.ItemName}
-                      onClick={() => handleItemClick(data)}
-                    >
-                      <l.CartSection>
-                        {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                                    {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                                </l.SelectIcon> */}
-                        <l.ItemsCard>
-                          <l.FoodImage>
-                            <l.Food
-                              src={`http://localhost:5000/tableitemimages/${data.TableItemImage}`}
-                            />
-                          </l.FoodImage>
-                          <l.Details>
-                            <l.MainText>
-                              <l.FoodName>{data.ItemName}</l.FoodName>
-                            </l.MainText>
-                            <l.SubText>
-                              <l.Text>Price : {data.ItemPrice}</l.Text>
-                            </l.SubText>
-                          </l.Details>
-                        </l.ItemsCard>
-                      </l.CartSection>
-                    </MenuItem>
-                  );
+                  console.log(data);
+                  if(data.ItemType === "Special Event"){
+                    return (
+                      <MenuItem
+                        value={data.ItemName}
+                        onClick={() => handleItemClick(data)}
+                      >
+                        <l.CartSection>
+                          {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
+                                                      {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
+                                                  </l.SelectIcon> */}
+                          <l.ItemsCard>
+                            <l.FoodImage>
+                              <l.Food
+                                src={`http://localhost:5000/tableitemimages/${data.TableItemImage}`}
+                              />
+                            </l.FoodImage>
+                            <l.Details>
+                              <l.MainText>
+                                <l.FoodName>{data.ItemName}</l.FoodName>
+                              </l.MainText>
+                              <l.SubText>
+                                <l.Text>Price : {data.ItemPrice}</l.Text>
+                              </l.SubText>
+                            </l.Details>
+                          </l.ItemsCard>
+                        </l.CartSection>
+                      </MenuItem>
+                    );
+                  }
                 })}
               </Select>
             </FormControl>
