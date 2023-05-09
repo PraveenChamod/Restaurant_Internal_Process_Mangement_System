@@ -16,6 +16,7 @@ const FoodDetails = (props) => {
             </Header>
                 <l.SubContainer>
                     <l.Table>
+                    <l.Tr1>
                         <l.Tr>
                             <l.Th>Name</l.Th>
                             <l.Th>Category</l.Th>
@@ -23,6 +24,7 @@ const FoodDetails = (props) => {
                             <l.Th>Status</l.Th>
                             <l.Th></l.Th>
                         </l.Tr>
+                        <l.data>
                         {
                             props.data1.map(row=>{
                                 return(
@@ -48,6 +50,8 @@ const FoodDetails = (props) => {
                                 )
                             })
                         }
+                        </l.data>
+                        </l.Tr1>
                     </l.Table>
                 </l.SubContainer>
             <l.ButtonSection>

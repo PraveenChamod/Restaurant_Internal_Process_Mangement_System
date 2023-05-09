@@ -28,7 +28,6 @@ const TableReservationComponent = ({ data }) => {
   let amount = data.Amount;
   let tables = data.Tables;
   let type = data.Type;
-  console.log(data.Package.packageName);
   const navigate = useNavigate();
   const confirmReservation = async (e) => {
     e.preventDefault();

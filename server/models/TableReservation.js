@@ -45,14 +45,14 @@ const TableReservationSchema = mongoose.Schema(
       required: true,
       default: "Pending",
     },
-    Items:[{
+    Items: [{
       type: mongoose.Schema.ObjectId,
       ref: "TableItem",
     }],
-    Package:[{
+    Package: {
       type: mongoose.Schema.ObjectId,
       ref: "Package",
-    }],
+    },
     eventName:{
       type:String
     }
@@ -63,6 +63,17 @@ const TableReservationSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+TableReservationSchema.pre("save", function (next) {
+  if (this.Type == "Special Events" || this.Type == "Dine-in") {
+    this.Items = undefined;
+  }
+  if (!this.Type == "Dating" || this.Type == "Dine-in") {
+    this.Package = undefined;
+  }
+  next();
+});
+
 const TableReservation = mongoose.model(
   "TableReservation",
   TableReservationSchema
