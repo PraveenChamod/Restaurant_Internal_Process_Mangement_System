@@ -63,6 +63,7 @@ export const getPackages = async (req, res) => {
         });
         data = {
           id: populatedPackages.id,
+          type:populatedPackages.Type,
           packageName: populatedPackages.Name,
           Items,
           Price: populatedPackages.Price,
