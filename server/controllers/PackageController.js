@@ -87,59 +87,6 @@ export const getPackages = async (req, res) => {
   }
 };
 
-
-//Praveen
-// Method : GET
-// End Point : "api/v1/packages/:id";
-// Description : get package items
-export const getPackageItems = async (req, res) => {
-  const user = req.user;
-  try {
-    if (user.Role == "Customer") {
-      const { id } = req.params;    
-      const populatedPackage = await Package.findById(id)
-          .populate({
-            path: "Items.item",
-            model: "TableItem",
-          })
-          .exec();
-          const Items = populatedPackage.Items.map((item) => {
-            return {
-              ItemId : item.item.id,
-              ItemName: item.item.ItemName,
-              ItemType: item.item.ItemType,
-              ItemImage: item.item.TableItemImage,
-            };
-          });
-      if(Items !== null) {
-        res.status(200).json({
-          status: "Success",
-          message: "Package Item Deatils",
-          data: {
-            Items,
-          },
-        });
-      } else {
-        res.status(400).json({
-          status: "Error",
-          message: "Package dosen't exist",
-        });
-      }
-    } else {
-      res.status(401).json({
-        status: "Error",
-        message: "Only Customer has access to do this operation",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      status: "Server Error",
-      message: error.message,
-    });
-  }
-};
-
-
 export const updatePackage = async (req, res) => {
   const user = req.user;
   try {
