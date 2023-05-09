@@ -60,6 +60,19 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
   final List tableNumbers = [];
   Map<String, dynamic>? paymentIntent;
 
+  final List selectedDatingTableItemList = [];
+  String currentFlowerVaseId = '';
+  String currentBeverageId = '';
+  String currentCandlesId = '';
+  String currentNapkinId = '';
+
+  void addItemsToList(String tableId) {
+    selectedDatingTableItemList.add(tableId);
+  }
+
+  void removeItemsFromList(String tableId) {
+    selectedDatingTableItemList.remove(tableId);
+  }
 
   void addDataToList(String tableId, String tableNumber) {
     bookTables.add(TableIdList(tableIdentity: tableId));
@@ -560,7 +573,7 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.network(
-                                          'http://$hostName:5000/Datingtableitemimages/${snapshot.data![index].itemImagePath}',
+                                          'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}',
                                           width: 90,
                                         ),
                                       ),
@@ -602,22 +615,67 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                                                     updateSelectItem(snapshot.data![index].itemPrice, snapshot.data![index].itemType, index);
                                                     if(snapshot.data![index].itemType == 'Flower'){
                                                       setState(() {
-                                                        flowerVaseImagePathVar = 'http://$hostName:5000/Datingtableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        flowerVaseImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                          if(currentFlowerVaseId == ''){
+                                                            if(selectedDatingTableItemList.length <= 3){
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }else{
+                                                            removeItemsFromList(currentFlowerVaseId);
+                                                            addItemsToList('${snapshot.data![index].itemId}');
+                                                          }
+                                                        }
+                                                        currentFlowerVaseId = '${snapshot.data![index].itemId}';
                                                       });
                                                     }else if(snapshot.data![index].itemType == 'Beverage'){
                                                       setState(() {
-                                                        beverageImagePathVar = 'http://$hostName:5000/Datingtableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        beverageImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                          if(currentBeverageId == ''){
+                                                            if(selectedDatingTableItemList.length <= 3){
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }else{
+                                                            removeItemsFromList(currentBeverageId);
+                                                            addItemsToList('${snapshot.data![index].itemId}');
+                                                          }
+                                                        }
+                                                        currentBeverageId = '${snapshot.data![index].itemId}';
                                                       });
                                                     }else if(snapshot.data![index].itemType == 'Candles'){
                                                       setState(() {
-                                                        candlesImagePathVar = 'http://$hostName:5000/Datingtableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        candlesImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                          if(currentCandlesId == ''){
+                                                            if(selectedDatingTableItemList.length <= 3){
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }else{
+                                                            removeItemsFromList(currentCandlesId);
+                                                            addItemsToList('${snapshot.data![index].itemId}');
+                                                          }
+                                                        }
+                                                        currentCandlesId = '${snapshot.data![index].itemId}';
                                                       });
                                                     }else{
                                                       setState(() {
-                                                        tableNapkinImagePathVar = 'http://$hostName:5000/Datingtableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        tableNapkinImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                          if(currentNapkinId == ''){
+                                                            if(selectedDatingTableItemList.length <= 3){
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }else{
+                                                            removeItemsFromList(currentNapkinId);
+                                                            addItemsToList('${snapshot.data![index].itemId}');
+                                                          }
+                                                        }
+                                                        currentNapkinId = '${snapshot.data![index].itemId}';
                                                       });
                                                     }
                                                   });
+                                                  print(selectedDatingTableItemList);
                                                 },
                                                 duration: const Duration(milliseconds: 500),
                                                 icons: const <AnimatedIconItem>[
@@ -641,7 +699,15 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                                                 onPressed: () {
                                                   setState(() {
                                                     subtractPrice(snapshot.data![index].itemPrice, snapshot.data![index].itemType, index);
+                                                    if(selectedDatingTableItemList.isNotEmpty){
+                                                      if(selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                        removeItemsFromList('${snapshot.data![index].itemId}');
+                                                        currentFlowerVaseId = '';
+                                                      }
+                                                    }
                                                   });
+                                                  print('After remove');
+                                                  print(selectedDatingTableItemList);
                                                 },
                                                 duration: const Duration(milliseconds: 500),
                                                 icons: const <AnimatedIconItem>[
@@ -879,7 +945,7 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                               '${datetime.year}/${datetime.month}/${datetime.day}',
                               '${arrivalTime.hour}:${arrivalTime.minute} $arrivalPeriod',
                               '${departureTime.hour}:${departureTime.minute} $departurePeriod',
-                              mainTablePriceVar);
+                              mainTablePriceVar, selectedDatingTableItemList);
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
@@ -924,7 +990,7 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final response = await http.get(
-      Uri.parse('http://$hostName:5000/api/v1/DatingTableItems'),
+      Uri.parse('http://$hostName:5000/api/v1/TableItems'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
@@ -932,14 +998,14 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
     );
     if (response.statusCode == 200) {
       final datingTableItems = json.decode(response.body);
-      return DatingTableItems.fromJsonList(datingTableItems['data']['datingTableItems']);
+      return DatingTableItems.fromJsonList(datingTableItems['data']['TableItems']);
     } else {
       throw Exception('Failed to load data');
     }
   }
 
   //Payment Intent
-  Future<void> cardPayment(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+  Future<void> cardPayment(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount, List itemList) async {
     showDialog(
       context: context,
       builder: (context){
@@ -982,7 +1048,7 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
     try{
       await Stripe.instance.presentPaymentSheet().then((value) => {
         print('Payment Success'),
-        reserveDatingTable(tableNumbers, tables, date, arrivalTime, departureTime, amount),
+        reserveDatingTable(tableNumbers, tables, date, arrivalTime, departureTime, amount, itemList),
       });
     }catch(error){
       unSuccessAwesomeDialog(DialogType.warning, 'Payment Unsuccessful Try Again!', "Warning");
@@ -990,7 +1056,7 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
     }
   }
 
-  void reserveDatingTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+  void reserveDatingTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount, List itemList) async {
     showDialog(
       context: context,
       builder: (context){
@@ -1019,6 +1085,7 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
         "DepartureTime": departureTime,
         "amount": amount,
         "Type": 'Dating',
+        "Items": itemList
       }),
     );
     Navigator.pop(context);
@@ -1069,18 +1136,21 @@ class DatingTableItems{
   final String itemName;
   final String itemType;
   final int itemPrice;
+  final String itemId;
   DatingTableItems({
     required this.itemImagePath,
     required this.itemName,
     required this.itemType,
     required this.itemPrice,
+    required this.itemId,
   });
   factory DatingTableItems.fromJson(Map<String, dynamic> json){
     return DatingTableItems(
-      itemImagePath: json['DatingTableItemImage'],
+      itemImagePath: json['TableItemImage'],
       itemName: json['ItemName'],
       itemPrice: json['ItemPrice'],
       itemType: json['ItemType'],
+      itemId: json['id'],
     );
   }
   static List<DatingTableItems> fromJsonList(dynamic jsonList){
