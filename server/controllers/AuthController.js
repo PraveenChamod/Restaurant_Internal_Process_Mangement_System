@@ -101,24 +101,31 @@ export const LogInUser = async (req, res) => {
         });
       }
     } else if (existingServiceProvider !== null) {
-      const result = await validatePassword(
-        Password,
-        existingServiceProvider.Password
-      );
-
-      if (result) {
-        const token = createToken(
-          existingServiceProvider._id,
-          existingServiceProvider.Email,
-          existingServiceProvider.Role
+      if (existingServiceProvider.Status !== "Deactive") {
+        const result = await validatePassword(
+          Password,
+          existingServiceProvider.Password
         );
-        console.log(token);
-        res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.json(token);
+
+        if (result) {
+          const token = createToken(
+            existingServiceProvider._id,
+            existingServiceProvider.Email,
+            existingServiceProvider.Role
+          );
+          console.log(token);
+          res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+          res.json(token);
+        } else {
+          res.status(400).json({
+            status: "Error",
+            message: "Invalid Password",
+          });
+        }
       } else {
         res.status(400).json({
           status: "Error",
-          message: "Invalid Password",
+          message: "User does not exist!",
         });
       }
     } else {
@@ -244,27 +251,71 @@ export const LogoutUser = async (req, res) => {
   res.json("User Logging Out");
 };
 
-//
+// Method : PATCH
+// End Point : "api/v1/Auth/resetpassword";
+// Description : Reset Password
 export const PasswordReset = async (req, res) => {
   try {
-    const { Email } = req.params;
-    const { InitialPassword, Password, ConfirmPassword } = req.body;
-    const user = await User.findOne({ Email: Email }).populate("Email");
-    const result = await validatePassword(InitialPassword, user.Password);
+    const user = req.user;
+    const { CurrentPassword, NewPassword, ConfirmPassword } = req.body;
+    console.log(req.body);
+    const result = await validatePassword(CurrentPassword, user.Password);
+    console.log(result);
+    const customer = await Customer.findOne({ Email: user.Email }).populate(
+      "Email"
+    );
+    const serviceProvider = await ServiceProviders.findOne({
+      Email: user.Email,
+    }).populate("Email");
     if (result) {
-      await User.findOneAndUpdate(
-        { Email: Email },
-        {
-          Password: Password,
-          ConfirmPassword: ConfirmPassword,
+      if (NewPassword === ConfirmPassword) {
+        
+        const salt = await GenerateSalt();
+        const encryptedPassword = await GeneratePassword(NewPassword, salt);
+        if (customer) {
+          await Customer.findOneAndUpdate(
+            { Email: user.Email },
+            {
+              Password: encryptedPassword,
+            },
+            {
+              new: true,
+            }
+          );
+
+        } else if (serviceProvider) {
+          console.log("test");
+            await ServiceProviders.findOneAndUpdate(
+            { Email: user.Email },
+            {
+              Password: encryptedPassword,
+            },
+            {
+              new: true,
+            }
+          );
         }
-      );
-      res.status(201).status({ message: `Password Reset Successfully` });
+        res.status(201).json({
+          status: "Success",
+          message: `Password Reset Successfully`,
+        });
+      } else {
+        res.status(400).json({
+          status: "Error",
+          message: "Confirm Password Doesn't Match!",
+        });
+      }
     } else {
-      res.status(402).json({ message: `Initial Password is not matched` });
+      res.status(402).json({
+        status: "Error",
+        message: `Current Password is incorrect!`,
+      });
     }
   } catch (error) {
-    res.status(500).json(error.message);
+    res.status(500).json({
+      status: "Server Error",
+      message: error.message,
+    });
   }
 };
 const createOTP = () => {

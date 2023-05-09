@@ -33,6 +33,9 @@ export const Th = styled.th`
 `;
 export const Td = styled.td``;
 export const Icon = styled.div`
+  & {
+    color: #ffbf00;
+  }
   &:hover {
     cursor: pointer;
   }

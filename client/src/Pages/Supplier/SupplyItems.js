@@ -9,7 +9,7 @@ const SupplierItems = (props) => {
   return (
     <>
       {isPending && <Spinner/>}
-      {data && <ViewSupplyItems BackRoutes={props.BackRoutes} data={data?.data?.SupplierItems[0]}/>}
+      {data && <ViewSupplyItems BackRoutes={props.BackRoutes} data={data?.data?.SupplierItems}/>}
     </>
   );
 };

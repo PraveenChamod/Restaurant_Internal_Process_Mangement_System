@@ -90,10 +90,10 @@ const AddUserComponent = (props) => {
             </Select>
           </FormControl>
           <Div1>
-            <div style={{ margin: "3%" }}>
+            <div style={{ margin: "3%", width:"50%"}}>
               <FormButton>Add</FormButton>
             </div>
-            <div style={{ margin: "3%" }}>
+            <div style={{ margin: "3%", width:"50%" }}>
               <FormButton>
                 <Link className="btn">Reset</Link>
               </FormButton>

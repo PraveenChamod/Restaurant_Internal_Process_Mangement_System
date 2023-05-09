@@ -35,12 +35,27 @@ const TableReservationSchema = mongoose.Schema(
       enum: {
         values: ["Dine-in", "Dating", "Special-Events"],
       },
+      required: [true, "Select the type!"],
     },
     Status: {
       type: String,
+      enum: {
+        values: ["Pending", "Confirm"],
+      },
       required: true,
       default: "Pending",
     },
+    Items:[{
+      type: mongoose.Schema.ObjectId,
+      ref: "TableItem",
+    }],
+    Package:[{
+      type: mongoose.Schema.ObjectId,
+      ref: "Package",
+    }],
+    eventName:{
+      type:String
+    }
   },
   {
     toJSON: { virtuals: true },
@@ -48,7 +63,6 @@ const TableReservationSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-
 const TableReservation = mongoose.model(
   "TableReservation",
   TableReservationSchema

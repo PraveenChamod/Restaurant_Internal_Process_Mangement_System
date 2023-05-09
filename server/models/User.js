@@ -51,6 +51,14 @@ const UserSchema = mongoose.Schema(
     ProfileImage: {
       type: String,
     },
+    Status:{
+      type:String,
+      enum:{
+        values:["Active","Deactivate"]
+      },
+      required:[true,"Must have a status"],
+      default:"Active"
+    }
   },
   {
     toJSON: { virtuals: true },

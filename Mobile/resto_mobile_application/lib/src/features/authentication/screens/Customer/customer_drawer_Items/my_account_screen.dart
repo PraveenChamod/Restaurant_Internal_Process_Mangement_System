@@ -20,31 +20,35 @@ class MyAccountScreen extends StatefulWidget {
 }
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
-
   //For Get User Input
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var contactController = TextEditingController();
   var addressController = TextEditingController();
 
+  String userImagePath = 'No';
+  String imageUrl = '';
+  String userAddress = 'Enter Your Address';
+
   ///-----------------------For get image from gallery----------------------------///
   File? _image;
   Future getImage(ImageSource source) async {
-    try{
+    try {
       final image = await ImagePicker().pickImage(source: source);
-      if(image == null ) return;
+      if (image == null) return;
       final imagePermanent = await saveFilePermanently(image.path);
 
       setState(() {
         _image = imagePermanent;
       });
-    }on PlatformException catch (e){
+    } on PlatformException catch (e) {
       print('failed to pick Image: $e');
     }
   }
+
   ///----------------------------------------------------------------------------///
 
-  Future<File> saveFilePermanently(String imagePath) async{
+  Future<File> saveFilePermanently(String imagePath) async {
     final directory = await getApplicationDocumentsDirectory();
     final name = path.basename(imagePath);
     final image = File('${directory.path}/$name');
@@ -58,6 +62,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     super.initState();
     _futureData = getUserDetails();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -79,14 +84,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 child: Center(
                   child: FutureBuilder(
                     future: _futureData,
-                    builder: (context, snapshot){
-                      if(snapshot.hasData){
-                        final String userImagePath = snapshot.data!['user']['ProfileImage'];
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data!['user']['ProfileImage'] != null) {
+                          userImagePath = snapshot.data!['user']['ProfileImage'];
+                          imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                        }
+                        if (snapshot.data!['user']['Address'] != null) {
+                          userAddress = snapshot.data!['user']['Address'];
+                        }
                         final String userName = snapshot.data!['user']['Name'];
                         final String userEmail = snapshot.data!['user']['Email'];
                         final String userContact = snapshot.data!['user']['ContactNumber'];
-                        final String userAddress = snapshot.data!['user']['Address'];
-                        final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
 
                         nameController = TextEditingController(text: userName);
                         emailController = TextEditingController(text: userEmail);
@@ -97,22 +106,31 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           children: [
                             _image != null
                                 ? ClipRRect(
-                                borderRadius: BorderRadius.circular(70.0),
-                                child: Image.file(_image!, width: 140, height: 140, fit: BoxFit.cover,))
-                                : CircleAvatar(
-                                    radius: 70,
-                                    backgroundImage: NetworkImage(imageUrl),
-                                  ),
-                            const SizedBox(height: 10.0,),
+                                    borderRadius: BorderRadius.circular(70.0),
+                                    child: Image.file(
+                                      _image!,
+                                      width: 140,
+                                      height: 140,
+                                      fit: BoxFit.cover,
+                                    ))
+                                : userImagePath == 'No'
+                                ? const CircleAvatar(radius: 70, backgroundImage: AssetImage('assets/images/Default_User.png'),)
+                                : CircleAvatar(radius: 70, backgroundImage: NetworkImage(imageUrl),),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Expanded(child: Container(),),
+                                Expanded(
+                                  child: Container(),
+                                ),
                                 Center(
                                   child: Container(
                                     width: 160,
                                     height: 35,
-                                    padding: const EdgeInsets.only(left: 5, right: 5),
+                                    padding: const EdgeInsets.only(
+                                        left: 5, right: 5),
                                     child: AnimatedButton(
                                       icon: Icons.camera_alt,
                                       text: 'Choose From Gallery',
@@ -130,7 +148,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -149,7 +169,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                   child: Container(
                                     width: 150,
                                     height: 35,
-                                    padding: const EdgeInsets.only(left: 5, right: 5),
+                                    padding: const EdgeInsets.only(
+                                        left: 5, right: 5),
                                     child: AnimatedButton(
                                       text: "Upload Profile Img",
                                       buttonTextStyle: const TextStyle(
@@ -161,14 +182,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                       pressEvent: () {
                                         _image != null
                                             ? updateProfilePicture()
-                                            : unSuccessAwesomeDialog(DialogType.warning, 'Firstly you have to select new Image!', "Warning");
+                                            : unSuccessAwesomeDialog(
+                                                DialogType.warning,
+                                                'Firstly you have to select new Image!',
+                                                "Warning");
                                       },
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             TextFormField(
                               controller: nameController,
                               style: const TextStyle(
@@ -184,15 +210,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFFFFF33)),
                                 ),
                                 suffixIcon: const Icon(
                                   Icons.person,
@@ -200,7 +229,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             TextFormField(
                               controller: emailController,
                               style: const TextStyle(
@@ -216,15 +247,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFFFFF33)),
                                 ),
                                 suffixIcon: const Icon(
                                   Icons.email,
@@ -232,7 +266,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             TextFormField(
                               controller: contactController,
                               style: const TextStyle(
@@ -248,15 +284,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFFFFF33)),
                                 ),
                                 suffixIcon: const Icon(
                                   Icons.phone_android,
@@ -264,7 +303,9 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             TextFormField(
                               controller: addressController,
                               style: const TextStyle(
@@ -280,15 +321,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFfebf10)),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                  borderSide: const BorderSide(
+                                      color: Color(0xFFFFFF33)),
                                 ),
                                 suffixIcon: const Icon(
                                   Icons.location_on_outlined,
@@ -296,12 +340,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10.0,),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
                             Center(
                               child: Container(
                                 width: 150,
                                 height: 35,
-                                padding: const EdgeInsets.only(left: 5, right: 5),
+                                padding:
+                                    const EdgeInsets.only(left: 5, right: 5),
                                 child: AnimatedButton(
                                   text: "Update Profile",
                                   buttonTextStyle: const TextStyle(
@@ -318,7 +365,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                             ),
                           ],
                         );
-                      }else if (snapshot.hasError) {
+                      } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       }
                       return const SizedBox(
@@ -340,6 +387,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       ),
     );
   }
+
   Future<Map<String, dynamic>> getUserDetails() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
@@ -356,10 +404,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       throw Exception('Failed to load data');
     }
   }
+
   void updateUserDetails() async {
     showDialog(
       context: context,
-      builder: (context){
+      builder: (context) {
         return const Center(
           child: CircularProgressIndicator(
             color: Color(0xFFfebf10),
@@ -384,14 +433,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       }),
     );
     Navigator.pop(context);
-    if(response.statusCode == 201) {
+    if (response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
       successAwesomeDialog(DialogType.success, msg, "Success");
     } else {
       final json = jsonDecode(response.body);
       final msg = json["message"];
-      //awesomeDialog(DialogType.warning, msg, "Warning");
     }
   }
 
@@ -402,7 +450,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      btnOkOnPress: (){
+      btnOkOnPress: () {
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (_) {
@@ -413,6 +461,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       },
     ).show();
   }
+
   awesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
       context: context,
@@ -420,9 +469,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      btnOkOnPress: (){},
+      btnOkOnPress: () {},
     ).show();
   }
+
   unSuccessAwesomeDialog(DialogType type, String desc, String title) {
     AwesomeDialog(
       context: context,
@@ -430,14 +480,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       animType: AnimType.topSlide,
       title: title,
       desc: desc,
-      btnOkOnPress: (){},
+      btnOkOnPress: () {},
     ).show();
   }
 
   void updateProfilePicture() async {
     showDialog(
       context: context,
-      builder: (context){
+      builder: (context) {
         return const Center(
           child: CircularProgressIndicator(
             color: Color(0xFFfebf10),
@@ -452,13 +502,20 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
-    var request = http.MultipartRequest('PATCH', Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
+    var request = http.MultipartRequest(
+      'PATCH',
+      Uri.parse("http://$hostName:5000/api/v1/Auth/ProfilePicture"),
     );
-    request.headers.addAll({"Authorization": "Bearer $userToken",});
-    request.files.add(await http.MultipartFile.fromPath('image', imageFile.path,));
+    request.headers.addAll({
+      "Authorization": "Bearer $userToken",
+    });
+    request.files.add(await http.MultipartFile.fromPath(
+      'image',
+      imageFile.path,
+    ));
     var response = await request.send();
     Navigator.pop(context);
-    if(response.statusCode == 201) {
+    if (response.statusCode == 201) {
       final json = jsonDecode(await response.stream.bytesToString());
       final msg = json["message"];
       successAwesomeDialog(DialogType.success, msg, "Success");

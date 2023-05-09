@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../common_widgets/drawer_item_appbar.dart';
+import '../../../../../constants/image_strings.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -13,21 +15,11 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _isChecked1 = false;
-  bool _isChecked2 = false;
-  bool _isChecked3 = false;
-  bool _isChecked4 = false;
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Colors.blue;
-    }
-    return Colors.red;
-  }
+
+  var initialPasswordController = TextEditingController();
+  var passwordController = TextEditingController();
+  var confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,151 +29,230 @@ class _SettingsScreenState extends State<SettingsScreen> {
         body: Stack(
           children: <Widget>[
             const BackgroundImage(),
-            Container(
-              padding: const EdgeInsets.all(10.0),
-              margin: const EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: Colors.black38,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'Push Notifications',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+            SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black38,
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    const SizedBox(height: 10.0,),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Allow Push Notifications',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFFfebf10),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Reset Password',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Expanded(child: Container(),),
-                        Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: _isChecked1,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isChecked1 = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0,),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Order Updates',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFFfebf10),
+                          const SizedBox(height: 10.0,),
+                          TextFormField(
+                            controller: initialPasswordController,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: InputDecoration(
+                              labelText: 'Initial Password',
+                              labelStyle: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                              ),
+                              suffixIcon: const Icon(
+                                Icons.lock_clock,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(child: Container(),),
-                        Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: _isChecked2,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isChecked2 = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0,),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'New Arrivals',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFFfebf10),
+                          const SizedBox(height: 10.0,),
+                          TextFormField(
+                            controller: passwordController,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: InputDecoration(
+                              labelText: 'New Password',
+                              labelStyle: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                              ),
+                              suffixIcon: const Icon(
+                                Icons.lock,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(child: Container(),),
-                        Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: _isChecked3,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isChecked3 = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0,),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Promotions',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFFfebf10),
+                          const SizedBox(height: 10.0,),
+                          TextFormField(
+                            controller: confirmPasswordController,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            decoration: InputDecoration(
+                              labelText: 'Confirm Password',
+                              labelStyle: const TextStyle(
+                                fontSize: 15,
+                                color: Color(0xFFfebf10),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                              ),
+                              suffixIcon: const Icon(
+                                Icons.lock,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
                           ),
-                        ),
-                        Expanded(child: Container(),),
-                        Checkbox(
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: _isChecked4,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _isChecked4 = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0,),
-                    Center(
-                      child: Container(
-                        width: 100,
-                        height: 35,
-                        padding: const EdgeInsets.only(left: 5, right: 5),
-                        child: AnimatedButton(
-                          text: "Save",
-                          buttonTextStyle: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                          const SizedBox(height: 10.0,),
+                          Center(
+                            child: Container(
+                              width: 150,
+                              height: 35,
+                              padding: const EdgeInsets.only(left: 5, right: 5),
+                              child: AnimatedButton(
+                                text: "Reset",
+                                buttonTextStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                color: const Color(0xFFfebf10),
+                                pressEvent: () {
+                                  resetInitialPassword();
+                                },
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(0),
+                                  topRight: Radius.circular(80),
+                                  bottomLeft: Radius.circular(80),
+                                  bottomRight: Radius.circular(80),
+                                ),
+                              ),
+                            ),
                           ),
-                          color: const Color(0xFFfebf10),
-                          pressEvent: () {
-
-                          },
-                        ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void resetInitialPassword() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userEmail = pref.getString("LoginEmail");
+    String? userToken = pref.getString("JwtToken");
+    var response = await http.patch(
+      Uri.parse("http://$hostName:5000/api/v1/User/resetpassword/$userEmail"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+      body: jsonEncode(<String, dynamic>{
+        "InitialPassword": initialPasswordController.text,
+        "Password": passwordController.text,
+        "ConfirmPassword": confirmPasswordController.text,
+      }),
+    );
+    Navigator.pop(context);
+    if(response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      successAwesomeDialog(DialogType.success, msg, "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      awesomeDialog(DialogType.warning, msg, "Warning");
+    }
+  }
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) {
+              return const SettingsScreen();
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+  awesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: (){},
+    ).show();
   }
 }

@@ -18,6 +18,9 @@ class DelivererHomeDrawer extends StatefulWidget {
 
 class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
   late Future<Map<String, dynamic>> _futureData;
+  String userImagePath = 'No';
+  String imageUrl = '';
+  String userName = 'Deliverer';
   @override
   void initState() {
     super.initState();
@@ -26,7 +29,10 @@ class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor:
+      MediaQuery.of(context).platformBrightness == Brightness.dark
+          ? Colors.black
+          : Colors.white,
       width: MediaQuery.of(context).size.width/1.5,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -46,14 +52,26 @@ class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
                 future: _futureData,
                 builder: (context, snapshot){
                   if(snapshot.hasData){
-                    final String userImagePath = snapshot.data!['user']['ProfileImage'];
-                    final String userName = snapshot.data!['user']['Name'];
+
+
+                    if(snapshot.data!['user']['ProfileImage'] != null){
+                      userImagePath = snapshot.data!['user']['ProfileImage'];
+                      imageUrl = 'http://$hostName:5000/images/$userImagePath';
+                    }
+                    if(snapshot.data!['user']['Name'] != null){
+                      userName = snapshot.data!['user']['Name'];
+                    }
                     final String userEmail = snapshot.data!['user']['Email'];
-                    final String imageUrl = 'http://$hostName:5000/images/$userImagePath';
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children:  [
-                        CircleAvatar(
+                        userImagePath == 'No'
+                            ? const CircleAvatar(
+                          radius: 40,
+                          backgroundImage: AssetImage(
+                              'assets/images/Default_User.png'),
+                        )
+                            : CircleAvatar(
                           radius: 40,
                           backgroundImage: NetworkImage(imageUrl),
                         ),
@@ -98,21 +116,6 @@ class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.delivery_dining,
-            ),
-            title: const Text('Orders Summary'),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_){
-                    return const DelivererOrdersSum();
-                  },
-                ),
-              );
-            },
-          ),
           const Divider(),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -137,7 +140,7 @@ class _DelivererHomeDrawerState extends State<DelivererHomeDrawer> {
             leading: const Icon(
               Icons.help,
             ),
-            title: const Text('Help Center'),
+            title: const Text('Help & FAQs'),
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

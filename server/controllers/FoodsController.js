@@ -186,10 +186,15 @@ export const updateFood = async (req, res) => {
     ) {
       const { id } = req.params;
       console.log(req.body);
+      const {FoodName,Category,Price,Status,image} = req.body;
       const Food = await Foods.findByIdAndUpdate(
         id,
         {
-          ...req.body,
+          FoodName:FoodName,
+          Category:Category,
+          Price:Price,
+          Status:Status,
+          FoodImage:req.file ? req.file.filename : image
         },
         { new: true }
       );

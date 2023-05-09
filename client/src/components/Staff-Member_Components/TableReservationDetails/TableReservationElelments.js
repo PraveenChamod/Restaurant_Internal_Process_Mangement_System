@@ -177,3 +177,86 @@ export const FormButton = styled.button`
 export const Hr = styled.hr`
   width: 100%;
 `;
+export const ItemSection = styled.div`
+  height: 300px;
+  width: 380px;
+  background-color: #1a1e21;
+  overflow: auto;
+  margin: 0 3% 5% 0;
+  border-radius: 10px;
+  box-shadow: 3px 3px 3px 3px #000;
+
+  @media screen and (max-width: 769px) {
+    width: 100%;
+    /* height:200px; */
+  }
+`;
+export const CartSection = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1e21;
+  @media screen and (max-width: 769px) {
+    font-size: 80%;
+  }
+`;
+export const ItemsCard = styled.div`
+  & {
+    display: flex;
+    margin: 2%;
+    width: 100%;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #ffffff2d;
+  }
+`;
+export const FoodImage = styled.div`
+  height: 90px;
+  width: 30%;
+  margin: 3%;
+`;
+export const Food = styled.img`
+  width: 90px;
+  height: 90px;
+`;
+export const Details = styled.div`
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  line-height: 0.1rem;
+  text-align: left;
+
+  @media screen and (max-width: 769px) {
+    padding-left: 8px;
+  }
+`;
+export const MainText = styled.div`
+  color: #fff;
+  width: 100%;
+`;
+export const FoodName = styled.h2`
+  font-size: 16px;
+  font-weight: 300;
+  @media screen and (max-width: 769px) {
+    font-size: 14px;
+  }
+`;
+export const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  line-height: 0;
+  height: 280px;
+  margin-bottom: 3%;
+`;
+export const Image1 = styled.img`
+  width: 400px;
+  height: 280px;
+  line-height: 0;
+`;
+export const Text2 = styled.h2`
+  color: #fff;
+`;

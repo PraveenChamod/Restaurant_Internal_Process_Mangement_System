@@ -54,6 +54,7 @@ import AdminAddCategories from "./Pages/Admin/AddCategories";
 import AdminViewFoods from "./Pages/Admin/AdimnViewFoods";
 import AdminViewFood from "./Pages/Admin/AdminViewFood";
 import AdminAddDatingTableItems from "./Pages/Admin/AddDatingTableItems";
+import AdminAddSpecialEvent from "./Pages/Admin/AddSpecialEvent";
 import ManagerViewUser from "./Pages/Manager/ManagerViewUser";
 import ManagerAddTables from "./Pages/Manager/ManagerAddTable";
 import ManagerViewTables from "./Pages/Manager/ManagerViewTables";
@@ -63,6 +64,7 @@ import ManagerViewFood from "./Pages/Manager/ManagerViewFood";
 import ManagerViewOffers from "./Pages/Manager/ViewOffers";
 import ManagerViewOffer from "./Pages/Manager/ViewOffer";
 import ManagerAddCategories from "./Pages/Manager/AddCategories";
+import ManagerAddSpecialEvent from "./Pages/Manager/AddSpecialEvent";
 import StaffMemberAddOffers from "./Pages/Staff-Member/AddOffers";
 import StaffMemberViewOffers from "./Pages/Staff-Member/ViewOffers";
 import StaffMemberViewOffer from "./Pages/Staff-Member/ViewOffer";
@@ -100,6 +102,12 @@ import ManagerAddDatingItems from "./Pages/Manager/ManagerAddDatingTableItems";
 import AdminViewTableDetails from "./Pages/Admin/AdminViewTable";
 import ChatBot from "./components/ChatBot/ChatBot";
 import Preloader from "./components/Preloader/Preloader";
+import AdminCategoryDetails from "./Pages/Admin/CategoryDetails";
+import StaffMemberCategoryDetails from "./Pages/Staff-Member/CategoryDetails";
+import ManagerCategoryDetails from "./Pages/Manager/CategoryDetails";
+import AddSupplierItems from "./Pages/Supplier/AddSupplierItems";
+import AddReservationPackages from "./Pages/Admin/AddPakages";
+import PackageDetails from "./Pages/Staff-Member/PackageDetails";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -237,6 +245,10 @@ function App() {
                   element={<AdminViewTableDetails />}
                 />
                 <Route
+                  path="/AdminAddPackages"
+                  element={<AddReservationPackages BackRoutes={BackRoutes[0].nav}/>}
+                />
+                <Route
                   path="/AdminAdd-Foods"
                   element={<AdminAddFoods BackRoutes={BackRoutes[0].nav} />}
                 />
@@ -255,6 +267,18 @@ function App() {
                   path="/AdminAdd-DatingTableItems"
                   element={
                     <AdminAddDatingTableItems BackRoutes={BackRoutes[0].nav} />
+                  }
+                />
+                <Route
+                  path="/AdminAdd-SpecialEvent"
+                  element={
+                    <AdminAddSpecialEvent BackRoutes={BackRoutes[0].nav} />
+                  }
+                />
+                <Route
+                  path="/AdminEditCategory"
+                  element={
+                    <AdminCategoryDetails BackRoutes={BackRoutes[0].nav} />
                   }
                 />
                 {/* </Route> */}
@@ -371,9 +395,21 @@ function App() {
                   }
                 />
                 <Route
+                  path="/ManagerEditCategory"
+                  element={
+                    <ManagerCategoryDetails BackRoutes={BackRoutes[1].nav} />
+                  }
+                />
+                <Route
                   path="/ManagerAdd-DatingTableItems"
                   element={
                     <ManagerAddDatingItems BackRoutes={BackRoutes[1].nav} />
+                  }
+                />
+                <Route
+                  path="/ManagerAdd-SpecialEvent"
+                  element={
+                    <ManagerAddSpecialEvent BackRoutes={BackRoutes[1].nav} />
                   }
                 />
 
@@ -421,6 +457,12 @@ function App() {
                   }
                 />
                 <Route
+                  path="/Staff-MemberPackageDetails"
+                  element={
+                    <PackageDetails BackRoutes={BackRoutes[2].nav} />
+                  }
+                />
+                <Route
                   path="/Staff-MemberPendingOrder-Details"
                   element={
                     <StaffMemberPendingOrders BackRoutes={BackRoutes[2].nav} />
@@ -446,6 +488,12 @@ function App() {
                     <StaffMemberTableReservationDetails
                       BackRoutes={BackRoutes[2].nav}
                     />
+                  }
+                />
+                <Route
+                  path="/StaffMemberEditCategory"
+                  element={
+                    <StaffMemberCategoryDetails BackRoutes={BackRoutes[2].nav} />
                   }
                 />
                 <Route
@@ -601,7 +649,7 @@ function App() {
                 />
                 <Route
                   path="/AddSupplyItems"
-                  element={<SupplierItems BackRoutes={BackRoutes[5].nav} />}
+                  element={<AddSupplierItems BackRoutes={BackRoutes[5].nav} />}
                 />
                 <Route
                   path="/ViewSupplyItems"

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:resto_mobile_application/src/features/authentication/screens/table_reservation/select_dating_table.dart';
+import 'package:resto_mobile_application/src/features/authentication/screens/table_reservation/select_special_event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
@@ -213,12 +214,7 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
                   ),
                 ],
               ),
-              Stack(
-                children: const [
-                  BackgroundImage(),
-
-                ],
-              ),
+              const SelectSpecialEvent(),
             ],
           ),
         ),

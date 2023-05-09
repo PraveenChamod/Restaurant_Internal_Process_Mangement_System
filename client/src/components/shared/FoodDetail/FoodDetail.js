@@ -7,19 +7,27 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import { FaCamera } from "react-icons/fa";
 const FoodDetailComponent = (props) => {
   console.log(props.BackRoutes);
   const [FoodName, setName] = useState(props.food.FoodName);
   const [Category, setCategory] = useState(props.food.Category);
   const [Price, setPrice] = useState(props.food.Price);
   const [Status, setStatus] = useState(props.food.Status);
+  const [image, setImage] = useState(props.food.FoodImage);
+  const [click, setClick] = useState(false);
   const { user } = useAuth();
   const { id } = useParams();
-  console.log(id);
+
   const update = async (e) => {
     e.preventDefault();
     try {
-      const Data = { FoodName, Category, Price, Status };
+      const Data = new FormData();
+      Data.append("image", image);
+      Data.append("FoodName", FoodName);
+      Data.append("Price", Price);
+      Data.append("Category", Category);
+      Data.append("Status", Status);
       console.log(Data);
       await toast.promise(
         axios.patch(`/api/v1/Food/${id}`, Data),
@@ -44,14 +52,33 @@ const FoodDetailComponent = (props) => {
       console.log(error.message);
     }
   };
+  const handleUpload = (e) => {
+    setImage(e.target.files[0]);
+    setClick(true);
+  };
   return (
     <Container>
       <Header>Food Details</Header>
       <l.Div onSubmit={update}>
         <l.Div1>
-          <l.Img
-            src={`http://localhost:5000/Foodimages/${props.food.FoodImage}`}
-          ></l.Img>
+          <l.ImageSection>
+            <l.ImageSubSec>
+              {click ? (
+                <l.Image src={URL.createObjectURL(image)} />
+              ) : (
+                <l.Image src={`http://localhost:5000/Foodimages/${image}`} />
+              )}
+            </l.ImageSubSec>
+            <l.Icon>
+              <FaCamera />
+              <input
+                type="file"
+                id="file"
+                accept="image/*"
+                onChange={handleUpload}
+              />
+            </l.Icon>
+          </l.ImageSection>
           <l.TextSection>
             <l.Text>Food Name</l.Text>
             <l.TextFeild

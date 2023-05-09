@@ -76,10 +76,15 @@ export const updateOffer = async (req, res) => {
     const user = req.user;
     if (user.Role === "Staff-Member" || user.Role === "Manager") {
       const { id } = req.params;
+      const {OfferName,SpecialPrice,Category,Status,image} = req.body;
       const offer = await Offers.findByIdAndUpdate(
         id,
         {
-          ...req.body,
+          OfferName:OfferName,
+          Category:Category,
+          Status:Status,
+          SpecialPrice:SpecialPrice,
+          OfferImage :req.file ? req.file.filename : image
         },
         { new: true }
       );

@@ -6,6 +6,8 @@ import {
   FaUsers,
   FaBookOpen,
   FaEye,
+  FaRegEdit,
+  FaBoxOpen
 } from "react-icons/fa";
 import {
   GiMeal,
@@ -13,6 +15,7 @@ import {
   GiHotMeal,
   GiRoundTable,
   GiWineBottle,
+  GiBoxUnpacking
 } from "react-icons/gi";
 import { BiCategory, BiLogOut } from "react-icons/bi";
 import { IoFastFoodSharp } from "react-icons/io5";
@@ -61,6 +64,11 @@ export const Roles = [
         link: "/AdminView-Tables",
       },
       {
+        text: "Add Package",
+        icon: <FaBoxOpen style={iconStyle} />,
+        link: "/AdminAddPackages",
+      },
+      {
         text: "Add Foods",
         icon: <GiMeal style={iconStyle} />,
         link: "/AdminAdd-Foods",
@@ -74,6 +82,11 @@ export const Roles = [
         text: "Add Categories",
         icon: <BiCategory style={iconStyle} />,
         link: "/AdminAdd-Categories",
+      },
+      {
+        text: "View/Update Category",
+        icon: <FaRegEdit style={iconStyle} />,
+        link:"/AdminEditCategory"
       },
       {
         text: "Add Dating Table Items",
@@ -161,6 +174,11 @@ export const Roles = [
         link: "/ManagerAdd-Categories",
       },
       {
+        text: "View/Update Category",
+        icon: <FaRegEdit style={iconStyle} />,
+        link:"/ManagerEditCategory"
+      },
+      {
         text: "Add Dating Table Items",
         icon: <GiWineBottle style={iconStyle} />,
         link: "/ManagerAdd-DatingTableItems",
@@ -219,6 +237,16 @@ export const Roles = [
         text: "Place Order",
         icon: <GiMeal style={iconStyle} />,
         link: "/Staff-MemberPlace-Order",
+      },
+      {
+        text: "View/Update Packages",
+        icon: <GiBoxUnpacking style={iconStyle} />,
+        link: "/Staff-MemberPackageDetails",
+      },
+      {
+        text: "View/Update Category",
+        icon: <FaRegEdit style={iconStyle} />,
+        link:"/StaffMemberEditCategory"
       },
       {
         text: "Log Out",

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../../common_widgets/background_image.dart';
-import '../../../../../common_widgets/drawer_item_appbar.dart';
 import '../../../../../common_widgets/main_order_container.dart';
 import '../../../../../constants/image_strings.dart';
 
@@ -16,49 +15,42 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color(0xFF161b1d),
-        appBar: const DrawerItemAppbar(title: "Your Orders"),
-        body: Stack(
-          children: <Widget>[
-            const BackgroundImage(),
-            Center(
-              child: FutureBuilder(
-                future: fetchOrdersData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        return MainOrderContainer(
-                          status: snapshot.data![index].status,
-                          deliveryStatus: snapshot.data![index].deliveryStatus,
-                          totalPrice: snapshot.data![index].totalPrice,
-                          orderId: snapshot.data![index].orderId,
-                        );
-                      },
+    return Stack(
+      children: <Widget>[
+        const BackgroundImage(),
+        Center(
+          child: FutureBuilder(
+            future: fetchOrdersData(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return MainOrderContainer(
+                      status: snapshot.data![index].status,
+                      deliveryStatus: snapshot.data![index].deliveryStatus,
+                      totalPrice: snapshot.data![index].totalPrice,
+                      orderId: snapshot.data![index].orderId,
                     );
-                  }else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  return const SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xFFfebf10),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-
-          ],
+                  },
+                );
+              }else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return const SizedBox(
+                height: 40,
+                width: 40,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xFFfebf10),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
-      ),
+      ],
     );
   }
 

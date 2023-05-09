@@ -21,8 +21,9 @@ class _ResetPasswordState extends State<ResetPassword> {
   final TextEditingController emailAddressController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
   final TextEditingController newPasswordController = TextEditingController();
-  final TextEditingController confirmNewPasswordController =
-      TextEditingController();
+  final TextEditingController confirmNewPasswordController = TextEditingController();
+  bool _obscureTextNew = true;
+  bool _obscureTextConfirm = true;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,8 +68,8 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ),
                   Center(
                     child: Container(
-                      margin: const EdgeInsets.all(30.0),
-                      padding: const EdgeInsets.all(30.0),
+                      margin: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(15.0),
                       decoration: BoxDecoration(
                         color: Colors.black38,
                         borderRadius: BorderRadius.circular(10),
@@ -86,14 +87,18 @@ class _ResetPasswordState extends State<ResetPassword> {
                             keyboardType: TextInputType.emailAddress,
                             style: const TextStyle(
                               fontSize: 15,
-                              color: Color(0xFFfebf10),
-                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                             decoration: InputDecoration(
                               labelText: 'Enter Email Address',
                               labelStyle: const TextStyle(
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
+                              ),
+                              suffixIcon: const Icon(
+                                CupertinoIcons.envelope_fill,
+                                color: Color(0xFFfebf10),
+                                size: 18,
                               ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -122,8 +127,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                             keyboardType: TextInputType.text,
                             style: const TextStyle(
                               fontSize: 15,
-                              color: Color(0xFFfebf10),
-                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                             decoration: InputDecoration(
                               labelText: 'Enter Given OTP',
@@ -131,6 +135,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                                 fontSize: 15,
                                 color: Color(0xFFfebf10),
                               ),
+                              suffixIcon: const Icon(
+                                CupertinoIcons.list_number,
+                                color: Color(0xFFfebf10),
+                                size: 18,
+                              ),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
@@ -151,75 +160,147 @@ class _ResetPasswordState extends State<ResetPassword> {
                           const SizedBox(
                             height: 15,
                           ),
-                          TextFormField(
+                          TextField(
                             controller: newPasswordController,
-                            textInputAction: TextInputAction.done,
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Color(0xFFfebf10),
-                              fontWeight: FontWeight.bold,
-                            ),
+                            obscureText: _obscureTextNew,
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLength: 8,
                             decoration: InputDecoration(
                               labelText: 'Enter New Password',
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFfebf10),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFFfebf10)),
+                              counterText: '',
+                              labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 15),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureTextNew = !_obscureTextNew;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureTextNew
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: const Color(0xFFfebf10),
+                                  size: 18,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFFfebf10)),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFFFFFF33)),
+                                borderSide: const BorderSide(color: Color(0xFFFFFF33)),
                               ),
                             ),
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
+                          // TextFormField(
+                          //   controller: newPasswordController,
+                          //   textInputAction: TextInputAction.done,
+                          //   maxLines: 1,
+                          //   keyboardType: TextInputType.text,
+                          //   style: const TextStyle(
+                          //     fontSize: 15,
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          //   decoration: InputDecoration(
+                          //     labelText: 'Enter New Password',
+                          //     labelStyle: const TextStyle(
+                          //       fontSize: 15,
+                          //       color: Color(0xFFfebf10),
+                          //     ),
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Color(0xFFfebf10)),
+                          //     ),
+                          //     enabledBorder: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Color(0xFFfebf10)),
+                          //     ),
+                          //     focusedBorder: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Color(0xFFFFFF33)),
+                          //     ),
+                          //   ),
+                          // ),
                           const SizedBox(
                             height: 15,
                           ),
-                          TextFormField(
+                          TextField(
                             controller: confirmNewPasswordController,
-                            textInputAction: TextInputAction.done,
-                            maxLines: 1,
-                            keyboardType: TextInputType.text,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Color(0xFFfebf10),
-                              fontWeight: FontWeight.bold,
-                            ),
+                            obscureText: _obscureTextConfirm,
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLength: 8,
                             decoration: InputDecoration(
                               labelText: 'Confirm New Password',
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFfebf10),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFFfebf10)),
+                              counterText: '',
+                              labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 15),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureTextConfirm = !_obscureTextConfirm;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureTextConfirm
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: const Color(0xFFfebf10),
+                                  size: 18,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFFfebf10)),
+                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Color(0xFFFFFF33)),
+                                borderSide: const BorderSide(color: Color(0xFFFFFF33)),
                               ),
                             ),
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
                           ),
+                          // TextFormField(
+                          //   controller: confirmNewPasswordController,
+                          //   textInputAction: TextInputAction.done,
+                          //   maxLines: 1,
+                          //   keyboardType: TextInputType.text,
+                          //   style: const TextStyle(
+                          //     fontSize: 15,
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          //   decoration: InputDecoration(
+                          //     labelText: 'Confirm New Password',
+                          //     labelStyle: const TextStyle(
+                          //       fontSize: 15,
+                          //       color: Color(0xFFfebf10),
+                          //     ),
+                          //     border: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Color(0xFFfebf10)),
+                          //     ),
+                          //     enabledBorder: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Color(0xFFfebf10)),
+                          //     ),
+                          //     focusedBorder: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Color(0xFFFFFF33)),
+                          //     ),
+                          //   ),
+                          // ),
                           const SizedBox(
                             height: 20,
                           ),

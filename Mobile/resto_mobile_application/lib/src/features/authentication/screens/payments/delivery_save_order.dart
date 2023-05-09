@@ -300,6 +300,16 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
   }
 
   void orderItems(List<FoodList> foods, String paymentMethod, num totalPrice, String type, String customerId) async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final http.Response response = await http.post(
@@ -316,11 +326,14 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
         "Customer":customerId
       }),
     );
+    Navigator.pop(context);
     if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final orderDetails = json["data"];
       final msg = json["message"];
-      successAwesomeDialog(DialogType.success, 'Your Order Is Placed Successfully.', "Success");
+      if(widget.paymentMethod != 'Card Payments'){
+        successAwesomeDialog(DialogType.success, 'Your Order Is Placed Successfully.', "Success");
+      }
     }else{
       final json = jsonDecode(response.body);
       final msg = json["message"];
@@ -384,7 +397,7 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
     await Stripe.instance.initPaymentSheet(
       paymentSheetParameters: SetupPaymentSheetParameters(
         paymentIntentClientSecret: paymentIntent!['clientSecret'],
-        style: ThemeMode.dark,
+        style: ThemeMode.system,
         merchantDisplayName: 'Resto_Mobile_App',)).then((value) => {}
     );
     //Display the payment sheet

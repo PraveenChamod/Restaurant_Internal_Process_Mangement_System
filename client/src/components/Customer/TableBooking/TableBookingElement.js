@@ -72,7 +72,7 @@ export const Div3 = styled.div`
   }
 `;
 export const Div31 = styled.div`
-  height: 88%;
+  height: 95%;
   width: 45%;
   background-color: #1a1e21;
   border-radius: 25px;
@@ -219,3 +219,20 @@ export const SubHeader = styled.h3`
   color: #fff;
   margin-bottom: 0px;
 `;
+export const NotFound = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  line-height: 0;
+  height: 350px;
+`
+export const Image1 = styled.img`
+  width:500px;
+  height: 350px;
+  line-height: 0;
+`
+export const Text1 = styled.h1`
+  color: #fff;
+` 

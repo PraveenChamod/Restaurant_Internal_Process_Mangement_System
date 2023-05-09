@@ -201,7 +201,6 @@ const OrderPlace = ({ data }) => {
                 </l.RadioButtonSection>
                 <l.ButtonSection>
                   <FormButton
-                    style={{ width: "200px" }}
                     onClick={
                       paymentMethod === "Cash On Delivery"
                         ? PlaceOrder

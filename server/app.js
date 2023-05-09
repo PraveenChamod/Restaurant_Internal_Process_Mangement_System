@@ -15,7 +15,7 @@ import passport from "passport";
 import ItemsRoutes from "./routes/ItemsRoutes.js";
 import FoodRoutes from "./routes/FoodsRoutes.js";
 import CategoryRoutes from "./routes/CategoryRoutes.js";
-import DatingTableItemRoutes from "./routes/DatingTableItemRoutes.js";
+import SpecialEventRoutes from "./routes/SpecialEventRoutes.js";
 import BlogRoutes from "./routes/BlogRoutes.js";
 import TableRoutes from "./routes/TableRoutes.js";
 import OfferRoutes from "./routes/OfferRoutes.js";
@@ -29,6 +29,8 @@ import PaymentRoute from "./routes/PaymentRoutes.js";
 import { getOffers } from "./controllers/OfferController.js";
 import { GetReviews } from "./controllers/BlogController.js";
 import StocksOrderRoutes from "./routes/StocksOrderRoutes.js";
+import TableItemRoutes from "./routes/TableItemRoutes.js";
+import PackageRoutes from "./routes/PackageRoutes.js";
 
 const app = express();
 
@@ -90,7 +92,7 @@ app.use("/Foodimages", express.static("images/Foods"));
 app.use("/offerimages", express.static("images/Offers"));
 app.use("/blogimages", express.static("images/Users"));
 app.use("/Categoryimages", express.static("images/Categories"));
-app.use("/Datingtableitemimages", express.static("images/DatingTableItems"));
+app.use("/tableitemimages", express.static("images/TableItems"));
 
 app.use("/api/v1/Auth", AuthRoutes);
 
@@ -104,7 +106,9 @@ app.use("/api/v1/", requireAuth, FoodRoutes);
 
 app.use("/api/v1/", requireAuth, CategoryRoutes);
 
-app.use("/api/v1/", requireAuth, DatingTableItemRoutes);
+app.use("/api/v1/", requireAuth, TableItemRoutes);
+
+app.use("/api/v1/", requireAuth, SpecialEventRoutes);
 
 app.use("/api/v1/", requireAuth, BlogRoutes);
 
@@ -121,5 +125,7 @@ app.use("/api/v1/", requireAuth, StocksOrderRoutes);
 app.use("/api/v1/", requireAuth, SupplierItemsRoutes);
 
 app.use("/api/v1/", PaymentRoute);
+
+app.use("/api/v1/",requireAuth,PackageRoutes);
 
 export default app;

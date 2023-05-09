@@ -58,6 +58,8 @@ dependencies:
   flutter_svg: ^2.0.4
   permission_handler: ^10.2.0
   geocoding: ^2.1.0
+  qr_flutter: ^4.0.0
+  qr_code_scanner: ^1.0.1
 
 
 dev_dependencies:
@@ -100,18 +102,12 @@ flutter:
   #Developers Images
     - assets/images/Praveen_Chamod.png
     - assets/images/Kasuni_Nihara.png
+    - assets/images/Chamodya.png
+    - assets/images/Dilmith.png
+    - assets/images/Aravinda.png
+    - assets/images/Dhanushka.png
   #Application Logo
     - assets/logo/Logo.png
-  #Food Images
-    - assets/Food Types/Burger/Chicken_Burger.jpg
-    - assets/Food Types/Koththu/Chicken_Koththu.jpg
-    - assets/Food Types/Pizza/Cheese_Pizza.jpg
-    - assets/Food Types/Rice/Veg_Rice.jpg
-    - assets/Food Types/Appetizer/FriedFish.jpg
-    - assets/Food Types/Beverages/Beverages.jpg
-    - assets/Food Types/Chop-Suey/VegChopSuey.jpg
-    - assets/Food Types/Desert/FruitSalad.jpg
-    - assets/Food Types/Noodles/Noodles.jpg
   #Default User
     - assets/images/Default_User.png
   #Table Images

@@ -437,6 +437,7 @@ export const ViewOrderFoods = async (req, res) => {
         const Address = populatedOrder.Customer.Address;
         const lat = populatedOrder.Customer.lat;
         const lang = populatedOrder.Customer.lang;
+        const PaymentMethod = populatedOrder.paymentMethod;
         const food = populatedOrder.Foods.map((item) => {
           if (item.food !== undefined) {
             return {
@@ -471,6 +472,7 @@ export const ViewOrderFoods = async (req, res) => {
           lat: lat,
           lang: lang,
           TotalPrice: populatedOrder.TotalPrice,
+          PaymentMethod: PaymentMethod,
           data: {
             food,
           },
