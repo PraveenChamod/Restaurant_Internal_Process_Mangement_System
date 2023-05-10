@@ -39,14 +39,17 @@ class _SplashScreenState extends State<SplashScreen> {
                   height: 25,
                 ),
                 ApplicationLogo(),
-                Text(
-                  "Your Favourite Food Delivered Hot & Fresh",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Your Favourite Food Delivered Hot & Fresh",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 SpinKitWave(
                   color: Colors.white,

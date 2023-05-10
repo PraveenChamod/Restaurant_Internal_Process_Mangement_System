@@ -76,6 +76,7 @@ class _CustomerSearchState extends State<CustomerSearch> {
           children: <Widget>[
             const BackgroundImage(),
             SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -234,7 +235,7 @@ class SearchFoodTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-          height: 100,
+          height: 120,
           padding: const EdgeInsets.only(left: 10, top: 10, right: 20, bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -249,7 +250,7 @@ class SearchFoodTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
                       foodImagePath,
-                      width: 70,
+                      width: 80,
                     ),
                   ),
                 ),

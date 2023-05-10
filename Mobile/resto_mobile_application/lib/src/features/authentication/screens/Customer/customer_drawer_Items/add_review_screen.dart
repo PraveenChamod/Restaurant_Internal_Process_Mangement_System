@@ -111,8 +111,8 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
                                     controller: reviewController,
                                     style: const TextStyle(
                                       fontSize: 18,
-                                      color: Color(0xFFfebf10),
-                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      //fontWeight: FontWeight.bold,
                                     ),
                                     decoration: InputDecoration(
                                       labelText: 'Share Your Opinion',
