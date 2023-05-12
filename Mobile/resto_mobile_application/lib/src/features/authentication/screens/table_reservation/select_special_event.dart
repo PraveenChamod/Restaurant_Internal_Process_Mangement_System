@@ -906,49 +906,57 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
   }
 
   void reserveSpecialEventTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount, String packageId, String eventName) async {
-    showDialog(
-      context: context,
-      builder: (context){
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFFfebf10),
-          ),
-        );
-      },
-    );
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? userToken = pref.getString("JwtToken");
-    String? cusId = pref.getString("LoginId");
-    final http.Response response = await http.post(
-      Uri.parse("http://$hostName:5000/api/v1/TableReservation"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": "Bearer $userToken",
-      },
-      body: jsonEncode(<String, dynamic>{
-        "Customer": cusId,
-        "TableNo": tableNumbers,
-        "Tables": tables,
-        "Date": date,
-        "ArrivalTime": arrivalTime,
-        "DepartureTime": departureTime,
-        "amount": amount,
-        "Type": 'Special-Events',
-        "Package": packageId,
-        "eventName": eventName
-      }),
-    );
-    Navigator.pop(context);
-    if (response.statusCode == 201) {
-      final json = jsonDecode(response.body);
-      final orderDetails = json["data"];
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
+    try{
+      showDialog(
+        context: context,
+        builder: (context){
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFFfebf10),
+            ),
+          );
+        },
+      );
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? userToken = pref.getString("JwtToken");
+      String? cusId = pref.getString("LoginId");
+      final http.Response response = await http.post(
+        Uri.parse("http://$hostName:5000/api/v1/TableReservation"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Authorization": "Bearer $userToken",
+        },
+        body: jsonEncode(<String, dynamic>{
+          "Customer": cusId,
+          "TableNo": tableNumbers,
+          "Tables": tables,
+          "Date": date,
+          "ArrivalTime": arrivalTime,
+          "DepartureTime": departureTime,
+          "amount": amount,
+          "Type": 'Special-Events',
+          "Package": packageId,
+          "eventName": eventName
+        }),
+      );
+      Navigator.pop(context);
+      if (response.statusCode == 201) {
+        final json = jsonDecode(response.body);
+        final orderDetails = json["data"];
+        final msg = json["message"];
+        successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
 
-    } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      } else {
+        final json = jsonDecode(response.body);
+        final msg = json["message"];
+        print(msg);
+        //unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      }
+    } catch (e) {
+      // Handle other errors
+      print('Error: $e');
+      unSuccessAwesomeDialog(DialogType.warning, 'An error occurred. Please try again', "Warning");
+      throw Exception(e);
     }
   }
   successAwesomeDialog(DialogType type, String desc, String title) {
@@ -979,8 +987,6 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
       btnOkOnPress: () {},
     ).show();
   }
-
-
 
   Future<List<SelectTables>> getTables() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
