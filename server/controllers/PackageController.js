@@ -44,7 +44,7 @@ export const getPackages = async (req, res) => {
     let packages = [];
     let Items = [];
     let data;
-    if (user.Role !== "Deliverer" || user.Role !== "Supplier") {
+    if (user.Role !== "Deliverer" || user.Role !== "Supplier" ) {
       const findPackages = await Package.find();
       for (const existpackage of findPackages) {
         const populatedPackages = await Package.findById(existpackage.id)

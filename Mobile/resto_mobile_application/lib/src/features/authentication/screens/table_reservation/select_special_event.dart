@@ -19,7 +19,9 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
 
   final List<SelectTables> data = [];
 
-  final List<SpecialEvents> eventData = [];
+  final List<PackagesData> eventData = [];
+
+  String packageIdentity = '';
 
   String tableId = '';
   String tableNumberStr = '';
@@ -111,565 +113,182 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
         Column(
           children: [
             Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 15.0, top: 5.0, right: 5.0),
-                child: FutureBuilder(
-                  future: getSpecialEvents(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            width: 280,
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              color: Colors.black38,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      snapshot.data![index].eventName,
-                                      style: const TextStyle(
-                                        color: Color(0xFFfebf10),
-                                        fontSize: 17.0,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                                            child: Container(
-                                              width: 10.0,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border: Border.all(color: const Color(0xFFCD7F32), width: 1),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Bronze',
-                                                      style: TextStyle(
-                                                        color: Color(0xFFCD7F32),
-                                                        fontSize: 17.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Package',
-                                                      style: TextStyle(
-                                                        color: Color(0xFFCD7F32),
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Rs. ${snapshot.data![index].bronzePrice}",
-                                                      style: const TextStyle(
-                                                        color: Color(0xFFCD7F32),
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                                            child: Container(
-                                              width: 10.0,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border: Border.all(color: const Color(0xFFC0C0C0), width: 1),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Silver',
-                                                      style: TextStyle(
-                                                        color: Color(0xFFC0C0C0),
-                                                        fontSize: 17.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Package',
-                                                      style: TextStyle(
-                                                        color: Color(0xFFC0C0C0),
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Rs. ${snapshot.data![index].silverPrice}",
-                                                      style: const TextStyle(
-                                                        color: Color(0xFFC0C0C0),
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                                            child: Container(
-                                              width: 10.0,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border: Border.all(color: const Color(0xFFFFD700), width: 1),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Gold',
-                                                      style: TextStyle(
-                                                        color: Color(0xFFFFD700),
-                                                        fontSize: 17.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const Expanded(
-                                                    child: Text(
-                                                      'Package',
-                                                      style: TextStyle(
-                                                        color: Color(0xFFFFD700),
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      "Rs. ${snapshot.data![index].goldPrice}",
-                                                      style: const TextStyle(
-                                                        color: Color(0xFFFFD700),
-                                                        fontSize: 15.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Center(
-                                      child: Container(
-                                        width: 130,
-                                        height: 25,
-                                        padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
-                                        child: AnimatedButton(
-                                          text: "More Details",
-                                          buttonTextStyle: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                          ),
-                                          color: const Color(0xFFfebf10),
-                                          pressEvent: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  backgroundColor: const Color(0xFF161b1d),
-                                                  title: Center(
-                                                    child: Text(
-                                                      snapshot.data![index].eventName,
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 20.0,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  content: SizedBox(
-                                                    height: 220,
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(10),
-                                                            border: Border.all(
-                                                              color: const Color(0xFFfebf10),
-                                                            ),
-                                                          ),
-                                                          child: Center(
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(5.0),
-                                                              child: Column(
-                                                                children: [
-                                                                  const Text(
-                                                                    'Bronze Package:',
-                                                                    style: TextStyle(
-                                                                      fontSize: 16,
-                                                                      color: Colors.white,
-                                                                    ),
-                                                                  ),
-                                                                  Text(snapshot.data![index].item1, style: const TextStyle(fontSize: 15, color: Colors.white,),),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5.0,
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(10),
-                                                            border: Border.all(
-                                                              color: const Color(0xFFfebf10),
-                                                            ),
-                                                          ),
-                                                          child: Center(
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(5.0),
-                                                              child: Column(
-                                                                children: [
-                                                                  const Text(
-                                                                    'Silver Package:',
-                                                                    style: TextStyle(fontSize: 16, color: Colors.white,),
-                                                                  ),
-                                                                  Text(snapshot.data![index].item1, style: const TextStyle(fontSize: 15, color: Colors.white,),),
-                                                                  Text(snapshot.data![index].item2, style: const TextStyle(fontSize: 15, color: Colors.white,),),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 5.0,
-                                                        ),
-                                                        Container(
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(10),
-                                                            border: Border.all(
-                                                              color: const Color(0xFFfebf10),
-                                                            ),
-                                                          ),
-                                                          child: Center(
-                                                            child: Padding(
-                                                              padding: const EdgeInsets.all(5.0),
-                                                              child: Column(
-                                                                children: [
-                                                                  const Text(
-                                                                    'Gold Package:',
-                                                                    style: TextStyle(
-                                                                      fontSize: 16,
-                                                                      color: Colors.white,
-                                                                    ),
-                                                                  ),
-                                                                  Text(snapshot.data![index].item1, style: const TextStyle(fontSize: 15, color: Colors.white,),),
-                                                                  Text(snapshot.data![index].item2, style: const TextStyle(fontSize: 15, color: Colors.white,),),
-                                                                  Text(snapshot.data![index].item3, style: const TextStyle(fontSize: 15, color: Colors.white,),),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  actions: [
-                                                    Center(
-                                                      child: Container(
-                                                        width: 150,
-                                                        height: 35,
-                                                        padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
-                                                        child: AnimatedButton(
-                                                          text: "Select Bronze",
-                                                          buttonTextStyle: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 17,
-                                                          ),
-                                                          color: const Color(0xFFfebf10),
-                                                          pressEvent: () {
-                                                            setState(() {
-                                                              eventName = snapshot.data![index].eventName;
-                                                              packageType = 'Bronze Package';
-                                                              eventPriceStr = 'Price: ${snapshot.data![index].bronzePrice}';
-                                                              eventPrice = snapshot.data![index].bronzePrice;
-                                                            });
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                          borderRadius: const BorderRadius.only(
-                                                            topLeft: Radius.circular(0),
-                                                            topRight: Radius.circular(80),
-                                                            bottomLeft: Radius.circular(80),
-                                                            bottomRight: Radius.circular(80),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5.0,
-                                                    ),
-                                                    Center(
-                                                      child: Container(
-                                                        width: 150,
-                                                        height: 35,
-                                                        padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
-                                                        child: AnimatedButton(
-                                                          text: "Select Silver",
-                                                          buttonTextStyle: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 17,
-                                                          ),
-                                                          color: const Color(0xFFfebf10),
-                                                          pressEvent: () {
-                                                            setState(() {
-                                                              eventName = snapshot.data![index].eventName;
-                                                              packageType = 'Silver Package';
-                                                              eventPriceStr = 'Price: Rs. ${snapshot.data![index].silverPrice}';
-                                                              eventPrice = snapshot.data![index].silverPrice;
-                                                            });
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                          borderRadius: const BorderRadius.only(
-                                                            topLeft: Radius.circular(0),
-                                                            topRight: Radius.circular(80),
-                                                            bottomLeft: Radius.circular(80),
-                                                            bottomRight: Radius.circular(80),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5.0,
-                                                    ),
-                                                    Center(
-                                                      child: Container(
-                                                        width: 150,
-                                                        height: 35,
-                                                        padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
-                                                        child: AnimatedButton(
-                                                          text: "Select Gold",
-                                                          buttonTextStyle: const TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 17,
-                                                          ),
-                                                          color: const Color(0xFFfebf10),
-                                                          pressEvent: () {
-                                                            setState(() {
-                                                              eventName = snapshot.data![index].eventName;
-                                                              packageType = 'Gold Package';
-                                                              eventPriceStr = 'Price: Rs. ${snapshot.data![index].goldPrice}';
-                                                              eventPrice = snapshot.data![index].goldPrice;
-                                                            });
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                          borderRadius: const BorderRadius.only(
-                                                            topLeft: Radius.circular(0),
-                                                            topRight: Radius.circular(80),
-                                                            bottomLeft: Radius.circular(80),
-                                                            bottomRight: Radius.circular(80),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    TextButton(
-                                                      child: const Text(
-                                                        'Close',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 17.0,
-                                                        ),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                          },
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(0),
-                                            topRight: Radius.circular(80),
-                                            bottomLeft: Radius.circular(80),
-                                            bottomRight: Radius.circular(80),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    }else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                    return const SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Color(0xFFfebf10),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Center(
-                  child: FutureBuilder(
-                    future: getTables(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index){
-                              return Padding(
-                                padding: const EdgeInsets.only(right: 10.0, left: 8.0),
-                                child: Container(
-                                  width: 180,
-                                  height: 300,
+              flex: 6,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15.0, top: 5.0, right: 5.0),
+                      child: FutureBuilder(
+                        future: getPackagesData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  width: 280,
+                                  margin: const EdgeInsets.only(right: 10.0),
                                   padding: const EdgeInsets.all(5.0),
                                   decoration: BoxDecoration(
                                     color: Colors.black38,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(2.0),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
-                                        Center(
+                                        Expanded(
+                                          flex: 1,
                                           child: Text(
-                                            'No. ${snapshot.data![index].tableNumber}',
+                                            snapshot.data![index].eventName,
                                             style: const TextStyle(
                                               color: Color(0xFFfebf10),
                                               fontSize: 17.0,
                                             ),
                                           ),
                                         ),
-                                        const Spacer(),
-                                        Center(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(12),
-                                            child: setImagePath(snapshot.data![index].numberOfPersons),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                                                  child: Container(
+                                                    width: 10.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: snapshot.data![index].packageName == 'Bronze'
+                                                            ? const Color(0xFFCD7F32)
+                                                            : snapshot.data![index].packageName == 'Silver'
+                                                            ? const Color(0xFFC0C0C0)
+                                                            : const Color(0xFFFFD700),
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    child: Column(
+                                                      children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            snapshot.data![index].packageName,
+                                                            style: TextStyle(
+                                                              color: snapshot.data![index].packageName == 'Bronze'
+                                                                  ? const Color(0xFFCD7F32)
+                                                                  : snapshot.data![index].packageName == 'Silver'
+                                                                  ? const Color(0xFFC0C0C0)
+                                                                  : const Color(0xFFFFD700),
+                                                              fontSize: 17.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            'Package',
+                                                            style: TextStyle(
+                                                              color: snapshot.data![index].packageName == 'Bronze'
+                                                                  ? const Color(0xFFCD7F32)
+                                                                  : snapshot.data![index].packageName == 'Silver'
+                                                                  ? const Color(0xFFC0C0C0)
+                                                                  : const Color(0xFFFFD700),
+                                                              fontSize: 15.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Text(
+                                                            "Rs. ${snapshot.data![index].packagePrice}",
+                                                            style: TextStyle(
+                                                              color: snapshot.data![index].packageName == 'Bronze'
+                                                                  ? const Color(0xFFCD7F32)
+                                                                  : snapshot.data![index].packageName == 'Silver'
+                                                                  ? const Color(0xFFC0C0C0)
+                                                                  : const Color(0xFFFFD700),
+                                                              fontSize: 15.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                flex: 2,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                                                  child: Container(
+                                                    width: 10.0,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10),
+                                                      border: Border.all(
+                                                        color: snapshot.data![index].packageName == 'Bronze'
+                                                            ? const Color(0xFFCD7F32)
+                                                            : snapshot.data![index].packageName == 'Silver'
+                                                            ? const Color(0xFFC0C0C0)
+                                                            : const Color(0xFFFFD700),
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    child: Center(
+                                                      child: ListView.builder(
+                                                        itemCount: snapshot.data![index].items.length,
+                                                        itemBuilder: (BuildContext context, int index) {
+                                                          return Padding(
+                                                            padding: const EdgeInsets.only(left: 10.0, right: 10.0,top: 2.0 ),
+                                                            child: Text(
+                                                              //snapshot.data![index].packageItems[index],
+                                                              snapshot.data![index].items[index].itemName,
+                                                              style: const TextStyle(
+                                                                color: Colors.white ,
+                                                                fontSize: 15.0,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                        const Spacer(),
-                                        Text(
-                                          '${snapshot.data![index].numberOfPersons} Persons',
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 17.0,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            const Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                'Price: ',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
+                                        Expanded(
+                                          flex: 1,
+                                          child: Center(
+                                            child: Container(
+                                              width: 130,
+                                              height: 25,
+                                              padding: const EdgeInsets.only(left: 5, right: 5, top: 5.0),
+                                              child: AnimatedButton(
+                                                text: "Select Package",
+                                                buttonTextStyle: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15,
                                                 ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                'Rs. ${snapshot.data![index].price}',
-                                                style: const TextStyle(
-                                                  color: Color(0xFFfebf10),
-                                                  fontSize: 16.0,
+                                                color: const Color(0xFFfebf10),
+                                                pressEvent: () {
+                                                  setState(() {
+                                                    eventName = snapshot.data![index].eventName;
+                                                    packageType = '${snapshot.data![index].packageName} Package';
+                                                    packageIdentity = snapshot.data![index].packageId;
+                                                    eventPriceStr = 'Price: ${snapshot.data![index].packagePrice}';
+                                                    eventPrice = snapshot.data![index].packagePrice;
+                                                  });
+                                                },
+                                                borderRadius: const BorderRadius.only(
+                                                  topLeft: Radius.circular(0),
+                                                  topRight: Radius.circular(80),
+                                                  bottomLeft: Radius.circular(80),
+                                                  bottomRight: Radius.circular(80),
                                                 ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            const Expanded(
-                                              flex: 1,
-                                              child: Text(
-                                                'Status: ',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 16.0,
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: setColorToStatus(snapshot.data![index].status),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        Center(
-                                          child: Container(
-                                            width: 150,
-                                            height: 25,
-                                            padding: const EdgeInsets.only(left: 5, right: 5),
-                                            child: AnimatedButton(
-                                              text: "Select Table",
-                                              buttonTextStyle: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-                                              ),
-                                              color: const Color(0xFFfebf10),
-                                              pressEvent: () {
-                                                setState(() {
-                                                  tableNumberStr = 'Table No: ${snapshot.data![index].tableNumber}';
-                                                  tableNumber = snapshot.data![index].tableNumber;
-                                                  tableId = snapshot.data![index].id;
-                                                  personCount = 'No. Of Persons: ${snapshot.data![index].numberOfPersons}';
-                                                  tablePriceStr = 'Price: Rs. ${snapshot.data![index].price}';
-                                                  tablePrice = snapshot.data![index].price;
-                                                });
-                                              },
-                                              borderRadius: const BorderRadius.only(
-                                                topLeft: Radius.circular(0),
-                                                topRight: Radius.circular(80),
-                                                bottomLeft: Radius.circular(80),
-                                                bottomRight: Radius.circular(80),
                                               ),
                                             ),
                                           ),
@@ -677,25 +296,180 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                                       ],
                                     ),
                                   ),
-                                ),
-                              );
-                            }
-                        );
-                      }else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }
-                      return const SizedBox(
-                        height: 40,
-                        width: 40,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0xFFfebf10),
-                          ),
-                        ),
-                      );
-                    },
+                                );
+                              },
+                            );
+                          }else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          }
+                          return const SizedBox(
+                            height: 40,
+                            width: 40,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex: 4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                        child: FutureBuilder(
+                          future: getTables(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index){
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 10.0, left: 8.0),
+                                      child: Container(
+                                        width: 180,
+                                        height: 300,
+                                        padding: const EdgeInsets.all(5.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black38,
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Center(
+                                                child: Text(
+                                                  'No. ${snapshot.data![index].tableNumber}',
+                                                  style: const TextStyle(
+                                                    color: Color(0xFFfebf10),
+                                                    fontSize: 17.0,
+                                                  ),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              Center(
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  child: setImagePath(snapshot.data![index].numberOfPersons),
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              Text(
+                                                '${snapshot.data![index].numberOfPersons} Persons',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 17.0,
+                                                ),
+                                              ),
+                                              const Spacer(),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  const Expanded(
+                                                    flex: 1,
+                                                    child: Text(
+                                                      'Price: ',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: Text(
+                                                      'Rs. ${snapshot.data![index].price}',
+                                                      style: const TextStyle(
+                                                        color: Color(0xFFfebf10),
+                                                        fontSize: 16.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  const Expanded(
+                                                    flex: 1,
+                                                    child: Text(
+                                                      'Status: ',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16.0,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 1,
+                                                    child: setColorToStatus(snapshot.data![index].status),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              Center(
+                                                child: Container(
+                                                  width: 150,
+                                                  height: 25,
+                                                  padding: const EdgeInsets.only(left: 5, right: 5),
+                                                  child: AnimatedButton(
+                                                    text: "Select Table",
+                                                    buttonTextStyle: const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18,
+                                                    ),
+                                                    color: const Color(0xFFfebf10),
+                                                    pressEvent: () {
+                                                      setState(() {
+                                                        tableNumberStr = 'Table No: ${snapshot.data![index].tableNumber}';
+                                                        tableNumber = snapshot.data![index].tableNumber;
+                                                        tableId = snapshot.data![index].id;
+                                                        personCount = 'No. Of Persons: ${snapshot.data![index].numberOfPersons}';
+                                                        tablePriceStr = 'Price: Rs. ${snapshot.data![index].price}';
+                                                        tablePrice = snapshot.data![index].price;
+                                                      });
+                                                    },
+                                                    borderRadius: const BorderRadius.only(
+                                                      topLeft: Radius.circular(0),
+                                                      topRight: Radius.circular(80),
+                                                      bottomLeft: Radius.circular(80),
+                                                      bottomRight: Radius.circular(80),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                              );
+                            }else if (snapshot.hasError) {
+                              return Text('${snapshot.error}');
+                            }
+                            return const SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: Color(0xFFfebf10),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -1032,15 +806,13 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                           print(tableNumbers);
                           print(bookTables);
                           print(totalPrice);
-
-
                           cardPayment(
                               tableNumbers,
                               bookTables,
                               '${datetime.year}/${datetime.month}/${datetime.day}',
                               '${arrivalTime.hour}:${arrivalTime.minute} $arrivalPeriod',
                               '${departureTime.hour}:${departureTime.minute} $departurePeriod',
-                              totalPrice);
+                              totalPrice, packageIdentity, eventName);
                         },
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0),
@@ -1082,7 +854,7 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
   );
 
   //Payment Intent
-  Future<void> cardPayment(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
+  Future<void> cardPayment(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount, String packageId, String eventName) async {
     showDialog(
       context: context,
       builder: (context){
@@ -1125,7 +897,7 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
     try{
       await Stripe.instance.presentPaymentSheet().then((value) => {
         print('Payment Success'),
-        reserveSpecialEventTable(tableNumbers, tables, date, arrivalTime, departureTime, amount),
+        reserveSpecialEventTable(tableNumbers, tables, date, arrivalTime, departureTime, amount, packageId, eventName),
       });
     }catch(error){
       unSuccessAwesomeDialog(DialogType.warning, 'Payment Unsuccessful Try Again!', "Warning");
@@ -1133,48 +905,58 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
     }
   }
 
-  void reserveSpecialEventTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount) async {
-    showDialog(
-      context: context,
-      builder: (context){
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFFfebf10),
-          ),
-        );
-      },
-    );
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? userToken = pref.getString("JwtToken");
-    String? cusId = pref.getString("LoginId");
-    final http.Response response = await http.post(
-      Uri.parse("http://$hostName:5000/api/v1/TableReservation"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": "Bearer $userToken",
-      },
-      body: jsonEncode(<String, dynamic>{
-        "Customer": cusId,
-        "TableNo": tableNumbers,
-        "Tables": tables,
-        "Date": date,
-        "ArrivalTime": arrivalTime,
-        "DepartureTime": departureTime,
-        "amount": amount,
-        "Type": 'Special-Events',
-      }),
-    );
-    Navigator.pop(context);
-    if (response.statusCode == 201) {
-      final json = jsonDecode(response.body);
-      final orderDetails = json["data"];
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
+  void reserveSpecialEventTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount, String packageId, String eventName) async {
+    try{
+      showDialog(
+        context: context,
+        builder: (context){
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFFfebf10),
+            ),
+          );
+        },
+      );
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? userToken = pref.getString("JwtToken");
+      String? cusId = pref.getString("LoginId");
+      final http.Response response = await http.post(
+        Uri.parse("http://$hostName:5000/api/v1/TableReservation"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Authorization": "Bearer $userToken",
+        },
+        body: jsonEncode(<String, dynamic>{
+          "Customer": cusId,
+          "TableNo": tableNumbers,
+          "Tables": tables,
+          "Date": date,
+          "ArrivalTime": arrivalTime,
+          "DepartureTime": departureTime,
+          "amount": amount,
+          "Type": 'Special-Events',
+          "Package": packageId,
+          "eventName": eventName
+        }),
+      );
+      Navigator.pop(context);
+      if (response.statusCode == 201) {
+        final json = jsonDecode(response.body);
+        final orderDetails = json["data"];
+        final msg = json["message"];
+        successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
 
-    } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      } else {
+        final json = jsonDecode(response.body);
+        final msg = json["message"];
+        print(msg);
+        //unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      }
+    } catch (e) {
+      // Handle other errors
+      print('Error: $e');
+      unSuccessAwesomeDialog(DialogType.warning, 'An error occurred. Please try again', "Warning");
+      throw Exception(e);
     }
   }
   successAwesomeDialog(DialogType type, String desc, String title) {
@@ -1206,8 +988,6 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
     ).show();
   }
 
-
-
   Future<List<SelectTables>> getTables() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
@@ -1225,61 +1005,68 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
       throw Exception('Failed to load data');
     }
   }
-  Future<List<SpecialEvents>> getSpecialEvents() async {
+  Future<List<PackagesData>> getPackagesData() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? userToken = pref.getString("JwtToken");
     final response = await http.get(
-      Uri.parse('http://$hostName:5000/api/v1/SpecialEvents'),
+      Uri.parse('http://$hostName:5000/api/v1/packages'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
       },
     );
     if (response.statusCode == 200) {
-      final ordersFoods = jsonDecode(response.body);
-      return SpecialEvents.fromJsonList(ordersFoods['data']['specialEvents']);
+      final packagesData = jsonDecode(response.body);
+      return PackagesData.fromJsonList(packagesData['data']['packages']);
     } else {
       throw Exception('Failed to load data');
     }
   }
 }
-class SpecialEvents{
+
+class PackagesData{
+  final String packageId;
+  final String packageName;
   final String eventName;
-  final String item1;
-  final String item2;
-  final String item3;
-  final int bronzePrice;
-  final int silverPrice;
-  final int goldPrice;
-  SpecialEvents({
+  final int packagePrice;
+  final List<ItemsDataStructure> items;
+  PackagesData({
+    required this.packageId,
+    required this.packageName,
     required this.eventName,
-    required this.item1,
-    required this.item2,
-    required this.item3,
-    required this.bronzePrice,
-    required this.silverPrice,
-    required this.goldPrice,
+    required this.packagePrice,
+    required this.items,
   });
-  factory SpecialEvents.fromJson(Map<String, dynamic> json) {
-    return SpecialEvents(
-      eventName: json['EventName'],
-      item1: json['Item1'],
-      item2: json['Item2'],
-      item3: json['Item3'],
-      bronzePrice: json['BronzePrice'],
-      silverPrice: json['SilverPrice'],
-      goldPrice: json['GoldPrice'],
+  factory PackagesData.fromJson(Map<String, dynamic> json) {
+    return PackagesData(
+      items: (json['Items'] as List<dynamic>)
+          .map((e) => ItemsDataStructure.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      packageId: json['id'],
+      packageName: json['packageName'],
+      eventName: json['type'],
+      packagePrice: json['Price'],
     );
   }
-  static List<SpecialEvents> fromJsonList(dynamic jsonList){
-    final specialEventList = <SpecialEvents>[];
+  static List<PackagesData> fromJsonList(dynamic jsonList){
+    final packageDataList = <PackagesData>[];
     if (jsonList is List<dynamic>) {
       for (final json in jsonList) {
-        specialEventList.add(SpecialEvents.fromJson(json),);
+        packageDataList.add(PackagesData.fromJson(json),);
       }
     }
-    return specialEventList;
+    return packageDataList;
   }
+}
+
+class ItemsDataStructure{
+  final String itemName;
+  ItemsDataStructure({
+    required this.itemName,
+  });
+  factory ItemsDataStructure.fromJson(Map<String, dynamic> json) => ItemsDataStructure(
+    itemName: json['ItemName'],
+  );
 }
 
 class SelectTables{

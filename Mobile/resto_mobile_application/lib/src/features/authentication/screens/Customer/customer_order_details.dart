@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 import '../../../../common_widgets/background_image.dart';
 import '../../../../common_widgets/order_item_container.dart';
 import '../../../../constants/image_strings.dart';
-import 'customer_drawer_Items/orders_screen.dart';
 import 'customer_main_page.dart';
 
 class CustomerOrderDetails extends StatefulWidget {

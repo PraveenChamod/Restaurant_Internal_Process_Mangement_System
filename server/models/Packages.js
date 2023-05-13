@@ -14,21 +14,22 @@ const PackagesSchema = mongoose.Schema(
         },
       },
     ],
-    Price:{
-        type:Number,
-        //required:[true,"Please enter the price"]
+    Price: {
+      type: Number,
+      required: [true, "Please enter the price"],
     },
-    Type:{
-      type:String
+    Type: {
+      type: String,
+      required: [true, "Please enter the event name"],
     },
     Status: {
-        type: String,
-        enum:{
-          values:["Available","Not Available"]
-        },
-        required: true,
-        default: "Available",
+      type: String,
+      enum: {
+        values: ["Available", "Not Available"],
       },
+      required: true,
+      default: "Available",
+    },
   },
   {
     toJSON: {

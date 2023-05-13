@@ -552,183 +552,186 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                           scrollDirection: Axis.vertical,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              width: 120,
-                              height: 220,
-                              margin: const EdgeInsets.only(bottom: 15.0, top: 0.0, left: 0.0, right: 0.0),
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                color: Colors.black38,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: const Color(0xFFfebf10),
+
+                            if(snapshot.data![index].itemType != 'Special Event'){
+                              return Container(
+                                width: 120,
+                                height: 220,
+                                margin: const EdgeInsets.only(bottom: 15.0, top: 0.0, left: 0.0, right: 0.0),
+                                padding: const EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.black38,
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: const Color(0xFFfebf10),
+                                  ),
                                 ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 4,
-                                    child: Center(
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Image.network(
-                                          'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}',
-                                          width: 90,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Text(
-                                      snapshot.data![index].itemName,
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xFFfebf10),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      'Rs.${snapshot.data![index].itemPrice}',
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xFFfebf10),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 2,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            color: Colors.transparent,
-                                            child: Center(
-                                              child: AnimatedIconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    addPrice(snapshot.data![index].itemPrice, snapshot.data![index].itemType);
-                                                    updateSelectItem(snapshot.data![index].itemPrice, snapshot.data![index].itemType, index);
-                                                    if(snapshot.data![index].itemType == 'Flower'){
-                                                      setState(() {
-                                                        flowerVaseImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
-                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
-                                                          if(currentFlowerVaseId == ''){
-                                                            if(selectedDatingTableItemList.length <= 3){
-                                                              addItemsToList('${snapshot.data![index].itemId}');
-                                                            }
-                                                          }else{
-                                                            removeItemsFromList(currentFlowerVaseId);
-                                                            addItemsToList('${snapshot.data![index].itemId}');
-                                                          }
-                                                        }
-                                                        currentFlowerVaseId = '${snapshot.data![index].itemId}';
-                                                      });
-                                                    }else if(snapshot.data![index].itemType == 'Beverage'){
-                                                      setState(() {
-                                                        beverageImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
-                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
-                                                          if(currentBeverageId == ''){
-                                                            if(selectedDatingTableItemList.length <= 3){
-                                                              addItemsToList('${snapshot.data![index].itemId}');
-                                                            }
-                                                          }else{
-                                                            removeItemsFromList(currentBeverageId);
-                                                            addItemsToList('${snapshot.data![index].itemId}');
-                                                          }
-                                                        }
-                                                        currentBeverageId = '${snapshot.data![index].itemId}';
-                                                      });
-                                                    }else if(snapshot.data![index].itemType == 'Candles'){
-                                                      setState(() {
-                                                        candlesImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
-                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
-                                                          if(currentCandlesId == ''){
-                                                            if(selectedDatingTableItemList.length <= 3){
-                                                              addItemsToList('${snapshot.data![index].itemId}');
-                                                            }
-                                                          }else{
-                                                            removeItemsFromList(currentCandlesId);
-                                                            addItemsToList('${snapshot.data![index].itemId}');
-                                                          }
-                                                        }
-                                                        currentCandlesId = '${snapshot.data![index].itemId}';
-                                                      });
-                                                    }else{
-                                                      setState(() {
-                                                        tableNapkinImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
-                                                        if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
-                                                          if(currentNapkinId == ''){
-                                                            if(selectedDatingTableItemList.length <= 3){
-                                                              addItemsToList('${snapshot.data![index].itemId}');
-                                                            }
-                                                          }else{
-                                                            removeItemsFromList(currentNapkinId);
-                                                            addItemsToList('${snapshot.data![index].itemId}');
-                                                          }
-                                                        }
-                                                        currentNapkinId = '${snapshot.data![index].itemId}';
-                                                      });
-                                                    }
-                                                  });
-                                                  print(selectedDatingTableItemList);
-                                                },
-                                                duration: const Duration(milliseconds: 500),
-                                                icons: const <AnimatedIconItem>[
-                                                  AnimatedIconItem(
-                                                    icon: Icon(
-                                                      Icons.add_circle,
-                                                      color: Color(0xFFfebf10),
-                                                      size: 28.0,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: Center(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: Image.network(
+                                            'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}',
+                                            width: 90,
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Container(
-                                            color: Colors.transparent,
-                                            child: Center(
-                                              child: AnimatedIconButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    subtractPrice(snapshot.data![index].itemPrice, snapshot.data![index].itemType, index);
-                                                    if(selectedDatingTableItemList.isNotEmpty){
-                                                      if(selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
-                                                        removeItemsFromList('${snapshot.data![index].itemId}');
-                                                        currentFlowerVaseId = '';
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text(
+                                        snapshot.data![index].itemName,
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xFFfebf10),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Text(
+                                        'Rs.${snapshot.data![index].itemPrice}',
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xFFfebf10),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          Expanded(
+                                            child: Container(
+                                              color: Colors.transparent,
+                                              child: Center(
+                                                child: AnimatedIconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      addPrice(snapshot.data![index].itemPrice, snapshot.data![index].itemType);
+                                                      updateSelectItem(snapshot.data![index].itemPrice, snapshot.data![index].itemType, index);
+                                                      if(snapshot.data![index].itemType == 'Flower'){
+                                                        setState(() {
+                                                          flowerVaseImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                          if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                            if(currentFlowerVaseId == ''){
+                                                              if(selectedDatingTableItemList.length <= 3){
+                                                                addItemsToList('${snapshot.data![index].itemId}');
+                                                              }
+                                                            }else{
+                                                              removeItemsFromList(currentFlowerVaseId);
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }
+                                                          currentFlowerVaseId = '${snapshot.data![index].itemId}';
+                                                        });
+                                                      }else if(snapshot.data![index].itemType == 'Beverage'){
+                                                        setState(() {
+                                                          beverageImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                          if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                            if(currentBeverageId == ''){
+                                                              if(selectedDatingTableItemList.length <= 3){
+                                                                addItemsToList('${snapshot.data![index].itemId}');
+                                                              }
+                                                            }else{
+                                                              removeItemsFromList(currentBeverageId);
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }
+                                                          currentBeverageId = '${snapshot.data![index].itemId}';
+                                                        });
+                                                      }else if(snapshot.data![index].itemType == 'Candles'){
+                                                        setState(() {
+                                                          candlesImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                          if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                            if(currentCandlesId == ''){
+                                                              if(selectedDatingTableItemList.length <= 3){
+                                                                addItemsToList('${snapshot.data![index].itemId}');
+                                                              }
+                                                            }else{
+                                                              removeItemsFromList(currentCandlesId);
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }
+                                                          currentCandlesId = '${snapshot.data![index].itemId}';
+                                                        });
+                                                      }else{
+                                                        setState(() {
+                                                          tableNapkinImagePathVar = 'http://$hostName:5000/tableitemimages/${snapshot.data![index].itemImagePath}';
+                                                          if(!selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                            if(currentNapkinId == ''){
+                                                              if(selectedDatingTableItemList.length <= 3){
+                                                                addItemsToList('${snapshot.data![index].itemId}');
+                                                              }
+                                                            }else{
+                                                              removeItemsFromList(currentNapkinId);
+                                                              addItemsToList('${snapshot.data![index].itemId}');
+                                                            }
+                                                          }
+                                                          currentNapkinId = '${snapshot.data![index].itemId}';
+                                                        });
                                                       }
-                                                    }
-                                                  });
-                                                  print('After remove');
-                                                  print(selectedDatingTableItemList);
-                                                },
-                                                duration: const Duration(milliseconds: 500),
-                                                icons: const <AnimatedIconItem>[
-                                                  AnimatedIconItem(
-                                                    icon: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                      size: 30.0,
+                                                    });
+                                                    print(selectedDatingTableItemList);
+                                                  },
+                                                  duration: const Duration(milliseconds: 500),
+                                                  icons: const <AnimatedIconItem>[
+                                                    AnimatedIconItem(
+                                                      icon: Icon(
+                                                        Icons.add_circle,
+                                                        color: Color(0xFFfebf10),
+                                                        size: 28.0,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Expanded(
+                                            child: Container(
+                                              color: Colors.transparent,
+                                              child: Center(
+                                                child: AnimatedIconButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      subtractPrice(snapshot.data![index].itemPrice, snapshot.data![index].itemType, index);
+                                                      if(selectedDatingTableItemList.isNotEmpty){
+                                                        if(selectedDatingTableItemList.contains('${snapshot.data![index].itemId}')){
+                                                          removeItemsFromList('${snapshot.data![index].itemId}');
+                                                          currentFlowerVaseId = '';
+                                                        }
+                                                      }
+                                                    });
+                                                    print('After remove');
+                                                    print(selectedDatingTableItemList);
+                                                  },
+                                                  duration: const Duration(milliseconds: 500),
+                                                  icons: const <AnimatedIconItem>[
+                                                    AnimatedIconItem(
+                                                      icon: Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                        size: 30.0,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
+                                  ],
+                                ),
+                              );
+                            }
                           },
                         );
                       }else if (snapshot.hasError) {
@@ -939,12 +942,19 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
                         ),
                         color: const Color(0xFFfebf10),
                         pressEvent: () {
+                          print(tableNumbers);
+                          print(bookTables);
+                          print(mainTablePriceVar);
+                          print('${datetime.year}/${datetime.month}/${datetime.day}');
+                          print('${arrivalTime.hour}.${arrivalTime.minute} $arrivalPeriod');
+                          print('${departureTime.hour}.${departureTime.minute} $departurePeriod');
+
                           cardPayment(
                               tableNumbers,
                               bookTables,
                               '${datetime.year}/${datetime.month}/${datetime.day}',
-                              '${arrivalTime.hour}:${arrivalTime.minute} $arrivalPeriod',
-                              '${departureTime.hour}:${departureTime.minute} $departurePeriod',
+                              '${arrivalTime.hour}.${arrivalTime.minute} $arrivalPeriod',
+                              '${departureTime.hour}.${departureTime.minute} $departurePeriod',
                               mainTablePriceVar, selectedDatingTableItemList);
                         },
                         borderRadius: const BorderRadius.only(
@@ -1057,48 +1067,56 @@ class _SelectDatingTableState extends State<SelectDatingTable> {
   }
 
   void reserveDatingTable(List tableNumbers, List<TableIdList> tables, String date, String arrivalTime, String departureTime, int amount, List itemList) async {
-    showDialog(
-      context: context,
-      builder: (context){
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Color(0xFFfebf10),
-          ),
-        );
-      },
-    );
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? userToken = pref.getString("JwtToken");
-    String? cusId = pref.getString("LoginId");
-    final http.Response response = await http.post(
-      Uri.parse("http://$hostName:5000/api/v1/TableReservation"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        "Authorization": "Bearer $userToken",
-      },
-      body: jsonEncode(<String, dynamic>{
-        "Customer": cusId,
-        "TableNo": tableNumbers,
-        "Tables": tables,
-        "Date": date,
-        "ArrivalTime": arrivalTime,
-        "DepartureTime": departureTime,
-        "amount": amount,
-        "Type": 'Dating',
-        "Items": itemList
-      }),
-    );
-    Navigator.pop(context);
-    if (response.statusCode == 201) {
-      final json = jsonDecode(response.body);
-      final orderDetails = json["data"];
-      final msg = json["message"];
-      successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
 
-    } else {
-      final json = jsonDecode(response.body);
-      final msg = json["message"];
-      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+    try{
+      showDialog(
+        context: context,
+        builder: (context){
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFFfebf10),
+            ),
+          );
+        },
+      );
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? userToken = pref.getString("JwtToken");
+      String? cusId = pref.getString("LoginId");
+      final http.Response response = await http.post(
+        Uri.parse("http://$hostName:5000/api/v1/TableReservation"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          "Authorization": "Bearer $userToken",
+        },
+        body: jsonEncode(<String, dynamic>{
+          "Customer": cusId,
+          "TableNo": tableNumbers,
+          "Tables": tables,
+          "Date": date,
+          "ArrivalTime": arrivalTime,
+          "DepartureTime": departureTime,
+          "amount": amount,
+          "Type": 'Dating',
+          "Items": itemList
+        }),
+      );
+      Navigator.pop(context);
+      if (response.statusCode == 201) {
+        final json = jsonDecode(response.body);
+        final orderDetails = json["data"];
+        final msg = json["message"];
+        successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
+
+      } else {
+        final json = jsonDecode(response.body);
+        final msg = json["message"];
+        print(msg);
+      }
+    } catch (e) {
+      // Handle other errors
+      print('Error: $e');
+      unSuccessAwesomeDialog(DialogType.warning, 'An error occurred. Please try again', "Warning");
+      throw Exception(e);
     }
   }
   successAwesomeDialog(DialogType type, String desc, String title) {

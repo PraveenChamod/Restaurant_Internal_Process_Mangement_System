@@ -333,6 +333,8 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
       final msg = json["message"];
       if(widget.paymentMethod != 'Card Payments'){
         successAwesomeDialog(DialogType.success, 'Your Order Is Placed Successfully.', "Success");
+      }else{
+        successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
       }
     }else{
       final json = jsonDecode(response.body);
@@ -405,7 +407,6 @@ class _DeliverySaveOrderState extends State<DeliverySaveOrder> {
       await Stripe.instance.presentPaymentSheet().then((value) => {
         print('Payment Success'),
         orderItems(foods, paymentMethod, totalPrice, type, customerId),
-        successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success"),
       });
     }catch(error){
       unSuccessAwesomeDialog(DialogType.warning, 'Payment Unsuccessful Try Again!', "Warning");
