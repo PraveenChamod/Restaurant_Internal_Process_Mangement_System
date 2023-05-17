@@ -202,17 +202,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
     );
     SharedPreferences pref = await SharedPreferences.getInstance();
-    String? userEmail = pref.getString("LoginEmail");
+    //String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
-      Uri.parse("http://$hostName:5000/api/v1/User/resetpassword/$userEmail"),
+      Uri.parse("http://$hostName:5000/api/v1/User/resetpassword"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
       },
       body: jsonEncode(<String, dynamic>{
-        "InitialPassword": initialPasswordController.text,
-        "Password": passwordController.text,
+        "CurrentPassword": initialPasswordController.text,
+        "NewPassword": passwordController.text,
         "ConfirmPassword": confirmPasswordController.text,
       }),
     );
@@ -235,13 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: title,
       desc: desc,
       btnOkOnPress: (){
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) {
-              return const SettingsScreen();
-            },
-          ),
-        );
+        Navigator.pop(context);
       },
     ).show();
   }
