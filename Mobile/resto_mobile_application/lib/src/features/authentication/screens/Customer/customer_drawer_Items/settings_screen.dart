@@ -19,6 +19,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   var initialPasswordController = TextEditingController();
   var passwordController = TextEditingController();
   var confirmPasswordController = TextEditingController();
+  bool _obscureTextCurrent = true;
+  bool _obscureTextNew = true;
+  bool _obscureTextConfirm = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,23 +58,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10.0,),
-                          TextFormField(
+                          const SizedBox(height: 15.0,),
+                          TextField(
                             controller: initialPasswordController,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            obscureText: _obscureTextCurrent,
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLength: 8,
                             decoration: InputDecoration(
-                              labelText: 'Initial Password',
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFfebf10),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              labelText: 'Password',
+                              counterText: '',
+                              labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 17),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureTextCurrent = !_obscureTextCurrent;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureTextCurrent
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: const Color(0xFFfebf10),
+                                  size: 18,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -81,29 +90,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(color: Color(0xFFFFFF33)),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.lock_clock,
-                                color: Color(0xFFfebf10),
-                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10.0,),
-                          TextFormField(
-                            controller: passwordController,
                             style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 17,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                          const SizedBox(height: 15.0,),
+                          TextField(
+                            controller: passwordController,
+                            obscureText: _obscureTextNew,
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLength: 8,
                             decoration: InputDecoration(
                               labelText: 'New Password',
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFfebf10),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              counterText: '',
+                              labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 17),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureTextNew = !_obscureTextNew;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureTextNew
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: const Color(0xFFfebf10),
+                                  size: 18,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -113,29 +129,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(color: Color(0xFFFFFF33)),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.lock,
-                                color: Color(0xFFfebf10),
-                              ),
                             ),
-                          ),
-                          const SizedBox(height: 10.0,),
-                          TextFormField(
-                            controller: confirmPasswordController,
                             style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 17,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                          const SizedBox(height: 15.0,),
+                          TextField(
+                            controller: confirmPasswordController,
+                            obscureText: _obscureTextConfirm,
+                            keyboardType: TextInputType.visiblePassword,
+                            maxLength: 8,
                             decoration: InputDecoration(
                               labelText: 'Confirm Password',
-                              labelStyle: const TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFFfebf10),
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                              counterText: '',
+                              labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 17),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obscureTextConfirm = !_obscureTextConfirm;
+                                  });
+                                },
+                                child: Icon(
+                                  _obscureTextConfirm
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: const Color(0xFFfebf10),
+                                  size: 18,
+                                ),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -145,10 +168,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(color: Color(0xFFFFFF33)),
                               ),
-                              suffixIcon: const Icon(
-                                Icons.lock,
-                                color: Color(0xFFfebf10),
-                              ),
+                            ),
+                            style: const TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                           const SizedBox(height: 10.0,),
@@ -202,10 +226,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
     );
     SharedPreferences pref = await SharedPreferences.getInstance();
-    //String? userEmail = pref.getString("LoginEmail");
     String? userToken = pref.getString("JwtToken");
     var response = await http.patch(
-      Uri.parse("http://$hostName:5000/api/v1/User/resetpassword"),
+      Uri.parse("http://$hostName:5000/api/v1/Auth/resetpassword"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         "Authorization": "Bearer $userToken",
@@ -217,7 +240,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }),
     );
     Navigator.pop(context);
-    if(response.statusCode == 200) {
+    if(response.statusCode == 201) {
       final json = jsonDecode(response.body);
       final msg = json["message"];
       successAwesomeDialog(DialogType.success, msg, "Success");

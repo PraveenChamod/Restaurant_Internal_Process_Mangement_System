@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../constants/image_strings.dart';
 import '../home_screen.dart';
-import 'deliverer_drawer_items/deliever_orders_summary.dart';
 import 'deliverer_drawer_items/deliverer_account.dart';
 import 'deliverer_drawer_items/deliverer_help_center.dart';
 import 'deliverer_drawer_items/deliverer_settings.dart';
