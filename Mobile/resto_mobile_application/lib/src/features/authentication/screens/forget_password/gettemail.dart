@@ -94,7 +94,6 @@ class _GetEmailState extends State<GetEmail> {
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(
                                 fontSize: 15,
-                                //color: Color(0xFFfebf10),
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
