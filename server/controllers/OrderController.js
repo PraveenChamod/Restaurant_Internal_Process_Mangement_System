@@ -897,7 +897,7 @@ export const viewOrdersOrderedByCustomer = async (req, res) => {
 };
 
 // Method : DELETE
-// End Point : "api/v1/Customer/Orders";
+// End Point : "api/v1/Customer/Orders/:id";
 // Description :Cancle Order
 export const CancelOrder = async (req, res) => {
   try {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../constants/image_strings.dart';
+import '../features/authentication/screens/Customer/customer_main_page.dart';
 import '../features/authentication/screens/customer/customer_generate_QR.dart';
 import '../features/authentication/screens/customer/customer_order_details.dart';
 import 'order_item_container.dart';
@@ -61,6 +62,30 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
+              const SizedBox(height: 5.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Expanded(
+                    child: Text(
+                      'Confirmation Status: ',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget.status,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFFfebf10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 5.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -196,7 +221,8 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                 ),
               ),
               const SizedBox(height: 10.0,),
-              Row(
+              widget.status == 'Confirm'
+                  ? Row(
                 children: [
                   Expanded(
                     child: Center(
@@ -217,20 +243,22 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                             if (hasPermission == PermissionStatus.denied) {
                               final permissionStatus = await _requestPermissions();
                               if (permissionStatus == PermissionStatus.granted) {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) {
-                                      return CustomerOrderDetails(
-                                        orderId: widget.orderId,
-                                        deliveryStatus: widget.deliveryStatus,
-                                        lat: lat,
-                                        lang: lang,
-                                      );
-                                    },
-                                  ),
+                                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                                  return CustomerOrderDetails(
+                                    orderId: widget.orderId,
+                                    deliveryStatus: widget.deliveryStatus,
+                                    lat: lat,
+                                    lang: lang,
+                                  );
+                                },
+                                ),
                                 );
-                              }else{
-                                awesomeDialog(DialogType.warning, 'You Need To Allow Permission To Access Device Location', "Warning");
+                              } else {
+                                awesomeDialog(
+                                    DialogType.warning,
+                                    'You Need To Allow Permission To Access Device Location',
+                                    "Warning"
+                                );
                               }
                             } else if (hasPermission == PermissionStatus.granted) {
                               Navigator.of(context).push(
@@ -275,7 +303,10 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) {
-                                  return CustomerGenerateQR(orderId: widget.orderId, totalPrice: widget.totalPrice,);
+                                  return CustomerGenerateQR(
+                                    orderId: widget.orderId,
+                                    totalPrice: widget.totalPrice,
+                                  );
                                 },
                               ),
                             );
@@ -286,6 +317,36 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                             bottomLeft: Radius.circular(80),
                             bottomRight: Radius.circular(80),
                           ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+                  : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Container(
+                      width: 150,
+                      height: 35,
+                      padding: const EdgeInsets.only(left: 5, right: 5),
+                      child: AnimatedButton(
+                        text: "Remove Order",
+                        buttonTextStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        color: const Color(0xFFfebf10),
+                        pressEvent: () async {
+                          removeOrder();
+                        },
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(0),
+                          topRight: Radius.circular(80),
+                          bottomLeft: Radius.circular(80),
+                          bottomRight: Radius.circular(80),
                         ),
                       ),
                     ),
@@ -329,6 +390,67 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
       throw Exception('Failed to load data');
     }
   }
+
+  void removeOrder() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    final response = await http.delete(
+      Uri.parse('http://$hostName:5000/api/v1/Customer/Orders/${widget.orderId}'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    Navigator.pop(context);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      successAwesomeDialog(DialogType.success, 'Successfully Cancel The Order', "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      throw Exception('Failed to load data');
+    }
+  }
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_){
+              return const CustomerMainPage(choice: 3,);
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {},
+    ).show();
+  }
 }
 class OrderFood{
   final String foodName;
@@ -353,3 +475,6 @@ class OrderFood{
     return cartOrderFoodList;
   }
 }
+
+
+

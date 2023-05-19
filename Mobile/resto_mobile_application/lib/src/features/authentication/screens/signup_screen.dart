@@ -40,12 +40,12 @@ class _LoginScreenState extends State<SignupScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 10,),
                   const ApplicationLogo(),
-                  const SizedBox(height: 20,),
+                  const SizedBox(height: 10,),
                   Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.only(left: 15.0, top: 0.0, right: 15.0, bottom: 15.0),
                       child: Container(
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(

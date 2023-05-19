@@ -91,32 +91,6 @@ class _MainFeaturesState extends State<MainFeatures> {
               ),
             ),
             // const Spacer(),
-            // Image(
-            //   image: AssetImage(widget.image),
-            //   width: 130,
-            // ),
-            // const Spacer(),
-            // Text(
-            //   widget.title,
-            //   style: const TextStyle(
-            //     fontSize: 20,
-            //     color: Colors.white,
-            //   ),
-            // ),
-            // Text(
-            //   widget.text,
-            //   textAlign: TextAlign.center,
-            //   style: const TextStyle(
-            //     fontSize: 15,
-            //     color: Colors.white70,
-            //   ),
-            // ),
-            // const Icon(
-            //   Icons.add_circle,
-            //   color: Color(0xFFfebf10),
-            //   size: 24.0,
-            // ),
-            // const Spacer(),
           ],
         ),
       ),

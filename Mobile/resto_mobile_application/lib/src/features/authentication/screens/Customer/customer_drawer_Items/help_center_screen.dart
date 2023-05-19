@@ -167,7 +167,7 @@ class HelpCenterScreen extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'You chat with our agent and find the best solution for your problem.',
+                              'You can chat with our agent and find the best solution for your problem.',
                               textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontSize: 15,
