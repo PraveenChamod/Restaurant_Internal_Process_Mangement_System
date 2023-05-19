@@ -895,3 +895,39 @@ export const viewOrdersOrderedByCustomer = async (req, res) => {
     });
   }
 };
+
+// Method : DELETE
+// End Point : "api/v1/Customer/Orders";
+// Description :Cancle Order
+export const CancelOrder = async (req, res) => {
+  try {
+    const user = req.user;
+    if (user.Role == "Customer") {
+      const {id}  = req.params;
+      console.log(req.body);
+      const order = await Order.findById(id);
+      if (order.Status !== "Confirm") {
+        const remove = await Order.findByIdAndRemove(id);
+        if (remove) {
+          res.status(200).json({
+            status: "Success",
+            message: "Order Cancled Successfully",
+            data: {
+              remove,
+            },
+          });
+        } else {
+          res.status(400).json({
+            status: "Error",
+            message: "Something Went Wrong",
+          });
+        }
+      }
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Server Error",
+      message: error.message,
+    });
+  }
+};

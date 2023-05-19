@@ -726,62 +726,62 @@ export const getLocation = async (address) => {
   )}&key=${API_KEY}`;
 };
 
-// Method : PATCH
-// End Point : "api/v1/User/resetpassword/:Email";
-// Description : Password Reset
-export const ResetPassword = async (req, res) => {
-  try {
-    const { Email } = req.params;
-    const serviceProvider = await ServiceProviders.findOne({
-      Email: Email,
-    }).populate("Email");
-    if (serviceProvider) {
-      const { InitialPassword, Password, ConfirmPassword } = req.body;
-      const result = await validatePassword(
-        InitialPassword,
-        serviceProvider.Password
-      );
-      if (result) {
-        const salt = await GenerateSalt();
-        const encryptedPassword = await GeneratePassword(Password, salt);
-        const confirmEncryptedPassword = await GeneratePassword(
-          ConfirmPassword,
-          salt
-        );
-        const resetPassword = await ServiceProviders.findByIdAndUpdate(
-          serviceProvider.id,
-          {
-            Password: encryptedPassword,
-            ConfirmPassword: confirmEncryptedPassword,
-          },
-          { new: true }
-        );
-        res.status(200).json({
-          status: "Success",
-          message: "Password Reset Succcessfull",
-          data: {
-            resetPassword,
-          },
-        });
-      } else {
-        res.status(400).json({
-          status: "Error",
-          message: "Entered Initial Password is Invalid",
-        });
-      }
-    } else {
-      res.status(404).json({
-        status: "Error",
-        message: "User Not Found",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      status: "Server Error",
-      message: error.message,
-    });
-  }
-};
+// // Method : PATCH
+// // End Point : "api/v1/User/resetpassword/:Email";
+// // Description : Password Reset
+// export const ResetPassword = async (req, res) => {
+//   try {
+//     const { Email } = req.params;
+//     const serviceProvider = await ServiceProviders.findOne({
+//       Email: Email,
+//     }).populate("Email");
+//     if (serviceProvider) {
+//       const { InitialPassword, Password, ConfirmPassword } = req.body;
+//       const result = await validatePassword(
+//         InitialPassword,
+//         serviceProvider.Password
+//       );
+//       if (result) {
+//         const salt = await GenerateSalt();
+//         const encryptedPassword = await GeneratePassword(Password, salt);
+//         const confirmEncryptedPassword = await GeneratePassword(
+//           ConfirmPassword,
+//           salt
+//         );
+//         const resetPassword = await ServiceProviders.findByIdAndUpdate(
+//           serviceProvider.id,
+//           {
+//             Password: encryptedPassword,
+//             ConfirmPassword: confirmEncryptedPassword,
+//           },
+//           { new: true }
+//         );
+//         res.status(200).json({
+//           status: "Success",
+//           message: "Password Reset Succcessfull",
+//           data: {
+//             resetPassword,
+//           },
+//         });
+//       } else {
+//         res.status(400).json({
+//           status: "Error",
+//           message: "Entered Initial Password is Invalid",
+//         });
+//       }
+//     } else {
+//       res.status(404).json({
+//         status: "Error",
+//         message: "User Not Found",
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       status: "Server Error",
+//       message: error.message,
+//     });
+//   }
+// };
 
 // Method : GET
 // End Point : "api/v1/User-Supplier/:id"

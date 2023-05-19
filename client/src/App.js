@@ -36,7 +36,6 @@ import DeliveryOrderDetails from "./Pages/Deliverer/OrderDetails";
 import SupplierDashBoard from "./Pages/Supplier/SupplierDashBoard";
 import SupplierUserProfile from "./Pages/Supplier/UserProfile";
 import Messages from "./Pages/Supplier/Messages";
-import PasswordReset from "./Pages/PasswordReset";
 import { Cards, Roles } from "./Data/DashBoardLinks";
 import "aos/dist/aos.css";
 import Aos from "aos";
@@ -189,10 +188,6 @@ function App() {
                 <Route
                   path="/FrogotPassword"
                   element={<FrogotPassword BackRoutes="/login" />}
-                />
-                <Route
-                  path="/ResetPassword/:Email"
-                  element={<PasswordReset />}
                 />
                 {/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Admin ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++  */}
                 {/* <Route element={<RequireAuth allowedRoles={['Admin']} />}> */}
