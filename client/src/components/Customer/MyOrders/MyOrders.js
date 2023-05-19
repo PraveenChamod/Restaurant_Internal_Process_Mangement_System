@@ -4,11 +4,59 @@ import img from "../../../Images/restoLogodark.png";
 import { TiTick } from "react-icons/ti";
 import { BsHourglassSplit } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { RegularButton } from "../../shared/SharedElements/Buttons";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { FormButton, RegularButton } from "../../shared/SharedElements/Buttons";
 import notfound from "../../../Images/notFound/NoResults.png";
+import { useState } from "react";
 const MyOrdersComponent = (props) => {
   console.log(props.data);
+  const [Items, setItems] = useState(props.data);
   const { user } = useAuth();
+  const [clickedIndex, setClickedIndex] = useState({});
+
+  const handleClick = async (index) => {
+    setClickedIndex((state) => ({
+      ...state, //copy previous state
+      [index]: !state[index], //update value by index key
+    }));
+  };
+  const cancleOrder = async ({ id }) => {
+    try {
+      const formdata = { id };
+      await toast.promise(
+        axios.delete(`api/v1/Customer/Orders/${id}`),
+        {
+          loading: `Cancelling order....`,
+          success: (data) => {
+            return data?.data?.message;
+          },
+          error: (err) => `${err.response.data.message}`,
+        },
+        {
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+            fontSize: "1rem",
+            zIndex: "99999999",
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const removeOrder = async (index) => {
+    const item = Items[index];
+    const id = item.OrderId;
+    console.log(id);
+    handleClick(index);
+    await cancleOrder({ id });
+    const newJoin = [...Items];
+    newJoin.splice(index, 1);
+    setItems(newJoin);
+  };
   return (
     <>
       <l.Container>
@@ -39,7 +87,7 @@ const MyOrdersComponent = (props) => {
               </l.NotFound>
             ) : (
               <l.Left>
-                {props.data.map((cart) => {
+                {Items.map((cart, index) => {
                   return (
                     <l.CartSection>
                       <l.ItemsCard>
@@ -66,6 +114,13 @@ const MyOrdersComponent = (props) => {
                               )}
                             </l.Icon1>
                           </l.Text>
+                          {cart.Status === "Pending" ? (
+                            <l.ButtonSection1>
+                              <FormButton onClick={() => removeOrder(index)}>
+                                Cancle
+                              </FormButton>
+                            </l.ButtonSection1>
+                          ) : null}
                         </l.SubText>
                         <l.Section>
                           <l.Text>Items</l.Text>

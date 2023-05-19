@@ -244,6 +244,12 @@ export const ButtonSection = styled.div`
   align-items: center;
   width: 100%;
 `;
+export const ButtonSection1 = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 40%;
+`;
 export const CartSection = styled.div`
   width: 90%;
   display: flex;

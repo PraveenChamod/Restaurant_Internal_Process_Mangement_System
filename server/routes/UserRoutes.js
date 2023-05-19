@@ -9,7 +9,6 @@ import {
   getUsersByRole,
   RegisterCustomer,
   RegisterServiceProviders,
-  ResetPassword,
   UpdateProfile,
   updateUserProfile,
   getSupplierById,
@@ -35,6 +34,5 @@ UserRoutes.route("/AvailableDeliverers").get(
   getAvailableDeliverers
 );
 UserRoutes.route("/User/Profile/:Email").patch(requireAuth, UpdateProfile);
-UserRoutes.route("/User/resetpassword/:Email").patch(ResetPassword);
 UserRoutes.route("User-Supplier/:id").get(requireAuth, getSupplierById);
 export default UserRoutes;
