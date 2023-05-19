@@ -40,7 +40,7 @@ const geocodeApiKey = "AIzaSyByYCGjAorLa5_rHMyisPNnrSEWv1rhAcY";
 // End Point : "api/v1/User/CustomerRegister";
 // Description : Register Customer
 export const RegisterCustomer = async (req, res) => {
-  const { Name, Password, ConfirmPassword, ContactNumber, Email } = req.body;
+  const { Name, Password, ConfirmPassword, ContactNumber, Email,Address } = req.body;
   const existingCustomer = await Customer.findOne({ Email: Email });
   try {
     if (existingCustomer === null) {
@@ -58,9 +58,10 @@ export const RegisterCustomer = async (req, res) => {
         ContactNumber: ContactNumber,
         Email: Email,
         Role: Role,
+        Address:Address,
       });
       //send sms
-      const contactNumber = "94" + ContactNumber.slice(1);
+      const contactNumber = ContactNumber.slice(1);
       console.log(contactNumber);
       var message = {
         source: "ShoutDEMO",

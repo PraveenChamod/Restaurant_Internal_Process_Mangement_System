@@ -57,10 +57,11 @@ const Login = (props) => {
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   const [ContactNumber, setContactNumber] = useState("");
+  const [Address, setAddress] = useState("");
 
   const navigate = useNavigate();
 
-  const formData = { Name, Email, Password, ConfirmPassword, ContactNumber };
+  const formData = { Name, Email, Password, ConfirmPassword, ContactNumber, Address };
   const SignupSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -251,6 +252,13 @@ const Login = (props) => {
                   placeholder="Re-enter the password"
                   value={ConfirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <InputSignUp
+                  type="text"
+                  name="Address"
+                  placeholder="Enter the address"
+                  value={Address}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
               </Column>
               {/* <SocialMedia>
