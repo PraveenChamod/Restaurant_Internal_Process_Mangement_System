@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import '../../../common_widgets/application_logo.dart';
 import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
@@ -16,6 +17,7 @@ class SignupScreen extends StatefulWidget {
 class _LoginScreenState extends State<SignupScreen> {
   var nameController = TextEditingController();
   var emailController = TextEditingController();
+  var addressController = TextEditingController();
   var passController = TextEditingController();
   var confirmPassController = TextEditingController();
   var contactController = TextEditingController();
@@ -23,6 +25,7 @@ class _LoginScreenState extends State<SignupScreen> {
   int output = 0;
   bool _obscureText1 = true;
   bool _obscureText2 = true;
+  late String phoneNumberSignUp = '';
   @override
   Widget build(BuildContext context) {
 
@@ -126,6 +129,34 @@ class _LoginScreenState extends State<SignupScreen> {
                               height: 10,
                             ),
                             TextField(
+                              textCapitalization: TextCapitalization.none,
+                              controller: addressController,
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                labelText: 'Address',
+                                labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 17),
+                                suffixIcon: const Icon(
+                                  CupertinoIcons.location_solid,
+                                  color: Color(0xFFfebf10),
+                                  size: 18,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(color: Color(0xFFFFFF33)),
+                                ),
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextField(
                               controller: passController,
                               obscureText: _obscureText1,
                               keyboardType: TextInputType.visiblePassword,
@@ -205,16 +236,26 @@ class _LoginScreenState extends State<SignupScreen> {
                             const SizedBox(
                               height: 10,
                             ),
-                            TextField(
-                              controller: contactController,
-                              keyboardType: TextInputType.number,
+                            IntlPhoneField(
+                              dropdownIcon: const Icon(Icons.arrow_drop_down, color: Color(0xFFfebf10),),
+                              dropdownTextStyle: const TextStyle(
+                                fontSize: 17,
+                                color: Color(0xFFfebf10),
+                              ),
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
+                              cursorColor: const Color(0xFFfebf10),
                               decoration: InputDecoration(
-                                labelText: 'Contact No.',
-                                labelStyle: const TextStyle(color: Color(0xFFfebf10), fontSize: 17),
-                                suffixIcon: const Icon(
-                                  CupertinoIcons.phone_badge_plus,
+                                labelText: 'Contact Number',
+                                labelStyle: const TextStyle(
+                                  fontSize: 17,
                                   color: Color(0xFFfebf10),
-                                  size: 18,),
+                                ),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: const BorderSide(color: Color(0xFFfebf10)),
+                                ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: const BorderSide(color: Color(0xFFfebf10)),
@@ -224,11 +265,12 @@ class _LoginScreenState extends State<SignupScreen> {
                                   borderSide: const BorderSide(color: Color(0xFFFFFF33)),
                                 ),
                               ),
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
+                              initialCountryCode: 'LK',
+                              onChanged: (phone) {
+                                phoneNumberSignUp = phone.completeNumber;
+                                print(phone.completeNumber);
+                              },
                             ),
-                            const SizedBox(height: 20,),
                             Center(
                               child: Container(
                                 width: 150,
@@ -243,6 +285,7 @@ class _LoginScreenState extends State<SignupScreen> {
                                   ),
                                   color: const Color(0xFFfebf10),
                                   pressEvent: () {
+                                    //print(phoneNumberSignUp);
                                     signup();
                                   },
                                   borderRadius: const BorderRadius.only(
@@ -313,13 +356,14 @@ class _LoginScreenState extends State<SignupScreen> {
       body: jsonEncode(<String, dynamic>{
         "Name": nameController.text,
         "Email": emailController.text,
+        "Address": addressController.text,
         "Password": passController.text,
         "ConfirmPassword": confirmPassController.text,
-        "ContactNumber": contactController.text
+        "ContactNumber": phoneNumberSignUp
       }),
     );
     Navigator.pop(context);
-    if(response.statusCode == 200) {
+    if(response.statusCode == 201) {
       awesomeDialog(DialogType.success, "You successfully registered to the system. Now you can Login", "Success");
     }else{
       final json = jsonDecode(response.body);
