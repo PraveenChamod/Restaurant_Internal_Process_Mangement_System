@@ -472,8 +472,7 @@ class OfferFoodTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
                         offerFoodImagePath,
-                        //width: 125,
-                        width: 80,
+                        width: 90,
                       ),
                     ),
                   ),

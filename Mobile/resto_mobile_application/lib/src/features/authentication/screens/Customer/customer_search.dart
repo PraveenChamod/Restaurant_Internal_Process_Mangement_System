@@ -56,15 +56,7 @@ class _CustomerSearchState extends State<CustomerSearch> {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) {
-                    return const CustomerMainPage(
-                      choice: 3,
-                    );
-                  },
-                ),
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.chevron_left),
           ),

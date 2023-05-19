@@ -212,6 +212,8 @@ class _CustomerHomeDrawerState extends State<CustomerHomeDrawer> {
     if (response.statusCode == 201) {
       return jsonDecode(response.body);
     } else {
+      const snackBar = SnackBar(content: Text('Please Try Again While!'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       throw Exception('Failed to load data');
     }
   }

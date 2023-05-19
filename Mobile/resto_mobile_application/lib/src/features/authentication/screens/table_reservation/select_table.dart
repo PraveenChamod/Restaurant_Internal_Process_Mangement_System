@@ -64,13 +64,7 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
             elevation: 0,
             leading: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_){
-                      return const CustomerMainPage(choice: 3,);
-                    },
-                  ),
-                );
+                Navigator.pop(context);
               },
               icon: const Icon(Icons.chevron_left),
             ),
@@ -80,13 +74,7 @@ class _SelectTableState extends State<SelectTable>  with SingleTickerProviderSta
                 padding: const EdgeInsets.only(right: 20.0),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_){
-                          return const CustomerMainPage(choice: 3);
-                        },
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                   icon: const Icon(Icons.home),
                 ),

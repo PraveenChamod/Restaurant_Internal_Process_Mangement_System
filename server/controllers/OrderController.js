@@ -839,6 +839,8 @@ export const viewOrdersOrderedByCustomer = async (req, res) => {
           if (populatedOrder.Customer.id === customer.id) {
             const status = populatedOrder.Status;
             const deliveryStatus = populatedOrder.DeliveryStatus;
+            const Address = customer.Address;
+            const CustomerName = customer.Name;
             const food = populatedOrder.Foods.map((item) => {
               if (item.food !== undefined) {
                 return {
@@ -865,6 +867,8 @@ export const viewOrdersOrderedByCustomer = async (req, res) => {
             OrderDetails = {
               OrderId: order.id,
               Status: status,
+              Address:Address,
+              Name:CustomerName,
               DeliveryStatus: deliveryStatus,
               food,
               TotalPrice: populatedOrder.TotalPrice,

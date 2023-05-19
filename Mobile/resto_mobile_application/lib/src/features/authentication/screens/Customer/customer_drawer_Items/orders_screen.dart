@@ -32,6 +32,8 @@ class OrdersScreen extends StatelessWidget {
                       deliveryStatus: snapshot.data![index].deliveryStatus,
                       totalPrice: snapshot.data![index].totalPrice,
                       orderId: snapshot.data![index].orderId,
+                      customerAddress: snapshot.data![index].address,
+                      customerName: snapshot.data![index].customerName,
                     );
                   },
                 );
@@ -79,12 +81,16 @@ class OrderItems{
   final String status;
   final String deliveryStatus;
   final int totalPrice;
+  final String address;
+  final String customerName;
 
   OrderItems({
     required this.orderId,
     required this.status,
     required this.deliveryStatus,
     required this.totalPrice,
+    required this.address,
+    required this.customerName,
   });
 
   factory OrderItems.fromJson(Map<String, dynamic> json) {
@@ -93,6 +99,8 @@ class OrderItems{
       status: json['Status'],
       deliveryStatus: json['DeliveryStatus'],
       totalPrice: json['TotalPrice'],
+      address: json['Address'],
+      customerName: json['Name'],
     );
   }
   static List<OrderItems> fromJsonList(dynamic jsonList){

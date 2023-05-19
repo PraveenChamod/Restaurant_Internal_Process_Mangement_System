@@ -14,11 +14,15 @@ class MainOrderContainer extends StatefulWidget {
   final String deliveryStatus;
   final String orderId;
   final int totalPrice;
+  final String customerAddress;
+  final String customerName;
   const MainOrderContainer({Key? key,
     required this.status,
     required this.deliveryStatus,
     required this.totalPrice,
-    required this.orderId
+    required this.orderId,
+    required this.customerAddress,
+    required this.customerName,
   }) : super(key: key);
 
   @override
@@ -57,30 +61,6 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              const SizedBox(height: 5.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Expanded(
-                    child: Text(
-                      'Received Status:',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      widget.status,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFFfebf10),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               const SizedBox(height: 5.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -129,37 +109,89 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                   ),
                 ],
               ),
+              const SizedBox(height: 5.0,),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Name:',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0,),
+                  Text(
+                    widget.customerName,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFFfebf10),
+                    ),
+                  ),
+                  const SizedBox(height: 5.0,),
+                  const Text(
+                    'Address:',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 5.0,),
+                  Text(
+                    widget.customerAddress,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFFfebf10),
+                    ),
+                  ),
+                  const SizedBox(height: 5.0,),
+                  const Divider(
+                    color: Color(0xFFfebf10),
+                  ),
+                  const Text(
+                    'Order Summary',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 10.0,),
+                ],
+              ),
               const SizedBox(height: 10.0,),
-              SizedBox(
-                height: 180,
-                child: Center(
-                  child: FutureBuilder(
-                    future: fetchSpecificOrderData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return OrderItemContainer(
-                              foodQuantity: snapshot.data![index].qty,
-                              foodName: snapshot.data![index].foodName,
-                            );
-                          },
-                        );
-                      }else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }
-                      return const SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0xFFfebf10),
+              Padding(
+                padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+                child: SizedBox(
+                  height: 150,
+                  child: Center(
+                    child: FutureBuilder(
+                      future: fetchSpecificOrderData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return OrderItemContainer(
+                                foodQuantity: snapshot.data![index].qty,
+                                foodName: snapshot.data![index].foodName,
+                              );
+                            },
+                          );
+                        }else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        }
+                        return const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xFFfebf10),
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
