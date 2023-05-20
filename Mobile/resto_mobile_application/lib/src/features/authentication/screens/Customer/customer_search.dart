@@ -275,7 +275,7 @@ class SearchFoodTile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "\$$foodPrice",
+                          "Rs. $foodPrice",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15.0,

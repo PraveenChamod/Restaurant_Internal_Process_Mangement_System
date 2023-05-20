@@ -185,7 +185,7 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
               ),
               const SizedBox(height: 10.0,),
               Padding(
-                padding: const EdgeInsets.only(left: 50.0, right: 50.0),
+                padding: const EdgeInsets.only(left: 30.0, right: 30.0),
                 child: SizedBox(
                   height: 150,
                   child: Center(
