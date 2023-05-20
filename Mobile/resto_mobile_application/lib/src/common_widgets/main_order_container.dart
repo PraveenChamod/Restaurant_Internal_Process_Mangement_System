@@ -332,7 +332,7 @@ class _MainOrderContainerState extends State<MainOrderContainer> {
                       height: 35,
                       padding: const EdgeInsets.only(left: 5, right: 5),
                       child: AnimatedButton(
-                        text: "Remove Order",
+                        text: "Cancel Order",
                         buttonTextStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 18,
