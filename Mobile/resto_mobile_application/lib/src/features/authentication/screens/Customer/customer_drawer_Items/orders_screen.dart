@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../../../../../common_widgets/background_image.dart';
 import '../../../../../common_widgets/main_order_container.dart';
 import '../../../../../constants/image_strings.dart';
+import '../customer_main_page.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({Key? key}) : super(key: key);
@@ -17,6 +17,7 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen> {
   final List<OrderItems> data = [];
+  String orderId = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   scrollDirection: Axis.vertical,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
+                    orderId = snapshot.data![index].orderId;
                     return MainOrderContainer(
                       status: snapshot.data![index].status,
                       deliveryStatus: snapshot.data![index].deliveryStatus,
@@ -90,6 +92,67 @@ class _OrdersScreenState extends State<OrdersScreen> {
       throw Exception('Failed to load data');
     }
   }
+
+  void removeOrder() async {
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(
+            color: Color(0xFFfebf10),
+          ),
+        );
+      },
+    );
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? userToken = pref.getString("JwtToken");
+    final response = await http.delete(
+      Uri.parse('http://$hostName:5000/api/v1/Customer/Orders/$orderId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        "Authorization": "Bearer $userToken",
+      },
+    );
+    Navigator.pop(context);
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      successAwesomeDialog(DialogType.success, 'Successfully Cancel The Order', "Success");
+    } else {
+      final json = jsonDecode(response.body);
+      final msg = json["message"];
+      unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
+      throw Exception('Failed to load data');
+    }
+  }
+  successAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_){
+              return const CustomerMainPage(choice: 3,);
+            },
+          ),
+        );
+      },
+    ).show();
+  }
+  unSuccessAwesomeDialog(DialogType type, String desc, String title) {
+    AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.topSlide,
+      title: title,
+      desc: desc,
+      btnOkOnPress: () {},
+    ).show();
+  }
 }
 
 class OrderItems {
@@ -99,6 +162,7 @@ class OrderItems {
   final int totalPrice;
   final String address;
   final String customerName;
+  final List<EventFoodItems> items;
   OrderItems({
     required this.orderId,
     required this.status,
@@ -106,6 +170,7 @@ class OrderItems {
     required this.totalPrice,
     required this.address,
     required this.customerName,
+    required this.items,
   });
 
   factory OrderItems.fromJson(Map<String, dynamic> json) {
@@ -116,17 +181,31 @@ class OrderItems {
       totalPrice: json['TotalPrice'],
       address: json['Address'],
       customerName: json['Name'],
+      items: (json['food'] as List<dynamic>)
+          .map((e) => EventFoodItems.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
   static List<OrderItems> fromJsonList(dynamic jsonList) {
     final cartItemsList = <OrderItems>[];
     if (jsonList is List<dynamic>) {
       for (final json in jsonList) {
-        cartItemsList.add(
-          OrderItems.fromJson(json),
-        );
+        cartItemsList.add(OrderItems.fromJson(json),);
       }
     }
     return cartItemsList;
   }
+}
+
+class EventFoodItems{
+  final String foodName;
+  final int foodCount;
+  EventFoodItems({
+    required this.foodName,
+    required this.foodCount,
+  });
+  factory EventFoodItems.fromJson(Map<String, dynamic> json) => EventFoodItems(
+    foodName: json['FoodName'],
+    foodCount: json['quantity'],
+  );
 }
