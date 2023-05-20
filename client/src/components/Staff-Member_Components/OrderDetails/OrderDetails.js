@@ -142,7 +142,7 @@ const OrderDetailsComponent = (props) => {
                 style: { color: "#fff" },
               }}
             />
-            {props.data.OrderType === "Online" ? (
+            {props.data.OrderType === "Online Order" ? (
               <TextField
                 id="standard-basic"
                 label="Payment Method"
@@ -166,7 +166,7 @@ const OrderDetailsComponent = (props) => {
                 style: { color: "#fff" },
               }}
             />
-            {props.data.OrderType === "Online" ? (
+            {props.data.OrderType === "Online Order" ? (
               <>
                 <l.SubHeader>Select Deliverer</l.SubHeader>
                 <FormControl>

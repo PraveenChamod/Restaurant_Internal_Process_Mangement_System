@@ -179,7 +179,7 @@ export const Roles = [
         link:"/ManagerEditCategory"
       },
       {
-        text: "Add Dating Table Items",
+        text: "Add Table Items",
         icon: <GiWineBottle style={iconStyle} />,
         link: "/ManagerAdd-DatingTableItems",
       },
