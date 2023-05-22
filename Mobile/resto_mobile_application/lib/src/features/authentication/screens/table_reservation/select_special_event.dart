@@ -945,12 +945,9 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
         final orderDetails = json["data"];
         final msg = json["message"];
         successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
-
       } else {
         final json = jsonDecode(response.body);
         final msg = json["message"];
-        print(msg);
-        //unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
       }
     } catch (e) {
       // Handle other errors

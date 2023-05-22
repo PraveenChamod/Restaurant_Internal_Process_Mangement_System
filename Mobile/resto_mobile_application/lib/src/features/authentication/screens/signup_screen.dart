@@ -173,8 +173,8 @@ class _LoginScreenState extends State<SignupScreen> {
                                   },
                                   child: Icon(
                                     _obscureText1
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: const Color(0xFFfebf10),
                                     size: 18,
                                   ),
@@ -213,8 +213,8 @@ class _LoginScreenState extends State<SignupScreen> {
                                   },
                                   child: Icon(
                                     _obscureText2
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: const Color(0xFFfebf10),
                                     size: 18,
                                   ),
