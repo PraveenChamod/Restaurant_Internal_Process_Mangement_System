@@ -128,6 +128,7 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                               scrollDirection: Axis.horizontal,
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
+                                //final packagesDataItems = snapshot.data as PackagesData;
                                 return Container(
                                   width: 280,
                                   margin: const EdgeInsets.only(right: 10.0),
@@ -243,7 +244,6 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
                                                           return Padding(
                                                             padding: const EdgeInsets.only(left: 10.0, right: 10.0,top: 2.0 ),
                                                             child: Text(
-                                                              //snapshot.data![index].packageItems[index],
                                                               snapshot.data![index].items[index].itemName,
                                                               style: const TextStyle(
                                                                 color: Colors.white ,
@@ -945,12 +945,9 @@ class _SelectSpecialEventState extends State<SelectSpecialEvent> {
         final orderDetails = json["data"];
         final msg = json["message"];
         successAwesomeDialog(DialogType.success, 'Payment Success & Your Order Is Placed.', "Success");
-
       } else {
         final json = jsonDecode(response.body);
         final msg = json["message"];
-        print(msg);
-        //unSuccessAwesomeDialog(DialogType.warning, msg, "Warning");
       }
     } catch (e) {
       // Handle other errors

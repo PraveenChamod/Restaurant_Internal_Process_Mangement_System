@@ -294,7 +294,6 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                   buttonTextStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                   color: const Color(0xFFfebf10),
                                   pressEvent: () {
@@ -384,11 +383,10 @@ class _DeliveryOnlineOrderState extends State<DeliveryOnlineOrder> {
                                 height: 35,
                                 padding: const EdgeInsets.only(left: 5, right: 5),
                                 child: AnimatedButton(
-                                  text: "Save Details",
+                                  text: "Next",
                                   buttonTextStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                   color: const Color(0xFFfebf10),
                                   pressEvent: () {

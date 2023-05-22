@@ -39,7 +39,7 @@ const OrderDetailsComponent = (props) => {
       await toast.promise(
         axios.post(`/api/v1/OrderConfirmation/${props.data.OrderId}`, formDate),
         {
-          loading: "Assigning Deliverer....",
+          loading: "Confirming Order....",
           success: (data) => {
             return ` ${data.data?.message} ` || "success";
           },
@@ -56,7 +56,7 @@ const OrderDetailsComponent = (props) => {
         }
       );
       setTimeout(() => {
-        navigate("/Staff-MemberPendingOrder-Details")
+        navigate("/Staff-MemberPendingOrder-Details");
       }, 2000);
     } catch (error) {
       console.log(error.message);
@@ -142,17 +142,19 @@ const OrderDetailsComponent = (props) => {
                 style: { color: "#fff" },
               }}
             />
-            <TextField
-              id="standard-basic"
-              label="Payment Method"
-              variant="standard"
-              InputLabelProps={{ className: "textFeild_Label" }}
-              sx={{ marginBottom: "10%" }}
-              value={paymentMethod}
-              InputProps={{
-                style: { color: "#fff" },
-              }}
-            />
+            {props.data.OrderType === "Online Order" ? (
+              <TextField
+                id="standard-basic"
+                label="Payment Method"
+                variant="standard"
+                InputLabelProps={{ className: "textFeild_Label" }}
+                sx={{ marginBottom: "10%" }}
+                value={paymentMethod}
+                InputProps={{
+                  style: { color: "#fff" },
+                }}
+              />
+            ) : null}
             <TextField
               id="standard-basic"
               label="Total Price"
@@ -164,45 +166,49 @@ const OrderDetailsComponent = (props) => {
                 style: { color: "#fff" },
               }}
             />
-            <l.SubHeader>Select Deliverer</l.SubHeader>
-            <FormControl>
-              <Select
-                defaultValue={30}
-                inputProps={{
-                  name: "Email",
-                  id: "uncontrolled-native",
-                }}
-                sx={{
-                  color: "white",
-                  ".MuiSvgIcon-root ": {
-                    fill: "white !important",
-                  },
-                }}
-                onChange={(e) => setEmail(e.target.value)}
-              >
-                {isPending && (
-                  <Oval
-                    height={150}
-                    width={150}
-                    color="#FFBF00"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                    ariaLabel="oval-loading"
-                    secondaryColor="#FFBF00ed"
-                    strokeWidth={2}
-                    strokeWidthSecondary={2}
-                  />
-                )}
-                {data?.data?.deliverers.map((deliverer) => {
-                  return (
-                    <MenuItem value={deliverer.Email}>
-                      {deliverer.Email}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            {props.data.OrderType === "Online Order" ? (
+              <>
+                <l.SubHeader>Select Deliverer</l.SubHeader>
+                <FormControl>
+                  <Select
+                    defaultValue={30}
+                    inputProps={{
+                      name: "Email",
+                      id: "uncontrolled-native",
+                    }}
+                    sx={{
+                      color: "white",
+                      ".MuiSvgIcon-root ": {
+                        fill: "white !important",
+                      },
+                    }}
+                    onChange={(e) => setEmail(e.target.value)}
+                  >
+                    {isPending && (
+                      <Oval
+                        height={150}
+                        width={150}
+                        color="#FFBF00"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                        ariaLabel="oval-loading"
+                        secondaryColor="#FFBF00ed"
+                        strokeWidth={2}
+                        strokeWidthSecondary={2}
+                      />
+                    )}
+                    {data?.data?.deliverers.map((deliverer) => {
+                      return (
+                        <MenuItem value={deliverer.Email}>
+                          {deliverer.Email}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </>
+            ) : null}
           </l.Div1>
         </l.Div2>
         {/* <l.Div3>

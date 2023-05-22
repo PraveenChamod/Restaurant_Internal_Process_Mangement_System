@@ -18,6 +18,14 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
 
   @override
+  void initState() {
+    checkLogin();
+    super.initState();
+  }
+
+  Widget screen = const CustomerMainPage(choice: 3,);
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF161b1d),
@@ -75,7 +83,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                     color: const Color(0xFFfebf10),
                     pressEvent: () {
-                      checkLogin();
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+                      //checkLogin();
                     },
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(0),
@@ -93,15 +102,15 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+  //In this checkLogin function check if user already login or credential already available or not
   void checkLogin() async {
-    //In this checkLogin function check if user already login or credential already available or not
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("LoginId");
     String? role = pref.getString("LoginUserRole");
     val != null ?
       role == 'Customer'
-        ? Navigator.push(context, MaterialPageRoute(builder: (context) => const CustomerMainPage(choice: 3,)))
-        : Navigator.push(context, MaterialPageRoute(builder: (context) => const DelivererHome()))
-        : Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          ? screen = const CustomerMainPage(choice: 3,)
+          : screen = const DelivererHome()
+          : screen = const HomeScreen();
   }
 }

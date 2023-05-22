@@ -51,6 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             children: const [
                               Text(
                                 'Reset Password',
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
@@ -76,8 +77,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 },
                                 child: Icon(
                                   _obscureTextCurrent
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                   color: const Color(0xFFfebf10),
                                   size: 18,
                                 ),
@@ -115,8 +116,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 },
                                 child: Icon(
                                   _obscureTextNew
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                   color: const Color(0xFFfebf10),
                                   size: 18,
                                 ),
@@ -154,8 +155,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 },
                                 child: Icon(
                                   _obscureTextConfirm
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                   color: const Color(0xFFfebf10),
                                   size: 18,
                                 ),

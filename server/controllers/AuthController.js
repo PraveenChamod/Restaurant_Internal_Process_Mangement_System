@@ -12,6 +12,15 @@ import path from "path";
 import ejs from "ejs";
 import { transporter } from "../util/NotificationUtil.js";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import ShoutoutClient from "shoutout-sdk";
+
+var apiKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM";
+
+var debug = true,
+  verifySSL = false;
+
+var client = new ShoutoutClient(apiKey, debug, verifySSL);
 
 const imageStorage = multer.diskStorage({
   destination: "images/Users",
@@ -323,58 +332,38 @@ const createOTP = () => {
   return otp;
 };
 let otp;
+let Number;
 export const sendOTP = async (req, res) => {
   try {
-    const { Email } = req.body;
-    const customer = await Customer.findOne({ Email: Email }).populate("Email");
+    const {ContactNumber } = req.body;
+    Number = ContactNumber;
+    const customer = await Customer.findOne({ ContactNumber: ContactNumber }).populate("ContactNumber");
     const serviceProvider = await ServiceProviders.findOne({
-      Email: Email,
-    }).populate("Email");
+      ContactNumber: ContactNumber,
+    }).populate("ContactNumber");
     otp = createOTP();
     if (customer || serviceProvider) {
-      const mailOption = {
-        from: "resto6430@gmail.com",
-        to: Email,
-        subject: "Password Reset OTP",
-        attachments: [
-          {
-            filename: "logo.png",
-            path: `${__dirname}/Template/logo.png`,
-            cid: "logo",
-          },
-        ],
+      var message = {
+        source: "ShoutDEMO",
+        destinations: [ContactNumber],
+        content: {
+          sms: `Your Resto Account Password Reset OTP is ${otp}`,
+        },
+        transports: ["sms"],
       };
-      ejs.renderFile(
-        `${__dirname}/Template/ForgotPassword.ejs`,
-        { otp: otp },
-        (err, renderedHtml) => {
-          if (err) {
-            console.log(err.message);
-            res.status(500).json({
-              status: "Server Error",
-              message: err.message,
-            });
-          } else {
-            mailOption.html = renderedHtml;
-            transporter.sendMail(mailOption, (err, info) => {
-              if (err) {
-                console.log(err.message);
-                res.status(500).json({
-                  status: "Server Error",
-                  message: err.message,
-                });
-              } else {
-                res.status(200).json({
-                  status: "Success",
-                  message: `OTP is sent`,
-                });
-              }
-            });
-          }
+      client.sendMessage(message, (error, result) => {
+        if (error) {
+          console.error("error ", error);
+        } else {
+          console.log("result ", result);
         }
-      );
+      });
+      res.status(200).json({
+        status:"Success",
+        message:"Successfully Send OTP"
+      })
     } else {
-      res.status(404).json({ message: `Invalid Email` });
+      res.status(404).json({ message: `Invalid Contact Number` });
     }
   } catch (error) {
     res.status(500).json({
@@ -386,13 +375,13 @@ export const sendOTP = async (req, res) => {
 
 export const ForgotPassword = async (req, res) => {
   try {
-    const { Email, OTP, Password, ConfirmPassword } = req.body;
+    const { OTP, Password, ConfirmPassword } = req.body;
     console.log(OTP);
     console.log(otp);
-    const customer = await Customer.findOne({ Email: Email }).populate("Email");
+    const customer = await Customer.findOne({ ContactNumber: Number }).populate("ContactNumber");
     const serviceProvider = await ServiceProviders.findOne({
-      Email: Email,
-    }).populate("Email");
+      ContactNumber: Number,
+    }).populate("ContactNumber");
     const salt = await GenerateSalt();
     const encryptedPassword = await GeneratePassword(Password, salt);
     const confirmEncryptedPassword = await GeneratePassword(

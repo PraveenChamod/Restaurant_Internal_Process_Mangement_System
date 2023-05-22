@@ -20,7 +20,7 @@ class _CustomerMainPageState extends State<CustomerMainPage> {
   int _currentIndex = 0;
   final screens = [
     const CustomerHome(),
-    OrdersScreen(),
+    const OrdersScreen(),
     const CustomerCart(choice: 3,),
   ];
 

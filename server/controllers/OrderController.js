@@ -233,7 +233,7 @@ export const ViewPendingOrders = async (req, res, next) => {
       const findOrders = await Order.find();
       let pendingOrders = [];
       for (const order of findOrders) {
-        if (order.Status === "Pending" && order.Type === "Online Order") {
+        if (order.Status === "Pending" ) {
           let OrderDetails;
           try {
             const populatedOrder = await Order.findById(order.id)
@@ -255,6 +255,7 @@ export const ViewPendingOrders = async (req, res, next) => {
             const Email = populatedOrder.Customer.Email;
             const ContactNumber = populatedOrder.Customer.ContactNumber;
             const CustomerAddress = populatedOrder.Customer.Address;
+            const Type = populatedOrder.Type;
             const food = populatedOrder.Foods.map((item) => {
               if (item.food !== undefined) {
                 return {
@@ -279,6 +280,7 @@ export const ViewPendingOrders = async (req, res, next) => {
             OrderDetails = {
               OrderId: order.id,
               customerName: Name,
+              OrderType:Type,
               customerEmail: Email,
               ContactNumber: ContactNumber,
               CustomerAddress: CustomerAddress,
@@ -350,6 +352,7 @@ export const ViewOrder = async (req, res) => {
         const Email = populatedOrder.Customer.Email;
         const ContactNumber = populatedOrder.Customer.ContactNumber;
         const Address = populatedOrder.Customer.Address;
+        const OrderType = populatedOrder.Type
         const lat = populatedOrder.Customer.lat;
         const lang = populatedOrder.Customer.lang;
         const food = populatedOrder.Foods.map((item) => {
@@ -381,6 +384,7 @@ export const ViewOrder = async (req, res) => {
           customerEmail: Email,
           ContactNumber: ContactNumber,
           Address: Address,
+          OrderType:OrderType,
           lat: lat,
           lang: lang,
           food,
@@ -510,82 +514,145 @@ export const SendOrderConfrimation = async (req, res) => {
       } = req.body;
       console.log(req.body);
       const findOrder = await Order.findById(_id);
+      const Type = findOrder.Type;
       if (findOrder !== null) {
         const session = await mongoose.startSession();
         try {
           session.startTransaction();
-          const findDeliverer = await ServiceProviders.findOne({
-            Email: Email,
-          }).populate("Email");
-          console.log(findDeliverer);
-          const UpdateOrder = await Order.findByIdAndUpdate(
-            findOrder.id,
-            { ServiceProvider: findDeliverer.id, Status: "Confirm" },
-            { new: true, runValidators: true }
-          ).session(session);
-          const updateDeliverer = await ServiceProviders.findByIdAndUpdate(
-            findDeliverer.id,
-            { Order: findOrder.id },
-            { new: true, runValidators: true }
-          ).session(session);
-          console.log(updateDeliverer);
-          await session.commitTransaction();
-          session.endSession();
-          const data = {
-            id: _id,
-            customerName: customerName,
-            customerAddress: Address,
-            customerPhone: ContactNo,
-            delivererName: findDeliverer.Name,
-            delivererPhone: findDeliverer.ContactNumber,
-            delivererEmail: findDeliverer.Email,
-            orderedItems: Items,
-            paymentMethod: paymentMethod,
-            totalPrice: totalPrice,
-          };
-          const mailOption = {
-            from: "resto6430@gmail.com",
-            to: customerEmail,
-            subject: "Order Confrimation",
-            attachments: [
-              {
-                filename: "logo.png",
-                path: `${__dirname}/Template/logo.png`,
-                cid: "logo",
-              },
-            ],
-          };
-          ejs.renderFile(
-            `${__dirname}/Template/OrderConfirmationEmail.ejs`,
-            data,
-            (err, renderHTML) => {
-              if (err) {
-                console.log(err.message);
-                res.status(500).json({
-                  status: "Server Error",
-                  message: err.message,
-                });
-              } else {
-                mailOption.html = renderHTML;
-                transporter.sendMail(mailOption, (err, info) => {
-                  if (err) {
-                    console.log(err.message);
-                    res.status(500).json({
-                      status: "Server Error",
-                      message: err.message,
-                    });
-                  }
-                });
+          if(findOrder.Type === "Online"){
+            const findDeliverer = await ServiceProviders.findOne({
+              Email: Email,
+            }).populate("Email");
+            const UpdateOrder = await Order.findByIdAndUpdate(
+              findOrder.id,
+              { ServiceProvider: findDeliverer.id, Status: "Confirm" },
+              { new: true, runValidators: true }
+            ).session(session);
+            const updateDeliverer = await ServiceProviders.findByIdAndUpdate(
+              findDeliverer.id,
+              { Order: findOrder.id },
+              { new: true, runValidators: true }
+            ).session(session);
+            await session.commitTransaction();
+            session.endSession();
+            const data = {
+              id: _id,
+              customerName: customerName,
+              customerAddress: Address,
+              customerPhone: ContactNo,
+              delivererName: findDeliverer.Name,
+              delivererPhone: findDeliverer.ContactNumber,
+              delivererEmail: findDeliverer.Email,
+              orderedItems: Items,
+              paymentMethod: paymentMethod,
+              totalPrice: totalPrice,
+            };
+            const mailOption = {
+              from: "resto6430@gmail.com",
+              to: customerEmail,
+              subject: "Order Confrimation",
+              attachments: [
+                {
+                  filename: "logo.png",
+                  path: `${__dirname}/Template/logo.png`,
+                  cid: "logo",
+                },
+              ],
+            };
+            ejs.renderFile(
+              `${__dirname}/Template/OrderConfirmationEmail.ejs`,
+              data,
+              (err, renderHTML) => {
+                if (err) {
+                  console.log(err.message);
+                  res.status(500).json({
+                    status: "Server Error",
+                    message: err.message,
+                  });
+                } else {
+                  mailOption.html = renderHTML;
+                  transporter.sendMail(mailOption, (err, info) => {
+                    if (err) {
+                      console.log(err.message);
+                      res.status(500).json({
+                        status: "Server Error",
+                        message: err.message,
+                      });
+                    }
+                  });
+                }
               }
-            }
-          );
-          res.status(201).json({
-            status: "success",
-            message: "Order is Confirmed",
-            data: {
-              UpdateOrder,
-            },
-          });
+            );
+            res.status(201).json({
+              status: "success",
+              message: "Order is Confirmed",
+              data: {
+                UpdateOrder,
+              },
+            });
+          }
+          else{
+            const UpdateOrder = await Order.findByIdAndUpdate(
+              findOrder.id,
+              {Status: "Confirm" },
+              { new: true, runValidators: true }
+            ).session(session);
+            await session.commitTransaction();
+            session.endSession();
+            const data = {
+              id: _id,
+              customerName: customerName,
+              customerAddress: Address,
+              customerPhone: ContactNo,
+              Type:Type,
+              orderedItems: Items,
+              paymentMethod: paymentMethod,
+              totalPrice: totalPrice,
+            };
+            const mailOption = {
+              from: "resto6430@gmail.com",
+              to: customerEmail,
+              subject: "Order Confrimation",
+              attachments: [
+                {
+                  filename: "logo.png",
+                  path: `${__dirname}/Template/logo.png`,
+                  cid: "logo",
+                },
+              ],
+            };
+            ejs.renderFile(
+              `${__dirname}/Template/OrderConfirmationEmail.ejs`,
+              data,
+              (err, renderHTML) => {
+                if (err) {
+                  console.log(err.message);
+                  res.status(500).json({
+                    status: "Server Error",
+                    message: err.message,
+                  });
+                } else {
+                  mailOption.html = renderHTML;
+                  transporter.sendMail(mailOption, (err, info) => {
+                    if (err) {
+                      console.log(err.message);
+                      res.status(500).json({
+                        status: "Server Error",
+                        message: err.message,
+                      });
+                    }
+                  });
+                }
+              }
+            );
+            res.status(201).json({
+              status: "success",
+              message: "Order is Confirmed",
+              data: {
+                UpdateOrder,
+              },
+            });
+          }
         } catch (error) {
           res.status(401).json({
             status: "Error",
@@ -897,7 +964,7 @@ export const viewOrdersOrderedByCustomer = async (req, res) => {
 };
 
 // Method : DELETE
-// End Point : "api/v1/Customer/Orders";
+// End Point : "api/v1/Customer/Orders/:id";
 // Description :Cancle Order
 export const CancelOrder = async (req, res) => {
   try {
