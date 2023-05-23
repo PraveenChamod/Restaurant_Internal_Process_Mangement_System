@@ -8,7 +8,7 @@ const WithNavAndFooter = (props) => {
     <>
       <NavBar ScrollToTop={props.ScrollToTop} />
       <Outlet />
-      <Footer />
+      <Footer ScrollToTop={props.ScrollToTop}/>
     </>
   );
 };
