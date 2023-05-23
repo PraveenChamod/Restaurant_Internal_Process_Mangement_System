@@ -227,7 +227,7 @@ class SearchFoodTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-          height: 120,
+          height: 130,
           padding: const EdgeInsets.only(left: 10, top: 10, right: 20, bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),

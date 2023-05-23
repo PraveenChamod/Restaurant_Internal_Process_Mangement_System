@@ -27,6 +27,9 @@ import {
   CardIcon,
   HeaderContainer,
   Image,
+  ImageSection,
+  Image1,
+  UserMainContainer
 } from "./DashbordElements";
 
 const Dashboard = (props) => {
@@ -49,10 +52,15 @@ const Dashboard = (props) => {
               <Header>Welcome</Header>
             </HeaderContainer>
           )}
-          <UserHeader>
-            <Title>{props.Navs1.Role}</Title>
-            <Name>{user.Name}</Name>
-          </UserHeader>
+          <UserMainContainer>
+            <ImageSection>
+              <Image1 src={`http://localhost:5000/images/${user?.ProfileImage}`}/>
+            </ImageSection>
+            <UserHeader>
+              <Title>{props.Navs1.Role}</Title>
+              <Name>{user.Name}</Name>
+            </UserHeader>
+          </UserMainContainer>
           <Navs>
             {data1.map((data) => {
               return (

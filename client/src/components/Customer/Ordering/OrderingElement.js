@@ -5,7 +5,7 @@ export const Page = styled.div`
   justify-content: center;
   height: fit-content;
   align-items: center;
-  margin-bottom: 3%;
+  padding-bottom: 2%;
   flex-direction: column;
 `;
 export const Section = styled.div`
@@ -197,6 +197,7 @@ export const ButtonSection = styled.div`
   width: 80%;
   display: flex;
   justify-content: left;
+  margin-bottom: 5%;
 `;
 export const NotFound = styled.div`
   display: flex;
