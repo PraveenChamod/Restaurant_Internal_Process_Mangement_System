@@ -40,7 +40,7 @@ const TableReservationSchema = mongoose.Schema(
     Status: {
       type: String,
       enum: {
-        values: ["Pending", "Reserved"],
+        values: ["Pending", "Confirm"],
       },
       required: true,
       default: "Pending",
@@ -65,7 +65,7 @@ const TableReservationSchema = mongoose.Schema(
 );
 
 TableReservationSchema.pre("save", function (next) {
-  if (this.Type == "Special Events" || this.Type == "Dine-in") {
+  if (this.Type == "Special-Events" || this.Type == "Dine-in") {
     this.Items = undefined;
   }
   if (!this.Type == "Dating" || this.Type == "Dine-in") {
