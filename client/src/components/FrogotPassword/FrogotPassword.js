@@ -8,7 +8,7 @@ import { Container, Header } from "../shared/SharedElements/SharedElements";
 import { Div, Div1, Div2, Div3 } from "./FrogotPasswordElements";
 const ForgotPasswordComponent = (props) => {
   const [OTP, setOtp] = useState(0);
-  const [Email, setEmail] = useState("");
+  const [ContactNumber, setContactNumber] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
   console.log(OTP);
@@ -16,7 +16,7 @@ const ForgotPasswordComponent = (props) => {
     e.preventDefault();
     try {
       await toast.promise(
-        axios.post("api/v1/Auth/OTP", { Email: Email }),
+        axios.post("api/v1/Auth/OTP", { ContactNumber: ContactNumber }),
         {
           loading: `Sending OTP....`,
           success: (data) => {
@@ -41,7 +41,7 @@ const ForgotPasswordComponent = (props) => {
     }
   };
 
-  const formData = { Email, OTP, Password, ConfirmPassword };
+  const formData = { ContactNumber, OTP, Password, ConfirmPassword };
   const resetPassword = async (e) => {
     e.preventDefault();
     try {
@@ -76,15 +76,15 @@ const ForgotPasswordComponent = (props) => {
           <FormControl sx={{ m: 1, width: "35ch" }} variant="standard">
             <TextField
               id="standard-basic"
-              label="Email"
+              label="Contact Number"
               variant="standard"
               InputLabelProps={{ className: "textFeild_Label" }}
               sx={{ marginBottom: "10%" }}
               InputProps={{
                 style: { color: "#fff" },
               }}
-              value={Email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={ContactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
             />
             <FormButton>Send OTP</FormButton>
           </FormControl>

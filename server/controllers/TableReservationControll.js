@@ -24,12 +24,13 @@ export const ReserveTable = async (req, res) => {
       // console.log(session);
       try {
         session.startTransaction();
+        console.log(req.body);
         req.body.TableNo.forEach(async (table) => {
           const findTable = await Table.findOne({ TableNo: table }).populate(
             "TableNo"
           );
           const updateTable = await Table.findByIdAndUpdate(
-            findTable._id,
+            findTable.id,
             { Status: "Reserved" },
             { new: true, runValidators: true }
           ).session(session);
