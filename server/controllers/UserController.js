@@ -184,7 +184,7 @@ export const RegisterServiceProviders = async (req, res) => {
             "Role"
           );
           console.log(user);
-          if (user !== null) {
+          if (user !== null && user.Status === 'Active') {
             res.json("Manager is already exist in the system");
           }
           else{
