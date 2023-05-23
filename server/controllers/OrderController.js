@@ -512,17 +512,17 @@ export const SendOrderConfrimation = async (req, res) => {
         totalPrice,
         customerEmail,
       } = req.body;
-      console.log(req.body);
       const findOrder = await Order.findById(_id);
       const Type = findOrder.Type;
       if (findOrder !== null) {
         const session = await mongoose.startSession();
         try {
           session.startTransaction();
-          if(findOrder.Type === "Online"){
+          if(findOrder.Type === "Online Order"){
             const findDeliverer = await ServiceProviders.findOne({
               Email: Email,
             }).populate("Email");
+            console.log(findDeliverer);
             const UpdateOrder = await Order.findByIdAndUpdate(
               findOrder.id,
               { ServiceProvider: findDeliverer.id, Status: "Confirm" },
@@ -537,6 +537,7 @@ export const SendOrderConfrimation = async (req, res) => {
             session.endSession();
             const data = {
               id: _id,
+              Type:Type,
               customerName: customerName,
               customerAddress: Address,
               customerPhone: ContactNo,

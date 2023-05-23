@@ -12,12 +12,15 @@ import {
   Icon,
   Image,
   HR,
+  Span
 } from "./FooterStyles";
 import fb from "../../Images/facebook.png";
 import inster from "../../Images/instagram.png";
 import youtube from "../../Images/youtube.png";
 import whatsapp from "../../Images/whatsapp.png";
-const Footer = () => {
+import { NavLink } from "react-router-dom";
+import { Link } from "react-scroll";
+const Footer = (props) => {
   return (
     <div>
       <Box>
@@ -25,17 +28,39 @@ const Footer = () => {
           <Row>
             <Column>
               <Heading>ORDER NOW</Heading>
-              <FooterLink href="#">PIZZAS</FooterLink>
-              <FooterLink href="#">FRIED RICE</FooterLink>
-              <FooterLink href="#">BEVARAGES</FooterLink>
-              <FooterLink href="#">TODAY SPECIAL</FooterLink>
+              <FooterLink>
+              <NavLink to = "Menu"  onClick={props.ScrollToTop} className="btn">PIZZAS</NavLink>
+                </FooterLink>
+              <FooterLink>
+              <NavLink to = "Menu" onClick={props.ScrollToTop} className="btn">FRIED RICE</NavLink>
+              </FooterLink>
+              <FooterLink>
+                <NavLink to = "Menu" onClick={props.ScrollToTop} className="btn">BEVARAGES</NavLink>
+                </FooterLink>
+              <FooterLink>
+              <Link to="Menu" spy={true} offset={-100} smooth={true}>
+                TODAY SPECIAL<Span className="Ho"></Span>
+              </Link>
+                </FooterLink>
             </Column>
             <Column>
               <Heading>ABOUT</Heading>
-              <FooterLink href="#">CAREERS</FooterLink>
-              <FooterLink href="#">ABOUT US</FooterLink>
-              <FooterLink href="#">FEEDBACK</FooterLink>
-              <FooterLink href="#">HOTLINE</FooterLink>
+              <FooterLink>
+                <NavLink to = "#" className="btn">CAREERS</NavLink>
+              </FooterLink>
+              <FooterLink>
+              <Link to="AboutUs" spy={true} offset={-100} smooth={true}>
+                  ABOUT US<Span className="Ho"></Span>
+              </Link>
+              </FooterLink>
+              <FooterLink>
+                <NavLink to = "/" className="btn">FEEDBACK</NavLink>
+              </FooterLink>
+              <FooterLink>
+                <Link to="ContactUs" spy={true} offset={-100} smooth={true}>
+                HOTLINE<Span className="Ho"></Span>
+              </Link>  
+              </FooterLink>
             </Column>
             <Column>
               <Heading>POLICY</Heading>
@@ -44,7 +69,9 @@ const Footer = () => {
             </Column>
             <Column>
               <Heading>MY ACCOUNT</Heading>
-              <FooterLink href="#">VIEW CART</FooterLink>
+              <FooterLink>
+                <NavLink to = "/login"  onClick={props.ScrollToTop} className="btn">VIEW CART</NavLink>
+              </FooterLink>
             </Column>
           </Row>
           {/* <Row>
