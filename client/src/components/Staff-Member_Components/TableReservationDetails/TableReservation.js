@@ -171,7 +171,7 @@ const TableReservationComponent = ({ data }) => {
                       style: { color: "#fff" },
                     }}
                     sx={{ marginBottom: "10%" }}
-                    value={data.Package.packageName}
+                    value={data.Package}
                   />
                 </>
               ) : null}

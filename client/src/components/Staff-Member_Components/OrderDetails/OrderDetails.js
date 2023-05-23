@@ -20,7 +20,6 @@ const OrderDetailsComponent = (props) => {
   let food = props.data.food;
   const [deliverer, setDeliverer] = useState(0);
   const { data, isPending } = useFetch("/api/v1/AvailableDeliverers");
-  console.log(Email);
 
   const navigate = useNavigate();
   const assignDeliverer = async (e) => {
