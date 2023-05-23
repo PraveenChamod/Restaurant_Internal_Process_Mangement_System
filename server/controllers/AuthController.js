@@ -336,8 +336,14 @@ let Number;
 export const sendOTP = async (req, res) => {
   try {
     const {ContactNumber } = req.body;
-    Number = ContactNumber;
-    const customer = await Customer.findOne({ ContactNumber: ContactNumber }).populate("ContactNumber");
+    if(ContactNumber.charAt(0) == "0"){
+      Number = "94" + ContactNumber.slice(1);
+    }
+    else if(ContactNumber.charAt(0) == "9"){
+      Number=ContactNumber;
+    }
+    console.log(Number);
+    const customer = await Customer.findOne({ ContactNumber: Number }).populate("ContactNumber");
     const serviceProvider = await ServiceProviders.findOne({
       ContactNumber: ContactNumber,
     }).populate("ContactNumber");
@@ -345,7 +351,7 @@ export const sendOTP = async (req, res) => {
     if (customer || serviceProvider) {
       var message = {
         source: "ShoutDEMO",
-        destinations: [ContactNumber],
+        destinations: [Number],
         content: {
           sms: `Your Resto Account Password Reset OTP is ${otp}`,
         },

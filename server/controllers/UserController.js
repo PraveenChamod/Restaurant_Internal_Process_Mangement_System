@@ -61,11 +61,16 @@ export const RegisterCustomer = async (req, res) => {
         Address:Address,
       });
       //send sms
-      const contactNumber = ContactNumber.slice(1);
-      console.log(contactNumber);
+      let Number
+      if(ContactNumber.charAt(0) == "0"){
+        Number = "94" + ContactNumber.slice(1);
+      }
+      else if(ContactNumber.charAt(0) == "9"){
+        Number=ContactNumber;
+      }
       var message = {
         source: "ShoutDEMO",
-        destinations: [contactNumber],
+        destinations: [Number],
         content: {
           sms: `Welcome ${Name} to Resto. You successfully registerd to our system.`,
         },

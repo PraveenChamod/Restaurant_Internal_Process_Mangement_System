@@ -31,6 +31,14 @@ export const SideNavBar = styled.div`
     background-color: transparent;
   }
 `;
+export const UserMainContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media screen and (max-width: 800px){
+    flex-direction: column;
+  }
+`
 export const UserHeader = styled.div`
   display: flex;
   align-items: center;
@@ -38,6 +46,20 @@ export const UserHeader = styled.div`
   color: #fff;
   margin: 3% 0;
 `;
+export const ImageSection = styled.div`
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const Image1 = styled.img`
+   width: 70px;
+  height: 70px;
+  border-radius: 50px;
+`
 export const Title = styled.div`
   font-size: 30px;
   letter-spacing: 0.25rem;
