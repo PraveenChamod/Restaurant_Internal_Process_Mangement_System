@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:resto_mobile_application/src/constants/image_strings.dart';
