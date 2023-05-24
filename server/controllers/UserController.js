@@ -73,8 +73,8 @@ export const RegisterCustomer = async (req, res) => {
       if(ContactNumber.charAt(0) == "0"){
         Number = "94" + ContactNumber.slice(1);
       }
-      else if(ContactNumber.charAt(0) == "9"){
-        Number=ContactNumber.slice(1);
+      else if(ContactNumber.charAt(0) == "+"){
+        Number= ContactNumber.slice(1);
       }
       var message = {
         source: "ShoutDEMO",
@@ -192,7 +192,7 @@ export const RegisterServiceProviders = async (req, res) => {
             "Role"
           );
           console.log(user);
-          if (user !== null && user.Status == "Active") {
+          if (user !== null && user.Status === 'Active') {
             res.json("Manager is already exist in the system");
           }
           else{

@@ -339,11 +339,11 @@ export const sendOTP = async (req, res) => {
     if(ContactNumber.charAt(0) == "0"){
       Number = "94" + ContactNumber.slice(1);
     }
-    else if(ContactNumber.charAt(0) == "9"){
-      Number=ContactNumber;
+    else if(ContactNumber.charAt(0) == "+"){
+      Number=ContactNumber.slice(1);
     }
     console.log(Number);
-    const customer = await Customer.findOne({ ContactNumber: Number }).populate("ContactNumber");
+    const customer = await Customer.findOne({ ContactNumber: ContactNumber }).populate("ContactNumber");
     const serviceProvider = await ServiceProviders.findOne({
       ContactNumber: ContactNumber,
     }).populate("ContactNumber");
