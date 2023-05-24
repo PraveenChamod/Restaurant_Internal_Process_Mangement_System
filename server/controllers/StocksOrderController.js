@@ -144,6 +144,7 @@ export const ViewSupplierOrder = async (req, res) => {
               model: "ServiceProvider",
             })
             .exec();
+            console.log(populatedOrder);
           for (const order1 of populatedOrder.Order) {
             if (order1.Supplier.id === user.id) {
               const Name = populatedOrder.Manager.Name;

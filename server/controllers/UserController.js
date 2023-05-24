@@ -51,6 +51,12 @@ export const RegisterCustomer = async (req, res) => {
         salt
       );
       const Role = "Customer";
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          Address
+        )}&key=${geocodeApiKey}`;
+        const response = await axios.get(url);
+        console.log(url);
+        const location = response.data.results[0].geometry.location;
       const createCustomer = await Customer.create({
         Name: Name,
         Password: encryptedPassword,
@@ -59,6 +65,8 @@ export const RegisterCustomer = async (req, res) => {
         Email: Email,
         Role: Role,
         Address:Address,
+        lat:location.lat,
+        lang:location.lng
       });
       //send sms
       let Number
@@ -66,7 +74,7 @@ export const RegisterCustomer = async (req, res) => {
         Number = "94" + ContactNumber.slice(1);
       }
       else if(ContactNumber.charAt(0) == "9"){
-        Number=ContactNumber;
+        Number=ContactNumber.slice(1);
       }
       var message = {
         source: "ShoutDEMO",
@@ -184,7 +192,7 @@ export const RegisterServiceProviders = async (req, res) => {
             "Role"
           );
           console.log(user);
-          if (user !== null) {
+          if (user !== null && user.Status == "Active") {
             res.json("Manager is already exist in the system");
           }
           else{
