@@ -65,8 +65,8 @@ export const RegisterCustomer = async (req, res) => {
       if(ContactNumber.charAt(0) == "0"){
         Number = "94" + ContactNumber.slice(1);
       }
-      else if(ContactNumber.charAt(0) == "9"){
-        Number=ContactNumber;
+      else if(ContactNumber.charAt(0) == "+"){
+        Number= ContactNumber.slice(1);
       }
       var message = {
         source: "ShoutDEMO",
