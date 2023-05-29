@@ -871,6 +871,10 @@ export const confirmDelivery = async (req, res) => {
           ).session(session);
           await session.commitTransaction();
           session.endSession();
+          res.status(201).json({
+            status: "success",
+            message: "Order Successfully Confirmed!",
+          });
         } catch (error) {
           res.status(401).json({
             status: "Error",
