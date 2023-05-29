@@ -15,6 +15,7 @@ const PendingOrdersComponent = (props) => {
             <l.Th>Email</l.Th>
             <l.Th>Contact No</l.Th>
             <l.Th>Order Id</l.Th>
+            <l.Th>Order Type</l.Th>
             <l.Th></l.Th>
           </l.Tr>
           {props.pendingorders.map((order) => {
@@ -24,6 +25,7 @@ const PendingOrdersComponent = (props) => {
                 <l.Td>{order.customerEmail}</l.Td>
                 <l.Td>{order.ContactNumber}</l.Td>
                 <l.Td>{order.OrderId}</l.Td>
+                <l.Td>{order.OrderType}</l.Td>
                 <l.Td>
                   <Link
                     to={`/Staff-MemberOrder-Details/${order.OrderId}`}

@@ -200,6 +200,42 @@ class _DelivererHelpCenterState extends State<DelivererHelpCenter> {
                                   color: Colors.white70
                               ),
                             ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Divider(
+                              color: Color(0xFFfebf10),
+                            ),
+                            Text(
+                              'Contact Us:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFfebf10),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              'resto6430@gmail.com',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Text(
+                              '+94 33 2266 589',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white
+                              ),
+                            ),
                           ],
                         ),
                       ),

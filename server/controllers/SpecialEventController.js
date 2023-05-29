@@ -9,13 +9,6 @@ export const addSpecialEvent = async (req, res) => {
     const user = req.user;
     if (user.Role === "Manager" || user.Role === "Admin") {
       const { EventName, Item1, Item2, Item3, BronzePrice, SilverPrice, GoldPrice } = req.body;
-      console.log(EventName);
-      console.log(Item1);
-      console.log(Item2);
-      console.log(Item3);
-      console.log(BronzePrice);
-      console.log(SilverPrice);
-      console.log(GoldPrice);
       const SerialNumber = EventName.slice(0, 2).toUpperCase() + Math.floor(100 + 98 * 100);
       const existingSpecialEvent = await SpecialEventModel.findOne({
         SerialNo: SerialNumber,

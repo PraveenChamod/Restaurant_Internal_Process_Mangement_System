@@ -5,6 +5,7 @@ import Table from "../models/Tables.js";
 import { transporter } from "../util/NotificationUtil.js";
 import path from "path";
 import ejs from "ejs";
+import { log } from "console";
 
 const __dirname = path
   .dirname(path.dirname(new URL(import.meta.url).pathname))
@@ -21,7 +22,6 @@ export const ReserveTable = async (req, res) => {
         Email: user.Email,
       }).populate("Email");
       const session = await mongoose.startSession();
-      // console.log(session);
       try {
         session.startTransaction();
         req.body.TableNo.forEach(async (table) => {
@@ -29,7 +29,7 @@ export const ReserveTable = async (req, res) => {
             "TableNo"
           );
           const updateTable = await Table.findByIdAndUpdate(
-            findTable._id,
+            findTable.id,
             { Status: "Reserved" },
             { new: true, runValidators: true }
           ).session(session);
@@ -175,23 +175,25 @@ export const ViewReservation = async (req, res) => {
         const Name = populatedReservation.Customer.Name;
         const ContactNo = populatedReservation.Customer.ContactNumber;
         const Email = populatedReservation.Customer.Email;
-        const Tables = populatedReservation.Tables.map((table) => ({
-          TableNo: table.table.TableNo,
-        }));
-        if(populatedReservation.Items != undefined){
-          Items = populatedReservation.Items.map(item=>({
+        const Tables = populatedReservation.Tables.map((table) => (
+          {
+            TableNo: table.table.TableNo,
+          }
+        ));
+        if(populatedReservation.Items != null){
+          Items = populatedReservation.Items.map(item=>(
+            console.log("test"),
+          {
             ItemName:item.ItemName,
             ItemImage:item.TableItemImage
           }))
         }
         if(populatedReservation.Package != undefined){
-          populatedReservation.Package.map(selectedpackage=>{
-            Package = {
-              packageName : selectedpackage.Name,
-            }
-          });
+          console.log();
+          Package = populatedReservation.Package.Name;
           eventName = populatedReservation.eventName;
         } 
+        console.log(populatedReservation);
         ReservationDetails = {
           CustomerName: Name,
           CustomerContactNo: ContactNo,
@@ -207,9 +209,10 @@ export const ViewReservation = async (req, res) => {
           id: populatedReservation.id,
           Amount: populatedReservation.amount,
         };
+        console.log(ReservationDetails);
         res.status(200).json({
           status: "Success",
-          message: `Details of Reservation ${_id}`,
+          message: `Details of Reservation`,
           data: {
             ReservationDetails,
           },

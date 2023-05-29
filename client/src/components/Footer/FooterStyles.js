@@ -113,3 +113,18 @@ export const HR = styled.hr`
   height: 2px;
   margin: 10px 0;
 `;
+
+export const Span = styled.span`
+  & {
+    width: 0%;
+    height: 2.5px;
+    position: absolute;
+    top: 80%;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    background: #ffa000;
+    z-index: -1;
+    transition: 0.5s;
+  }
+`;

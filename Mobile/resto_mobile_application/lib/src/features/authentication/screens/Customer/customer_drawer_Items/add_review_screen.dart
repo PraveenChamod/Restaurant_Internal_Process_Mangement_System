@@ -242,13 +242,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
       title: title,
       desc: desc,
       btnOkOnPress: (){
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) {
-              return const CustomerMainPage(choice: 2,);
-            },
-          ),
-        );
+        Navigator.pop(context);
       },
     ).show();
   }

@@ -14,13 +14,7 @@ class DelivererDrawerItemAppbar extends StatelessWidget implements PreferredSize
       elevation: 0,
       leading: IconButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_){
-                return const DelivererHome();
-              },
-            ),
-          );
+          Navigator.pop(context);
         },
         icon: const Icon(Icons.chevron_left),
       ),

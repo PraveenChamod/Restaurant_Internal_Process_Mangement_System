@@ -40,7 +40,7 @@ const geocodeApiKey = "AIzaSyByYCGjAorLa5_rHMyisPNnrSEWv1rhAcY";
 // End Point : "api/v1/User/CustomerRegister";
 // Description : Register Customer
 export const RegisterCustomer = async (req, res) => {
-  const { Name, Password, ConfirmPassword, ContactNumber, Email } = req.body;
+  const { Name, Password, ConfirmPassword, ContactNumber, Email,Address } = req.body;
   const existingCustomer = await Customer.findOne({ Email: Email });
   try {
     if (existingCustomer === null) {
@@ -51,6 +51,12 @@ export const RegisterCustomer = async (req, res) => {
         salt
       );
       const Role = "Customer";
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          Address
+        )}&key=${geocodeApiKey}`;
+        const response = await axios.get(url);
+        console.log(url);
+        const location = response.data.results[0].geometry.location;
       const createCustomer = await Customer.create({
         Name: Name,
         Password: encryptedPassword,
@@ -58,13 +64,21 @@ export const RegisterCustomer = async (req, res) => {
         ContactNumber: ContactNumber,
         Email: Email,
         Role: Role,
+        Address:Address,
+        lat:location.lat,
+        lang:location.lng
       });
       //send sms
-      const contactNumber = "94" + ContactNumber.slice(1);
-      console.log(contactNumber);
+      let Number
+      if(ContactNumber.charAt(0) == "0"){
+        Number = "94" + ContactNumber.slice(1);
+      }
+      else if(ContactNumber.charAt(0) == "+"){
+        Number= ContactNumber.slice(1);
+      }
       var message = {
         source: "ShoutDEMO",
-        destinations: [contactNumber],
+        destinations: [Number],
         content: {
           sms: `Welcome ${Name} to Resto. You successfully registerd to our system.`,
         },
@@ -178,7 +192,7 @@ export const RegisterServiceProviders = async (req, res) => {
             "Role"
           );
           console.log(user);
-          if (user !== null) {
+          if (user !== null && user.Status === 'Active') {
             res.json("Manager is already exist in the system");
           }
           else{
@@ -725,62 +739,62 @@ export const getLocation = async (address) => {
   )}&key=${API_KEY}`;
 };
 
-// Method : PATCH
-// End Point : "api/v1/User/resetpassword/:Email";
-// Description : Password Reset
-export const ResetPassword = async (req, res) => {
-  try {
-    const { Email } = req.params;
-    const serviceProvider = await ServiceProviders.findOne({
-      Email: Email,
-    }).populate("Email");
-    if (serviceProvider) {
-      const { InitialPassword, Password, ConfirmPassword } = req.body;
-      const result = await validatePassword(
-        InitialPassword,
-        serviceProvider.Password
-      );
-      if (result) {
-        const salt = await GenerateSalt();
-        const encryptedPassword = await GeneratePassword(Password, salt);
-        const confirmEncryptedPassword = await GeneratePassword(
-          ConfirmPassword,
-          salt
-        );
-        const resetPassword = await ServiceProviders.findByIdAndUpdate(
-          serviceProvider.id,
-          {
-            Password: encryptedPassword,
-            ConfirmPassword: confirmEncryptedPassword,
-          },
-          { new: true }
-        );
-        res.status(200).json({
-          status: "Success",
-          message: "Password Reset Succcessfull",
-          data: {
-            resetPassword,
-          },
-        });
-      } else {
-        res.status(400).json({
-          status: "Error",
-          message: "Entered Initial Password is Invalid",
-        });
-      }
-    } else {
-      res.status(404).json({
-        status: "Error",
-        message: "User Not Found",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      status: "Server Error",
-      message: error.message,
-    });
-  }
-};
+// // Method : PATCH
+// // End Point : "api/v1/User/resetpassword/:Email";
+// // Description : Password Reset
+// export const ResetPassword = async (req, res) => {
+//   try {
+//     const { Email } = req.params;
+//     const serviceProvider = await ServiceProviders.findOne({
+//       Email: Email,
+//     }).populate("Email");
+//     if (serviceProvider) {
+//       const { InitialPassword, Password, ConfirmPassword } = req.body;
+//       const result = await validatePassword(
+//         InitialPassword,
+//         serviceProvider.Password
+//       );
+//       if (result) {
+//         const salt = await GenerateSalt();
+//         const encryptedPassword = await GeneratePassword(Password, salt);
+//         const confirmEncryptedPassword = await GeneratePassword(
+//           ConfirmPassword,
+//           salt
+//         );
+//         const resetPassword = await ServiceProviders.findByIdAndUpdate(
+//           serviceProvider.id,
+//           {
+//             Password: encryptedPassword,
+//             ConfirmPassword: confirmEncryptedPassword,
+//           },
+//           { new: true }
+//         );
+//         res.status(200).json({
+//           status: "Success",
+//           message: "Password Reset Succcessfull",
+//           data: {
+//             resetPassword,
+//           },
+//         });
+//       } else {
+//         res.status(400).json({
+//           status: "Error",
+//           message: "Entered Initial Password is Invalid",
+//         });
+//       }
+//     } else {
+//       res.status(404).json({
+//         status: "Error",
+//         message: "User Not Found",
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       status: "Server Error",
+//       message: error.message,
+//     });
+//   }
+// };
 
 // Method : GET
 // End Point : "api/v1/User-Supplier/:id"

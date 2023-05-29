@@ -11,6 +11,7 @@ import {
   ViewPendingOrders,
   ViewOrderFoods,
   CheckDelivererOrderDetails,
+  CancelOrder,
 } from "../controllers/OrderController.js";
 
 const OrderRoutes = express.Router();
@@ -26,5 +27,6 @@ OrderRoutes.route("/staffmemberorderItem").post(PlaceOrderByStaffMember);
 OrderRoutes.route("/Deliverer/ConfirmDelivery/:_id").post(confirmDelivery);
 OrderRoutes.route("/Customer/Orders").get(viewOrdersOrderedByCustomer);
 OrderRoutes.route("/Deliverer/AssignOrder").get(CheckDelivererOrderDetails);
+OrderRoutes.route("/Customer/Orders/:id").delete(CancelOrder)
 
 export default OrderRoutes;

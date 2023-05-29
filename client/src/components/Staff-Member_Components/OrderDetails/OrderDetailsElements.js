@@ -32,7 +32,7 @@ export const Header = styled.h1`
   }
 `;
 export const Div = styled.div`
-  width: 50%;
+  width: 60%;
   background-color: #1a1e21;
   border-radius: 25px;
   display: flex;
@@ -50,8 +50,6 @@ export const Div = styled.div`
 export const Div1 = styled.div`
   margin-top: 10px;
   width: 50%;
-
-  background-color: #1a1e21;
   display: flex;
   flex-direction: column;
   padding-left: 20px;
@@ -153,7 +151,7 @@ export const Div6 = styled.div`
 `;
 export const Div7 = styled.div`
   margin-top: 15px;
-  width: 50%;
+  width: 60%;
   height: 8%;
   display: flex;
   flex-direction: column;

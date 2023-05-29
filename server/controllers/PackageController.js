@@ -63,6 +63,7 @@ export const getPackages = async (req, res) => {
         });
         data = {
           id: populatedPackages.id,
+          Status:populatedPackages.Status,
           type:populatedPackages.Type,
           packageName: populatedPackages.Name,
           Items,
@@ -87,11 +88,60 @@ export const getPackages = async (req, res) => {
   }
 };
 
+export const getPackageById = async (req, res) => {
+  const user = req.user;
+  try {
+    let packages = [];
+    let Items = [];
+    let data;
+    if (user.Role !== "Deliverer" || user.Role !== "Supplier" ) {
+      const {id} = req.params;
+      const populatedPackages = await Package.findById(id)
+          .populate({
+            path: "Items.item",
+            model: "TableItem",
+          })
+          .exec();
+        const Items = populatedPackages.Items.map((item) => {
+          return {
+            ItemId : item.item.id,
+            ItemName: item.item.ItemName,
+            ItemType: item.item.ItemType,
+            ItemImage: item.item.TableItemImage,
+          };
+        });
+        data = {
+          id: populatedPackages.id,
+          Status:populatedPackages.Status,
+          type:populatedPackages.Type,
+          packageName: populatedPackages.Name,
+          Items,
+          Price: populatedPackages.Price,
+        };
+        packages.push(data);
+
+      res.status(200).json({
+        status: "Success",
+        message: "Package Details Exists",
+        data: {
+          packages,
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: "Server Error",
+      message: error.message,
+    });
+  }
+};
+
 export const updatePackage = async (req, res) => {
   const user = req.user;
   try {
     if (user.Role === "Staff-Member") {
       const { id, itemIds, price } = req.body;
+      console.log(req.body);
       let findpackage = await Package.findById(id);
       const session = await mongoose.startSession();
       try {

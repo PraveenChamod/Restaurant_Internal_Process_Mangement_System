@@ -70,9 +70,6 @@ const DeliverComponent = (props) => {
               {props.data.food.map((food) => {
                 return (
                   <l.CartSection>
-                    {/* <l.SelectIcon onClick={()=>{selectOne(index)}}>
-                                                        {change && selectItem === index ? <MdCheckBox/> : <MdCheckBoxOutlineBlank />}
-                                                    </l.SelectIcon> */}
                     <l.ItemsCard>
                       <l.FoodImage>
                         <l.Food
@@ -86,13 +83,7 @@ const DeliverComponent = (props) => {
                           <l.FoodName>{food.FoodName}</l.FoodName>
                         </l.MainText>
                         <l.SubText>
-                          {/* <l.Text>
-                                                                    {cart.Size}
-                                                                </l.Text> */}
                           <l.Text>Quantity : {food.quantity}</l.Text>
-                          {/* <l.Text>
-                                                                    Price : {food.quantity * cart.price}
-                                                                </l.Text> */}
                         </l.SubText>
                       </l.Details>
                     </l.ItemsCard>

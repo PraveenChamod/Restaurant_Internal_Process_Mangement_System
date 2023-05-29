@@ -202,30 +202,32 @@ const PackageDetailsComponent = (props) => {
                   />
                 }
                 {data?.data?.TableItems.map((data) => {
-                  return (
-                    <MenuItem
-                      value={data.ItemName}
-                      onClick={() => handleItemClick(data)}
-                    >
-                      <l.CartSection>
-                        <l.ItemsCard>
-                          <l.FoodImage>
-                            <l.Food
-                              src={`http://localhost:5000/tableitemimages/${data.TableItemImage}`}
-                            />
-                          </l.FoodImage>
-                          <l.Details>
-                            <l.MainText>
-                              <l.FoodName>{data.ItemName}</l.FoodName>
-                            </l.MainText>
-                            <l.SubText>
-                              <l.Text>Price : {data.ItemPrice}</l.Text>
-                            </l.SubText>
-                          </l.Details>
-                        </l.ItemsCard>
-                      </l.CartSection>
-                    </MenuItem>
-                  );
+                  if(data.ItemType === "Special Event"){
+                    return (
+                      <MenuItem
+                        value={data.ItemName}
+                        onClick={() => handleItemClick(data)}
+                      >
+                        <l.CartSection>
+                          <l.ItemsCard>
+                            <l.FoodImage>
+                              <l.Food
+                                src={`http://localhost:5000/tableitemimages/${data.TableItemImage}`}
+                              />
+                            </l.FoodImage>
+                            <l.Details>
+                              <l.MainText>
+                                <l.FoodName>{data.ItemName}</l.FoodName>
+                              </l.MainText>
+                              <l.SubText>
+                                <l.Text>Price : {data.ItemPrice}</l.Text>
+                              </l.SubText>
+                            </l.Details>
+                          </l.ItemsCard>
+                        </l.CartSection>
+                      </MenuItem>
+                    );
+                  }
                 })}
               </Select>
             </FormControl>

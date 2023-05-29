@@ -11,6 +11,7 @@ import '../../../common_widgets/background_image.dart';
 import '../../../constants/image_strings.dart';
 import 'Customer/customer_main_page.dart';
 import 'deliverer/deliverer_home.dart';
+import 'forget_password/getphonenumber.dart';
 import 'forget_password/gettemail.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -121,8 +122,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     },
                                     child: Icon(
                                       _obscureText
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
                                       color: const Color(0xFFfebf10),
                                       size: 18,
                                     ),
@@ -153,10 +154,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                     textStyle: const TextStyle(fontSize: 15),
                                   ),
                                   onPressed: () {
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (_) {
+                                    //       return const GetEmail();
+                                    //     },
+                                    //   ),
+                                    // );
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (_) {
-                                          return const GetEmail();
+                                          return const GetPhoneNumber();
                                         },
                                       ),
                                     );

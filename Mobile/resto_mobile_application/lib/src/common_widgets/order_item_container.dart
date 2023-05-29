@@ -12,7 +12,6 @@ class OrderItemContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 40,
-      //color: Colors.black38,
       padding: const EdgeInsets.all(10.0),
       margin: const EdgeInsets.only(bottom: 5.0),
       decoration: BoxDecoration(

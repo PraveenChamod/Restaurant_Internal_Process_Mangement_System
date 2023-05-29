@@ -78,7 +78,7 @@ class _CustomerHomeState extends State<CustomerHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Divider(),
+              const SizedBox(height: 10.0,),
               SizedBox(
                 height: 218,
                 child: PageView.builder(
@@ -96,7 +96,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                   ),
                 ),
               ),
-              const Divider(),
+              const Divider(color: Colors.transparent,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -211,7 +211,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                   ),
                 ),
               ),
-              const Divider(),
+              const Divider(color: Colors.transparent,),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
@@ -222,7 +222,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                   ),
                 ),
               ),
-              const Divider(),
+              const Divider(color: Colors.transparent,),
               Center(
                 child: SizedBox(
                   height: 250,
@@ -260,7 +260,7 @@ class _CustomerHomeState extends State<CustomerHome> {
                   ),
                 ),
               ),
-              const Divider(),
+              const Divider(color: Colors.transparent,),
             ],
           ),
         ),
@@ -472,8 +472,7 @@ class OfferFoodTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
                         offerFoodImagePath,
-                        //width: 125,
-                        width: 80,
+                        width: 90,
                       ),
                     ),
                   ),

@@ -62,24 +62,26 @@
             <td><%= customerPhone %></td>
           </tr>
         </table>
-        <h3>Deliverer :</h3>
-        <table class="Deliverer">
-          <tr>
-            <td><b>Name</b></td>
-            <td>:</td>
-            <td><%= delivererName %></td>
-          </tr>
-          <tr>
-            <td><b>Contact No</b></td>
-            <td>:</td>
-            <td><%= delivererPhone %></td>
-          </tr>
-          <tr>
-            <td><b>Email</b></td>
-            <td>:</td>
-            <td><%= delivererEmail %></td>
-          </tr>
-        </table>
+        <% if (Type === "Online Order") { %>
+          <h3>Deliverer :</h3>
+          <table class="Deliverer">
+            <tr>
+              <td><b>Name</b></td>
+              <td>:</td>
+              <td><%= delivererName %></td>
+            </tr>
+            <tr>
+              <td><b>Contact No</b></td>
+              <td>:</td>
+              <td><%= delivererPhone %></td>
+            </tr>
+            <tr>
+              <td><b>Email</b></td>
+              <td>:</td>
+              <td><%= delivererEmail %></td>
+            </tr>
+          </table>
+        <% } %>        
         <table class="items">
           <thead>
             <tr>
@@ -101,10 +103,12 @@
           </tbody>
         </table>
         <tfoot>
-          <tr>
-            <td colspan="3"><b>Payment Method:</b></td>
-            <td><%= paymentMethod %></td>
-          </tr>
+          <% if (Type === "Online") { %>
+            <tr>
+              <td colspan="3"><b>Payment Method:</b></td>
+              <td><%= paymentMethod %></td>
+            </tr>
+          <% } %>
           <br />
           <tr>
             <td colspan="3"><b>Total:</b></td>
@@ -112,9 +116,6 @@
           </tr>
         </tfoot>
       </main>
-      <footer>
-        <h3>Thank you!</h3>
-      </footer>
     </div>
   </body>
 </html>

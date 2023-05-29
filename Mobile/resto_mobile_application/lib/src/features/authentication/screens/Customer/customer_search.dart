@@ -56,15 +56,7 @@ class _CustomerSearchState extends State<CustomerSearch> {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) {
-                    return const CustomerMainPage(
-                      choice: 3,
-                    );
-                  },
-                ),
-              );
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.chevron_left),
           ),
@@ -235,7 +227,7 @@ class SearchFoodTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: Container(
-          height: 120,
+          height: 130,
           padding: const EdgeInsets.only(left: 10, top: 10, right: 20, bottom: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -283,7 +275,7 @@ class SearchFoodTile extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "\$$foodPrice",
+                          "Rs. $foodPrice",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 15.0,

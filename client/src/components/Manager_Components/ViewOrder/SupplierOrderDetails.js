@@ -18,7 +18,6 @@ const SupplierOrderDetails = (props) => {
             <l.Th>Item Name</l.Th>
             <l.Th>Unit Price</l.Th>
             <l.Th>Status</l.Th>
-            <l.Th></l.Th>
           </l.Tr>
           {props.data3.map((ItemArray) => {
             return ItemArray.Item.map((row) => {
@@ -29,15 +28,6 @@ const SupplierOrderDetails = (props) => {
                   <l.Td>{row.ItemName}</l.Td>
                   <l.Td>{row.Price}</l.Td>
                   <l.Td>{ItemArray.OrderStatus}</l.Td>
-
-                  <Link
-                    to={`/ManagerView-supllierorder-details/${row.SupplierItemsId}`}
-                    className="btn"
-                  >
-                    <l.Icon>
-                      <AiFillEye />
-                    </l.Icon>
-                  </Link>
                 </l.Tr>
               );
             });
