@@ -12,7 +12,7 @@ const OrderDetails = (props) => {
   const navigate = useNavigate();
   const [totalPrice,setTotalPrice] = useState(0);
   let price = 0;
-  console.log(totalPrice);
+  console.log(data);
   const confirmOrder = async (e) => {
     e.preventDefault();
     try {
@@ -78,7 +78,7 @@ const OrderDetails = (props) => {
         <l.Sec2>
           <l.SubSec1 onSubmit={confirmOrder}>
             <l.SubHeader>Pending Orders</l.SubHeader>
-            {props.data3[0].OrderStatus == "Pending" ? (
+            {data.Item.length > 0 && data.Item[0].Status == "Pending" ? (
               <>
                 {props.data3[0].Item.map((item) => {
                   return (
@@ -114,9 +114,9 @@ const OrderDetails = (props) => {
           </l.SubSec1>
           <l.SubSec2>
             <l.SubHeader>Confirmed Orders</l.SubHeader>
-            {props.data3[0].OrderStatus == "Confirm" ? (
+            {data.ConfirmedItems.length > 0 && data.ConfirmedItems[0].Status == "Confirm" ? (
               <>
-                {props.data3[0].Item.map((item) => {
+                {props.data3[0].ConfirmedItems.map((item) => {
                   return (
                     <l.ItemCart>
                       <l.TextSection1>

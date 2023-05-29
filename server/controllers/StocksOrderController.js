@@ -5,11 +5,18 @@ import SupplierItem from "../models/SupplierItem.js";
 import { transporter } from "../util/NotificationUtil.js";
 import path from "path";
 import ejs from "ejs";
+import ShoutoutClient from "shoutout-sdk";
 
 const __dirname = path
   .dirname(path.dirname(new URL(import.meta.url).pathname))
   .slice(1);
+  var apiKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM";
 
+var debug = true,
+  verifySSL = false;
+
+var client = new ShoutoutClient(apiKey, debug, verifySSL);
 
 // Method : POST
 // End Point : "api/v1/SupplierOrder";
@@ -18,12 +25,37 @@ export const addSupplierOrder = async (req, res) => {
   try {
     const user = req.user;
     if (user.Role === "Manager") {
+      let suppliersnumbers = [];
       const session = await mongoose.startSession();
       try {
         session.startTransaction();
         const newOrder = await StocksOrder.create([req.body], { session });
         const commit = await session.commitTransaction();
         session.endSession();
+        for(const supplier of req.body.Order){
+          const findsupplier = await ServiceProviders.findById(supplier.Supplier);
+          suppliersnumbers.push(
+            {number : findsupplier.ContactNumber}
+          );
+        }
+        console.log(suppliersnumbers);
+        for(const number of suppliersnumbers){
+          var message = {
+            source: "ShoutDEMO",
+            destinations: [number.number],
+            content: {
+              sms: `You have new order to confirm! check pending orders through the Resto app ⏰♨️`,
+            },
+            transports: ["sms"],
+          };
+          client.sendMessage(message, (error, result) => {
+            if (error) {
+              console.error("error ", error);
+            } else {
+              console.log("result ", result);
+            }
+          });
+        }
         res.status(201).json({
           status: "Success",
           message: "Your order is placed",
@@ -57,6 +89,8 @@ export const ViewSupplierOrder = async (req, res) => {
     let ItemName;
     let Quantity;
     let Item = [];
+    let Status;
+    let ConfirmedItems = [];
     let Price;
     const orders = await StocksOrder.find();
     if (user.Role === "Manager") {
@@ -144,31 +178,50 @@ export const ViewSupplierOrder = async (req, res) => {
               model: "ServiceProvider",
             })
             .exec();
-            console.log(populatedOrder);
           for (const order1 of populatedOrder.Order) {
             if (order1.Supplier.id === user.id) {
               const Name = populatedOrder.Manager.Name;
               const Email = populatedOrder.Manager.Email;
-              const Status = populatedOrder.Status;
               const ContactNumber = populatedOrder.Manager.ContactNumber
               const Image = populatedOrder.Manager.ProfileImage;
               const TotalPrice = populatedOrder.TotalPrice;
               for (const order of order1.Items) {
-                console.log(order);
-                for (const item of order.id.Items) {
-                  if (item._id == order.item) {
-                    ItemName = item.ItemName;
-                    Quantity = order.Quantity;
-                    Price = item.Price;
-                    Item.push({
-                      ItemName,
-                      Quantity,
-                      Price,
-                    });
-                  }
+                if(order1.Status === "Pending"){
+                  for (const item of order.id.Items) {
+                    if (item._id == order.item) {
+                      ItemName = item.ItemName;
+                      Quantity = order.Quantity;
+                      Price = item.Price;
+                      Status = order1.Status
+                      Item.push({
+                        ItemName,
+                        Quantity,
+                        Price,
+                        Status
+                      });
+                    }
+                }
                 }
               }
+              for (const order of order1.Items) {
+                if(order1.Status === "Confirm"){
+                  for (const item of order.id.Items) {
+                    if (item._id == order.item) {
+                      ItemName = item.ItemName;
+                      Quantity = order.Quantity;
+                      Price = item.Price;
+                      Status = order1.Status
+                      ConfirmedItems.push({
+                        ItemName,
+                        Quantity,
+                        Price,
+                        Status
+                      });
+                    }
+                  }
+                }
 
+              }
               orderDetails = {
                 orderId: order.id,
                 managerName: Name,
@@ -177,6 +230,7 @@ export const ViewSupplierOrder = async (req, res) => {
                 managerContactNumber:ContactNumber,
                 OrderStatus: Status,
                 Item,
+                ConfirmedItems
               };
 
               placedorders.push(orderDetails);
@@ -236,17 +290,33 @@ export const ConfirmStockOrder = async (req, res) => {
     const user = req.user;
     if (user.Role === "Supplier") {
       const {id,Name,Email,ContactNumber,Items,totalPrice} = req.body;
-      console.log(req.body);
       const session = await mongoose.startSession();
         try {
           session.startTransaction();
-          const UpdateOrder = await StocksOrder.findByIdAndUpdate(
+          const orders = await StocksOrder.findById(id)
+          .populate({
+            path: "Order.Items.id",
+            model: "SupplierItem",
+          })
+          .populate({
+            path: "Order.Supplier",
+            model: "ServiceProvider",
+          })
+          .exec();
+          for(const order of orders.Order){
+            if(order.Supplier.Email === user.Email){
+              order.Status = "Confirm";
+            }
+          }
+          const updatedOrder = await StocksOrder.findByIdAndUpdate(
             id,
-            { Status: "Confirm" },
+            { Order: orders.Order },
             { new: true, runValidators: true }
           ).session(session);
+          
           await session.commitTransaction();
           session.endSession();
+          
           const data = {
             id:id,
             ManagerName: Name,
@@ -297,9 +367,6 @@ export const ConfirmStockOrder = async (req, res) => {
           res.status(201).json({
             status: "success",
             message: "Order is Confirmed",
-            data: {
-              UpdateOrder,
-            },
           });
         } catch (error) {
           res.status(401).json({

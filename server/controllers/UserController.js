@@ -70,7 +70,7 @@ export const RegisterCustomer = async (req, res) => {
       });
       //send sms
       let Number
-      if(ContactNumber.charAt(0) == "0"){
+      if(ContactNumber.charAt(0) == "0"){ 
         Number = "94" + ContactNumber.slice(1);
       }
       else if(ContactNumber.charAt(0) == "+"){
