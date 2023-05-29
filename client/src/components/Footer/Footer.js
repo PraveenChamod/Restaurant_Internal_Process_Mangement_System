@@ -130,6 +130,9 @@ const Footer = (props) => {
           @2022 resto. All rights reserved.The resto name,logos and related
           marks are trademarks of resto Inc.
         </P>
+        <P style={{cursor:"pointer"}} onClick={props.ScrollToTop}>
+          <NavLink to="/developers" className="btn">Development Team</NavLink>
+        </P>
       </Box>
     </div>
   );
