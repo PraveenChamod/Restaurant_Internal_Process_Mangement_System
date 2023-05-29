@@ -6,6 +6,15 @@ import ServiceProviders from "../models/ServiceProviders.js";
 import path from "path";
 import ejs from "ejs";
 import { transporter } from "../util/NotificationUtil.js";
+import ShoutoutClient from "shoutout-sdk";
+
+var apiKey =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmMTU0YTA3MC0yYTBkLTExZWQtYTIyZC0yMzNlNTJkNzg3MDYiLCJzdWIiOiJTSE9VVE9VVF9BUElfVVNFUiIsImlhdCI6MTY2MjA0NzQ4OSwiZXhwIjoxOTc3NjY2Njg5LCJzY29wZXMiOnsiYWN0aXZpdGllcyI6WyJyZWFkIiwid3JpdGUiXSwibWVzc2FnZXMiOlsicmVhZCIsIndyaXRlIl0sImNvbnRhY3RzIjpbInJlYWQiLCJ3cml0ZSJdfSwic29fdXNlcl9pZCI6IjczMzgxIiwic29fdXNlcl9yb2xlIjoidXNlciIsInNvX3Byb2ZpbGUiOiJhbGwiLCJzb191c2VyX25hbWUiOiIiLCJzb19hcGlrZXkiOiJub25lIn0.7ODAC-X1QFiFFKMpoe23iD-mpEPRkO6twmBsvQvgnOM";
+
+var debug = true,
+  verifySSL = false;
+
+var client = new ShoutoutClient(apiKey, debug, verifySSL);
 
 const __dirname = path
   .dirname(path.dirname(new URL(import.meta.url).pathname))
@@ -535,6 +544,23 @@ export const SendOrderConfrimation = async (req, res) => {
             ).session(session);
             await session.commitTransaction();
             session.endSession();
+            if(updateDeliverer && UpdateOrder){
+              var message = {
+                source: "ShoutDEMO",
+                destinations: [updateDeliverer.ContactNumber],
+                content: {
+                  sms: `You have to deliver a new order please check order details through the Resto app🍽️🍔♨️`,
+                },
+                transports: ["sms"],
+              };
+              client.sendMessage(message, (error, result) => {
+                if (error) {
+                  console.error("error ", error);
+                } else {
+                  console.log("result ", result);
+                }
+              });
+            }
             const data = {
               id: _id,
               Type:Type,
@@ -833,7 +859,6 @@ export const confirmDelivery = async (req, res) => {
           const findDeliverer = await ServiceProviders.findOne({
             Email: user.Email,
           }).populate("Email");
-          console.log(findDeliverer);
           const UpdateOrder = await Order.findByIdAndUpdate(
             findOrder.id,
             { ServiceProvider: findDeliverer.id, DeliveryStatus: "Delivered" },
@@ -844,17 +869,8 @@ export const confirmDelivery = async (req, res) => {
             { Order: null },
             { new: true, runValidators: true }
           ).session(session);
-          console.log(updateDeliverer);
           await session.commitTransaction();
           session.endSession();
-
-          res.status(201).json({
-            status: "success",
-            message: "Order is Delivered",
-            data: {
-              UpdateOrder,
-            },
-          });
         } catch (error) {
           res.status(401).json({
             status: "Error",
