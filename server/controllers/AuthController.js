@@ -333,9 +333,11 @@ const createOTP = () => {
 };
 let otp;
 let Number;
+let Number1;
 export const sendOTP = async (req, res) => {
   try {
     const {ContactNumber } = req.body;
+    Number1 = ContactNumber;
     if(ContactNumber.charAt(0) == "0"){
       Number = "94" + ContactNumber.slice(1);
     }
@@ -384,9 +386,9 @@ export const ForgotPassword = async (req, res) => {
     const { OTP, Password, ConfirmPassword } = req.body;
     console.log(OTP);
     console.log(otp);
-    const customer = await Customer.findOne({ ContactNumber: Number }).populate("ContactNumber");
+    const customer = await Customer.findOne({ ContactNumber: Number1 }).populate("ContactNumber");
     const serviceProvider = await ServiceProviders.findOne({
-      ContactNumber: Number,
+      ContactNumber: Number1,
     }).populate("ContactNumber");
     const salt = await GenerateSalt();
     const encryptedPassword = await GeneratePassword(Password, salt);
