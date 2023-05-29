@@ -107,6 +107,8 @@ import ManagerCategoryDetails from "./Pages/Manager/CategoryDetails";
 import AddSupplierItems from "./Pages/Supplier/AddSupplierItems";
 import AddReservationPackages from "./Pages/Admin/AddPakages";
 import PackageDetails from "./Pages/Staff-Member/PackageDetails";
+import DevelopersPage from "./Pages/DevelopersPage";
+import { developersImages } from "./Data/DevelopersImages";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -177,6 +179,7 @@ function App() {
                   path="/Menu"
                   element={<Menu MenuItems={MenuItems} login="/login" />}
                 />
+                <Route path="/developers" element={<DevelopersPage developers={developersImages} back="/" />}/>
               </Route>
               <Route
                 element={<WithoutNavAndFooter ScrollToTop={scrollToTop} />}
