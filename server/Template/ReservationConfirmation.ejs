@@ -71,16 +71,6 @@
               <th>Reserved Table</th>
             </tr>
           </thead>
-          <tbody>
-            <% reservedTables.forEach((item)=>{ %>
-            <tr>
-              <td><%= item.depatureTime %></td>
-              <td><%= item.arrivalTime %></td>
-              <td><%= item.bookedDate%></td>
-              <td>Rs. <%= item.reservedTables %></td>
-            </tr>
-            <% }); %>
-          </tbody>
         </table>
         <tfoot>
           <tr>

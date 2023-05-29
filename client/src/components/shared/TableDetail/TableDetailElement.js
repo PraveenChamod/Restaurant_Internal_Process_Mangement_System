@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Div = styled.div`
+export const Div = styled.form`
   width: 50%;
   height: 50%;
   background-color: #1a1e21;
@@ -16,6 +16,22 @@ export const Div = styled.div`
     width: 90%;
     height: 350px;
   }
+`;
+export const Text = styled.div`
+  color: #fff;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 600;
+`;
+export const TextSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  justify-content: center;
+  align-items: center;
 `;
 export const H1 = styled.h1`
   justify-content: center;
