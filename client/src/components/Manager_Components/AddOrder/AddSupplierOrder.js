@@ -90,7 +90,6 @@ for (let supplierId in suppliers) {
   });
 }
 
-
   console.log(orderItems);
   console.log(Items);
   const addOrder = async (e) => {

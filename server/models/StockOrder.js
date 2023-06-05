@@ -25,6 +25,14 @@ const StocksOrderSchema = mongoose.Schema(
             },
           },
         ],
+        Status: {
+          type: String,
+          enum:{
+            values:["Pending","Confirm"]
+          },
+          required: true,
+          default: "Pending",
+        },
       },
     ],
     Manager: {
@@ -33,14 +41,6 @@ const StocksOrderSchema = mongoose.Schema(
     },
     TotalPrice: {
       type: Number,
-    },
-    Status: {
-      type: String,
-      enum:{
-        values:["Pending","Confirm"]
-      },
-      required: true,
-      default: "Pending",
     },
     Date: {
       type: Date,
