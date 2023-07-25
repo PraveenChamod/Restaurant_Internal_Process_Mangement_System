@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "https://restaurant-management-system-api.vercel.app/",
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.10.5",
