@@ -31,7 +31,7 @@ import { GetReviews } from "./controllers/BlogController.js";
 import StocksOrderRoutes from "./routes/StocksOrderRoutes.js";
 import TableItemRoutes from "./routes/TableItemRoutes.js";
 import PackageRoutes from "./routes/PackageRoutes.js";
-
+import helmet from "helmet";
 const app = express();
 
 dotenv.config();
@@ -47,7 +47,8 @@ app.use(function (req, res, next) {
   next();
 });
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://restaurant-management-system-seven.vercel.app",
+  methods:["POST","GET","PATCH","DELETE"],
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -55,7 +56,7 @@ app.use(express.static("public"));
 
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-
+app.use(helmet());
 app.use("/api/v1/public/offers", getOffers);
 app.use("/api/v1/public/blogs", GetReviews);
 
