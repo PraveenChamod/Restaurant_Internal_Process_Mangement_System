@@ -22,7 +22,7 @@ const UserProfileComponent = (props) => {
   return (
     <UserProfileContainer>
       <Div>
-        <Img src={`http://localhost:5000/images/${user?.ProfileImage}`}></Img>
+        <Img src={`https://resto-f3zu.onrender.com/images/${user?.ProfileImage}`}></Img>
         <Header>Welcome</Header>
         <P>Hi {user?.Name}</P>
         <RegularButton>

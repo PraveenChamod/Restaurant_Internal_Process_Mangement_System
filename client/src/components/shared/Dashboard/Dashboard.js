@@ -54,7 +54,7 @@ const Dashboard = (props) => {
           )}
           <UserMainContainer>
             <ImageSection>
-              <Image1 src={`http://localhost:5000/images/${user?.ProfileImage}`}/>
+              <Image1 src={`https://resto-f3zu.onrender.com/images/${user?.ProfileImage}`}/>
             </ImageSection>
             <UserHeader>
               <Title>{props.Navs1.Role}</Title>

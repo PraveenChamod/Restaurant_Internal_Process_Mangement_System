@@ -135,7 +135,7 @@ const TableReservationComponent = ({ data }) => {
                           <l.ItemsCard>
                             <l.FoodImage>
                               <l.Food
-                                src={`http://localhost:5000/tableitemimages/${data.ItemImage}`}
+                                src={`https://resto-f3zu.onrender.com/tableitemimages/${data.ItemImage}`}
                               />
                             </l.FoodImage>
                             <l.Details>

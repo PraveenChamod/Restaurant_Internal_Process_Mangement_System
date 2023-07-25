@@ -126,7 +126,7 @@ const Testimonials = (props) => {
                 <img
                   alt="person"
                   className="image1"
-                  src={`http://localhost:5000/blogimages/${review.Customer.ProfileImage}`}
+                  src={`https://resto-f3zu.onrender.com/blogimages/${review.Customer.ProfileImage}`}
                   data-aos="zoom-in-down"
                   data-aos-duration="1500"
                 />

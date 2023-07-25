@@ -54,7 +54,7 @@ const OrderDetails = (props) => {
         <l.Sec1>
           <l.ProfileImage>
             <l.Image
-              src={`http://localhost:5000/images/${props.data3[0].managerImage}`}
+              src={`https://resto-f3zu.onrender.com/images/${props.data3[0].managerImage}`}
             />
           </l.ProfileImage>
           <l.UserDetails>

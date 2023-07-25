@@ -66,7 +66,7 @@ const FoodDetailComponent = (props) => {
               {click ? (
                 <l.Image src={URL.createObjectURL(image)} />
               ) : (
-                <l.Image src={`http://localhost:5000/Foodimages/${image}`} />
+                <l.Image src={`https://resto-f3zu.onrender.com/Foodimages/${image}`} />
               )}
             </l.ImageSubSec>
             <l.Icon>

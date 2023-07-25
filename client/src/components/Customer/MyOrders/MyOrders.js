@@ -65,7 +65,7 @@ const MyOrdersComponent = (props) => {
             <l.OrderUserDetails>
               <l.ProfileImage>
                 <l.Image
-                  src={`http://localhost:5000/images/${user?.ProfileImage}`}
+                  src={`https://resto-f3zu.onrender.com/images/${user?.ProfileImage}`}
                 />
               </l.ProfileImage>
               <l.UserDetails>Name : {user?.Name}</l.UserDetails>
@@ -134,7 +134,7 @@ const MyOrdersComponent = (props) => {
                                   <l.ItemsCard1>
                                     <l.FoodImage>
                                       <l.Food
-                                        src={`http://localhost:5000/${
+                                        src={`https://resto-f3zu.onrender.com/${
                                           food.Foodid == null
                                             ? "offerimages"
                                             : "Foodimages"

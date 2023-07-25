@@ -26,6 +26,7 @@ export const addSupplierOrder = async (req, res) => {
     const user = req.user;
     if (user.Role === "Manager") {
       let suppliersnumbers = [];
+      console.log(req.body.Order[0].Items);
       const session = await mongoose.startSession();
       try {
         session.startTransaction();

@@ -144,7 +144,7 @@ const CustomerProfile = (props) => {
                   {!loading && user && (
                     <Image
                       className="image1"
-                      src={`http://localhost:5000/images/${user?.ProfileImage}`}
+                      src={`https://resto-f3zu.onrender.com/images/${user?.ProfileImage}`}
                     />
                   )}
                 </ImageSubSec>
