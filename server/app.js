@@ -47,7 +47,8 @@ app.use(function (req, res, next) {
   next();
 });
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://restaurant-management-system-seven.vercel.app",
+  methods:["POST","GET","PATCH","DELETE"],
   credentials: true,
 };
 app.use(cors(corsOptions));
