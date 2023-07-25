@@ -47,8 +47,7 @@ app.use(function (req, res, next) {
   next();
 });
 const corsOptions = {
-  origin: "https://restaurant-management-system-seven.vercel.app",
-  methods:["POST","GET","PATCH","DELETE"],
+  origin: "https://restaurant-management-system-seven.vercel.app/",
   credentials: true,
 };
 app.use(cors(corsOptions));
