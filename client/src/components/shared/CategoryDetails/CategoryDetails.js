@@ -105,7 +105,7 @@ const CategoryDetails = (props) => {
                 <l.Image src={URL.createObjectURL(image)} />
               ) : (
                 <l.Image
-                  src={`http://localhost:5000/Categoryimages/${image}`}
+                  src={`https://resto-f3zu.onrender.com/Categoryimages/${image}`}
                 />
               )
             }

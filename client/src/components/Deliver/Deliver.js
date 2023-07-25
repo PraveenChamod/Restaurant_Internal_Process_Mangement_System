@@ -73,7 +73,7 @@ const DeliverComponent = (props) => {
                     <l.ItemsCard>
                       <l.FoodImage>
                         <l.Food
-                          src={`http://localhost:5000/${
+                          src={`https://resto-f3zu.onrender.com/${
                             food.Foodid == null ? "offerimages" : "Foodimages"
                           }/${food.image}`}
                         />

@@ -65,7 +65,7 @@ const Deals = (props) => {
               >
                 <Images>
                   <Img
-                    src={`http://localhost:5000/offerimages/${cardData.OfferImage}`}
+                    src={`https://resto-f3zu.onrender.com/offerimages/${cardData.OfferImage}`}
                   />
                 </Images>
                 <div className="text">

@@ -21,7 +21,7 @@ const CustomerDashboardComponent = (props) => {
         <l.Profile>
           <l.Picture>
             <l.Image
-              src={`http://localhost:5000/images/${user?.ProfileImage}`}
+              src={`https://resto-f3zu.onrender.com/images/${user?.ProfileImage}`}
             />
           </l.Picture>
           <l.Name>{user?.Name}</l.Name>

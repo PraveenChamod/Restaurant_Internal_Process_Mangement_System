@@ -185,7 +185,7 @@ const Ordering = (props) => {
                   <l.Div1 key={data.id}>
                     <l.Div2>
                       <l.Img1
-                        src={`http://localhost:5000/Foodimages/${data.FoodImage}`}
+                        src={`https://resto-f3zu.onrender.com/Foodimages/${data.FoodImage}`}
                         alt="buttonpng"
                       ></l.Img1>
                       <l.P>{data.FoodName}</l.P>
@@ -224,7 +224,7 @@ const Ordering = (props) => {
                 <l.Div1 key={data.id}>
                   <l.Div2>
                     <l.Img1
-                      src={`http://localhost:5000/offerimages/${data.OfferImage}`}
+                      src={`https://resto-f3zu.onrender.com/offerimages/${data.OfferImage}`}
                       alt="buttonpng"
                     ></l.Img1>
                     <l.P>{data.OfferName}</l.P>

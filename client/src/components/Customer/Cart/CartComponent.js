@@ -125,7 +125,7 @@ const CartComponent = ({ data }) => {
           <l.SubSection1>
             <l.ProfileImage>
               <l.Image
-                src={`http://localhost:5000/images/${user?.ProfileImage}`}
+                src={`https://resto-f3zu.onrender.com/images/${user?.ProfileImage}`}
               />
             </l.ProfileImage>
             <l.Name>{user?.Name}</l.Name>
@@ -150,7 +150,7 @@ const CartComponent = ({ data }) => {
                       <l.ItemsCard>
                         <l.FoodImage>
                           <l.Food
-                            src={`http://localhost:5000/${
+                            src={`https://resto-f3zu.onrender.com/${
                               cart.Foodid == null ? "offerimages" : "Foodimages"
                             }/${cart.image}`}
                           />

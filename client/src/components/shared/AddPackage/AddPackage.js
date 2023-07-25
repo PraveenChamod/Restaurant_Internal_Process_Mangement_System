@@ -140,7 +140,7 @@ const AddPackages = (props) => {
                           <l.ItemsCard>
                             <l.FoodImage>
                               <l.Food
-                                src={`http://localhost:5000/tableitemimages/${data.TableItemImage}`}
+                                src={`https://resto-f3zu.onrender.com/tableitemimages/${data.TableItemImage}`}
                               />
                             </l.FoodImage>
                             <l.Details>
@@ -175,7 +175,7 @@ const AddPackages = (props) => {
                       <l.ItemsCard>
                         <l.FoodImage>
                           <l.Food
-                            src={`http://localhost:5000/tableitemimages/${data.TableItemImage}`}/>
+                            src={`https://resto-f3zu.onrender.com/tableitemimages/${data.TableItemImage}`}/>
                         </l.FoodImage>
                         <l.Details>
                           <l.MainText>

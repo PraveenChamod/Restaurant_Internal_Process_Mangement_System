@@ -196,7 +196,7 @@ const PlaceOrderComponent = (props) => {
                         <l.ItemsCard>
                           <l.FoodImage>
                             <l.Food
-                              src={`http://localhost:5000/Foodimages/${data.FoodImage}`}
+                              src={`https://resto-f3zu.onrender.com/Foodimages/${data.FoodImage}`}
                             />
                           </l.FoodImage>
                           <l.Details>
@@ -250,7 +250,7 @@ const PlaceOrderComponent = (props) => {
                         <l.ItemsCard>
                           <l.FoodImage>
                             <l.Food
-                              src={`http://localhost:5000/offerimages/${data.OfferImage}`}
+                              src={`https://resto-f3zu.onrender.com/offerimages/${data.OfferImage}`}
                             />
                           </l.FoodImage>
                           <l.Details>
@@ -303,7 +303,7 @@ const PlaceOrderComponent = (props) => {
                       <l.ItemsCard>
                         <l.FoodImage>
                           <l.Food
-                            src={`http://localhost:5000/${
+                            src={`https://resto-f3zu.onrender.com/${
                               data.FoodName == null
                                 ? `offerimages/${data.OfferImage}`
                                 : `Foodimages/${data.FoodImage}`

@@ -65,7 +65,7 @@ const OfferDetails = (props) => {
               {click ? (
                 <l.Image src={URL.createObjectURL(image)} />
               ) : (
-                <l.Image src={`http://localhost:5000/offerimages/${image}`} />
+                <l.Image src={`https://resto-f3zu.onrender.com/offerimages/${image}`} />
               )}
             </l.ImageSubSec>
             <l.Icon>

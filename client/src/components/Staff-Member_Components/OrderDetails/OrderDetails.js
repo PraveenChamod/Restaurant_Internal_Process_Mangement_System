@@ -102,7 +102,7 @@ const OrderDetailsComponent = (props) => {
                         <l.ItemsCard>
                           <l.FoodImage>
                             <l.Food
-                              src={`http://localhost:5000/${
+                              src={`https://resto-f3zu.onrender.com/${
                                 data.Foodid == null
                                   ? "offerimages"
                                   : "Foodimages"
