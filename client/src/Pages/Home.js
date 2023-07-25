@@ -15,7 +15,7 @@ export const Home = (props) => {
   const { data: data2, isPending: isPending2 } = useFetch(
     "/api/v1/public/blogs"
   );
-  console.log(data2);
+  console.log(data1);
   return (
     <>
       <Cover ScrollToTop1={props.ScrollToTop} />
