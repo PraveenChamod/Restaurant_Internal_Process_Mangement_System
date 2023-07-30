@@ -13,6 +13,8 @@ The current restaurant management process is inefficient and error-prone. Staff 
 The project aims to create a comprehensive restaurant management system for automating tasks and enhancing the customer experience. The objectives include developing a user-friendly web and mobile app for ordering food, reserving tables, checking menus/prices, and making online payments. The system will handle online orders, communicate with deliverers, email new customers, and generate financial reports. APIs, payment gateways, and third-party services will be integrated for effective operation. A robust database will store customer information, orders, stocks, and other relevant data. The project seeks to create a scalable, adjustable system that meets restaurant and customer requirements while ensuring reliability and security.
 
 ![Untitled-1](https://github.com/imAravinda/restaurant_management_system/assets/86168078/015d1fe3-e0b5-43a7-95d9-ec8b7539d5b1)
+![Mobile_UI_New](https://github.com/imAravinda/restaurant_management_system/assets/86168078/627af8d9-ff27-47e2-b7e3-a276018f43ea)
+
 
 ### 1.4 Main Objectives
 
